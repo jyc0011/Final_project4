@@ -1,4 +1,4 @@
-package com.test.campus;
+package com.finalproject.team4.shouldbe;
 
 import java.util.Date;
 
