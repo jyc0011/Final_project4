@@ -1,91 +1,101 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<style>
-    .footer-section {
-        width: 100%;
-        background-color: #ddd;
-        height: 350px;
-        margin: 0;
-        margin-top: 60px;
-    }
-
-    .footer-first-area,
-    .footer-second-area {
-        margin: 0 auto;
-        width: 1200px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .footer-second-area {
-        margin-top: 30px;
-    }
-
-    .footer-second-area {
-    }
-
-    .footer-first-first {
-        width: 252px;
-        height: 190px;
-    }
-
-    .footer-first-second > .footer-content,
-    .footer-first-third > .footer-content,
-    .footer-first-4th > .footer-content {
-        margin: 0 auto;
-    }
-
-    .footer-title {
-        color: rgb(17, 23, 75);
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 30px;
-    }
-
-    .footer-section ul,
-    .footer-section li {
-        margin: 0;
-    }
-
-    .footer-section li {
-        margin-bottom: 12px;
-    }
-
-    .footer-content {
-        color: rgb(68, 73, 111);
-        font-size: 16px;
-    }
-
-    .footer-social-section {
-        margin-top: 20px;
-    }
-
-    .footer__social {
-        font-size: 1.25rem;
-    }
-
-    .footer-first-area {
-        padding-top: 60px;
-    }
-
-    .footer__social,
-    .footer__social:hover,
-    .footer__social:link,
-    .footer__social:visited,
-    .footer__social:active,
-    .something,
-    .something:hover,
-    .something:link,
-    .something:visited,
-    .something:active{
-        color: rgb(70, 77, 134);
-    }
-
-</style>
+    <style>
+        .footer-section {
+            width: 100%;
+            background-color: #965417;
+            height: 350px;
+            margin: 0;
+            margin-top: 60px;
+        }
+    
+        .footer-first-area,
+        .footer-second-area {
+            margin: 0 auto;
+            width: 1200px;
+            display: flex;
+            justify-content: space-between;
+        }
+    
+        .footer-second-area {
+            margin-top: 30px;
+        }
+    
+        .footer-first-first {
+            width: calc((1200px / 4) - (10px * 3 / 4)); /* Adjust width considering margins */
+            height: 190px;
+        }
+    
+        .footer-first-second,
+        .footer-first-third,
+        .footer-first-4th {
+            width: calc((1200px / 4) - (10px * 3 / 4)); /* Same adjustment as above */
+            height: 190px;
+        }
+    
+        .footer-first-second>.footer-content,
+        .footer-first-third>.footer-content,
+        .footer-first-4th>.footer-content {
+            margin: 0 auto;
+        }
+    
+        .footer-title {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-decoration: none;
+        }
+    
+        .footer-section ul,
+        .footer-section li {
+            margin: 0;
+            padding: 0;
+            list-style: none; /* Remove bullet points */
+        }
+    
+        .footer-section li {
+            margin-bottom: 12px;
+        }
+    
+        .footer-content {
+            color: #ffffff;
+            font-size: 16px;
+            text-decoration: none;
+        }
+    
+        .footer-social-section {
+            margin-top: 20px;
+        }
+    
+        .footer__social {
+            font-size: 1.25rem;
+        }
+    
+        .footer-first-area {
+            padding-top: 60px;
+        }
+    
+        .footer__social,
+        .footer__social:hover,
+        .footer__social:link,
+        .footer__social:visited,
+        .footer__social:active,
+        .something,
+        .something:hover,
+        .something:link,
+        .something:visited,
+        .something:active {
+            color: #ffffff;
+            text-decoration: none;
+        }
+    </style>
+    
+</head>
 <footer class="footer-section">
     <div class="footer-first-area">
         <div class="footer-first-first">
-            <div class="footer-title">project shouldbe </div>
-            <div class="footer-content">final project team 4 rainbow</div>
+            <div class="footer-title">Project ShouldBe </div>
+            <div class="footer-content">채용연계 풀스택 개발</br>최종 프로젝트 4조의</br>프로젝트 결과물입니다.</div>
             <div class="footer-social-section">
                 <a href="https://www.facebook.com/" target="_blank" class="footer__social">
                     <i class="ri-facebook-box-fill"></i>
@@ -117,7 +127,7 @@
                 <ul>
                     <li><a href="https://www.multicampus.com/kr/index.html" class="something">멀티캠퍼스</a></li>
                     <li><a href="https://www.hrd.go.kr/hrdp/ma/pmmao/newIndexRenewal.do" class="something">HRD</a></li>
-                    <li><a href="index.html" class="something">2조</a></li>
+                    <li><a href="index.html" class="something">4조</a></li>
                 </ul>
             </div>
         </div>
@@ -134,15 +144,16 @@
     </div>
     <div class="footer-second-area">
         <div class="footer-second-left">
-            © 2023 Multi-Campus Semi-Project Team 2. All rigths reserved.
+            © 2023 Multi-Campus Final-Project Team 4. All rigths reserved.
         </div>
         <div class="footer-second-right" style="display: flex">
             <div class="footer-TermsNAgreements"><a href="https://youtu.be/9PfIi4nXJ6E?si=VoHRlilst2YOdQiP"
-                                                    style="font-size: 14px;" class="something">Terms &
-                Agreements</a></div>
+                    style="font-size: 14px;" class="something">Terms &
+                    Agreements</a></div>
             <div class="footer-PrivacyPolicy" style="margin-left: 30px"><a
-                    href="https://youtu.be/Eb-JAjWSxkI?si=g6xiT8-0tVViOcT2" style="font-size: 14px;" class="something">Privacy
-                Policy</a></div>
+                    href="https://youtu.be/Eb-JAjWSxkI?si=g6xiT8-0tVViOcT2" style="font-size: 14px;"
+                    class="something">Privacy
+                    Policy</a></div>
         </div>
     </div>
 </footer>
