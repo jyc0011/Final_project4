@@ -11,7 +11,7 @@
     .footer-first-area,
     .footer-second-area {
         margin: 0 auto;
-        width: 1080px;
+        width: 1200px;
         display: flex;
         justify-content: space-between;
     }
@@ -84,8 +84,8 @@
 <footer class="footer-section">
     <div class="footer-first-area">
         <div class="footer-first-first">
-            <div class="footer-title">헬스엔에스</div>
-            <div class="footer-content">사용자들에게 건강한 라이프 스타일을 쉽고 재미있게 유지할 수 있는 플랫폼을 제공합니다.</div>
+            <div class="footer-title">project shouldbe </div>
+            <div class="footer-content">final project team 4 rainbow</div>
             <div class="footer-social-section">
                 <a href="https://www.facebook.com/" target="_blank" class="footer__social">
                     <i class="ri-facebook-box-fill"></i>
@@ -105,9 +105,9 @@
             <div class="footer-title">About</div>
             <div class="footer-content">
                 <ul>
-                    <li><a href="index.html" class="something">소개</a></li>
-                    <li><a href="Community_Free.html" class="something">커뮤니티</a></li>
-                    <li><a href="MiniHome_Home.html" class="something">미니 홈</a></li>
+                    <li><a href="" class="something">홈</a></li>
+                    <li><a href="" class="something">게시판</a></li>
+                    <li><a href="" class="something">퀴즈</a></li>
                 </ul>
             </div>
         </div>
