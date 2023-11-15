@@ -89,3 +89,12 @@ shouldbe/gradle
 shouldbe/src/test/*
 Servers/*
 # End of https://www.toptal.com/developers/gitignore/api/java,visualstudiocode,eclipse
+<<<<<<< HEAD
+=======
+
+.idea
+#intellij project files
+
+shouldbe/build
+# End of https://www.toptal.com/developers/gitignore/api/java,visualstudiocode,eclipse
+>>>>>>> upstream/main

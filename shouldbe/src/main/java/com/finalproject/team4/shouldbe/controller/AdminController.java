@@ -13,4 +13,8 @@ public class AdminController {
 	public String admin_reply() {
 		return "admin/admin_reply";
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> upstream/main
