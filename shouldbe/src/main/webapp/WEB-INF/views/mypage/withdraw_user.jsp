@@ -58,15 +58,16 @@
 	</head>
 
 	<body>
+		<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 		<div id="wrapper" class="container-fluid">
 			<div id="sidebar">
 				<h3>회원정보수정</h3>
 				<ul class="sidebar-menu">
-					<li><a href="#">회원정보 수정</a></li>
-					<li><a href="#">작성한글</a></li>
-					<li><a href="#">친구관리</a></li>
-					<li><a href="#" class="active">탈퇴하기</a></li>
-					<li><a href="#">저장소</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user" class="active">탈퇴하기</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
 				</ul>
 			</div>
 			<div id="content">
@@ -84,6 +85,7 @@
 				</div>
 			</div>
 		</div>
+		<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 	</body>
 	<script>
 		function confirmDeletion() {
