@@ -1,0 +1,177 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+        <!DOCTYPE html>
+        <html>
+
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+            <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>                                           
+            <style>
+                .footer-section {
+                    width: 100%;
+                    background-color: #965417;
+                    height: 350px;
+                    margin: 0;
+                    margin-top: 60px;
+                }
+
+                .footer-first-area,
+                .footer-second-area {
+                    margin: 0 auto;
+                    width: 1200px;
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                .footer-second-area {
+                    margin-top: 30px;
+                }
+
+                .footer-first-first {
+                    width: calc((1200px / 4) - (10px * 3 / 4));
+                    /* Adjust width considering margins */
+                    height: 190px;
+                }
+
+                .footer-first-second,
+                .footer-first-third,
+                .footer-first-4th {
+                    width: calc((1200px / 4) - (10px * 3 / 4));
+                    /* Same adjustment as above */
+                    height: 190px;
+                }
+
+                .footer-first-second>.footer-content,
+                .footer-first-third>.footer-content,
+                .footer-first-4th>.footer-content {
+                    margin: 0 auto;
+                }
+
+                .footer-title {
+                    color: #ffffff;
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 30px;
+                    text-decoration: none;
+                }
+
+                .footer-section ul,
+                .footer-section li {
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                    /* Remove bullet points */
+                }
+
+                .footer-section li {
+                    margin-bottom: 12px;
+                }
+
+                .footer-content {
+                    color: #ffffff;
+                    font-size: 16px;
+                    text-decoration: none;
+                }
+
+                .footer-social-section {
+                    margin-top: 20px;
+                }
+
+                .footer__social {
+                    font-size: 1.25rem;
+                }
+
+                .footer-first-area {
+                    padding-top: 60px;
+                }
+
+                .footer__social,
+                .footer__social:hover,
+                .footer__social:link,
+                .footer__social:visited,
+                .footer__social:active,
+                .something,
+                .something:hover,
+                .something:link,
+                .something:visited,
+                .something:active {
+                    color: #ffffff;
+                    text-decoration: none;
+                }
+            </style>
+
+        </head>
+        <footer class="footer-section">
+            <div class="footer-first-area">
+                <div class="footer-first-first">
+                    <div class="footer-title">Project ShouldBe </div>
+                    <div class="footer-content">채용연계 풀스택 개발</br>최종 프로젝트 4조의</br>프로젝트 결과물입니다.</div>
+                    <div class="footer-social-section">
+                        <a href="https://www.facebook.com/" target="_blank" class="footer__social">
+                            <i class="ri-facebook-box-fill"></i>
+                        </a>
+                        <a href="https://twitter.com/" target="_blank" class="footer__social">
+                            <i class="ri-twitter-fill"></i>
+                        </a>
+                        <a href="https://www.instagram.com/" target="_blank" class="footer__social">
+                            <i class="ri-instagram-fill"></i>
+                        </a>
+                        <a href="https://www.youtube.com/" target="_blank" class="footer__social">
+                            <i class="ri-youtube-fill"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-first-second">
+                    <div class="footer-title">About</div>
+                    <div class="footer-content">
+                        <ul>
+                            <li><a href="" class="something">홈</a></li>
+                            <li><a href="" class="something">게시판</a></li>
+                            <li><a href="" class="something">퀴즈</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-first-third">
+                    <div class="footer-title">Company</div>
+                    <div class="footer-content">
+                        <ul>
+                            <li><a href="https://www.multicampus.com/kr/index.html" class="something">멀티캠퍼스</a></li>
+                            <li><a href="https://www.hrd.go.kr/hrdp/ma/pmmao/newIndexRenewal.do"
+                                    class="something">HRD</a></li>
+                            <li><a href="index.html" class="something">4조</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-first-4th">
+                    <div class="footer-title">Support</div>
+                    <div class="footer-content">
+                        <ul>
+                            <li><a href="https://www.naver.com" class="something">자주 묻는 질문</a></li>
+                            <li><a href="https://www.daum.net" class="something">지원 센터</a></li>
+                            <li><a href="https://www.nate.com" class="something">문의하기</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-second-area">
+                <div class="footer-second-left">
+                    © 2023 Multi-Campus Final-Project Team 4. All rigths reserved.
+                </div>
+                <div class="footer-second-right" style="display: flex">
+                    <div class="footer-TermsNAgreements"><a href="https://youtu.be/9PfIi4nXJ6E?si=VoHRlilst2YOdQiP"
+                            style="font-size: 14px;" class="something">Terms &
+                            Agreements</a></div>
+                    <div class="footer-PrivacyPolicy" style="margin-left: 30px"><a
+                            href="https://youtu.be/Eb-JAjWSxkI?si=g6xiT8-0tVViOcT2" style="font-size: 14px;"
+                            class="something">Privacy
+                            Policy</a></div>
+                </div>
+            </div>
+        </footer>
+        </body>
+
+        </html>

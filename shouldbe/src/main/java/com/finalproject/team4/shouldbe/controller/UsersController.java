@@ -28,4 +28,9 @@ public class UsersController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	@GetMapping("/create_membership")
+	public String create_membership() {
+		return "create_membership/create_membership";
+	}
 }
