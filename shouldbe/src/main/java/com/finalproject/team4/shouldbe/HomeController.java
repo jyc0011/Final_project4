@@ -1,17 +1,12 @@
-package com.test.campus;
-
-import java.util.Date;
+package com.finalproject.team4.shouldbe;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HomeController{
-    @GetMapping("/")
-    public String home(Model model){
-        model.addAttribute("data", new Date());
-        return "home";
-    }
+public class HomeController {
+	@RequestMapping("/")
+	public String Home() {
+		return "home";
+	}
 }
