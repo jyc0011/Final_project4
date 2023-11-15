@@ -155,3 +155,5 @@ CREATE TABLE user_scores (
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 OREIGN KEY (quiz_lang) REFERENCES quiz(quiz_lang)
 );
+
+--변경

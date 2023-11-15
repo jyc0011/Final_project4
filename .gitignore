@@ -85,6 +85,6 @@ replay_pid*
 .history
 .ionide
 
-team2_semi/target/*
+shouldbe/src/test/*
 Servers/*
 # End of https://www.toptal.com/developers/gitignore/api/java,visualstudiocode,eclipse
