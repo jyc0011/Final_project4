@@ -18,4 +18,8 @@ public class UsersController {
 	public String find_pwd() {
 		return "login/find_pwd";
 	}
+	@GetMapping("/create_membership")
+	public String create_membership() {
+		return "create_membership/create_membership";
+	}
 }

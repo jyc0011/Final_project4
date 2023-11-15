@@ -84,7 +84,14 @@ replay_pid*
 # Ignore all local history of files
 .history
 .ionide
-
-team2_semi/target/*
+shouldbe/.gradle
+shouldbe/gradle
+shouldbe/src/test/*
 Servers/*
+# End of https://www.toptal.com/developers/gitignore/api/java,visualstudiocode,eclipse
+
+.idea
+#intellij project files
+
+shouldbe/build
 # End of https://www.toptal.com/developers/gitignore/api/java,visualstudiocode,eclipse
