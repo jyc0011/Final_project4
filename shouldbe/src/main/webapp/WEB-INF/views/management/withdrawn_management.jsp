@@ -13,7 +13,7 @@
 	<style>
 
 		#side_menu{
-			margin:100px 0 0 0;
+			padding:100px 0 0 0;
 			float: left;
 		}
 		#side_menu>ul>li{
@@ -24,15 +24,21 @@
 			text-align: center;
 		}
 		#memberList{
-		margin:0 auto;list-style-type: none;
+		
+		margin:0;
+		list-style-type: none;
 		}
 		#memberList>li{
-		float: left;height:40px;line-height: 40px; border-bottom: 1px solid #ddd;width: 15%;
+		float: left;height:40px;line-height: 40px; border-bottom: 1px solid #ddd;width: 13%;
 		}
 		.search{
-		width:10%;
 		height:40px;
 		float: left;
+		margin:0 auto;
+		wid
+		}
+		#searchform{
+		width:100px;
 		}
 		
 	</style>
@@ -52,7 +58,7 @@
 		</ul>
 	</div>
 	<div id="member_management">
-		<h1 id="membertitle">현재 회원 관리</h1>
+		<h1 id="membertitle">탈퇴 회원 관리</h1>
 		<ul id="memberList">
 			<li>
 				<div class="search" style="width:100%">
@@ -65,6 +71,7 @@
 			<li>닉네임</li>
 			<li>아이디</li>
 			<li>가입일</li>
+			<li>탈퇴일</li>
 			<li>작성글/댓글 수</li>
 			<li>신고횟수</li>
 		</ul>

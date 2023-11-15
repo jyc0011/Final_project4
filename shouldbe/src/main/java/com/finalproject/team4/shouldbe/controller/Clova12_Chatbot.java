@@ -63,7 +63,7 @@ public class Clova12_Chatbot {
             
             int responseCode = con.getResponseCode();
 
-            BufferedReader br;
+            //BufferedReader br;
             	System.out.println(responseCode);
             if(responseCode==200) { // Normal call
                 System.out.println(con.getResponseMessage());
