@@ -1,100 +1,69 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-<style>
-    main{
-        width: 1000px;
-        margin: 0 auto;
-    }
-    #viewArea {
-        width:1000px;
-        height: 500px;
-        margin: 0 auto;
-    }
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        main {
+            width: 1000px;
+            margin: 0 auto;
+        }
+        #viewArea{
+            height:500px;
+        }
+        hr {
+            width : 60%;
+        }
 
-    #replyArea{
-        padding:10px 0px;
-    }
-    #coment{
-        width:600px; height: 81px;
-    }
-    #replyList>li{
-        border-bottom:1px solid #ddd;
+        #replyArea {
+            padding: 10px 0px;
+        }
 
-    }
-    /* 초기화 */
-    body, ul, li {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-    /* link초기화 */
-    a:link, a:visited, a:hover, a:active {
-        color: black;
-        text-decoration: none;
-    }
+        #coment {
+            width: 600px;
+            height: 81px;
+        }
 
-    /* header */
-    header>div {
-        height: 100px;
-        width: 1000px;
-        line-height: 100px;
-        font-size: 50px;
-        background-color: #EBE5D9;
-        color: #577D86;
-        text-align:center;
-        margin:0 auto;
-    }
 
-    /* header 메뉴 */
-    .topMenu{
-        height: 40px;
-        background-color: #002B5B;
-    }
-    .topMenu>ul{
-        height:40px;
-        margin:0 auto;
-        width:1000px;
-    }
+        /* 초기화 */
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
 
-    .topMenu li{
-        float:left;
-        padding: 0px 30px;
-        height: 40px;
-        line-height:40px;
+        /* link초기화 */
+        a:link, a:visited, a:hover, a:active {
+            color: black;
+            text-decoration: none;
+        }
 
-    }
-    .topMenu a:link, .topMenu a:visited{
-        color: white;
-    }
-    .topMenu a:hover{
-        color:yellow;
-    }
+    </style>
+    <script>
 
-    footer{
-        height:80px;
-        line-height:80px;
-        text-align:center;
-        background-color:#ddd;
-        margin:10px 0;
-    }
-</style>
-<script>
+    </script>
+<body>
 
-</script>
+
 <main>
     <div id="viewArea">
-    <h1>글 내용 보기</h1>
+        <h1>글 내용 보기</h1>
 
-    <ul>
-        <li>번호 : 1, 글쓴이 : 작성자, 조회수 : 10, 작성일 : 2023-11-13</li>
-        <li>제목 : 제목</li>
-        <li>내용</li>
-    </ul>
+        <ul>
+            <li>번호 : 1, 글쓴이 : 작성자, 조회수 : 10, 작성일 : 2023-11-13</li>
+            <li>제목 : 제목</li>
+            <li>내용</li>
+        </ul>
     </div>
-    <div>
+
         <hr>
+    <div>
         목록
         <!-- 현재글쓴이와 로그인 아이디가 같을 때만 수정 삭제 가능 -->
         <a href="">수정</a>
@@ -104,13 +73,13 @@
     <!-- 댓글 -->
     <div id="replyArea">
         <!-- 로그인 상태일 때 댓글쓰기 -->
-            <form method="post" id="replyForm">
-                <!--  원글 글번호 -->
-                <input type="hidden" name="no" value="${vo.no}"/>
-                <textarea name="coment" id="coment"></textarea>
-                <!-- button은 form안에있을경우 input type submit과 동일 -->
-                <button>댓글등록</button>
-            </form>
+        <form method="post" id="replyForm">
+            <!--  원글 글번호 -->
+            <input type="hidden" name="no" value="${vo.no}"/>
+            <textarea name="coment" id="coment"></textarea>
+            <!-- button은 form안에있을경우 input type submit과 동일 -->
+            <button>댓글등록</button>
+        </form>
         <!-- 댓글목록 -->
         <div>댓글 목록</div>
         <ul id="replyList">
@@ -138,8 +107,6 @@
             </li>
         </ul>
     </div>
-
-
-
-
 </main>
+</body>
+</html>

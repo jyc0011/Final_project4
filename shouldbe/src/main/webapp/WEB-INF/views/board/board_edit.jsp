@@ -14,6 +14,10 @@
             width: 1000px;
             margin: 0 auto;
         }
+        #replyList > li {
+            border-bottom: 1px solid #ddd;
+
+        }
         /* 초기화 */
         body, ul, li {
             margin: 0;
@@ -21,14 +25,21 @@
             list-style-type: none;
         }
 
+        /* link초기화 */
+        a:link, a:visited, a:hover, a:active {
+            color: black;
+            text-decoration: none;
+        }
         #writeButton{
             text-align: center;
         }
 
     </style>
     <script>
+
     </script>
 <body>
+<!-- todo: db에서 글 내용 가져와서 세팅-->
 <main>
     <h1>게시글 작성</h1>
     <div class="mb-3">

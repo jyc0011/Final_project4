@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        .board{
+        main{
             width:1000px;
             margin: 0 auto;
         }
@@ -124,8 +124,7 @@
     </style>
 </head>
 <body>
-
-<div class="board">
+<main>
     <h1>게시판목록</h1>
     <div>
         <a href="">글쓰기</a>
@@ -220,6 +219,6 @@
 
         </form>
     </div>
-</div>
+</main>
 </body>
 </html>

@@ -4,16 +4,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class BoardController {
-    @GetMapping("/board_free")
+    @GetMapping("/board")
     public String boardfree() {
-        return "board/board_free";
+        return "board/board_list";
     }
 
-    @GetMapping("/board_free/view")
+    @GetMapping("/board/view")
     public String view() {
-        return "board/board_free";
+        return "board/board_view";
     }
-    @GetMapping("/board_free/write")
+    @GetMapping("/board/write")
     public String write() {
         return "board/board_write";
     }
