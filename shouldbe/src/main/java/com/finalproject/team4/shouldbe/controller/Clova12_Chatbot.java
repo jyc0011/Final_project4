@@ -1,4 +1,4 @@
-package com.finalproject.team4.shouldbe.Controller;
+package com.finalproject.team4.shouldbe.controller;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -63,7 +63,7 @@ public class Clova12_Chatbot {
             
             int responseCode = con.getResponseCode();
 
-            BufferedReader br;
+            //BufferedReader br;
             	System.out.println(responseCode);
             if(responseCode==200) { // Normal call
                 System.out.println(con.getResponseMessage());
