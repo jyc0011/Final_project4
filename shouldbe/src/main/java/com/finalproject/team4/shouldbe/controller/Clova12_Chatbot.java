@@ -1,4 +1,4 @@
-package com.multi.myapp.controller;
+package com.finalproject.team4.shouldbe.controller;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
