@@ -88,3 +88,6 @@ replay_pid*
 shouldbe/src/test/*
 Servers/*
 # End of https://www.toptal.com/developers/gitignore/api/java,visualstudiocode,eclipse
+
+shouldbe/.idea
+#intellij project files
