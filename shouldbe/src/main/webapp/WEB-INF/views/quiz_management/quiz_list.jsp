@@ -17,30 +17,31 @@
 			float: left;
 		}
 		#side_menu>ul>li{
-		list-style-type: none;
+			list-style-type: none;
 		}
 		#member_management{
 			width: 1100px;
+
+		}
+		#quiz_list{
+			display: flex;
+  			justify-content: space-around;
+		}
+		#quiz_list_title{
 			text-align: center;
 		}
-		#memberList{
-		
-		margin:0;
-		list-style-type: none;
+		#reg_buttons{
+			margin-bottom: 50px;
+			text-align: right;
 		}
-		#memberList>li{
-		float: left;height:40px;line-height: 40px; border-bottom: 1px solid #ddd;width: 13%;
+		.qqlist{
+
+			width: 300px;
+			height: 500px;
+			border: 1px solid #ddd;
+			
 		}
-		.search{
-		height:40px;
-		float: left;
-		margin:0 auto;
-		wid
-		}
-		#searchform{
-		width:100px;
-		}
-		
+
 	</style>
 </head>
 <body>
@@ -58,23 +59,20 @@
 		</ul>
 	</div>
 	<div id="member_management">
-		<h1 id="membertitle">정지 회원 관리</h1>
-		<ul id="memberList">
-			<li>
-				<div class="search" style="width:100%">
-					<form method="get" action="" >
-						<input type="text" name="searchMember" id="searchMember" style="width:70%;height: 40px"/>
-						<input type="submit" value="검색" style="width:25%;height: 40px">
-					</form>
-				</div>
-			</li>
-			<li>닉네임</li>
-			<li>아이디</li>
-			<li>정지일</li>
-			<li>정지사유</li>
-			<li>작성글/댓글 수</li>
-			<li>신고횟수</li>
-		</ul>
+		<h1 id="quiz_list_title">퀴즈 관리</h1>
+		<div id="reg_buttons">
+			<input type="button" value="관리자 퀴즈 등록">
+			<input type="button" value="유저 퀴즈 등록">
+		</div>
+		
+		<div id="quiz_list">
+			<div class="qqlist" id="quiz_easy">
+				
+			</div>
+			<div class="qqlist" id="quiz_medium"></div>
+			<div class="qqlist" id="quiz_hard"></div>
+		</div>
+
 	
 	</div>
 </div>

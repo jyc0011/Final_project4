@@ -14,4 +14,20 @@ public class ManagementController {
 	public String GoSuspended_management() {
 		return "management/suspended_management";
 	}
+	
+	@GetMapping("/withdrawn_management")
+	public String GoWithdrawn_management() {
+		return "management/withdrawn_management";
+	}
+	
+	@GetMapping("/chat_management")
+	public String GoChat_management() {
+		return "management/chat_management";
+	}
+	
+	@GetMapping("/quiz_list")
+	public String GoQuiz_list() {
+		return "quiz_management/quiz_list";
+	}
+	
 }

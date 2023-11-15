@@ -58,7 +58,7 @@
 		</ul>
 	</div>
 	<div id="member_management">
-		<h1 id="membertitle">정지 회원 관리</h1>
+		<h1 id="membertitle">탈퇴 회원 관리</h1>
 		<ul id="memberList">
 			<li>
 				<div class="search" style="width:100%">
@@ -70,8 +70,8 @@
 			</li>
 			<li>닉네임</li>
 			<li>아이디</li>
-			<li>정지일</li>
-			<li>정지사유</li>
+			<li>가입일</li>
+			<li>탈퇴일</li>
 			<li>작성글/댓글 수</li>
 			<li>신고횟수</li>
 		</ul>
