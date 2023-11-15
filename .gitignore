@@ -91,3 +91,5 @@ Servers/*
 
 shouldbe/.idea
 #intellij project files
+
+shouldbe/.gradle
