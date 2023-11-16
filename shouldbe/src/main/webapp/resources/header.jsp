@@ -160,10 +160,10 @@
 
                 <!-- 퀴즈 Dropdown -->
                 <div class="dropdown">
-                    <a href="#" class="dropbtn">퀴즈</a>
+                    <a href="/quiz/main" class="dropbtn">퀴즈</a>
                     <div class="dropdown-content">
-                        <a href="${pageContext.servletContext.contextPath}/Quiz/list">퀴즈</a>
-                        <a href="${pageContext.servletContext.contextPath}/Quiz/create">퀴즈 등록하기</a>
+                        <a href="${pageContext.servletContext.contextPath}/quiz/main">퀴즈</a>
+                        <a href="${pageContext.servletContext.contextPath}/quiz/create">퀴즈 등록하기</a>
                     </div>
                 </div>
 
