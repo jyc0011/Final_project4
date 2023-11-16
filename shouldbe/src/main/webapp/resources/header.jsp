@@ -151,7 +151,7 @@
                 <div class="dropdown">
                     <a href="#" class="dropbtn">게시판</a>
                     <div class="dropdown-content">
-                        <a href="${pageContext.servletContext.contextPath}/board">공지사항</a>
+                        <a href="${pageContext.servletContext.contextPath}/board/notice">공지사항</a>
                         <a href="${pageContext.servletContext.contextPath}/board/free">자유게시판</a>
                         <a href="${pageContext.servletContext.contextPath}/board/resources">자료게시판</a>
                         <a href="${pageContext.servletContext.contextPath}/board/inquiries">문의 게시판</a>
