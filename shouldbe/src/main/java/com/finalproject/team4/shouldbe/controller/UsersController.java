@@ -15,11 +15,11 @@ public class UsersController {
 		return "login/login_form";
 	}
 	
-	@GetMapping("/find_id")
+	@GetMapping("/login/find_id")
 	public String find_id() {
 		return "login/find_id";
 	}
-	@GetMapping("/find_pwd")
+	@GetMapping("/login/find_pwd")
 	public String find_pwd() {
 		return "login/find_pwd";
 	}

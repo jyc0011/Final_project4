@@ -23,60 +23,60 @@
 			align-items: center;
 			flex-direction: column;
 		}
-  		#loginForm>ul>li, #link>ul>li{
+  		ul>li{
   			list-style-type: none;
   		}
-  		#logo{
-			width: 300px;
+  		.difficulty{
+  			float:left;
+  			width: 250px;
+  			height: 250px;
+  			margin: 50px;
   		}
-		#userpwd, #userid{
-			width: 400px;
-			height: 40px;
-			line-height: 40px;
-			margin: 15px auto;
+		#quiz_easy{
+			background: #FFF2D4;
 		}
-		.submitbtn{
+		#quiz_medium{
+			background-color: #FFE3A0;
+		}
+		#quiz_hard{
 			background-color: #FFB300;
-			border: none;
-			color: white;
-		}
-		#login{
-			margin: 20px auto;
-			width: 400px;
-			height: 40px;
-			line-height: 40px;
-		}
-		#loginForm a{
-			text-decoration: none;
-			color: black;
-			border-right: 2px solid gray;
-			padding: 0 25px;
-			text-align: center;
-		}
-		#loginForm a:last-child{
-			border: none;
-		}
-		#loginForm li:last-child{
-			margin: 20px auto;
 		}
   	</style>
+	<script>
+		$(function(){
+			$("#quiz_easy").on('click', function(){
+				location.href = "/quiz/easy";
+			});
+			$("#quiz_medium").on('click', function(){
+				location.href = "/quiz/medium";
+			});
+			$("#quiz_hard").on('click', function(){
+				location.href = "/quiz/hard";
+			});
+		});
+	</script>
 </head>
-<body style="width: 1200px; margin: 0 auto;">
+<body>
 	<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 	<main>
-		<h1>로그인</h1>
-		<form method="post" action="/loginOk" id="loginForm">
+		<h1>퀴즈</h1>
+		<hr/>
+		<div id="difficulty">
 			<ul>
-				<li><input type="text" name="userid" id="userid" placeholder="아이디"></li>
-				<li><input type="password" name="userpwd" id="userpwd" placeholder="비밀번호"></li>
-				<li><input type="submit" name="login" id="login" value="로그인" class="submitbtn"/></li>
 				<li>
-					<a href="/create_membership">회원가입</a>
-					<a href="login/find_id">아이디찾기</a>
-					<a href="login/find_pwd">비밀번호찾기</a>
+					<button type="button" id="quiz_easy" class="difficulty">쉬움</button>
+					<button type="button" id="quiz_medium" class="difficulty">중간</button>
+					<button type="button" id="quiz_hard" class="difficulty">어려움</button>
 				</li>
 			</ul>
-		</form>
+		</div>
+		<div>
+			<ol>
+				<li><span>난이도를 선택하세요.</span></li>
+				<li><span>단어를 보고 정답을 입력해 주세요.</span></li>
+				<li><span>틀린 단어를 저장소에 저장해 보세요.</span></li>
+			</ol>
+		</div>
 	</main>
 	<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 </body>
