@@ -76,15 +76,16 @@
         </head>
 
         <body>
+            <jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
             <div id="wrapper" class="container-fluid">
                 <div id="sidebar">
                     <br/>
                     <ul class="sidebar-menu">
-                        <li><a href="#">회원정보 수정</a></li>
-                        <li><a href="#" class="active">작성한글</a></li>
-                        <li><a href="#">친구관리</a></li>
-                        <li><a href="#">탈퇴하기</a></li>
-                        <li><a href="#">저장소</a></li>
+                        <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user" class="active">회원정보 수정</a></li>
+                        <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
+                        <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
+                        <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a></li>
+                        <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
                     </ul>
                 </div>
                 <div id="content" class="col-10">
@@ -148,6 +149,7 @@
                     </form>
                 </div>
             </div>
+            <jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
         </body>
         </html>
 >>>>>>> upstream/main
