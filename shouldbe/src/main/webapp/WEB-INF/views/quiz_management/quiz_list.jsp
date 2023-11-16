@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>현재 회원 관리</title>
+	<title>should be</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
  
  	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,32 +13,38 @@
 	<style>
 
 		#side_menu{
-			margin:100px 0 0 0;
+			padding:100px 0 0 0;
 			float: left;
 		}
 		#side_menu>ul>li{
-		list-style-type: none;
+			list-style-type: none;
 		}
 		#member_management{
 			width: 1100px;
+
+		}
+		#quiz_list{
+			display: flex;
+  			justify-content: space-around;
+		}
+		#quiz_list_title{
 			text-align: center;
 		}
-		#memberList{
-		margin:0 auto;list-style-type: none;
+		#reg_buttons{
+			margin-bottom: 50px;
+			text-align: right;
 		}
-		#memberList>li{
-		float: left;height:40px;line-height: 40px; border-bottom: 1px solid #ddd;width: 15%;
+		.qqlist{
+
+			width: 300px;
+			height: 500px;
+			border: 1px solid #ddd;
+			
 		}
-		.search{
-		width:10%;
-		height:40px;
-		float: left;
-		}
-		
+
 	</style>
 </head>
 <body>
-	<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 <div class="container">
 	<div id="side_menu" >
 		<ul>
@@ -53,25 +59,22 @@
 		</ul>
 	</div>
 	<div id="member_management">
-		<h1 id="membertitle">현재 회원 관리</h1>
-		<ul id="memberList">
-			<li>
-				<div class="search" style="width:100%">
-					<form method="get" action="" >
-						<input type="text" name="searchMember" id="searchMember" style="width:70%;height: 40px"/>
-						<input type="submit" value="검색" style="width:25%;height: 40px">
-					</form>
-				</div>
-			</li>
-			<li>닉네임</li>
-			<li>아이디</li>
-			<li>가입일</li>
-			<li>작성글/댓글 수</li>
-			<li>신고횟수</li>
-		</ul>
+		<h1 id="quiz_list_title">퀴즈 관리</h1>
+		<div id="reg_buttons">
+			<input type="button" value="관리자 퀴즈 등록">
+			<input type="button" value="유저 퀴즈 등록">
+		</div>
+		
+		<div id="quiz_list">
+			<div class="qqlist" id="quiz_easy">
+				
+			</div>
+			<div class="qqlist" id="quiz_medium"></div>
+			<div class="qqlist" id="quiz_hard"></div>
+		</div>
+
 	
 	</div>
 </div>
-<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 </body>
 </html>
