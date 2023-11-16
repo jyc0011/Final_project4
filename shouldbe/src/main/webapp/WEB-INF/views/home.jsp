@@ -13,7 +13,6 @@
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 			<style>
 				body {
-
 					margin: 0 auto;
 				}
 
@@ -41,7 +40,6 @@
 		</head>
 
 		<body>
-			<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 			<main>
 				<div id="freeboard">
 
@@ -71,7 +69,6 @@
 				<a href="${pageContext.servletContext.contextPath}/log">임시로그인</a>
 				<p>현재 아이디 : ${LogId} / 로그인 상태 : ${LogStatus}</p>
 			</div>
-			<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 		</body>
 
 		</html>

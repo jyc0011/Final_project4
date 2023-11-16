@@ -35,7 +35,6 @@
 		height:40px;
 		float: left;
 		margin:0 auto;
-		wid
 		}
 		#searchform{
 		width:100px;

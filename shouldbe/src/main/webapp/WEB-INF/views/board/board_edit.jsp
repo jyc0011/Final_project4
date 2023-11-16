@@ -48,7 +48,6 @@
             </script>
 
         <body>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
             <!-- todo: db에서 글 내용 가져와서 세팅-->
             <main>
 
@@ -67,7 +66,6 @@
                 </div>
 
             </main>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
         </body>
 
         </html>

@@ -55,7 +55,6 @@
         </head>
 
         <body>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
             <div id="wrapper" class="container-fluid">
                 <div id="sidebar">
                     <br/>
@@ -128,6 +127,5 @@
                     </form>
                 </div>
             </div>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
         </body>
         </html>

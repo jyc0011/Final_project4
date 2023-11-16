@@ -38,7 +38,6 @@
 	</style>
 </head>
 <body>
-	<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 <div class="container">
 	<div id="side_menu" >
 		<ul>
@@ -72,6 +71,5 @@
 	
 	</div>
 </div>
-<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 </body>
 </html>

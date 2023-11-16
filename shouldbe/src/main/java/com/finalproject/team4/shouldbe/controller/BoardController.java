@@ -60,4 +60,10 @@ public class BoardController {
     public String write() {
         return "board/board_write";
     }
+
+    @GetMapping("/board/edit")
+    public String edit() {
+        return "board/board_edit";
+    }
+
 }

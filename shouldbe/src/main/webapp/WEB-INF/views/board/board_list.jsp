@@ -69,14 +69,6 @@
                     color: yellow;
                 }
 
-                footer {
-                    height: 80px;
-                    line-height: 80px;
-                    text-align: center;
-                    background-color: #ddd;
-                    margin: 10px 0;
-                }
-
                 #boardTop>div {
                     float: left;
                     width: 50%;
@@ -140,7 +132,6 @@
         </head>
 
         <body>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
             <main>
                 <h1>게시판목록</h1>
                 <div>
@@ -253,7 +244,6 @@
                     </ul>
                 </div>
             </main>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
         </body>
 
         </html>

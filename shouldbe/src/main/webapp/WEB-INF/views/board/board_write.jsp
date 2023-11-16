@@ -33,7 +33,6 @@
             </script>
 
         <body>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
             <main>
                 <h1>게시글 작성</h1>
                 <div class="mb-3">
@@ -50,7 +49,6 @@
                 </div>
 
             </main>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />   
         </body>
 
         </html>

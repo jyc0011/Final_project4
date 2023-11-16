@@ -85,7 +85,6 @@
         </head>
 
         <body>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
             <div class="container">
                 <nav>
                     <ul id="navList">
@@ -160,7 +159,6 @@
                     </section>
                 </main>
             </div>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
         </body>
 
         </html>

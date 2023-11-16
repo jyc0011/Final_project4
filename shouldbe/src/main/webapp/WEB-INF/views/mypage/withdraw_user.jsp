@@ -58,7 +58,6 @@
 	</head>
 
 	<body>
-		<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 		<div id="wrapper" class="container-fluid">
 			<div id="sidebar">
 				<h3>회원정보수정</h3>
@@ -85,7 +84,6 @@
 				</div>
 			</div>
 		</div>
-		<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 	</body>
 	<script>
 		function confirmDeletion() {
