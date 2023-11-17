@@ -38,6 +38,7 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.10.1'
 	implementation 'net.morimekta.utils:android-util:3.0.1'
 	implementation group: 'com.oracle.database.jdbc', name: 'ojdbc11', version: '21.8.0.0'
+	implementation 'mysql:mysql-connector-java:8.0.33'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
 }
 
