@@ -10,13 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BoardVO {
     private int post_id;
-    private String userid;
+    private String user_id;
     private String title;
     private String content;
-    private String cat;
-    private int like;
     private int views;
+    private String board_cat;
     private String write_date;
-    private int commentsCount;
 }
 
