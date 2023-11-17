@@ -5,24 +5,53 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>현재 회원 관리</title>
+	<title>should be</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
  
  	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	<style>
-
+		.container{
+			display: flex;
+		}
 		#side_menu{
-			margin:100px 0 0 0;
-			float: left;
+			padding:98px 0 0 0;
+			width:150px;
+			height:1000px;
+
 		}
-		#side_menu>ul>li{
-		list-style-type: none;
+		#side_menu{
+			list-style-type: none;
 		}
+		#side_menu li a{
+			text-decoration: none;
+			color: black;
+			display: block;
+			padding: 10px;
+		}
+		#side_menu li a:hover{
+			background-color: #ddd;
+		}
+		
 		#member_management{
-			width: 1100px;
-			text-align: center;
+			width: 1200px;
+			height:1000px;
+			margin: 50px auto;
+			
 		}
+		#quiz_list_title{
+			text-align: center;
+			border-bottom: 1px solid #000;
+			
+		}
+		
+		/*#quiz_grade{
+			display: flex;
+			flex-direction: column;
+  			justify-content: space-around;
+  			margin: 10px auto;
+		}*/
+		
 		#memberList{
 		margin:0 auto;list-style-type: none;
 		}
@@ -35,12 +64,13 @@
 		float: left;
 		}
 		
+
 	</style>
 </head>
 <body>
 <div class="container">
-	<div id="side_menu" >
-		<ul>
+	<div id="side_bar" >
+		<ul id="side_menu">
 			<li><a href="">대시보드</a></li>
 			<li><a href="">현재회원관리</a></li>
 			<li><a href="">정지회원관리</a></li>
@@ -52,7 +82,8 @@
 		</ul>
 	</div>
 	<div id="member_management">
-		<h1 id="membertitle">현재 회원 관리</h1>
+		<h1 id="quiz_list_title">현재 회원 관리</h1>
+		
 		<ul id="memberList">
 			<li>
 				<div class="search" style="width:100%">
@@ -68,7 +99,8 @@
 			<li>작성글/댓글 수</li>
 			<li>신고횟수</li>
 		</ul>
-	
+		
+
 	</div>
 </div>
 </body>
