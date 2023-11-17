@@ -44,6 +44,39 @@
 			border-bottom: 1px solid #000;
 			
 		}
+		#quiz_content{
+			width:900px;
+			height:300px;
+			line-height:300px;
+			font-size:4em;
+			text-align: center;
+			margin:0 auto;
+			border-bottom: 1px solid #ddd;
+		}
+		#answerlist{
+			width:900px;
+			height:600px;
+			margin:0 auto;
+			border-bottom: 1px solid #ddd;
+		}
+		#answer{
+			margin: 0 auto;
+			display: flex;
+			flex-direction: row;
+  			justify-content: space-around;
+  			border-bottom: 1px solid #ddd;
+		}
+		#quiz_answer{
+			width:80%;
+			height:100px;
+			font-size: 2em;
+			
+		}
+		#quiz_delete{
+			width: 100px;
+			height:100px;
+			font-size: 2em;
+		}
 		
 		/*#quiz_grade{
 			display: flex;
@@ -51,18 +84,7 @@
   			justify-content: space-around;
   			margin: 10px auto;
 		}*/
-		
-		#memberList{
-		margin:0 auto;list-style-type: none;
-		}
-		#memberList>li{
-		float: left;height:40px;line-height: 40px; border-bottom: 1px solid #ddd;width: 15%;
-		}
-		.search{
-		width:10%;
-		height:40px;
-		float: left;
-		}
+
 		
 
 	</style>
@@ -82,25 +104,28 @@
 		</ul>
 	</div>
 	<div id="member_management">
-		<h1 id="quiz_list_title">현재 회원 관리</h1>
+		<h1 id="quiz_list_title">퀴즈 수정/삭제</h1>
 		
-		<ul id="memberList">
-			<li>
-				<div class="search" style="width:100%">
-					<form method="get" action="" >
-						<input type="text" name="searchMember" id="searchMember" style="width:70%;height: 40px"/>
-						<input type="submit" value="검색" style="width:25%;height: 40px">
-					</form>
-				</div>
-			</li>
-			<li>닉네임</li>
-			<li>아이디</li>
-			<li>가입일</li>
-			<li>작성글/댓글 수</li>
-			<li>신고횟수</li>
-		</ul>
+		<div id="quiz_content">
+			combination
+		</div>
+		<div id="answerlist">
+			<div id="answer">
+				<div id="quiz_answer">단어</div>
+				<button id="quiz_delete"> - </button>
+			</div>
+		</div>
+		<div>
+			<input type="text">
+			<button>추가</button>
+		</div>
+		<div>
+			<button>단어 삭제</button>
+		</div>
+		
 		
 
+	
 	</div>
 </div>
 </body>

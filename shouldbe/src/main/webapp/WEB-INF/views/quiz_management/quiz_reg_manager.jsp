@@ -37,7 +37,7 @@
 			width: 1200px;
 			height:1000px;
 			margin: 50px auto;
-			
+			text-align: center;
 		}
 		#quiz_list_title{
 			text-align: center;
@@ -50,18 +50,42 @@
 			flex-direction: column;
   			justify-content: space-around;
   			margin: 10px auto;
-		}*/
+		}
+		#quiz_input{
+			border:1px solid #ddd;
+		}
+		#quiz_reg{
+			border:1px solid #ddd;
+		}
 		
-		#memberList{
-		margin:0 auto;list-style-type: none;
+		*/
+		
+
+		#quiz_grade{
+			display: flex;
+  			justify-content: space-around;
+  			margin: 10px auto;
 		}
-		#memberList>li{
-		float: left;height:40px;line-height: 40px; border-bottom: 1px solid #ddd;width: 15%;
+		
+		#reg_button{
+			width: 400px;
+			height: 200px;
+			margin: 50px auto;
+			font-size: 3em;
 		}
-		.search{
-		width:10%;
-		height:40px;
-		float: left;
+		.qqlist{
+
+			width: 300px;
+			height: 150px;
+			border: 1px solid #ddd;
+			font-size: 3em;
+		}
+		.quiz_txt{
+			width: 700px;
+			height: 200px;
+			font-size: 4em;
+			margin:10px auto;
+			
 		}
 		
 
@@ -82,24 +106,22 @@
 		</ul>
 	</div>
 	<div id="member_management">
-		<h1 id="quiz_list_title">현재 회원 관리</h1>
+		<h1 id="quiz_list_title">관리자 퀴즈 등록</h1>
 		
-		<ul id="memberList">
-			<li>
-				<div class="search" style="width:100%">
-					<form method="get" action="" >
-						<input type="text" name="searchMember" id="searchMember" style="width:70%;height: 40px"/>
-						<input type="submit" value="검색" style="width:25%;height: 40px">
-					</form>
-				</div>
-			</li>
-			<li>닉네임</li>
-			<li>아이디</li>
-			<li>가입일</li>
-			<li>작성글/댓글 수</li>
-			<li>신고횟수</li>
-		</ul>
+		<div id="quiz_input">
+			<input type="text" name="quiz_content" class="quiz_txt" id="" placeholder="단어를 입력해 주세요">
+			<input type="text" name="answer" class="quiz_txt" id="" placeholder="정답을 입력해 주세요">
+		</div>
 		
+		<div id="quiz_grade">
+			<button class="qqlist" id="quiz_easy">쉬움</button>
+			<button class="qqlist" id="quiz_medium">중간</button>
+			<button class="qqlist" id="quiz_hard">어려움</button>
+		</div>
+		
+		<div id="quiz_reg">
+			<button id="reg_button">제출하기</button>
+		</div>
 
 	</div>
 </div>
