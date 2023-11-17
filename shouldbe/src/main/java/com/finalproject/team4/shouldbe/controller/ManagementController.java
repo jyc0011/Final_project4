@@ -29,5 +29,19 @@ public class ManagementController {
 	public String GoQuiz_list() {
 		return "quiz_management/quiz_list";
 	}
+	@GetMapping("/quiz_reg_manager")
+	public String GoQuiz_reg_manager() {
+		return "quiz_management/quiz_reg_manager";
+	}
+	
+	@GetMapping("/quiz_reg_user")
+	public String GoQuiz_reg_user() {
+		return "quiz_management/quiz_reg_user";
+	}
+	
+	@GetMapping("/quiz_edit")
+	public String GoQuiz_edit() {
+		return "quiz_management/quiz_edit";
+	}
 	
 }
