@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.final.project.team4.shouldbe.ChatMapper">
+	
+	   <select id="hasRoom" resultType="String">
+			select room.chatRoomNum from dk_chat_room room INNER JOIN dk_chat_member member ON room.chatRoomNum = member.chatRoomNum 
+					where room.roomownerid = #{roomOwnerId} and member.chat_memberId = #{chat_memberId} and room.chat_type = 0
+	   </select>
+	   
+       <insert id="createChatRoom">
+       
+	       	<selectKey keyProperty="chatRoomNum" order="BEFORE" resultType="long">
+					select seq_dk_chat_room.nextval from dual
+			</selectKey>
+	
+ 			insert into dk_chat_room (	  chatRoomNum
+							 			, roomOwnerId
+							 			, roomOwnerNick
+							 			, chat_type
+							 			, headCount
+					 			   )
+					 		values(
+						 				 #{chatRoomNum}
+										,#{roomOwnerId}
+										,#{roomOwnerNick}
+										,#{chat_type}				 		
+										,#{headCount}				 		
+					 				) 
+       </insert>
+       
+       <insert id="createChatMember">
+	 			insert into dk_chat_member (	  chatRoomNum
+									 			, chat_memberId
+									 			, chat_memberNick
+							 			   )
+							 		values(
+								 				 #{chatRoomNum}
+												,#{chat_memberId}
+												,#{chat_memberNick}
+							 				) 
+       </insert>
+				
+		<!-- <select id="getChatContents" resultType="org.my.domain.chat.ChatContentVO"> 
+				  	  select /*+INDEX_ASC(dk_chat_content pk_dk_chat_content) */
+				  	  												  chatContentNum	
+								     								, chat_writerId
+															    	, chat_writerNick
+															    	, chat_content
+															    	, content_type
+															    	, regdate
+															    	, readCount
+								from dk_chat_content 
+								where chatRoomNum = #{chatRoomNum}  
+								
+								<if test="recentOutDate != null">
+								
+								and regdate > #{recentOutDate}
+								
+								</if>
+								
+								and chatContentNum > 0
+		</select> -->
+	 	
+	 	<select id="getChatContents" resultType="org.my.domain.chat.ChatContentVO"> 
+	 			
+			select content.chatContentNum  
+																			, chat_writerId
+																	    	, chat_writerNick
+																	    	, chat_content
+																	    	, content_type
+																	    	, regdate
+																	    	, readCount
+																	    	, read.read_type
+			
+			from dk_chat_content content LEFT OUTER JOIN dk_chat_read read ON content.chatContentNum = read.chatContentNum 
+			where content.chatRoomNum = #{chatRoomNum}
+			
+			<if test="recentOutDate != null">
+										
+				and content.regdate > #{recentOutDate}
+			
+			</if> 
+			
+			and read.chat_memberId = #{chat_memberId} order by content.chatContentNum asc
+       
+       	</select>
+		
+		<select id="getChatMember" resultType="org.my.domain.chat.ChatMemberVO"> 
+				  select chat_memberId, chat_memberNick from dk_chat_member where chatRoomNum = #{chatRoomNum} and chat_memberId != #{userId}
+		</select>
+		
+		<insert id="createChatContent">
+		
+		   	<selectKey keyProperty="chatContentNum" order="BEFORE" resultType="long">
+					select seq_dk_chat_content.nextval from dual
+			</selectKey>
+			
+	 			insert into dk_chat_content (	  chatContentNum
+									 			, chatRoomNum
+									 			, chat_content
+									 			, chat_writerId
+									 			, chat_writerNick
+									 			, regDate
+									 			, readCount
+							 			   )
+							 		values(
+								 				 #{chatContentNum}
+												,#{chatRoomNum}
+												,#{chat_content}
+												,#{chat_writerId}
+												,#{chat_writerNick}
+												,#{regDate}
+												,#{readCount}
+							 				) 
+       </insert>
+       
+       <!-- <insert id="updateInput_content_date">
+      		 update dk_chat_room set input_content_date = sysdate where chatRoomNum = #{chatRoomNum}
+       </insert> -->
+       
+       <insert id="createNoticeContent">
+       
+	      		<selectKey keyProperty="chatContentNum" order="BEFORE" resultType="long">
+						select seq_dk_chat_content.nextval from dual
+				</selectKey>
+			
+	 			insert into dk_chat_content (	  chatContentNum
+									 			, chatRoomNum
+									 			, chat_content
+									 			, regDate
+		 										, content_type
+							 			   )
+							 		values(
+								 				 #{chatContentNum}
+												,#{chatRoomNum}
+												,#{chat_content}
+												,#{regDate}
+												, 1
+							 				) 	
+       </insert>
+       
+	   <update id="updateOutDate">
+	 	 	update dk_chat_member set recentOutDate =  #{inputDate} where chatRoomNum = #{chatRoomNum} and chat_memberId = #{chat_memberId} 
+	   </update>
+	   
+	   <select id="getRecentOutDate" resultType="Date"> 
+			  select recentOutDate from dk_chat_member where chatRoomNum = #{chatRoomNum} and chat_memberId = #{chat_memberId}
+	   </select>
+       
+       <update id="updateHeadCount">
+	 	 	update dk_chat_room set headCount = headCount + #{changeCount} where chatRoomNum = #{chatRoomNum} 
+	   </update>
+	   
+       <update id="updatePresent_position">
+	 	 	update dk_chat_member set present_position = #{changePosition} where chatRoomNum = #{chatRoomNum} and chat_memberId = #{chat_memberId}  
+	   </update>
+	   
+      <select id="getMyRoomStatus" resultType="int"> 
+			  select present_position from dk_chat_member where chatRoomNum = #{chatRoomNum} and chat_memberId = #{myId}
+	   </select>
+	   
+	   <select id="getRoomHeadCount" resultType="int"> 
+			  select headCount from dk_chat_room where chatRoomNum = #{chatRoomNum}
+	   </select>
+	   
+	   <delete id="removeChatRoom">
+       		delete from dk_chat_room where chatRoomNum = #{chatRoomNum}
+       </delete>
+       
+       <select id="getHeadCount" resultType="int">
+       		select headCount from dk_chat_room where chatRoomNum = #{chatRoomNum}
+       </select>
+       
+	   <insert id="createChatReadType">
+	 			insert into dk_chat_read (	  	  chatReadNum
+	 											, chatRoomNum
+									 			, chatContentNum
+									 			, chat_memberId
+									 			, chat_memberNick
+									 			, read_type
+							 			   )
+							 		values(
+								 				 seq_dk_chat_read.nextval
+								 				, #{chatRoomNum}
+												, #{chatContentNum}
+												, #{chat_memberId}
+												, #{chat_memberNick}
+												, #{read_type}
+							 				) 	
+       </insert>
+       
+       <select id="getRead_type" resultType="int">
+       		select read_type from dk_chat_read where chatContentNum = #{chatContentNum} and chat_memberId = #{chat_memberId}
+       </select>
+       
+       <update id="updateRead_type">
+	 	 	update dk_chat_read set read_type = 1 where chatContentNum = #{chatContentNum} and chat_memberId = #{chat_memberId}
+	   </update>
+	   
+	   <update id="updateReadCount">
+	 	 	update dk_chat_content set readCount = readCount -1 where chatContentNum = #{chatContentNum}
+	   </update>
+	 
+	   <select id="getMyChatRoomVoList" resultType="org.my.domain.chat.ChatRoomVO">
+	 		<!-- select room.chatRoomNum, 
+	 			   room.chat_type, 
+	 			   room.chat_title from dk_chat_room room left outer join dk_chat_member member on room.chatRoomNum = member.chatRoomNum 
+				where member.chat_memberId = #{userId} and member.present_position = 0 order by room.input_content_date desc -->
+ 	 
+	 		WITH subTable AS ( select room.chatRoomNum,
+			  					      room.chat_type,
+			  					      room.chat_title,
+			  					      room.headCount,
+			  					      content.chatContentNum
+								  from dk_chat_room room inner join dk_chat_member member on room.chatRoomNum = member.chatRoomNum 
+									  					 inner join dk_chat_content content on member.chatRoomNum = content.chatRoomNum 
+								 where member.chat_memberId = #{userId}  and member.present_position = 0 ) 
+			select chatRoomNum,
+				   chat_type,
+				   chat_title,
+				   headCount
+			 from subTable where chatContentNum in (select max(chatContentNum)from subTable group by subTable.chatRoomNum) order by subTable.chatContentNum desc
+ 
+	   </select>
+	   
+	   <select id="getMyChatContentVo" resultType="org.my.domain.chat.ChatContentVO">
+	   		<![CDATA[ select /*+INDEX_DESC(DK_CHAT_CONTENT pk_dk_chat_content) */ chat_content, regdate from dk_chat_content where chatRoomNum = #{chatRoomNum} and ROWNUM <= 1 ]]>
+	   </select>
+	   
+	   <select id="getMyMultiChatReadVo" resultType="org.my.domain.chat.ChatReadVO">
+	   		select chat_memberId, chat_memberNick from dk_chat_member where chatRoomNum = #{chatRoomNum} and present_position = 0 
+	   </select>
+	   
+	    <select id="getChatMembers" resultType="org.my.domain.chat.ChatMemberVO">
+			  select chat_memberId, chat_memberNick from dk_chat_member where chatRoomNum = #{chatRoomNum} and present_position = 0
+	   </select>
+	   
+	   <select id="getMySingleChatReadVo" resultType="org.my.domain.chat.ChatReadVO">
+	   		select distinct chat_memberId, chat_memberNick from dk_chat_read where chatRoomNum = #{chatRoomNum} and chat_memberId != #{userId}
+	   </select>
+	   
+	   <select id="getNotReadCnt" resultType="int">
+	   		select count(chatReadNum) as notReadCnt from dk_chat_read where chat_memberId = #{userId} and read_type = 0 and chatRoomNum = #{chatRoomNum}
+	   </select>
+	   
+	   <select id="getChatUserList" resultType="org.my.domain.common.MemberVO">
+	   		select userId,nickName from dk_member where enabled = 1 and userId != #{userId}
+	   		
+	   		<if test="keyword != null and keyword !='undefined' and keyword !=''">
+				              	   and nickName like '%'||#{keyword}||'%'
+			</if>
+				                
+	   		order by convert (nickName, 'US8ICL') asc
+	   		<!-- 한글 > 영문 > 숫자의 오름차순 -->
+	   </select>
+	   
+	   <select id="getChatTitleInfo" resultType="org.my.domain.chat.MultiRoomVO">
+	   		select chat_title, roomOwnerId, roomOwnerNick from dk_chat_room where chatRoomNum = #{chatRoomNum}
+	   </select>
+	   
+	   <update id="updateChatTitle">
+			update dk_chat_room set chat_title = #{chat_title} where chatRoomNum = #{chatRoomNum}
+	   </update>
+	   
+	    <select id="getChatInviteList" resultType="org.my.domain.common.MemberVO">
+	   		
+	   		select userId, nickName from dk_member 
+	   		
+	   		<trim prefix="where" prefixOverrides="and">
+				<foreach item='userId' collection="exceptUsers">
+					<trim prefix="and">
+						 userId != #{userId}
+					</trim>
+				</foreach>
+			</trim>
+			
+			<if test="keyword != null and keyword !='undefined' and keyword !=''">
+				              	   and nickName like '%'||#{keyword}||'%'
+			</if>
+				                
+	   		order by convert (nickName, 'US8ICL') asc
+	   		<!-- 한글 > 영문 > 숫자의 오름차순 -->
+	   		
+	   </select>
+	   	
+	   <select id="getExceptUsers" resultType="String">
+	   		select chat_memberId from dk_chat_member where chatRoomNum = #{chatRoomNum} and present_position = 0
+	   </select>
+	   
+       <select id="getChat_type" resultType="int">
+	   		select chat_type from dk_chat_room where chatRoomNum = #{chatRoomNum}
+	   </select>
+	   
+	   <select id="getMember" resultType="int">
+	   		select count(*) from dk_chat_member where chatRoomNum = #{chatRoomNum} and chat_memberId = #{chat_memberId}
+	   </select>
+	   
+	   <update id="updateChat_typeToMulti">
+	 	 	update dk_chat_room set chat_type = 1 where chatRoomNum = #{chatRoomNum}
+	   </update>
+	
+		<select id="getInChatMember" resultType="int">
+			select count(*) from dk_chat_member where chatRoomNum = #{chatRoomNum} and chat_memberId = #{userId} and present_position = 0
+		</select>
+		
+</mapper>
