@@ -1,7 +1,9 @@
 package com.finalproject.team4.shouldbe.controller;
 
-import java.util.List;
-
+import com.finalproject.team4.shouldbe.service.BoardService;
+import com.finalproject.team4.shouldbe.util.UriUtil;
+import com.finalproject.team4.shouldbe.vo.PagingVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,14 +11,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.finalproject.team4.shouldbe.util.UriUtil;
-import com.finalproject.team4.shouldbe.vo.BoardVO;
-import com.finalproject.team4.shouldbe.vo.PagingVO;
-
 @Controller
 public class BoardController {
-   @RequestMapping(value = "/board/list", method = RequestMethod.GET)
-    public String list(Model model, @ModelAttribute("pVO") PagingVO pVO) {
+
+    @Autowired
+    BoardService service;
+    @RequestMapping(value = "/board/free", method = RequestMethod.GET)
+    public String freeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
+
+        var temp = service.boardPageList();
+        System.out.println(temp);
         /*try {
             // Fetch the records based on the parameters in pVO
             pVO.setTotalRecord(service.totalRecordAuth(pVO));
@@ -52,10 +56,26 @@ public class BoardController {
         return UriUtil.makeSearch(page, searchType, keyword, category, postSort);
     }
 
-    @GetMapping("/board/view")
+    @GetMapping("/board/notice")
+    public String noticeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
+        return "board/board_list";
+    }
+
+    @GetMapping("/board/resources")
+    public String resourcesBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
+        return "board/board_list";
+    }
+
+    @GetMapping("/board/inquiries")
+    public String inquiriesBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
+        return "board/board_list";
+    }
+
+    @GetMapping("/board/free/view")
     public String view() {
         return "board/board_view";
     }
+
     @GetMapping("/board/write")
     public String write() {
         return "board/board_write";
