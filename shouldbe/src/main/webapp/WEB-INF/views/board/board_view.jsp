@@ -57,7 +57,6 @@
             </script>
 
         <body>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
             <main>
                 <div id="viewArea">
                     <h1>글 내용 보기</h1>
@@ -115,7 +114,6 @@
                     </ul>
                 </div>
             </main>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
         </body>
 
         </html>

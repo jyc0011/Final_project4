@@ -11,9 +11,17 @@
  	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   	<style>
-		main{
-			width: 1200px;
+		body {
 			margin: 0 auto;
+		}
+		main {
+			width: 1200px;
+			height: 600px;
+			margin: 30px auto;
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			flex-direction: column;
 		}
   		#find_pwd_form>h1{
   			text-align: center;
@@ -22,7 +30,6 @@
   			list-style-type: none;
   			margin-top: 5px;
 			margin-bottom: 5px;
-			margin-left: 350px;
   		}
   		.submitbtn{
 			background-color: #FFB300;
@@ -43,7 +50,7 @@
 </head>
 <body>
 	<main>
-		<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
+		<form>
 		<form method="post" action="/findpwdOk" id=find_pwd_form>
 			<h1>비밀번호 찾기</h1>
 			<ul>
@@ -57,6 +64,5 @@
 			</ul>
 		</form>
 	</main>
-	<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 </body>
 </html>

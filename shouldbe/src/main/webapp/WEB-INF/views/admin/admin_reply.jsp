@@ -65,7 +65,6 @@
         </head>
 
         <body>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
             <div class="container">
                 <nav>
                     <ul id="navList">
@@ -138,7 +137,6 @@
                     <input type="button" value="선택삭제" style="width: 80px;">
                 </main>
             </div>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
         </body>
 
         </html>

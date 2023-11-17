@@ -99,9 +99,7 @@
 		<div id="quiz_list">
 			<div class="qqlist" id="quiz_easy">
 			</div>
-			<div class="qqlist" id="quiz_medium"></div>
-			<div class="qqlist" id="quiz_hard"></div>
-		</div>
+		</body>
 
 	</div>
 </div>
