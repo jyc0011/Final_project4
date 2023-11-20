@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class BoardController {
 
-    @Autowired
+/*    @Autowired
     BoardService service;
     @RequestMapping(value = "/board/free", method = RequestMethod.GET)
-    public String freeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
-
-        var temp = service.boardPageList();
-        System.out.println(temp);
+    public String freeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) { */
+        //var temp = service.boardPageList();
+        //System.out.println(temp);
         /*try {
             // Fetch the records based on the parameters in pVO
             pVO.setTotalRecord(service.totalRecordAuth(pVO));
@@ -43,8 +42,8 @@ public class BoardController {
             // Optionally: Log the exception or handle it accordingly
             e.printStackTrace();
         }*/
-        return "board/board_list";
-    }
+        /*return "board/board_list";
+    }*/
 
     private String getUri(PagingVO pVO) {
         int page = pVO.getNowPage();
@@ -54,6 +53,11 @@ public class BoardController {
         String postSort = pVO.getPostSort(); // Fetch sort option
 
         return UriUtil.makeSearch(page, searchType, keyword, category, postSort);
+    }
+
+    @GetMapping("/board")
+    public String freeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
+        return "board/board_list";
     }
 
     @GetMapping("/board/notice")

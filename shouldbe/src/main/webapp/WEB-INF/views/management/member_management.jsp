@@ -68,7 +68,6 @@
 	</style>
 </head>
 <body>
-	<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 <div class="container">
 	<div id="side_bar" >
 		<ul id="side_menu">

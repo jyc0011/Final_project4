@@ -50,7 +50,6 @@
 </head>
 <body>
 	<main>
-		<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 		<form>
 		<form method="post" action="/findpwdOk" id=find_pwd_form>
 			<h1>비밀번호 찾기</h1>
@@ -65,6 +64,5 @@
 			</ul>
 		</form>
 	</main>
-	<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 </body>
 </html>
