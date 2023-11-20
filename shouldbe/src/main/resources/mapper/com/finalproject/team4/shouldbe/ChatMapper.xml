@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<!-- <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -41,7 +41,7 @@
 												,#{chat_memberNick}
 							 				) 
        </insert>
-				
+	-->
 		<!-- <select id="getChatContents" resultType="org.my.domain.chat.ChatContentVO"> 
 				  	  select /*+INDEX_ASC(dk_chat_content pk_dk_chat_content) */
 				  	  												  chatContentNum	
@@ -62,7 +62,7 @@
 								
 								and chatContentNum > 0
 		</select> -->
-	 	
+	 	<!--
 	 	<select id="getChatContents" resultType="org.my.domain.chat.ChatContentVO"> 
 	 			
 			select content.chatContentNum  
@@ -115,11 +115,11 @@
 												,#{readCount}
 							 				) 
        </insert>
-       
+	-->
        <!-- <insert id="updateInput_content_date">
       		 update dk_chat_room set input_content_date = sysdate where chatRoomNum = #{chatRoomNum}
        </insert> -->
-       
+       <!--
        <insert id="createNoticeContent">
        
 	      		<selectKey keyProperty="chatContentNum" order="BEFORE" resultType="long">
@@ -204,11 +204,12 @@
 	   </update>
 	 
 	   <select id="getMyChatRoomVoList" resultType="org.my.domain.chat.ChatRoomVO">
+	   -->
 	 		<!-- select room.chatRoomNum, 
 	 			   room.chat_type, 
 	 			   room.chat_title from dk_chat_room room left outer join dk_chat_member member on room.chatRoomNum = member.chatRoomNum 
 				where member.chat_memberId = #{userId} and member.present_position = 0 order by room.input_content_date desc -->
- 	 
+<!-- 	 
 	 		WITH subTable AS ( select room.chatRoomNum,
 			  					      room.chat_type,
 			  					      room.chat_title,
@@ -253,8 +254,10 @@
 			</if>
 				                
 	   		order by convert (nickName, 'US8ICL') asc
+		-->
 	   		<!-- 한글 > 영문 > 숫자의 오름차순 -->
-	   </select>
+	   <!--
+		</select>
 	   
 	   <select id="getChatTitleInfo" resultType="org.my.domain.chat.MultiRoomVO">
 	   		select chat_title, roomOwnerId, roomOwnerNick from dk_chat_room where chatRoomNum = #{chatRoomNum}
@@ -281,8 +284,9 @@
 			</if>
 				                
 	   		order by convert (nickName, 'US8ICL') asc
+		-->
 	   		<!-- 한글 > 영문 > 숫자의 오름차순 -->
-	   		
+	   	<!--	
 	   </select>
 	   	
 	   <select id="getExceptUsers" resultType="String">
@@ -306,3 +310,4 @@
 		</select>
 		
 </mapper>
+-->

@@ -23,26 +23,62 @@
                 hr {
                     width: 60%;
                 }
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+        <!DOCTYPE html>
+        <html>
 
-                #replyArea {
-                    padding: 10px 0px;
+        <head>
+            <meta charset="UTF-8">
+            <title>글 내용보기</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+            <style>
+                main {
+                    width: 1000px;
+                    margin: 0 auto;
                 }
 
-                #coment {
-                    width: 600px;
-                    height: 81px;
+                #viewArea {
+                    height: 500px;
                 }
 
+                hr {
+                    width: 60%;
+                }
 
-                /* 초기화 */
-                body,
+                        #replyArea {
+                            padding: 10px 0px;
+                        }
+
+                        #coment {
+                            width: 600px;
+                            height: 81px;
+                        }
+
+
+                        /* 초기화 */
+                        body,
+               
                 ul,
+               
                 li {
-                    margin: 0;
-                    padding: 0;
-                    list-style-type: none;
-                }
+                            margin: 0;
+                            padding: 0;
+                            list-style-type: none;
+                        }
 
+                /* link초기화 */
+                a:link,
+                a:visited,
+                a:hover,
+                a:active {
+                    color: black;
+                    text-decoration: none;
+                }
+            </style>
+            <script>
                 /* link초기화 */
                 a:link,
                 a:visited,
@@ -67,7 +103,20 @@
                         <li>내용</li>
                     </ul>
                 </div>
+                    <ul>
+                        <li>번호 : 1, 글쓴이 : 작성자, 조회수 : 10, 작성일 : 2023-11-13</li>
+                        <li>제목 : 제목</li>
+                        <li>내용</li>
+                    </ul>
+                </div>
 
+                <hr>
+                <div>
+                    목록
+                    <!-- 현재글쓴이와 로그인 아이디가 같을 때만 수정 삭제 가능 -->
+                    <a href="">수정</a>
+                    <a href="">삭제</a>
+                </div>
                 <hr>
                 <div>
                     목록

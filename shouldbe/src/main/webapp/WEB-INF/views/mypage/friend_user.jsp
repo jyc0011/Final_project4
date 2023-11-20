@@ -78,6 +78,7 @@
 		</head>
 
 		<body>
+			<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 			<div id="wrapper" class="container-fluid">
 				<div id="sidebar">
 					<br />
