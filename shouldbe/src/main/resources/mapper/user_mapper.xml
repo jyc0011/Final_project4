@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.finalproject.team4.shouldbe.mapper.UserMapper">
+    <select id="useridCheck" resultType="int">
+        select count(user_id) from users where user_id=#{param1};
+    </select>
+    <insert id="useridInsert">
+        insert into users(user_id, user_name, password, salt, email, nation, sex, lang)
+        values(#{userid}, #{username}, #{userpwd}, #{salt}, #{email}, #{nation}, #{sex}, #{langText})
+    </insert>
+    <select id ="userLoginCheck" resultType="LoginVO">
+        select password, salt, user_name from users where user_id=#{param1};
+    </select>
+</mapper>

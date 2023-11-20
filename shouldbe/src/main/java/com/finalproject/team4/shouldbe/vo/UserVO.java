@@ -12,9 +12,18 @@ public class UserVO {
     private String userpwd;
     private String username;
     private String email;
-    private String pwd_q;
-    private String pwd_a;
+    private String nation;
+    private int sex;
     private String date;
-    private String profile_img;
-    private String comment;
+    private String[] lang;
+    private String langText;
+    private String salt;
+
+    public String getLangText() {
+        langText = "";
+        for(String h: lang) {
+            langText += h+"/";
+        }
+        return langText;
+    }
 }
