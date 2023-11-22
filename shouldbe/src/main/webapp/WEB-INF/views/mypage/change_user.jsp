@@ -52,6 +52,18 @@
                     color: white;
                 }
             </style>
+            <script>
+                function editCheck(){
+                    if(document.getElementById("pwd").value == ""){
+                        alert("비밀번호를 입력해주세요.");
+                        return false;
+                    }
+                    if(document.getElementById("pwd").value != document.getElementById("pwd-confirm").value){
+                        alert("비밀번호가 일치하지 않습니다.");
+                        return false;
+                    }
+                }
+            </script>
         </head>
 
         <body>
@@ -79,32 +91,29 @@
                         <button type="button" class="btn btn-secondary">기본 이미지로 변경</button>
                     </div>
 
-                    <form>
+                    <form method="post" action="${pageContext.servletContext.contextPath}/mypage/editProfileOk" onsubmit="editCheck()">
                         <div class="row mb-3 mt-3">
                             <label for="userid" class="col-sm-2 col-form-label">아이디</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="userid" placeholder="Enter userid"
-                                    name="userid">
+                                <input type="text" class="form-control" id="userid" name="user_id" value="${myvo.user_id}">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="pwd" class="col-sm-2 col-form-label">비밀번호</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="pwd" placeholder="Enter password"
-                                    name="pwd">
+                                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="pwd-confirm" class="col-sm-2 col-form-label">비밀번호확인</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="pwd-confirm"
-                                    placeholder="Confirm password" name="pwd-confirm">
+                                <input type="password" class="form-control" id="pwd-confirm" placeholder="Confirm password" name="pwd-confirm">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="language" class="col-sm-2 col-form-label">사용가능언어</label>
                             <div class="col-sm-10">
-                                <select class="form-select" id="language" name="language">
+                                <select class="form-select" id="language" name="lang" value="${myvo.lang}">
                                     <option value="ko">한국어</option>
                                     <option value="en">English</option>
                                     <option value="jp">日本語</option>
@@ -115,13 +124,12 @@
                         <div class="row mb-3">
                             <label for="intro" class="col-sm-2 col-form-label">자기소개</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="intro" placeholder="Write introduction"
-                                    name="intro">
+                                <input type="text" class="form-control" id="intro" placeholder="Write introduction" name="profile_content" value="${myvo.profile_content}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-10 offset-sm-2">
-                                <button type="submit" class="btn btn-primary">수정하기</button>
+                                <button type="submit" id="edit" class="btn btn-primary">수정하기</button>
                             </div>
                         </div>
                     </form>
