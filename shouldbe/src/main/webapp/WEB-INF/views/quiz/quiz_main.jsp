@@ -45,13 +45,13 @@
 	<script>
 		$(function(){
 			$("#quiz_easy").on('click', function(){
-				location.href = "/quiz/easy";
+				location.href = "${pageContext.servletContext.contextPath}/quiz/easy";
 			});
 			$("#quiz_medium").on('click', function(){
-				location.href = "/quiz/medium";
+				location.href = "${pageContext.servletContext.contextPath}/quiz/medium";
 			});
 			$("#quiz_hard").on('click', function(){
-				location.href = "/quiz/hard";
+				location.href = "${pageContext.servletContext.contextPath}/quiz/hard";
 			});
 		});
 	</script>
