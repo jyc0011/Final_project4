@@ -57,7 +57,6 @@
 	</script>
 </head>
 <body>
-	<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 	<main>
 		<h1>퀴즈</h1>
 		<hr/>
@@ -78,6 +77,5 @@
 			</ol>
 		</div>
 	</main>
-	<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 </body>
 </html>

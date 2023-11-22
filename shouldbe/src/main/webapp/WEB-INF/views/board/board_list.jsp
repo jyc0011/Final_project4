@@ -1,127 +1,153 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+        <!DOCTYPE html>
+        <html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>게시판 글 목록</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        main {
-            width: 1000px;
-            margin: 0 auto;
-        }
+        <head>
+            <meta charset="UTF-8">
+            <title>게시판 글 목록</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+            <style>
+                main {
+                    width: 1000px;
+                    margin: 0 auto;
+                }
 
-        /* 초기화 */
-        body,
-        ul,
-        li {
-            margin: 0;
-            padding: 0;
-            list-style-type: none;
-        }
+                /* 초기화 */
+                body,
+                ul,
+                li {
+                    margin: 0;
+                    padding: 0;
+                    list-style-type: none;
+                }
 
-        /* link초기화 */
-        a:link,
-        a:visited,
-        a:hover,
-        a:active {
-            color: black;
-            text-decoration: none;
-        }
+                /* link초기화 */
+                a:link,
+                a:visited,
+                a:hover,
+                a:active {
+                    color: black;
+                    text-decoration: none;
+                }
 
-        .topMenu > ul {
-            height: 40px;
-            margin: 0 auto;
-            width: 1000px;
-        }
+                /* header */
+                header>div {
+                    height: 100px;
+                    width: 1000px;
+                    line-height: 100px;
+                    font-size: 50px;
+                    background-color: #EBE5D9;
+                    color: #577D86;
+                    text-align: center;
+                    margin: 0 auto;
+                }
 
-        .topMenu li {
-            float: left;
-            padding: 0px 30px;
-            height: 40px;
-            line-height: 40px;
+                .topMenu>ul {
+                    height: 40px;
+                    margin: 0 auto;
+                    width: 1000px;
+                }
 
-        }
+                .topMenu li  {
+                    float:  left;
+                    padding: 0px 30px;
+                    height: 40px;
+                    line-height:  40px;
 
+                }
+
+        
         .topMenu a:link,
-        .topMenu a:visited {
-            color: white;
-        }
+               
+        .topMenu a:visited  {
+                    color: white;
+                }
 
-        .topMenu a:hover {
-            color: yellow;
-        }
+        
+        .topMenu a:hover  {
+                    color:  yellow;
+                }
 
-        #boardTop > div {
-            float: left;
-            width: 50%;
-        }
+                footer {
+                    height: 80px;
+                    line-height: 80px;
+                    text-align: center;
+                    background-color: #ddd;
+                    margin: 10px 0;
+                }
 
-        #boardTop {
-            height: 50px;
-        }
+                #boardTop>div {
+                    float: left;
+                    width: 50%;
+                }
 
-        #boardTop > div:last-of-type {
-            text-align: right;
-        }
+                #boardTop {
+                    height: 50px;
+                }
 
-        #boardList {
-            overflow: auto;
-        }
+                #boardTop>div:last-of-type {
+                    text-align: right;
+                }
 
-        #boardList .page > ul {
-            margin: 30px 0px 0px;
-            overflow: auto;
-        }
+                #boardList {
+                    overflow: auto;
+                }
 
-        #boardList > li {
-            float: left;
-            height: 40px;
-            line-height: 40px;
-            border-bottom: 1px solid #ddd;
-            width: 10%;
-        }
+                #boardList .page>ul {
+                    margin: 30px 0px 0px;
+                    overflow: auto;
+                }
 
-        #boardList > li:nth-child(5n+2) {
-            width: 60%;
-            /* 내용이 길면 ...으로 제목 겹침 방 */
-            white-space: nowrap;
+                #boardList>li {
+                    float: left;
+                    height: 40px;
+                    line-height: 40px;
+                    border-bottom: 1px solid #ddd;
+                    width: 10%;
+                }
+
+                #boardList>li:nth-child(5n+2) {
+                    width: 60%;
+                    /* 내용이 길면 ...으로 제목 겹침 방 */
+                    white-space: nowrap;
+                   
             /* 줄바꾸지 않음 */
-            overflow: hidden;
+                    overflow: hidden;
+                   
             /* 넘친 데이터 숨기기*/
-            text-overflow: ellipsis;
+                    text-overflow: ellipsis;
+                   
             /* 넘친 데이터 ...표  */
-        }
+                }
 
-        .page {
-            text-align: center;
-            height: 50px;
-            width: 300px;
-            margin: 0 auto;
+                .page {
+                    text-align: center;
+                    height: 50px;
+                    width: 300px;
+                    margin: 0 auto;
         }
 
         .page > ul {
             display: table;
             margin-left: auto;
-            margin-right: auto;
-        }
+                    margin-right: auto;
+                }
 
-        .page li {
-            float: left;
-            height: 40px;
-            line-height: 40px;
-            padding: 10px;
-        }
+                .page li {
+                    float: left;
+                    height: 40px;
+                    line-height: 40px;
+                    padding: 10px;
+                }
 
-        .search {
-            text-align: center;
-        }
-
+                .search {
+                    text-align: center;
+                }
+        
         #sideMenu {
             list-style-type: none;
             padding: 0px;
@@ -150,8 +176,9 @@
             color: #fff;
         }
     </style>
-</head>
+        </head>
 
+        
 <ul id="sideMenu">
     <li><a href="#" class="current">공지사항</a></li>
     <li><a href="#">자유게시판</a></li>
@@ -159,11 +186,12 @@
 </ul>
 
 <body>
-<main>
-    <h1>게시판목록</h1>
-    <div>
-        <a href="">글쓰기</a>
-    </div>
+            <jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
+            <main>
+                <h1>게시판목록</h1>
+                <div>
+                    <a href="">글쓰기</a>
+                </div>
 
     <div id="boardTop">
         <div>총 레코드 수 : 9999개</div>

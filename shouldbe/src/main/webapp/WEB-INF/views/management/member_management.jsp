@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>should be</title>
+	<title>현재 회원 관리</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
  
  	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -41,27 +41,26 @@
 		}
 		#quiz_list_title{
 			text-align: center;
-			border-bottom: 1px solid #000;
-			
+			border-bottom: 4px solid #000;
+			padding-bottom: 20px;
 		}
 		
-		/*#quiz_grade{
-			display: flex;
-			flex-direction: column;
-  			justify-content: space-around;
-  			margin: 10px auto;
-		}*/
 		
-		#memberList{
-		margin:0 auto;list-style-type: none;
+		/*리스트 내용*/
+		#list_head{
+			border-bottom: 4px solid #000;
 		}
-		#memberList>li{
-		float: left;height:40px;line-height: 40px; border-bottom: 1px solid #ddd;width: 15%;
+		.management_list th{
+			width:14%;
+			height:40px;
+			line-height: 40px;
 		}
-		.search{
-		width:10%;
-		height:40px;
-		float: left;
+		.management_list td{
+			width:14%;
+			height:100px;
+		}
+		#list_content{
+			border-bottom: 1px solid #ddd;
 		}
 		
 
@@ -84,24 +83,38 @@
 	<div id="member_management">
 		<h1 id="quiz_list_title">현재 회원 관리</h1>
 		
-		<ul id="memberList">
-			<li>
-				<div class="search" style="width:100%">
-					<form method="get" action="" >
-						<input type="text" name="searchMember" id="searchMember" style="width:70%;height: 40px"/>
-						<input type="submit" value="검색" style="width:25%;height: 40px">
-					</form>
-				</div>
-			</li>
-			<li>닉네임</li>
-			<li>아이디</li>
-			<li>가입일</li>
-			<li>작성글/댓글 수</li>
-			<li>신고횟수</li>
-		</ul>
 		
+		
+		<div class="col-sm-12">
+			<table id="example" class="display" style="width:100%">
+		        <thead id="list_head">
+		            <tr class="management_list">
+		            	<th class="profile_img"></th>
+		                <th class="user_name">닉네임</th>
+		                <th class="user_id">아이디</th>
+		                <th class="time">가입일</th>
+		                <th class="writing_count">작성글/댓글 수</th>
+		                <th class="report_count">신고횟수</th>
+		                <th class="suspend_button"></th>
+		            </tr>
+		        </thead>
+		        <tbody id = "list_content">
+		        	<tr class="management_list">
+		        		<td class="user_name"></td>
+		        		<td class="user_name">닉네임</td>
+		                <td class="user_id">아이디</td>
+		                <td class="time">가입일</td>
+		                <td class="writing_count">작성글/댓글 수</td>
+		                <td class="report_count">신고횟수</td>
+		                <td class="suspend_button"><input type="button" value="계정정지"></td>
+
+		        	</tr>
+		        </tbody>
+		    </table>
+		</div>
 
 	</div>
 </div>
+<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 </body>
 </html>

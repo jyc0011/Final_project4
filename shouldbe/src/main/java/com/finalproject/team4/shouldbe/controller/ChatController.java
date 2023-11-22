@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ChatController {
 	
-	@RequestMapping("/chat")
+	@RequestMapping("/chat/list")
 	public ModelAndView chat() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("chat");

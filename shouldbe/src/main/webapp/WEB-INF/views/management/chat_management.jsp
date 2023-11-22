@@ -41,8 +41,7 @@
 		}
 		#quiz_list_title{
 			text-align: center;
-			border-bottom: 1px solid #000;
-			
+			padding-bottom: 20px;
 		}
 		
 		/*#quiz_grade{
@@ -52,22 +51,24 @@
   			margin: 10px auto;
 		}*/
 		
-		#memberList{
-			margin:10px;
-			list-style-type: none;
-		
+		/*리스트 내용*/
+		#list_head{
+			border-bottom: 4px solid #000;
 		}
-		#memberList>li{
-			float: left;height:40px;line-height: 40px; border-bottom: 1px solid #ddd;width: 13%;
-		}
-		.search{
+		.management_list th{
+			width:12%;
 			height:40px;
-			float: left;
-			margin:0 auto;
-
+			line-height: 40px;
 		}
-		#searchform{
-			width:100px;
+		.management_list td{
+			width:12%;
+			height:100px;
+		}
+		#list_content{
+			border-bottom: 1px solid #ddd;
+		}
+		.management_list .chat_content{
+			width: 40%;
 		}
 		
 
@@ -88,24 +89,38 @@
 		</ul>
 	</div>
 	<div id="member_management">
-		<h1 id="quiz_list_title">정지 회원 관리</h1>
+		<h1 id="quiz_list_title">채팅 관리</h1>
 		
-		<ul id="memberList">
-			<li>
-				<div class="search" style="width:100%">
-					<form method="get" action="" >
-						<input type="text" name="searchMember" id="searchMember" style="width:70%;height: 40px"/>
-						<input type="submit" value="검색" style="width:25%;height: 40px">
-					</form>
-				</div>
-			</li>
-			<li>닉네임</li>
-			<li>아이디</li>
-			<li>정지일</li>
-			<li>정지사유</li>
-			<li>작성글/댓글 수</li>
-			<li>신고횟수</li>
-		</ul>
+		<div class="col-sm-12">
+			<table id="example" class="display" style="width:100%">
+		        <thead id="list_head">
+		            <tr class="management_list">
+		                <th class="reported_id">신고받은 ID</th>
+		                <th class="user_id">신고한 ID</th>
+		                <th class="chat_content">채팅 내용</th>
+		                <th class="report_count">신고횟수</th>
+		                <th class="suspend_button"></th>
+		            </tr>
+		        </thead>
+		        <tbody id = "list_content">
+		        	<tr class="management_list">
+		        		<td class="reported_id">신고받은 ID</td>
+		                <td class="user_id">신고한 ID</td>
+		                <td class="chat_content">
+		                	<div class="origin">
+		                		sdf
+		                	</div>
+		                	<div class="translation">
+		                		asdfsadfsadfsaf
+		                	</div>
+		                </td>
+		                <td class="report_count">신고횟수</td>
+		                <td class="suspend_button"><input type="button" value="계정정지"></td>
+
+		        	</tr>
+		        </tbody>
+		    </table>
+		</div>
 
 	</div>
 </div>
