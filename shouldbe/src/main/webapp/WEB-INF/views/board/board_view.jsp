@@ -36,7 +36,9 @@
 
                 /* 초기화 */
                 body,
+
                 ul,
+
                 li {
                     margin: 0;
                     padding: 0;
@@ -51,11 +53,10 @@
                     color: black;
                     text-decoration: none;
                 }
+
             </style>
             <script>
-
             </script>
-
         <body>
             <main>
                 <div id="viewArea">
@@ -67,7 +68,20 @@
                         <li>내용</li>
                     </ul>
                 </div>
+                <ul>
+                    <li>번호 : 1, 글쓴이 : 작성자, 조회수 : 10, 작성일 : 2023-11-13</li>
+                    <li>제목 : 제목</li>
+                    <li>내용</li>
+                </ul>
+                </div>
 
+                <hr>
+                <div>
+                    목록
+                    <!-- 현재글쓴이와 로그인 아이디가 같을 때만 수정 삭제 가능 -->
+                    <a href="">수정</a>
+                    <a href="">삭제</a>
+                </div>
                 <hr>
                 <div>
                     목록

@@ -149,9 +149,9 @@
 
                 <!-- 게시판 Dropdown -->
                 <div class="dropdown">
-                    <a href="#" class="dropbtn">게시판</a>
+                    <a href="${pageContext.servletContext.contextPath}/board/notice" class="dropbtn">게시판</a>
                     <div class="dropdown-content">
-                        <a href="${pageContext.servletContext.contextPath}/board/list">공지사항</a>
+                        <a href="${pageContext.servletContext.contextPath}/board/notice">공지사항</a>
                         <a href="${pageContext.servletContext.contextPath}/board/free">자유게시판</a>
                         <a href="${pageContext.servletContext.contextPath}/board/resources">자료게시판</a>
                         <a href="${pageContext.servletContext.contextPath}/board/inquiries">문의 게시판</a>
@@ -162,8 +162,8 @@
                 <div class="dropdown">
                     <a href="#" class="dropbtn">퀴즈</a>
                     <div class="dropdown-content">
-                        <a href="${pageContext.servletContext.contextPath}/Quiz/list">퀴즈</a>
-                        <a href="${pageContext.servletContext.contextPath}/Quiz/create">퀴즈 등록하기</a>
+                        <a href="${pageContext.servletContext.contextPath}/quiz/main">퀴즈</a>
+                        <a href="${pageContext.servletContext.contextPath}/quiz/create">퀴즈 등록하기</a>
                     </div>
                 </div>
 
@@ -171,8 +171,8 @@
                 <div class="dropdown">
                     <a href="#" class="dropbtn">채팅</a>
                     <div class="dropdown-content">
-                        <a href="${pageContext.servletContext.contextPath}/Chat/list">채팅</a>
-                        <a href="${pageContext.servletContext.contextPath}/Chat/partners">채팅 파트너</a>
+                        <a href="${pageContext.servletContext.contextPath}/chat/list">채팅</a>
+                        <a href="${pageContext.servletContext.contextPath}/chat/partners">채팅 파트너</a>
                     </div>
                 </div>
             </div>

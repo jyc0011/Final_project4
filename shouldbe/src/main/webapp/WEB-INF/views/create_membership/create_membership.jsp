@@ -57,7 +57,7 @@
 		#nationselcet{
 			margin: 20px auto;
 		}
-		#lang{
+		.lang{
 			margin: 10px auto;
 		}
   	</style>
@@ -67,22 +67,77 @@
   				if(document.getElementById("userpwd").value == document.getElementById("userpwdCheck").value){
   					document.getElementById("passwordCheckOk").innerHTML="비밀번호가 일치합니다.";
   					document.getElementById("passwordCheckOk").style.color="blue";
+					  return true;
   				}else{
   					document.getElementById("passwordCheckOk").innerHTML="비밀번호가 일치하지 않습니다.";
   					document.getElementById("passwordCheckOk").style.color="red";
+					  return false;
   				}
   			}
   		}
+		function isCheckedId(){
+			  if(document.getElementById("isIdChecked").value =="Y"){
+				  return true;
+			  }else{
+				  return false;
+			  }
+		}
+
   		$(function(){
+			  //아이디 변경시 다시 중복검사
+			$("#userid").keyup(function(){
+				$("#isIdChecked").val("N");
+			});
   			$("#sendcode").on('click', function(){
   				$("#authenticate").css('display', '');
   				$("#checkcode").css('display', '');
   			});
+
+			  $("#idcheck").click(function(){
+				  var userid = $("#userid").val();
+				  if(userid == ""){
+					  alert("아이디를 입력해주세요")
+					  return;
+				  }
+				  $.ajax({
+					  type : "POST",
+					  url : "/idcheck",
+					  data : {userid : userid},
+					  success : function(r){
+						  if(r) {
+							  alert("사용 가능한 아이디입니다.");
+							  $("#isIdChecked").val("Y");
+						  }else{
+							  alert("사용 불가능한 아이디입니다.");
+							  $("#isIdChecked").val("N");
+						  }
+					  },
+					  error : function(e){
+						  console.log(e.responseText);
+					  }
+
+				  });
+			  });
+
+			$("#create_Form").submit(function(){
+				if(!isCheckedId()) {
+					alert("아이디 중복 검사를 해주세요");
+					return false;
+				}
+				if(!checkpwd()) {//여러가지 체크들
+					alert("비밀번호가 일치하지 않습니다.");
+					return false;
+				}
+				//todo : 나머지 폼 검사(이름, 이메일, 국적, 성별, 언어 최소요구사항)
+
+				return true;
+
+			})
   		});
+
   	</script>
 </head>
 <body>
-	<jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
 	<main>
 		<h1>회원가입</h1>
 		<form method="post" action="/createOk" id="create_Form">
@@ -92,6 +147,7 @@
 				<li><label>아이디</label></li>
 				<li>
 					<input type="text" id="userid" name="userid"/>
+					<input type="hidden" id="isIdChecked" value="N">
 					<input type="button" value="아이디체크" id="idcheck" class="submitbtn"/>
 				</li>
 				<li><label>비밀번호</label></li>
@@ -110,28 +166,27 @@
 				</li>
 				<li><label>사용언어</label></li>
 				<li>
-					한국어 <input type="checkbox" id="lang" name="lang"/>
-					일본어 <input type="checkbox" id="lang" name="lang"/>
-					영어 <input type="checkbox" id="lang" name="lang"/>
+					한국어 <input type="checkbox" class="lang" name="lang" value="ko"/>
+					일본어 <input type="checkbox" class="lang" name="lang" value="jp"/>
+					영어 <input type="checkbox" class="lang" name="lang" value="en"/>
 				</li>
 				<li><label style="float: left; margin: 20px auto; margin-right: 10px;">국적</label></li>
 				<li id="nationselcet">
 					<select id="nation" name="nation">
 						<option value="kor">한국</option>
-						<option value="eng">미국</option>
+						<option value="us">미국</option>
 						<option value="jpn">일본</option>
 					</select>
 				</li>
 				<li><label style="float: left; margin-right: 10px;">성별</label></li>
 				<li>
-					남자 <input type="radio" id="sex" name="sex"/>
-					여자 <input type="radio" id="sex" name="sex"/>
+					남자 <input type="radio" class="sex" name="sex" value="0"/>
+					여자 <input type="radio" class="sex" name="sex" value="1"/>
 				</li>
 				<li><input type="submit" value="가입하기" id="join" class="submitbtn"/></li>
 				<li><input type="button" value="취소" id="cancel" class="submitbtn"/></li>
 			</ul>
 		</form>
 	</main>
-	<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 </body>
 </html>
