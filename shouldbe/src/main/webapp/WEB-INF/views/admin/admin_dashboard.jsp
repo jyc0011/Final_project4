@@ -18,11 +18,6 @@
                     margin-top: 50px;
                 }
 
-                body {
-                    display: flex;
-                    flex-direction: row;
-                }
-
                 li {
                     list-style-type: none;
                 }
