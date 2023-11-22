@@ -67,7 +67,7 @@
 			<div class="temp-login">
 				<br />
 				<a href="${pageContext.servletContext.contextPath}/log">임시로그인</a>
-				<p>현재 아이디 : ${LogId} / 로그인 상태 : ${LogStatus}</p>
+				<p>현재 아이디 : ${logId} / 로그인 상태 : ${logStatus}</p>
 			</div>
 		</body>
 

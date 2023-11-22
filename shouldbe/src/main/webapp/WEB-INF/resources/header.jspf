@@ -119,13 +119,13 @@
                 <!-- 로고 이미지 -->
             </div>
             <div class="login">
-                <c:if test="${LogStatus=='Y'}">
-                    <a href="${pageContext.servletContext.contextPath}/Mypage?id=${LogId}"> <!-- 마이페이지 -->
+                <c:if test="${logStatus=='Y'}">
+                    <a href="${pageContext.servletContext.contextPath}/Mypage?id=${logId}"> <!-- 마이페이지 -->
                         <img src="" class="user-icon" id="user-icon" style="border-radius: 50%;" /></a>
                     <!--유저로고-->
                     <a href="${pageContext.servletContext.contextPath}/logout" class="login-button">로그아웃</a>
                 </c:if>
-                <c:if test="${LogStatus!='Y'}">
+                <c:if test="${logStatus!='Y'}">
                     <a href="${pageContext.servletContext.contextPath}/login" class="login-button">로그인</a>
                 </c:if>
             </div>
@@ -136,7 +136,7 @@
                 <!-- 마이페이지 Dropdown -->
                 <div class="dropdown">
                     <a href="${pageContext.servletContext.contextPath}/mypage/change_user" class="dropbtn">마이페이지</a>
-                    <c:if test="${LogStatus=='Y'}">
+                    <c:if test="${logStatus=='Y'}">
                         <div class="dropdown-content">
                             <a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a>
                             <a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한 글</a>
