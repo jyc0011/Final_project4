@@ -13,4 +13,8 @@ public class QuizVO {
     private String quiz_lang;
     private String quiz_content;
     private String answer;
+
+    public int getQuiz_id() {
+        return quiz_id;
+    }
 }

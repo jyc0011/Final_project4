@@ -21,21 +21,6 @@
 	</style>
 	<script>
 		$(document).ready(function() {
-			// Fetching the quiz
-			$.ajax({
-				url: '/quiz/easy/problem',
-				type: 'GET',
-				dataType: 'json',
-				success: function(response) {
-					$('#quiz_content').text(response.question);
-					$('#quiz_answer').val(response.answer);
-				},
-				error: function(xhr, status, error) {
-					console.log("Error: " + error);
-				}
-			});
-
-				// Initially disable the submit button
 				$('#submitButton').prop('disabled', true);
 
 				// Enable the submit button only when user input is present
@@ -46,27 +31,6 @@
 						$('#submitButton').prop('disabled', true);
 					}
 				});
-
-			$('#submitButton').on('click', function() {
-				const userAnswer = $('#userAnswer').val();
-				const correctAnswer = $('#quiz_answer').val();
-				const quizContent = $('#quiz_content').val();
-				$.ajax({
-					url: '/quiz/checkAnswer',
-					type: 'POST',
-					data: {
-						quizContent: quizContent,
-						userAnswer: userAnswer,
-						correctAnswer: correctAnswer
-					},
-					success: function(response) {
-						window.location.href = '/quiz/quiz_answer';
-					},
-					error: function(xhr, status, error) {
-						console.log("Error: " + error);
-					}
-				});
-			});
 		});
 	</script>
 </head>
@@ -74,12 +38,13 @@
 <main>
 	<h1>쉬움</h1>
 	<hr />
-	<b id="quiz_content">퀴즈 내용</b>
-	<form method="post" action="#">
-		<input type="text" id="userAnswer" placeholder="정답 입력" />
-		<input type="button" id="submitButton" value="제출" />
+	<b id="quiz_content">${quiz.quiz_content}</b>
+	<form method="post" action="/quiz/checkAnswer">
+		<input type="text" name="userAnswer" placeholder="정답 입력" />
+		<input type="hidden" name="quizContent" id="quiz_cont" />
+		<input type="hidden" name="level" id="level" value="쉬움" />
+		<input type="submit" value="제출" />
 	</form>
-	<input type="hidden" id="quiz_answer" />
 </main>
 </body>
 </html>

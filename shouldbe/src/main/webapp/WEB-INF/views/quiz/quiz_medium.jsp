@@ -24,17 +24,32 @@
 					align-items: center;
 				}
 			</style>
+			<script>
+				$(document).ready(function() {
+					$('#submitButton').prop('disabled', true);
+
+					// Enable the submit button only when user input is present
+					$('#userAnswer').on('input', function() {
+						if ($(this).val().trim() !== '') {
+							$('#submitButton').prop('disabled', false);
+						} else {
+							$('#submitButton').prop('disabled', true);
+						}
+					});
+				});
+			</script>
 		</head>
 
 		<body>
 			<main>
 				<h1>중간</h1>
 				<hr />
-				<h2>1/10</h2>
-				<b>Combination</b>
-				<form method="post" action="#">
-					<input type="text" placeholder="정답 입력" />
-					<input type="button" value="제출" />
+				<b id="quiz_content">${quiz.quiz_content}</b>
+				<form method="post" action="/quiz/checkAnswer">
+					<input type="text" name="userAnswer" placeholder="정답 입력" />
+					<input type="hidden" name="quizContent" id="quiz_cont" />
+					<input type="hidden" name="level" id="level" value="중간" />
+					<input type="submit" value="제출" />
 				</form>
 			</main>
 		</body>

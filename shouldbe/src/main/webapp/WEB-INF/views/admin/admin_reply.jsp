@@ -18,19 +18,13 @@
                     margin-top: 50px;
                 }
 
-                body {
-                    width: 1200px;
-                    display: flex;
-                    flex-direction: row;
-                }
-
                 li {
                     list-style-type: none;
                 }
 
                 #navList>li {
                     width: 200px;
-                    margin: 20px 100px;
+                    margin: 20px 50px 0 0;
                 }
 
                 main {
@@ -61,6 +55,10 @@
                 #boardList>li:nth-child(7n+4) {
                     width: 200px;
                 }
+
+                #searchNickname{
+                    float: right;
+                }
             </style>
         </head>
 
@@ -77,7 +75,7 @@
                     </ul>
                 </nav>
                 <main>
-                    <div>
+                    <div id="searchNickname">
                         <input type="text" placeholder="닉네임 검색" style="width: 120px;">
                         <input type="button" value="검색" style="width: 80px;">
                     </div>

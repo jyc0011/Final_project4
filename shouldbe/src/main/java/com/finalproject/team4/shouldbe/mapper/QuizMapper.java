@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface QuizMapper {
     List<QuizVO> findQuiz(@Param("level") int level);
+    List<String> findAnswersByQuizId(int quizId);
+    void insertQuizInfo(@Param("quiz_id") int quizId, @Param("user_id") String userId);
 }

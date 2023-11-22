@@ -20,6 +20,7 @@
 					width: 1200px;
 					margin: 100px auto;
 					display: flex;
+					flex-direction: column;
 					justify-content: space-around;
 					align-items: center;
 				}
@@ -41,28 +42,32 @@
 
 		<body>
 			<main>
-				<div id="freeboard">
+				<div>
+					<div id="freeboard">
 
+					</div>
+					<div id="databoard">
+
+					</div>
 				</div>
-				<div id="databoard">
+				<br/>
+				<div>
+					<button id="mypagebtn" class="ctrlbtn">
 
+					</button>
+
+					<button id="" class="ctrlbtn">
+
+					</button>
+
+					<button id="" class="ctrlbtn">
+
+					</button>
+
+					<button id="" class="ctrlbtn">
+
+					</button>
 				</div>
-
-				<button id="mypagebtn" class="ctrlbtn">
-
-				</button>
-
-				<button id="" class="ctrlbtn">
-
-				</button>
-
-				<button id="" class="ctrlbtn">
-
-				</button>
-
-				<button id="" class="ctrlbtn">
-
-				</button>
 			</main>
 			<div class="temp-login">
 				<br />

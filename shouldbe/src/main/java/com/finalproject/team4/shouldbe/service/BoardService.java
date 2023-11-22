@@ -2,7 +2,6 @@ package com.finalproject.team4.shouldbe.service;
 
 import com.finalproject.team4.shouldbe.vo.BoardVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
-
 import java.util.List;
 
 public interface BoardService {
