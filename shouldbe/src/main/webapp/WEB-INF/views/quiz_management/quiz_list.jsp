@@ -41,7 +41,7 @@
 		}
 		#quiz_list_title{
 			text-align: center;
-			border-bottom: 1px solid #000;
+
 			
 		}
 		
@@ -67,9 +67,28 @@
 
 			width: 300px;
 			height: 500px;
-			border: 1px solid #ddd;
-			
+			border: 3px solid #000;
+			margin:0 5px;
+			overflow-y:scroll;
 		}
+		
+		/*단어리스트*/
+		#list_head{
+			border-bottom: 3px solid #000;
+			background-color: #ddd;
+		}
+		.management_list th{
+		}
+		.management_list td{
+		}
+		#list_content{
+			border-bottom: 1px solid #ddd;
+
+		}
+		.quiz_content{
+			width: 50%;	
+		}
+		
 		
 
 	</style>
@@ -97,10 +116,72 @@
 		</div>
 		
 		<div id="quiz_list">
+		
+			<!-- 쉬움 -->
 			<div class="qqlist" id="quiz_easy">
+				<table id="example" class="display" style="width:100%">
+			        <thead id="list_head">
+			            <tr class="management_list">
+			                <th class="lise_number">NO</th>
+			                <th class="quiz_content">단어</th>
+			                <th class="edit_button">수정</th>
+			            </tr>
+			        </thead>
+			        <tbody id = "list_content">
+			        	<tr class="management_list">
+			        		<td class="lise_number">No.</td>
+			                <td class="quiz_content">단어</td>
+			                <td class="edit_button"><input type="button" value="수정/삭제"></td>
+			        	</tr>
+			        	<tr class="management_list">
+			        		<td class="lise_number">No.</td>
+			                <td class="quiz_content">단어</td>
+			                <td class="edit_button"><input type="button" value="수정/삭제"></td>
+			        	</tr>
+			        </tbody>
+			    </table>
 			</div>
-		</body>
-
+			
+			<!-- 중간 -->
+			<div class="qqlist" id="quiz_easy">
+				<table id="example" class="display" style="width:100%">
+			        <thead id="list_head">
+			            <tr class="management_list">
+			                <th class="lise_number">NO</th>
+			                <th class="quiz_content">단어</th>
+			                <th class="edit_button">수정</th>
+			            </tr>
+			        </thead>
+			        <tbody id = "list_content">
+			        	<tr class="management_list">
+			        		<td class="lise_number">No.</td>
+			                <td class="quiz_content">단어</td>
+			                <td class="edit_button"><input type="button" value="수정/삭제"></td>
+			        	</tr>
+			        </tbody>
+			    </table>
+			</div>
+			
+			<!-- 어려움 -->
+			<div class="qqlist" id="quiz_easy">
+				<table id="example" class="display" style="width:100%">
+			        <thead id="list_head">
+			            <tr class="management_list">
+			                <th class="lise_number">NO</th>
+			                <th class="quiz_content">단어</th>
+			                <th class="edit_button">수정</th>
+			            </tr>
+			        </thead>
+			        <tbody id = "list_content">
+			        	<tr class="management_list">
+			        		<td class="lise_number">No.</td>
+			                <td class="quiz_content">단어</td>
+			                <td class="edit_button"><input type="button" value="수정/삭제"></td>
+			        	</tr>
+			        </tbody>
+			    </table>
+			</div>
+		</div>
 	</div>
 </div>
 </body>

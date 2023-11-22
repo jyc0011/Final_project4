@@ -120,7 +120,7 @@
 		</div>
 		
 		<div id="quiz_reg">
-			<button id="reg_button">제출하기</button>
+			<button id="reg_button">등록하기</button>
 		</div>
 
 	</div>
