@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>shouldbe</name>
-<<<<<<< HEAD
-	<comment></comment>
-=======
 	<comment>Project shouldbe created by Buildship.</comment>
->>>>>>> upstream/main
 	<projects>
 	</projects>
 	<buildSpec>
@@ -42,8 +38,6 @@
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 	</natures>
-<<<<<<< HEAD
-=======
 	<filteredResources>
 		<filter>
 			<id>1700029044420</id>
@@ -55,5 +49,4 @@
 			</matcher>
 		</filter>
 	</filteredResources>
->>>>>>> upstream/main
 </projectDescription>
