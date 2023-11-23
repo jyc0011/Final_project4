@@ -186,7 +186,6 @@
 </ul>
 
 <body>
-            <jsp:include page="${pageContext.servletContext.contextPath}/resources/header.jsp" />
             <main>
                 <h1>게시판목록</h1>
                 <div>
