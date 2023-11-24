@@ -92,18 +92,24 @@
 		
 
 	</style>
+	<script>
+		function EditDelBtn(){
+			location.href="${pageContext.servletContext.contextPath}/admin/quiz_edit";
+		}
+	</script>
 </head>
 <body>
 <div class="container">
 	<div id="side_bar" >
 		<ul id="side_menu">
-			<li><a href="">대시보드</a></li>
-			<li><a href="">현재회원관리</a></li>
-			<li><a href="">정지회원관리</a></li>
-			<li><a href="">탈퇴회원관리</a></li>
-			<li><a href="">글관리</a></li>
-			<li><a href="">퀴즈관리</a></li>
-			<li><a href="">채팅관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin">대시보드</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/member/management">현재회원관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/suspended/management">정지회원관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/chat/management">채팅관리</a></li>
 			
 		</ul>
 	</div>
@@ -111,8 +117,8 @@
 		<h1 id="quiz_list_title">퀴즈 관리</h1>
 		
 		<div id="reg_buttons">
-			<input type="button" value="관리자 퀴즈 등록">
-			<input type="button" value="유저 퀴즈 등록">
+			<input type="button" value="관리자 퀴즈 등록" onclick="location.href='${pageContext.servletContext.contextPath}/admin/quiz/reg_manager'">
+			<input type="button" value="유저 퀴즈 등록" onclick="location.href='${pageContext.servletContext.contextPath}/admin/quiz/reg_user'">
 		</div>
 		
 		<div id="quiz_list">
@@ -131,12 +137,12 @@
 			        	<tr class="management_list">
 			        		<td class="lise_number">No.</td>
 			                <td class="quiz_content">단어</td>
-			                <td class="edit_button"><input type="button" value="수정/삭제"></td>
+			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"></td>
 			        	</tr>
 			        	<tr class="management_list">
 			        		<td class="lise_number">No.</td>
 			                <td class="quiz_content">단어</td>
-			                <td class="edit_button"><input type="button" value="수정/삭제"></td>
+			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"></td>
 			        	</tr>
 			        </tbody>
 			    </table>
@@ -156,7 +162,7 @@
 			        	<tr class="management_list">
 			        		<td class="lise_number">No.</td>
 			                <td class="quiz_content">단어</td>
-			                <td class="edit_button"><input type="button" value="수정/삭제"></td>
+			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"></td>
 			        	</tr>
 			        </tbody>
 			    </table>
@@ -176,7 +182,7 @@
 			        	<tr class="management_list">
 			        		<td class="lise_number">No.</td>
 			                <td class="quiz_content">단어</td>
-			                <td class="edit_button"><input type="button" value="수정/삭제"></td>
+			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"></td>
 			        	</tr>
 			        </tbody>
 			    </table>

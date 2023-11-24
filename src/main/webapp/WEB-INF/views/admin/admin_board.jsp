@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>관리자 페이지 _ 댓글관리</title>
+    <title>관리자 페이지 _ 게시글관리</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -38,7 +38,7 @@
             display: flex;
             flex-direction: column;
         }
-        #ReplyListTitle{
+        #boardListTitle{
             text-align: center;
         }
 
@@ -46,25 +46,25 @@
             border-top: 4px solid #000;
             border-bottom: 4px solid #000;
         }
-        .reply_list th{
+        .board_list th{
             width:120px;
             height:40px;
             line-height: 40px;
             text-align: center;
         }
-        .reply_list td{
+        .board_list td{
             padding: 0 10px;
-            max-width:120px;
-            width:120px;
+            width: 120px;
+            max-width: 120px;
             height:100px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             text-align: center;
         }
-        .reply_list th:nth-child(7n+3), .reply_list td:nth-child(7n+3){
-            max-width: 260px;
+        .board_list th:nth-child(7n+3), .board_list td:nth-child(7n+3){
             width: 260px;
+            max-width: 260px;
         }
         #list_content{
             border-bottom: 1px solid #ddd;
@@ -87,7 +87,7 @@
             </ul>
         </nav>
         <main>
-            <h1 id="ReplyListTitle">댓글 관리</h1>
+            <h1 id="boardListTitle">게시글 관리</h1>
             <div id="searchNickname">
                 <input type="text" placeholder="닉네임 검색" style="width: 120px;">
                 <input type="button" value="검색" style="width: 80px;">
@@ -96,10 +96,10 @@
             <div class="col-sm-12" id="boardList">
                 <table id="example" class="display" style="width:100%">
                     <thead id="list_head">
-                        <tr class="reply_list">
+                        <tr class="board_list">
                             <th class="board">게시판</th>
                             <th class="board_title">글제목</th>
-                            <th class="reply_content">댓글내용</th>
+                            <th class="content">글내용</th>
                             <th class="user_id">작성자</th>
                             <th class="report_count">신고횟수</th>
                             <th class="report_reason">신고사유</th>
@@ -107,14 +107,14 @@
                         </tr>
                     </thead>
                     <tbody id = "list_content">
-                        <tr class="reply_list">
-                            <td class="board_title">자유게시판</td>
+                        <tr class="board_list">
+                            <td class="board">자유게시판</td>
                             <td class="board_title">글제목입니다</td>
-                            <td class="reply_content">댓글내용입니다</td>
+                            <td class="content">글내용입니다</td>
                             <td class="user_id">userid</td>
                             <td class="report_count">1</td>
-                            <td class="report_reason">댓글도배</td>
-                            <td class="del_button"><input type="button" value="댓글삭제" style="width: 80px;"></td>
+                            <td class="report_reason">부적절한 게시글</td>
+                            <td class="del_button"><input type="button" value="게시글삭제" style="width: 100px;"></td>
                         </tr>
                     </tbody>
                 </table>
