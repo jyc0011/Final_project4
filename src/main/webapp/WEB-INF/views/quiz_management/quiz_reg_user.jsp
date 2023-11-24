@@ -121,18 +121,19 @@
 <div class="container">
 	<div id="side_bar" >
 		<ul id="side_menu">
-			<li><a href="">대시보드</a></li>
-			<li><a href="">현재회원관리</a></li>
-			<li><a href="">정지회원관리</a></li>
-			<li><a href="">탈퇴회원관리</a></li>
-			<li><a href="">글관리</a></li>
-			<li><a href="">퀴즈관리</a></li>
-			<li><a href="">채팅관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin">대시보드</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/member/management">현재회원관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/suspended/management">정지회원관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/chat/management">채팅관리</a></li>
 			
 		</ul>
 	</div>
 	<div id="member_management">
-		<h1 id="quiz_list_title">퀴즈 수정/삭제</h1>
+		<h1 id="quiz_list_title">유저 퀴즈 등록</h1>
 		
 		<div id="user_input_list">
 			<div class="user_input">

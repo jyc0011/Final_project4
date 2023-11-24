@@ -13,6 +13,10 @@ public class AdminController {
 	public String admin_reply() {
 		return "admin/admin_reply";
 	}
+	@GetMapping("/admin/board")
+	public String admin_board() {
+		return "admin/admin_board";
+	}
 	@GetMapping("/admin/member/management")
 	public String GoMember_management() {
 		return "management/member_management";

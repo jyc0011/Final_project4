@@ -70,13 +70,14 @@
 <div class="container">
 	<div id="side_bar" >
 		<ul id="side_menu">
-			<li><a href="">대시보드</a></li>
-			<li><a href="">현재회원관리</a></li>
-			<li><a href="">정지회원관리</a></li>
-			<li><a href="">탈퇴회원관리</a></li>
-			<li><a href="">글관리</a></li>
-			<li><a href="">퀴즈관리</a></li>
-			<li><a href="">채팅관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin">대시보드</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/member/management">현재회원관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/suspended/management">정지회원관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/admin/chat/management">채팅관리</a></li>
 			
 		</ul>
 	</div>
@@ -115,6 +116,5 @@
 
 	</div>
 </div>
-<jsp:include page="${pageContext.servletContext.contextPath}/resources/footer.jsp" />
 </body>
 </html>
