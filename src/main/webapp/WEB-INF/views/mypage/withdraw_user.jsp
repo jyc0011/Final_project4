@@ -65,22 +65,22 @@
 					<li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
-					<li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user" class="active">탈퇴하기</a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user" class="active">탈퇴하기</a></li>
 				</ul>
 			</div>
 			<div id="content">
 				<div class="account-deletion-form">
-					<h2>탈퇴하기</h2>
-					<div class="mb-3">
-						<label for="password" class="form-label">비밀번호</label>
-						<input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
-					</div>
-					<div class="mb-3">
-						<label for="password-confirm" class="form-label">비밀번호확인</label>
-						<input type="password" class="form-control" id="password-confirm" placeholder="비밀번호를 다시 입력하세요">
-					</div>
-					<button type="button" class="btn btn-warning" onclick="confirmDeletion()">탈퇴하기</button>
+						<h2>탈퇴하기</h2>
+						<div class="mb-3">
+							<label for="password" class="form-label">비밀번호</label>
+							<input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
+						</div>
+						<div class="mb-3">
+							<label for="password-confirm" class="form-label">비밀번호확인</label>
+							<input type="password" class="form-control" id="password-confirm" placeholder="비밀번호를 다시 입력하세요">
+						</div>
+						<button type="button" class="btn btn-warning" onclick="confirmDeletion()">탈퇴하기</button>
 				</div>
 			</div>
 		</div>
@@ -90,28 +90,14 @@
 			var userConfirmed = confirm("정말 탈퇴하시겠습니까?");
 
 			if (userConfirmed) {
-				var userId = $('#userid').val();
 				var password = $('#password').val();
-
-				// AJAX POST 요청
-				$.ajax({
-					url: '/path', // URL
-					type: 'POST',
-					data: {
-						userid: userId, // 아이디
-						password: password // 비밀번호
-					},
-					success: function (response) {
-						if (response.success) {
-							alert("탈퇴완료");
-						} else {
-							alert("탈퇴에 실패하였습니다.");
-						}
-					},
-					error: function (xhr, status, error) {
-						alert("오류가 발생했습니다: " + error);
-					}
-				});
+				var password_confirm = $('#password-confirm').val();
+				if(password == password_confirm){
+					return true;
+				}else{
+					alert("비밀번호가 일치하지 않습니다. 다시입력하세요.");
+					return false;
+				}
 			}
 		}
 	</script>

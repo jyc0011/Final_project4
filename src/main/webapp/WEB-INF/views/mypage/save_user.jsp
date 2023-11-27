@@ -80,8 +80,8 @@
                         <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
                         <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
                         <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
-                        <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a></li>
                         <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user" class="active">저장소</a></li>
+                        <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a></li>
 					</ul>
 				</div>
 				<div id="content">

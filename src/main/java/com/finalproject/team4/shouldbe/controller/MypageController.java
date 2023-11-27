@@ -1,5 +1,7 @@
 package com.finalproject.team4.shouldbe.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +12,18 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.finalproject.team4.shouldbe.service.MypageService;
+import com.finalproject.team4.shouldbe.util.EncryptUtil;
+import com.finalproject.team4.shouldbe.vo.BoardReplyVO;
+import com.finalproject.team4.shouldbe.vo.BoardVO;
 import com.finalproject.team4.shouldbe.vo.MypageVO;
+import com.finalproject.team4.shouldbe.vo.PagingVO;
 
 @Controller
-public class MypageController {
+public class MypageController {    
     @Autowired
     MypageService service;
+
+    EncryptUtil encrypt = new EncryptUtil();
 
     @GetMapping("/mypage/change_user")
     public ModelAndView mypage_change_user(@SessionAttribute(name="logId") String userid) {
@@ -44,13 +52,36 @@ public class MypageController {
     }
 
     @GetMapping("/mypage/friend_user")
-    public String mypage_friend_user() {
-        return "mypage/friend_user";
+    public ModelAndView mypage_friend_user() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("mypage/friend_user");
+        return mav;
+    }
+
+    @GetMapping("/mypage/blackList")
+    public String mypage_blacklist() {
+        return "mypage/blacklist_user";
     }
 
     @GetMapping("/mypage/post_user")
-    public String mypage_post_user() {
-        return "mypage/post_user";
+    public ModelAndView mypage_post_user(@SessionAttribute(name="logId") String user_id) {
+        ModelAndView mav = new ModelAndView();
+		List<BoardVO> list = service.mypage_post_board(user_id);
+		
+		mav.addObject("list", list);
+		mav.setViewName("mypage/post_user");
+		return mav;
+    }
+    
+    @GetMapping("/mypage/post_user/reply")
+    public ModelAndView mypage_post_user_reply(@SessionAttribute(name="logId") String user_id) {
+        ModelAndView mav = new ModelAndView();
+        List<BoardReplyVO> list = service.mypage_post_board_reply(user_id);
+        System.out.println(list.toString());
+
+        mav.addObject("list", list);
+        mav.setViewName("mypage/post_user_reply");
+        return mav;
     }
 
     @GetMapping("/mypage/save_user")
