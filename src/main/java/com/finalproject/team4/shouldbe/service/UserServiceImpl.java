@@ -24,4 +24,21 @@ public class UserServiceImpl implements UserService {
     public LoginVO userLoginCheck(String userid) {
         return mapper.userLoginCheck(userid);
     }
+
+    @Override
+    public String userFindId(String username, String userid) {
+        return mapper.userFindId(username, userid);
+    }
+
+    @Override
+    public int userCheckId(String userid, String email) {
+        return mapper.userCheckId(userid, email);
+    }
+
+    @Override
+    public int userpwdUpdate(UserVO vo) {
+        return mapper.userpwdUpdate(vo);
+    }
+
+
 }

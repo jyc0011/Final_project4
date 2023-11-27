@@ -51,12 +51,12 @@
 					line-height: 40px;
 				}
 
-				#finded {
+				#finded{
 					width: 600px;
+					height : 50px;
 					margin-left: 280px;
 					display: none;
 				}
-
 				#finded>p {
 					text-align: center;
 				}
@@ -70,21 +70,50 @@
 			<script>
 				$(function () {
 					$("#find_pwd").on('click', function () {
-						location.href = "/find_pwd";
+						location.href = "/login/findpwd";
 					});
 					$("#back").on('click', function () {
 						location.href = "/login";
 					});
-					$("#find").on('click', function () {
-						$("#finded").css('display', 'block');
+					$("#find").click(function () {
+						event.preventDefault();
+						var username = $("#username").val();
+						var email = $("#email").val();
+						$.ajax({
+							type : "POST",
+							url : "/login/findidOk",
+							data : {username : username,email : email},
+							success : function(r){
+								console.log(r);
+								if(r == "") {
+									$("#finded").css('display', 'block');
+									$("#find_pwd").css('display', 'none');
+									$("#result").text("아이디를 찾을 수 없습니다.");
+								}else{
+									$("#finded").css('display', 'block');
+									$("#find_pwd").css('display', 'block');
+									$("#result").text("아이디는 " + r + " 입니다.");
+
+								}
+
+
+							},
+							error : function(e){
+								console.log(e.responseText);
+							}
+
+						});
+
 					});
+
+
 				});
 			</script>
 		</head>
 
 		<body>
 			<main>
-				<form method="post" action="/findidOk" id="find_id_form">
+				<form method="post" id="find_id_form">
 					<h1>아이디 찾기</h1>
 					<ul>
 						<li><label>이름</label></li>
@@ -96,7 +125,7 @@
 				</form>
 				<div id="finded">
 					<hr />
-					<p>찾으신 아이디는 "" 입니다.</p>
+					<p id="result"></p>
 					<input type="button" value="뒤로가기" class="submitbtn" id="back" />
 					<input type="button" value="비밀번호찾기" class="submitbtn" id="find_pwd" />
 				</div>
