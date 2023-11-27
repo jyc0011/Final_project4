@@ -115,7 +115,7 @@
 		                		asdfsadfsadfsaf
 		                	</div>
 		                </td>
-		                <td class="report_count">신고횟수</td>
+		                <td class="report_count">신고횟수111</td>
 		                <td class="suspend_button"><input type="button" value="계정정지"></td>
 
 		        	</tr>
