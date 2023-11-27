@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.finalproject.team4.shouldbe.vo.QuizVO;
 import com.finalproject.team4.shouldbe.mapper.QuizMapper;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -40,7 +42,6 @@ public class QuizServiceImpl implements QuizService {
         session.setAttribute("userId", userId); // 사용자 ID 저장
     }
 
-
     @Override
     public Map<String, String> getQuizInfo() {
         HttpSession session = request.getSession();
@@ -56,13 +57,28 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public void saveQuiz(int quizId, String userId){
+        boolean exists = QuizMapper.existsQuizInfo(quizId, userId);
+        if (!exists) {
+            QuizMapper.insertQuizInfo(quizId, userId);
+        }
+    }
+
+    @Override
     public List<String> getCorrectAnswers(int quizId) {
         return QuizMapper.findAnswersByQuizId(quizId);
     }
 
-    @Override
-    public void saveQuiz(int quizId, String userId) {
-        QuizMapper.insertQuizInfo(quizId, userId);
+    @Autowired
+    public void QuizService(QuizMapper quizMapper) {
+        this.QuizMapper = quizMapper;
     }
 
+    @Override
+    @Transactional
+    public boolean createQuiz(QuizVO quizVO) {
+        QuizMapper.insertQuiz(quizVO);
+        QuizMapper.insertAnswer(quizVO);
+        return true;
+    }
 }

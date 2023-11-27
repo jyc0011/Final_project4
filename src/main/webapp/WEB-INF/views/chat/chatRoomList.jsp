@@ -9,16 +9,7 @@
 
 						<head>
 							<meta charset="UTF-8">
-							<title>Dokky - 채팅리스트</title>
-							<c:choose>
-								<c:when test="${pageContext.request.serverName == 'localhost'}">
-									<link href="/resources/css/chat/chatRoomList.css" rel="stylesheet" type="text/css">
-								</c:when>
-								<c:otherwise>
-									<link href="/ROOT/resources/css/chat/chatRoomList.css" rel="stylesheet"
-										type="text/css">
-								</c:otherwise>
-							</c:choose>
+							<title></title>
 						</head>
 						<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 

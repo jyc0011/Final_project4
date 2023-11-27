@@ -9,5 +9,9 @@ import java.util.List;
 public interface QuizMapper {
     List<QuizVO> findQuiz(@Param("level") int level);
     List<String> findAnswersByQuizId(int quizId);
+    boolean existsQuizInfo(@Param("quiz_id") int quizId, @Param("user_id") String userId);
     void insertQuizInfo(@Param("quiz_id") int quizId, @Param("user_id") String userId);
+    int insertQuiz(QuizVO quizVO);
+    void insertAnswer(QuizVO quizVO);
+
 }
