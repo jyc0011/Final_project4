@@ -52,8 +52,8 @@
 
 <script type="text/javascript">
     var ws;
-    var userName = "<%= session.getAttribute("logName") %>"; // 세션에서 userName 가져오기
-    var chatRoomId = "<%= session.getAttribute("chatRoomId") %>"; // 세션에서 chatRoomId 가져오기
+    var userName = mung1234;//session.getAttribute("logName") %>"
+    var chatRoomId = 1;// session.getAttribute("chatRoomId")
 
     function wsOpen() {
         ws = new WebSocket("ws://" + location.host + "/chating");

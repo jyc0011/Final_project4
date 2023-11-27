@@ -115,10 +115,25 @@
 		                		asdfsadfsadfsaf
 		                	</div>
 		                </td>
-		                <td class="report_count">신고횟수</td>
+		                <td class="report_count">신고횟수111</td>
 		                <td class="suspend_button"><input type="button" value="계정정지"></td>
-
 		        	</tr>
+
+					<c:forEach var="acVO" items="${aclist}">
+						<td class="reported_id">${acVO.user_id}</td>
+						<td class="user_id">${acVO.user_name}</td>
+						<td class="chat_content">
+							<div class="origin">
+								sdf
+							</div>
+							<div class="translation">
+								asdfsadfsadfsaf
+							</div>
+						</td>
+						<td class="report_count">신고횟수111</td>
+						<td class="suspend_button"><input type="button" value="계정정지"></td>
+					</c:forEach>
+
 		        </tbody>
 		    </table>
 		</div>

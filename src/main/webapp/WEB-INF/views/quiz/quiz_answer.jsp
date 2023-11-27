@@ -67,29 +67,25 @@
         });
 
         function saveQuiz() {
-            // Save button click event
-            $('input[type="button"]').on('click', function () {
-                var quizId = '${quizInfo.quiz_id}';
-                var userId = '${quizInfo.user_id}';
-                $.ajax({
-                    url: '/quiz/save',
-                    type: 'POST',
-                    data: {
-                        quiz_id: quizId,
-                        user_id: userId
-                    },
-                    success: function (response) {
-                        alert('정보가 성공적으로 저장되었습니다.');
-                    },
-                    error: function (xhr, status, error) {
-                        console.log("Error: " + error);
-                    }
-                });
+            var quizId = '${quizInfo.quizId}';
+            $.ajax({
+                url: '/quiz/save',
+                type: 'POST',
+                data: {
+                    quizId: quizId
+                },
+                success: function () {
+                    alert('정보가 성공적으로 저장되었습니다.');
+                },
+                error: function () {
+                    console.log("Error");
+                }
             });
         }
 
         function nextQuiz() {
             var level = '${quizInfo.level}'; // JSP 변수에서 레벨 가져오기
+            console.log(level)
             var url;
             if (level === '쉬움') {
                 url = '/quiz/easy';

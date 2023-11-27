@@ -7,9 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -27,9 +30,20 @@ public class QuizController {
     }
 
     @GetMapping("/create")
-    public String quiz_create() {
-        return "/quiz/quiz_create";
+    public String quiz_create(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        if (!"Y".equals(request.getSession().getAttribute("logStatus"))) {
+            return "redirect:/login";
+        }
+        return "quiz/quiz_create";
     }
+
+
+    @PostMapping("/createOk")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void quizCreateOk(@RequestBody QuizVO quizVO) {
+        quizService.createQuiz(quizVO);
+    }
+
 
     @GetMapping("/easy")
     public String quiz_easy(Model model, HttpSession session) {
@@ -86,13 +100,17 @@ public class QuizController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveQuiz(@RequestParam("quiz_id") int quizId,
-                                      @RequestParam("user_id") String userId) {
-        try {
-            quizService.saveQuiz(quizId, userId);
-            return ResponseEntity.ok("Quiz saved successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving quiz");
+    public void saveQuiz(@RequestParam("quizId") int quizId, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("logId");
+        if (userId == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User is not logged in");
         }
+        quizService.saveQuiz(quizId, userId);
     }
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<String> handleResponseStatusException(ResponseStatusException ex) {
+        return new ResponseEntity<>(ex.getReason(), ex.getStatus());
+    }
+
 }

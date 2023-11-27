@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 		<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-			<!--  <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>-->
 				<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-					<!-- <%@ include file="../includes/common.jsp" %>  -->
-						<c:set var="random">
-							<%= java.lang.Math.round(java.lang.Math.random() * 123456) %>
-						</c:set>
 						<jsp:useBean id="today" class="java.util.Date" />
 
 						<!DOCTYPE html>
@@ -14,16 +9,7 @@
 
 						<head>
 							<meta charset="UTF-8">
-							<title>Dokky - 채팅리스트</title>
-							<c:choose>
-								<c:when test="${pageContext.request.serverName == 'localhost'}">
-									<link href="/resources/css/chat/chatRoomList.css" rel="stylesheet" type="text/css">
-								</c:when>
-								<c:otherwise>
-									<link href="/ROOT/resources/css/chat/chatRoomList.css" rel="stylesheet"
-										type="text/css">
-								</c:otherwise>
-							</c:choose>
+							<title></title>
 						</head>
 						<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 

@@ -18,11 +18,4 @@ public class HomeController {
 		return "header";
 	}
 
-	@RequestMapping("/log")
-	public String home(HttpSession session) {
-		//자동로그인용 나중에 지워야함
-		session.setAttribute("logId", "helloworld2");
-		session.setAttribute("logStatus","Y");
-		return "home";
-	}
 }
