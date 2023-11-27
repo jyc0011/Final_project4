@@ -108,8 +108,19 @@
 		                <td class="writing_count">작성글/댓글 수</td>
 		                <td class="report_count">신고횟수</td>
 		                <td class="suspend_button"><input type="button" value="계정정지"></td>
-
 		        	</tr>
+					<c:forEach var="amVO" items="${amlist}">
+						<tr class="management_list">
+							<td class="user_name">${amVO.profile_img}</td>
+							<td class="user_name">${amVO.user_name}</td>
+							<td class="user_id">${amVO.user_id}</td>
+							<td class="time">${amVO.time}</td>
+							<td class="writing_count">작성글/댓글 수</td>
+							<td class="report_count">${amVO.count_report}</td>
+							<td class="suspend_button"><input type="button" value="계정정지"></td>
+						</tr>
+					</c:forEach>
+
 		        </tbody>
 		    </table>
 		</div>

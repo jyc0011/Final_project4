@@ -107,8 +107,21 @@
 		                <td class="writing_count">작성글/댓글 수</td>
 		                <td class="report_count">신고횟수</td>
 		                <td class="unsuspend_button"><input type="button" value="정지해제"></td>
-
 		        	</tr>
+
+					<c:forEach var="asVO" items="${aslist}">
+						<tr class="management_list">
+							<td class="user_name"></td>
+							<td class="user_name">${asVO.user_name}</td>
+							<td class="user_id">아이디</td>
+							<td class="time">정지일</td>
+							<th class="suspend_reason">정지사유</th>
+							<td class="writing_count">작성글/댓글 수</td>
+							<td class="report_count">신고횟수</td>
+							<td class="unsuspend_button"><input type="button" value="정지해제"></td>
+						</tr>
+					</c:forEach>
+
 		        </tbody>
 		    </table>
 		</div>

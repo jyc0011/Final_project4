@@ -106,8 +106,18 @@
 		                <td class="withdrawn_date">탈퇴일</td>
 		                <td class="writing_count">작성글/댓글 수</td>
 		                <td class="report_count">신고횟수</td>
-
 		        	</tr>
+					<c:forEach var="awVO" items="${awlist}">
+						<tr class="management_list">
+							<td class="user_name"></td>
+							<td class="user_name">${awVO.user_name}</td>
+							<td class="user_id">아이디</td>
+							<td class="time">가입일</td>
+							<td class="withdrawn_date">탈퇴일</td>
+							<td class="writing_count">작성글/댓글 수</td>
+							<td class="report_count">신고횟수</td>
+						</tr>
+					</c:forEach>
 		        </tbody>
 		    </table>
 		</div>
