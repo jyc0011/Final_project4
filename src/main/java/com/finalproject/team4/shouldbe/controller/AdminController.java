@@ -1,10 +1,22 @@
 package com.finalproject.team4.shouldbe.controller;
 
+import com.finalproject.team4.shouldbe.service.AdminService;
+import com.finalproject.team4.shouldbe.service.UserService;
+import com.finalproject.team4.shouldbe.vo.AdminChatVO;
+import com.finalproject.team4.shouldbe.vo.AdminMemberVO;
+import com.finalproject.team4.shouldbe.vo.AdminSuspendedVO;
+import com.finalproject.team4.shouldbe.vo.AdminWithdrawnVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 public class AdminController {
+	@Autowired
+	AdminService service;
 	@GetMapping("/admin")
 	public String admin() {
 		return "admin/admin_dashboard";
@@ -18,23 +30,39 @@ public class AdminController {
 		return "admin/admin_board";
 	}
 	@GetMapping("/admin/member/management")
-	public String GoMember_management() {
-		return "management/member_management";
+	public ModelAndView GoMember_management() {
+		ModelAndView mav=new ModelAndView();
+		List<AdminMemberVO> amlist=service.adminMemberList();
+		mav.addObject("amlist", amlist);
+		mav.setViewName("management/member_management");
+		return mav;
 	}
 	
 	@GetMapping("/admin/suspended/management")
-	public String GoSuspended_management() {
-		return "management/suspended_management";
+	public ModelAndView GoSuspended_management() {
+		ModelAndView mav=new ModelAndView();
+		List<AdminSuspendedVO> aslist=service.adminSuspendedList();
+		mav.addObject("aslist", aslist);
+		mav.setViewName("management/suspended_management");
+		return mav;
 	}
 	
 	@GetMapping("/admin/withdrawn/management")
-	public String GoWithdrawn_management() {
-		return "management/withdrawn_management";
+	public ModelAndView GoWithdrawn_management() {
+		ModelAndView mav=new ModelAndView();
+		List<AdminWithdrawnVO> awlist=service.adminWithdrawnList();
+		mav.addObject("awlist", awlist);
+		mav.setViewName("management/withdrawn_management");
+		return mav;
 	}
 	
 	@GetMapping("/admin/chat/management")
-	public String GoChat_management() {
-		return "management/chat_management";
+	public ModelAndView GoChat_management() {
+		ModelAndView mav=new ModelAndView();
+		List<AdminChatVO> aclist=service.adminChatList();
+		mav.addObject("aclist", aclist);
+		mav.setViewName("management/chat_management");
+		return mav;
 	}
 	
 	@GetMapping("/admin/quiz/list")
