@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MypageVO {
     private String user_id;
+    private String user_name;
     private String password;
     private String salt;
     private String lang;
+    private String profile_img;
     private String profile_content;
 }

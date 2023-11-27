@@ -81,18 +81,20 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>글번호</th>
-								<th>제목</th>
+								<th>댓글번호</th>
+								<th>댓글작성 글</th>
+								<th>댓글내용</th>
 								<th>작성일</th>
 							</tr>
 						</thead>
 						<tbody>
 							<!-- ajax로 세팅변경 -->
-							<c:forEach var="bVO" items="${list}">
+							<c:forEach var="rVO" items="${list}">
 								<tr>
-									<td>${bVO.post_id}</td>
-									<td><a href="#">${bVO.title}</a></td>
-									<td>${bVO.write_date}</td>
+									<td>${rVO.post_id}</td>
+									<td>${rVO.comment_id}</td>
+									<td><a href="#">${rVO.content}</a></td>
+									<td>${rVO.write_date}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
