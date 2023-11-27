@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.finalproject.team4.shouldbe.mapper.MypageMapper">
+    <select id="mypage_info" resultType="MypageVO">
+        select user_id, password, lang, profile_content from users where user_id=#{param1};
+    </select>
+    <update id="mypage_edit">
+        update users set profile_content=#{profile_content}, lang=#{lang} where user_id=#{user_id};
+    </update>
+</mapper>
