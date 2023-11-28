@@ -46,6 +46,9 @@
             border-top: 4px solid #000;
             border-bottom: 4px solid #000;
         }
+        #list_head>th{
+            font-weight: bold;
+        }
         .board_list th{
             width:120px;
             height:40px;
@@ -88,9 +91,9 @@
         </nav>
         <main>
             <h1 id="boardListTitle">게시글 관리</h1>
-            <div id="searchNickname">
-                <input type="text" placeholder="닉네임 검색" style="width: 120px;">
-                <input type="button" value="검색" style="width: 80px;">
+            <div class="input-group mb-3" id="searchNickname" style="width: 250px;">
+                <input type="text" class="form-control" placeholder="닉네임 검색">
+                <button class="btn btn-dark" type="submit">검색</button>
             </div>
 
             <div class="col-sm-12" id="boardList">
@@ -114,7 +117,7 @@
                             <td class="user_id">userid</td>
                             <td class="report_count">1</td>
                             <td class="report_reason">부적절한 게시글</td>
-                            <td class="del_button"><input type="button" value="게시글삭제" style="width: 100px;"></td>
+                            <td class="del_button"><input type="button" value="게시글삭제" class="btn btn-dark"></td>
                         </tr>
                     </tbody>
                 </table>

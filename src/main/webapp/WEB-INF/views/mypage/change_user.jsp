@@ -63,6 +63,11 @@
                         return false;
                     }
                 }
+                $(function(){
+                    $("#basicimg").on('click', function(){
+                        $("#profile_img").attr("src", "${pageContext.servletContext.contextPath}/image/user.png");
+                    });
+                });
             </script>
         </head>
 
@@ -74,21 +79,20 @@
                         <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user" class="active">회원정보 수정</a></li>
                         <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
                         <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
-                        <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a></li>
                         <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
+                        <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a></li>
                     </ul>
                 </div>
                 <div id="content" class="col-10">
                     <h2 class="mb-4">회원정보수정</h2>
 
                     <div class="text-center mb-3">
-                        <img src="path_to_your_image.jpg" class="rounded-circle" alt="Profile Image"
-                            style="width: 150px; height: 150px; object-fit: cover;">
+                        <img src="${pageContext.servletContext.contextPath}/image/logo.png" id="profile_img" name="profile_img" class="rounded-circle" alt="Profile Image" style="width: 150px; height: 150px; object-fit: cover;">
                     </div>
 
                     <div class="text-center">
                         <button type="button" class="btn btn-primary me-2">이미지 변경</button>
-                        <button type="button" class="btn btn-secondary">기본 이미지로 변경</button>
+                        <button type="button" class="btn btn-secondary" id="basicimg">기본 이미지로 변경</button>
                     </div>
 
                     <form method="post" action="${pageContext.servletContext.contextPath}/mypage/editProfileOk" onsubmit="editCheck()">
