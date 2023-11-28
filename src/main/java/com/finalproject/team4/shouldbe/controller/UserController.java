@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,7 +29,6 @@ public class UserController {
     @Autowired
     EmailService emailService;
     EncryptUtil encrypt = new EncryptUtil();
-
     @GetMapping("/login")
     public String login(HttpSession session) {
         if (session.getAttribute("logStatus") == "Y") {
@@ -45,12 +45,54 @@ public class UserController {
     }
 
     @GetMapping("/create")
-    public String create_membership() {
+    public String create_membership(HttpSession session) {
+        session.invalidate();//회원가입중 새로고침시 인증정보 날리기
         return "create_membership/create_membership";
+    }
+    @PostMapping("/create/sendcode")
+    @ResponseBody
+    public boolean createSendCode(@RequestParam("email") String email, HttpSession session) {
+
+        //System.out.println(result);
+            try {
+                var authNum = emailService.sendAuthMail(email);
+                session.setAttribute("authNum", authNum);
+                session.setAttribute("authTime", System.currentTimeMillis());
+                return true;
+            }catch(Exception e){
+            }
+        return false;
+    }
+
+    @PostMapping("/create/verify")
+    @ResponseBody
+    public boolean createVerifyCode(@RequestParam("code") String code, HttpSession session) {
+        System.out.println("/create/verify");
+        var time = (long)session.getAttribute("authTime");
+        if(System.currentTimeMillis() > time+1000*60*3){
+            //System.out.println("시간초과");
+            session.removeAttribute("authNum");
+            session.removeAttribute("authTime");
+            return false;
+        }
+        if(!code.equals(session.getAttribute("authNum"))){
+            //System.out.println("번호미일치");
+            return false;
+        }
+        //인증성공
+        session.removeAttribute("authNum");
+        session.removeAttribute("authTime");
+        session.setAttribute("emailValid", "Y");
+
+        return true;
     }
 
     @PostMapping("/createOk")
-    public String createOk(UserVO vo) {
+    public String createOk(UserVO vo, HttpSession session, RedirectAttributes redirect) {
+        if(session.getAttribute("emailValid")!="Y" || session.getAttribute("idValid")!="Y"){
+            redirect.addFlashAttribute("result", "이메일, 아이디 중복검사를 해주세요");
+            return "redirect:/create";
+        }
 
         //Salt 생성
         var salt = encrypt.getSalt();
@@ -64,15 +106,16 @@ public class UserController {
         //System.out.println(vo);
 
         int result = userService.useridInsert(vo);
-        return "login/login_form";
+        return "login/create_success";
     }
 
     @PostMapping("/idcheck")
     @ResponseBody
-    public boolean idCheck(@RequestParam("userid") String userid) {
+    public boolean idCheck(@RequestParam("userid") String userid, HttpSession session) {
         int result = userService.useridCheck(userid);
         if (result == 0) {
             //중복x
+            session.setAttribute("idValid", "Y");
             return true;
         } else {
             //중복
@@ -82,24 +125,20 @@ public class UserController {
     }
 
     @PostMapping("/loginOk")
-    public ModelAndView loginOk(HttpSession session, @RequestParam("userid") String userid, @RequestParam("userpwd") String userpwd) {
+    public String loginOk(HttpSession session, @RequestParam("userid") String userid, @RequestParam("userpwd") String userpwd, RedirectAttributes redirect) {
         LoginVO vo = userService.userLoginCheck(userid);
-        ModelAndView mav = new ModelAndView();
         if (vo == null) {//로그인 실패
-            mav.addObject("result", "로그인 실패, 아이디를 확인해주세요!");
-            mav.setViewName("login/login_form");
-            return mav;
+            redirect.addFlashAttribute("result", "로그인 실패, 아이디를 확인해주세요!");
+            return "redirect:/login";
         } else if (encrypt.encrypt(userpwd, vo.getSalt()).equals(vo.getPassword())) {
             session.setAttribute("logStatus", "Y");
             session.setAttribute("logName", vo.getUser_name());
             session.setAttribute("logId", userid);
-            mav.setViewName("redirect:/");
-            return mav;
+            return "redirect:/";
         }
 
-        mav.addObject("result", "로그인 실패, 비밀번호를 확인해주세요!");
-        mav.setViewName("login/login_form");
-        return mav;
+        redirect.addFlashAttribute("result", "로그인 실패, 비밀번호를 확인해주세요!");
+        return "redirect:/login";
 
     }
 
@@ -131,15 +170,16 @@ public class UserController {
         //System.out.println(result);
         if(result == 1){
             //email발송
-            var authNum = emailService.sendAuthMail(email);
-           // System.out.println(authNum);
-            session.setAttribute("authNum", authNum);
-            session.setAttribute("authTime", System.currentTimeMillis());
-
-            return true;
-
+            try {
+                var authNum = emailService.sendAuthMail(email);
+                // System.out.println(authNum);
+                session.setAttribute("authNum", authNum);
+                session.setAttribute("authTime", System.currentTimeMillis());
+                return true;
+            }catch(Exception e){
+                return false;
+            }
         }
-
         return false;
     }
     @PostMapping("/login/verify")
@@ -148,12 +188,18 @@ public class UserController {
         var time = (long)session.getAttribute("authTime");
         if(System.currentTimeMillis() > time+1000*60*3){
             //System.out.println("시간초과");
+            session.removeAttribute("authNum");
+            session.removeAttribute("authTime");
             return false;
         }
         if(!code.equals(session.getAttribute("authNum"))){
             //System.out.println("번호미일치");
+            session.removeAttribute("authNum");
+            session.removeAttribute("authTime");
             return false;
         }
+        session.removeAttribute("authNum");
+        session.removeAttribute("authTime");
         //임시비밀번호 생성
         String newPass = emailService.sendNewPasswd(email);
         //Salt 생성
