@@ -54,7 +54,7 @@
 		
 				#quiz_list_title{
 			text-align: center;
-			border-bottom: 1px solid #000;
+			border-bottom: 4px solid #000;
 			
 		}
 		#user_input_list{
@@ -112,7 +112,9 @@
 			line-height:150px;
 			font-size: 1.5em;
 		}
-
+		h1{
+			padding-bottom: 20px;
+		}
 		
 
 	</style>
@@ -140,13 +142,13 @@
 				<div id="user_quiz">단어</div>
 				<div id="user_answer">사용자가 입력한 정답</div>
 				<div id="user_quiz_grade">
-					<button>쉬움</button>
-					<button>중간</button>
-					<button>어려움</button>
+					<button class="btn btn-secondary">쉬움</button>
+					<button class="btn btn-secondary">중간</button>
+					<button class="btn btn-secondary">어려움</button>
 				</div>
 				<div id="do_reg">
-					<button>등록</button>
-					<button>삭제</button>
+					<button class="btn btn-dark">등록</button>
+					<button class="btn btn-dark">삭제</button>
 				</div>
 			</div>
 			
@@ -154,13 +156,13 @@
 				<div id="user_quiz">단어</div>
 				<div id="user_answer">사용자가 입력한 정답</div>
 				<div id="user_quiz_grade">
-					<button>쉬움</button>
-					<button>중간</button>
-					<button>어려움</button>
+					<button class="btn btn-secondary">쉬움</button>
+					<button class="btn btn-secondary">중간</button>
+					<button class="btn btn-secondary">어려움</button>
 				</div>
 				<div id="do_reg">
-					<button>등록</button>
-					<button>삭제</button>
+					<button class="btn btn-dark">등록</button>
+					<button class="btn btn-dark">삭제</button>
 				</div>
 			</div>
 			
@@ -168,13 +170,13 @@
 				<div id="user_quiz">단어</div>
 				<div id="user_answer">사용자가 입력한 정답</div>
 				<div id="user_quiz_grade">
-					<button>쉬움</button>
-					<button>중간</button>
-					<button>어려움</button>
+					<button class="btn btn-secondary">쉬움</button>
+					<button class="btn btn-secondary">중간</button>
+					<button class="btn btn-secondary">어려움</button>
 				</div>
 				<div id="do_reg">
-					<button>등록</button>
-					<button>삭제</button>
+					<button class="btn btn-dark">등록</button>
+					<button class="btn btn-dark">삭제</button>
 				</div>
 			</div>
 		</div>

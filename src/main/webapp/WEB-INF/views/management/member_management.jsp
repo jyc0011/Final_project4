@@ -107,7 +107,7 @@
 		                <td class="time">가입일</td>
 		                <td class="writing_count">작성글/댓글 수</td>
 		                <td class="report_count">신고횟수</td>
-		                <td class="suspend_button"><input type="button" value="계정정지"></td>
+						<td class="suspend_button"><input type="button" value="계정정지"></td>
 		        	</tr>
 					<c:forEach var="amVO" items="${amlist}">
 						<tr class="management_list">

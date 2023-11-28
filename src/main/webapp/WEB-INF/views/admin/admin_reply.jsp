@@ -88,9 +88,9 @@
         </nav>
         <main>
             <h1 id="ReplyListTitle">댓글 관리</h1>
-            <div id="searchNickname">
-                <input type="text" placeholder="닉네임 검색" style="width: 120px;">
-                <input type="button" value="검색" style="width: 80px;">
+            <div class="input-group mb-3" id="searchNickname" style="width: 250px;">
+                <input type="text" class="form-control" placeholder="닉네임 검색">
+                <button class="btn btn-dark" type="submit">검색</button>
             </div>
 
             <div class="col-sm-12" id="boardList">
@@ -114,7 +114,7 @@
                             <td class="user_id">userid</td>
                             <td class="report_count">1</td>
                             <td class="report_reason">댓글도배</td>
-                            <td class="del_button"><input type="button" value="댓글삭제" style="width: 80px;"></td>
+                            <td class="del_button"><input type="button" value="댓글삭제" class="btn btn-dark"></td>
                         </tr>
                     </tbody>
                 </table>

@@ -107,6 +107,7 @@
 		                <td class="writing_count">작성글/댓글 수</td>
 		                <td class="report_count">신고횟수</td>
 		                <td class="unsuspend_button"><input type="button" value="정지해제"></td>
+
 		        	</tr>
 
 					<c:forEach var="asVO" items="${aslist}">
