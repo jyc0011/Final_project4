@@ -5,112 +5,125 @@ import com.finalproject.team4.shouldbe.service.QuizService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Arrays;
+
+
 
 @Controller
-@RequestMapping("/quiz")
 public class QuizController {
     @Autowired
     private QuizService quizService;
 
-    @GetMapping("/main")
+    @GetMapping("/quiz/main")
     public String quiz_list() {
         return "/quiz/quiz_main";
     }
 
-    @GetMapping("/create")
-    public String quiz_create(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    @GetMapping("/quiz/create")
+    public String quiz_create(HttpServletRequest request) {
         if (!"Y".equals(request.getSession().getAttribute("logStatus"))) {
             return "redirect:/login";
         }
-        return "quiz/quiz_create";
+        return "/quiz/quiz_create";
     }
 
-
-    @PostMapping("/createOk")
+    @PostMapping("/quiz/createOk")
     @ResponseStatus(HttpStatus.CREATED)
     public void quizCreateOk(@RequestBody QuizVO quizVO) {
         quizService.createQuiz(quizVO);
     }
 
-
-    @GetMapping("/easy")
-    public String quiz_easy(Model model, HttpSession session) {
+    @GetMapping("/quiz/easy")
+    public ModelAndView quiz_easy(HttpServletRequest request, HttpSession session) {
+        if (!"Y".equals(request.getSession().getAttribute("logStatus"))) {
+            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+            return modelAndView;
+        }
         String userId = (String) session.getAttribute("userId");
         QuizVO quiz = quizService.selectRandomQuiz(userId, 1);
-        model.addAttribute("quiz", quiz);
-        session.setAttribute("quizId", quiz.getQuiz_id());
-        return "/quiz/quiz_easy";
+        System.out.println(quiz);
+        ModelAndView modelAndView = new ModelAndView("/quiz/quiz_easy");
+        modelAndView.addObject("quiz", quiz);
+        return modelAndView;
     }
 
-    @PostMapping("/checkAnswer")
-    public ModelAndView checkAnswer(@RequestParam("quizContent") String quizContent,
-                                    @RequestParam("userAnswer") String userAnswer,
-                                    @RequestParam("level") String level,
-                                    HttpSession session) {
-        ModelAndView mav = new ModelAndView();
-        String userId = (String) session.getAttribute("userId");
-        Integer quizId = (Integer) session.getAttribute("quizId"); // 세션에서 퀴즈 번호 가져오기
-        List<String> correctAnswers = quizService.getCorrectAnswers(quizId); // 정답 리스트 가져오기
+    @PostMapping("/quiz/checkAnswer")
+    public ModelAndView checkAnswer(@RequestParam("quiz_content") String quiz_content,
+                                    @RequestParam("user_answer") String user_answer,
+                                    @RequestParam("level") int level,
+                                    @RequestParam("quiz_lang") String quiz_lang,
+                                    @RequestParam("quiz_id") int quiz_id,
+                                    HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("/quiz/quiz_answer");
+        QuizVO quizVO = new QuizVO();
+        quizVO.setQuiz_id(quiz_id);
+        quizVO.setLevel(level);
+        quizVO.setQuiz_lang(quiz_lang);
+        quizVO.setQuiz_content(quiz_content);
+        quizVO.setUser_answer(user_answer);
+        String correctAnswers = quizService.getCorrectAnswers(quiz_id);
+        String[] answersArray = correctAnswers.split(",\\s*"); // 쉼표와 공백으로 구분
+        boolean isCorrect = Arrays.asList(answersArray).contains(user_answer);
+        String result = isCorrect ? "correct" : "incorrect";
+        quizVO.setAnswer(correctAnswers);
 
-        String result = correctAnswers.contains(userAnswer) ? "correct" : "incorrect"; // 사용자 답변 확인
-        quizService.saveQuizInfo(quizContent, userAnswer, correctAnswers, result, level, quizId, userId);
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("logId");
+        quizService.saveQuizAnswer(quiz_id, userId, result);
 
-        mav.addObject("result", result); // 결과를 모델에 추가
-        mav.setViewName("redirect:/quiz/answer"); // 결과 페이지로 리디렉션
+        mav.addObject("user_answer",user_answer);
+        mav.addObject("quizVO", quizVO);
+        mav.addObject("result", result);
         return mav;
     }
 
 
-    @GetMapping("/medium")
-    public String quiz_medium(Model model, HttpSession session) {
+    @GetMapping("/quiz/medium")
+    public ModelAndView quiz_medium(HttpServletRequest request, HttpSession session) {
+        if (!"Y".equals(request.getSession().getAttribute("logStatus"))) {
+            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+            return modelAndView;
+        }
         String userId = (String) session.getAttribute("userId");
         QuizVO quiz = quizService.selectRandomQuiz(userId, 2);
-        model.addAttribute("quiz", quiz);
-        session.setAttribute("quizId", quiz.getQuiz_id());
-        return "/quiz/quiz_medium";
-    }
-
-    @GetMapping("/hard")
-    public String quiz_hard(Model model, HttpSession session) {
-        String userId = (String) session.getAttribute("userId");
-        QuizVO quiz = quizService.selectRandomQuiz(userId, 3);
-        model.addAttribute("quiz", quiz);
-        session.setAttribute("quizId", quiz.getQuiz_id());
-        return "/quiz/quiz_hard";
-    }
-
-    @GetMapping("/answer")
-    public ModelAndView showAnswer() {
-        Map<String, String> quizInfo = quizService.getQuizInfo();
-        ModelAndView modelAndView = new ModelAndView("/quiz/quiz_answer");
-        modelAndView.addObject("quizInfo", quizInfo);
+        System.out.println(quiz);
+        ModelAndView modelAndView = new ModelAndView("/quiz/quiz_medium");
+        modelAndView.addObject("quiz", quiz);
         return modelAndView;
     }
 
-    @PostMapping("/save")
-    public void saveQuiz(@RequestParam("quizId") int quizId, HttpServletRequest request) {
+    @GetMapping("/quiz/hard")
+    public ModelAndView quiz_hard(HttpServletRequest request, HttpSession session) {
+        if (!"Y".equals(request.getSession().getAttribute("logStatus"))) {
+            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+            return modelAndView;
+        }
+        String userId = (String) session.getAttribute("userId");
+        QuizVO quiz = quizService.selectRandomQuiz(userId, 3);
+        System.out.println(quiz);
+        ModelAndView modelAndView = new ModelAndView("/quiz/quiz_hard");
+        modelAndView.addObject("quiz", quiz);
+        return modelAndView;
+    }
+
+    @PostMapping("/quiz/save")
+    public ResponseEntity<?> saveQuiz(@RequestParam("quizId") int quizId, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("logId");
         if (userId == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User is not logged in");
         }
-        quizService.saveQuiz(quizId, userId);
+        boolean saved = quizService.saveQuiz(quizId, userId);
+        if (saved) {
+            return new ResponseEntity<>(HttpStatus.CREATED); // Quiz saved successfully
+        } else {
+            return new ResponseEntity<>("Quiz already exists", HttpStatus.CONFLICT); // Or any other appropriate status
+        }
     }
-    @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<String> handleResponseStatusException(ResponseStatusException ex) {
-        return new ResponseEntity<>(ex.getReason(), ex.getStatus());
-    }
-
 }
