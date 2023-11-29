@@ -97,9 +97,9 @@
     </form>
     <div id="link">
         <ul>
-            <li><a href="create_membership">회원가입</a></li>
-            <li><a href="find_id">아이디찾기</a></li>
-            <li><a href="find_pwd">비밀번호찾기</a></li>
+            <li><a href="create">회원가입</a></li>
+            <li><a href="login/findid">아이디찾기</a></li>
+            <li><a href="login/findpwd">비밀번호찾기</a></li>
         </ul>
     </div>
 </main>

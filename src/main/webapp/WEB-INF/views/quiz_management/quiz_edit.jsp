@@ -41,13 +41,13 @@
 		}
 		#quiz_list_title{
 			text-align: center;
-			border-bottom: 1px solid #000;
+			border-bottom: 4px solid #000;
 			
 		}
 		#quiz_content{
 			width:900px;
-			height:300px;
-			line-height:300px;
+			height:150px;
+			line-height:150px;
 			font-size:4em;
 			text-align: center;
 			margin:0 auto;
@@ -55,12 +55,13 @@
 		}
 		#answerlist{
 			width:900px;
-			height:600px;
 			margin:0 auto;
+			padding-bottom: 30px;
 			border-bottom: 1px solid #ddd;
 		}
 		#answer{
 			margin: 0 auto;
+			height: 80px;
 			display: flex;
 			flex-direction: row;
   			justify-content: space-around;
@@ -68,24 +69,35 @@
 		}
 		#quiz_answer{
 			width:80%;
-			height:100px;
+			height:80px;
 			font-size: 2em;
 			
 		}
 		#quiz_delete{
-			width: 100px;
-			height:100px;
+			width: 80px;
+			height:80px;
 			font-size: 2em;
 		}
-		
+		h1{
+			padding-bottom: 20px;
+		}
 		/*#quiz_grade{
 			display: flex;
 			flex-direction: column;
   			justify-content: space-around;
   			margin: 10px auto;
 		}*/
-
-		
+		#input-text{
+			width: 280px;
+			margin-top: 20px;
+		}
+		#editDelForm{
+			width: 900px;
+			margin: 0;
+			display: flex;
+			justify-content: space-around;
+			line-height: 70px;
+		}
 
 	</style>
 </head>
@@ -106,9 +118,17 @@
 	</div>
 	<div id="member_management">
 		<h1 id="quiz_list_title">퀴즈 수정/삭제</h1>
-		
+		<div id="editDelForm">
+			<div class="input-group mb-3" id="input-text">
+				<input type="text" class="form-control" placeholder="추가할 단어 작성">
+				<button class="btn btn-dark">추가</button>
+			</div>
+			<div>
+				<button class="btn btn-dark">단어 삭제</button>
+			</div>
+		</div>
 		<div id="quiz_content">
-			combination
+			<p>combination</p>
 		</div>
 		<div id="answerlist">
 			<div id="answer">
@@ -116,13 +136,7 @@
 				<button id="quiz_delete"> - </button>
 			</div>
 		</div>
-		<div>
-			<input type="text">
-			<button>추가</button>
-		</div>
-		<div>
-			<button>단어 삭제</button>
-		</div>
+
 		
 		
 

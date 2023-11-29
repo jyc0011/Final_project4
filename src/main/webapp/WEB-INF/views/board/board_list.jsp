@@ -72,13 +72,6 @@
                     color:  yellow;
                 }
 
-                footer {
-                    height: 80px;
-                    line-height: 80px;
-                    text-align: center;
-                    background-color: #ddd;
-                    margin: 10px 0;
-                }
 
                 #boardTop>div {
                     float: left;

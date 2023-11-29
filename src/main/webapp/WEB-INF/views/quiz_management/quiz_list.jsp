@@ -58,9 +58,10 @@
 		}
 		#quiz_list_title{
 			text-align: center;
+			border-bottom: 4px solid #000;
 		}
 		#reg_buttons{
-			margin-bottom: 50px;
+			margin: 20px 0;
 			text-align: right;
 		}
 		.qqlist{
@@ -71,13 +72,14 @@
 			margin:0 5px;
 			overflow-y:scroll;
 		}
-		
+
 		/*단어리스트*/
 		#list_head{
 			border-bottom: 3px solid #000;
 			background-color: #ddd;
 		}
-		.management_list th{
+		.management_list{
+			border-bottom: 1px solid #ddd;
 		}
 		.management_list td{
 		}
@@ -88,7 +90,9 @@
 		.quiz_content{
 			width: 50%;	
 		}
-		
+		h1{
+			padding-bottom: 20px;
+		}
 		
 
 	</style>
@@ -117,8 +121,8 @@
 		<h1 id="quiz_list_title">퀴즈 관리</h1>
 		
 		<div id="reg_buttons">
-			<input type="button" value="관리자 퀴즈 등록" onclick="location.href='${pageContext.servletContext.contextPath}/admin/quiz/reg_manager'">
-			<input type="button" value="유저 퀴즈 등록" onclick="location.href='${pageContext.servletContext.contextPath}/admin/quiz/reg_user'">
+			<input type="button" value="관리자 퀴즈 등록" onclick="location.href='${pageContext.servletContext.contextPath}/admin/quiz/reg_manager'" class="btn btn-dark">
+			<input type="button" value="유저 퀴즈 등록" onclick="location.href='${pageContext.servletContext.contextPath}/admin/quiz/reg_user'" class="btn btn-dark">
 		</div>
 		
 		<div id="quiz_list">
@@ -137,13 +141,61 @@
 			        	<tr class="management_list">
 			        		<td class="lise_number">No.</td>
 			                <td class="quiz_content">단어</td>
-			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"></td>
+			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
 			        	</tr>
 			        	<tr class="management_list">
 			        		<td class="lise_number">No.</td>
 			                <td class="quiz_content">단어</td>
-			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"></td>
-			        	</tr>
+			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+			        	</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr><tr class="management_list">
+							<td class="lise_number">No.</td>
+							<td class="quiz_content">단어</td>
+							<td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
+						</tr>
 			        </tbody>
 			    </table>
 			</div>
@@ -162,7 +214,7 @@
 			        	<tr class="management_list">
 			        		<td class="lise_number">No.</td>
 			                <td class="quiz_content">단어</td>
-			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"></td>
+			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
 			        	</tr>
 			        </tbody>
 			    </table>
@@ -182,7 +234,7 @@
 			        	<tr class="management_list">
 			        		<td class="lise_number">No.</td>
 			                <td class="quiz_content">단어</td>
-			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"></td>
+			                <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()" class="btn btn-dark"></td>
 			        	</tr>
 			        </tbody>
 			    </table>

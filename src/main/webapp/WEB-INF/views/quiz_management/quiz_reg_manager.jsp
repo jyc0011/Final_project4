@@ -41,7 +41,7 @@
 		}
 		#quiz_list_title{
 			text-align: center;
-			border-bottom: 1px solid #000;
+			border-bottom: 4px solid #000;
 			
 		}
 		
@@ -68,26 +68,27 @@
 		}
 		
 		#reg_button{
-			width: 400px;
-			height: 200px;
-			margin: 50px auto;
+			width: 350px;
+			height: 100px;
+			margin: 25px auto;
 			font-size: 3em;
 		}
 		.qqlist{
-
-			width: 300px;
-			height: 150px;
+			width: 250px;
+			height: 100px;
 			border: 1px solid #ddd;
-			font-size: 3em;
+			font-size: 2em;
 		}
 		.quiz_txt{
 			width: 700px;
-			height: 200px;
-			font-size: 4em;
+			height: 120px;
+			font-size: 3em;
 			margin:10px auto;
-			
+			padding: 3px 20px;
 		}
-		
+		h1{
+			padding-bottom: 20px;
+		}
 
 	</style>
 </head>
@@ -115,13 +116,13 @@
 		</div>
 		
 		<div id="quiz_grade">
-			<button class="qqlist" id="quiz_easy">쉬움</button>
-			<button class="qqlist" id="quiz_medium">중간</button>
-			<button class="qqlist" id="quiz_hard">어려움</button>
+			<button class="qqlist btn btn-secondary" id="quiz_easy">쉬움</button>
+			<button class="qqlist btn btn-secondary" id="quiz_medium">중간</button>
+			<button class="qqlist btn btn-secondary" id="quiz_hard">어려움</button>
 		</div>
 		
 		<div id="quiz_reg">
-			<button id="reg_button">등록하기</button>
+			<button id="reg_button" class="btn btn-dark">등록하기</button>
 		</div>
 
 	</div>
