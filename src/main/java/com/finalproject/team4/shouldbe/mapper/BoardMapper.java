@@ -9,21 +9,19 @@ import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    public List<BoardVO> boardPageList();
+    public int boardInsert(BoardVO vo);
 
-    public int BoardInsert(BoardVO vo);
-
-    public List<BoardVO> BoardPageList(PagingVO pVO);
+    public List<BoardVO> boardPageList(PagingVO pVO);
 
 	public int totalRecord(PagingVO pVO);
 
-	public BoardVO BoardSelect(int post_id);
+	public BoardVO boardSelect(int post_id);
 
 	public void hitCount(int post_id);
 
-	public int BoardUpdate(BoardVO vo);
+	public int boardUpdate(BoardVO vo);
 
-	public int BoardDelete(int post_id);
+	public int boardDelete(int post_id);
 
 	public void increaseLike(int post_id);
 }
