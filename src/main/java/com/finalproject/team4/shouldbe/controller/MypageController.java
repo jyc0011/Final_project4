@@ -89,14 +89,12 @@ public class MypageController {
     public ModelAndView saveUser(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView("mypage/save_user");
 
-        String userId = (String) session.getAttribute("LogId");
+        String userId = (String) session.getAttribute("logId");
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
         pvo.setPage(page);
-
         pvo.setTotalRecord(service.totalRecord(userId));
         List<SaveMessageVO> saveMessages = service.getSaveMessageList(pvo, userId);
-
         mav.addObject("saveMessages", saveMessages);
         mav.addObject("pVO", pvo);
 

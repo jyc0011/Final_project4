@@ -1,7 +1,7 @@
 package com.finalproject.team4.shouldbe.service;
 
 import com.finalproject.team4.shouldbe.mapper.ChatMapper;
-import com.finalproject.team4.shouldbe.vo.messageVO;
+import com.finalproject.team4.shouldbe.vo.MessageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class ChatServiceImpl implements ChatService {
     ChatMapper chatMapper;
 
     @Override
-    public void saveMessage(messageVO message) {
+    public void saveMessage(MessageVO message) {
 
         chatMapper.insertMessage(message);
     }

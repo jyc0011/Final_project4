@@ -12,6 +12,6 @@ public interface MypageMapper {
     public int mypage_edit(MypageVO vo);
     public List<BoardVO> mypage_post_board(String userid); // 글목록 보기
     public List<BoardReplyVO> mypage_post_board_reply(String userid); // 댓글목록보기
-    int countSaveMessages(String userid);
-    List<SaveMessageVO> selectSaveMessages(@Param("pvo") PagingVO pvo, @Param("userid") String userid);
+    public int countSaveMessages(String userid);
+    public List<SaveMessageVO> selectSaveMessages(@Param("pvo") PagingVO pvo, @Param("userid") String userid);
 }
