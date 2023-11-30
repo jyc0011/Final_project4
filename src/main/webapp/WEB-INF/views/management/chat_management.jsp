@@ -133,9 +133,7 @@
 		                </td>
 		                <td class="report_count">신고횟수111</td>
 		                <td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
-
 		        	</tr>
-
 					<c:forEach var="acVO" items="${aclist}">
 						<tr>
 							<td class="reported_id">${acVO.user_id}</td>
@@ -152,47 +150,8 @@
 							<td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
 						</tr>
 					</c:forEach>
-
-
 		        </tbody>
 		    </table>
-				<thead id="list_head">
-				<tr class="management_list">
-					<th class="reported_id">신고받은 ID</th>
-					<th class="user_id">신고한 ID</th>
-					<th class="chat_content">채팅 내용</th>
-					<th class="report_count">신고횟수</th>
-					<th class="suspend_button"></th>
-				</tr>
-				</thead>
-				<tbody id="list_content">
-				<!-- Commented out or removed example row
-                <tr class="management_list">
-                    <td class="reported_id">신고받은 ID</td>
-                    <td class="user_id">신고한 ID</td>
-                    <td class="chat_content">
-                        <div class="origin">sdf</div>
-                        <div class="translation">as</div>
-                    </td>
-                    <td class="report_count">11</td>
-                    <td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
-                </tr>
-                -->
-				<c:forEach var="acVO" items="${aclist}">
-					<tr class="management_list">
-						<td class="reported_id">${acVO.reportedId}</td> <!-- Assuming acVO has reportedId property -->
-						<td class="user_id">${acVO.userId}</td> <!-- Assuming acVO has userId property -->
-						<td class="chat_content">
-							<div class="origin">${acVO.originalMessage}</div> <!-- Assuming acVO has originalMessage property -->
-							<div class="translation">${acVO.translatedMessage}</div> <!-- Assuming acVO has translatedMessage property -->
-						</td>
-						<td class="report_count">${acVO.reportCount}</td> <!-- Assuming acVO has reportCount property -->
-						<td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
-					</tr>
-				</c:forEach>
-				</tbody>
-			</table>
-
 		</div>
 		<div>
 			<div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
