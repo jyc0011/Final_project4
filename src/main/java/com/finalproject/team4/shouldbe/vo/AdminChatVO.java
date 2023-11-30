@@ -20,5 +20,4 @@ public class AdminChatVO {
     private String time;
 
 
-
 }

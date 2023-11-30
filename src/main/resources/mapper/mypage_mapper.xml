@@ -2,23 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalproject.team4.shouldbe.mapper.MypageMapper">
     <select id="mypage_info" resultType="MypageVO">
-        select user_id, password, lang, profile_content from users where user_id=#{param1};
+        select user_id, password, lang, profile_content
+        from users
+        where user_id = #{param1};
     </select>
     <update id="mypage_edit">
-        update users set profile_content=#{profile_content}, lang=#{lang} where user_id=#{user_id};
+        update users
+        set profile_content=#{profile_content},
+            lang=#{lang}
+        where user_id = #{user_id};
     </update>
     <select id="mypage_post_board" resultType="BoardVO">
-        select post_id, user_id, title, date_format(write_date, '%y-%m-%d') write_date from posts where user_id=#{user_id};
+        select post_id, user_id, title, date_format(write_date, '%y-%m-%d') write_date
+        from posts
+        where user_id = #{user_id};
     </select>
     <select id="mypage_post_board_reply" resultType="BoardReplyVO">
-        select comment_id, post_id ,user_id, content, date_format(write_date, '%y-%m-%d') write_date from comments where user_id=#{user_id};
+        select comment_id, post_id, user_id, content, date_format(write_date, '%y-%m-%d') write_date
+        from comments
+        where user_id = #{user_id};
     </select>
     <select id="countSaveMessages" parameterType="String" resultType="int">
-        SELECT COUNT(*) FROM save_message WHERE save_user_id = #{userid}
+        SELECT COUNT(*)
+        FROM save_message
+        WHERE save_user_id = #{userid}
     </select>
 
     <select id="selectSaveMessages" parameterType="map" resultType="SaveMessageVO">
-        SELECT msg_id, save_user_id FROM save_message
+        SELECT msg_id, save_user_id
+        FROM save_message
         WHERE save_user_id = #{userid}
         ORDER BY msg_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
@@ -26,11 +38,15 @@
 
     <select id="friendList" resultType="FriendVO">
         select user_name, profile_content, profile_img, following_user_id, followed_user_id
-        from users as u join friend as f on u.user_id = f.following_user_id 
+        from users as u
+                 join friend as f on u.user_id = f.following_user_id
         where followed_user_id = #{followed_user_id}
     </select>
 
     <delete id="friendDelete">
-        delete from friend where followed_user_id = #{param1} and following_user_id = #{param2}
+        delete
+        from friend
+        where followed_user_id = #{param1}
+          and following_user_id = #{param2}
     </delete>
 </mapper>

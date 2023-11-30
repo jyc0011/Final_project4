@@ -1,15 +1,14 @@
 package com.finalproject.team4.shouldbe.service;
 
-import java.util.List;
-
+import com.finalproject.team4.shouldbe.mapper.MypageMapper;
 import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finalproject.team4.shouldbe.mapper.MypageMapper;
+import java.util.List;
 
 @Service
-public class MypageServiceImpl implements MypageService{
+public class MypageServiceImpl implements MypageService {
     @Autowired
     MypageMapper mapper;
 
@@ -39,7 +38,7 @@ public class MypageServiceImpl implements MypageService{
     }
 
     @Override
-    public List<SaveMessageVO> getSaveMessageList(PagingVO pvo,String userid) {
+    public List<SaveMessageVO> getSaveMessageList(PagingVO pvo, String userid) {
         return mapper.selectSaveMessages(pvo, userid);
     }
 

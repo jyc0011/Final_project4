@@ -16,15 +16,18 @@
             margin: auto;
             display: flex;
         }
+
         .container {
             width: 1200px;
             display: flex;
             flex-direction: row;
         }
-        main{
+
+        main {
             width: 80%;
             padding: 20px;
         }
+
         /* 초기화 */
         body,
         ul,
@@ -43,7 +46,7 @@
             text-decoration: none;
         }
 
-        #boardTop>div {
+        #boardTop > div {
             float: left;
             width: 50%;
         }
@@ -52,7 +55,7 @@
             height: 50px;
         }
 
-        #boardTop>div:last-of-type {
+        #boardTop > div:last-of-type {
             text-align: right;
         }
 
@@ -60,12 +63,12 @@
             overflow: auto;
         }
 
-        #boardList .page>ul {
+        #boardList .page > ul {
             margin: 30px 0px 0px;
             overflow: auto;
         }
 
-        #boardList>li {
+        #boardList > li {
             float: left;
             height: 40px;
             line-height: 40px;
@@ -74,7 +77,7 @@
             padding: 0 8px;
         }
 
-        #boardList>li:nth-child(5n+2) {
+        #boardList > li:nth-child(5n+2) {
             width: 45%;
             /* 내용이 길면 ...으로 제목 겹침 방 */
             white-space: nowrap;
@@ -111,13 +114,14 @@
         .search {
             text-align: center;
         }
-        
+
         #sidebar {
             padding: 20px;
             width: 20%;
             height: 100vh;
             border-right: 1px solid #ccc;
         }
+
         .sidebar-menu {
             list-style-type: none;
             padding: 0;
@@ -134,113 +138,125 @@
         .sidebar-menu li a:hover {
             background-color: #ddd;
         }
+
         .active {
             background-color: #ffe3a0;
             color: white;
         }
 
-        #boardList li:nth-child(-n+5){
+        #boardList li:nth-child(-n+5) {
             font-weight: bold;
         }
-        #boardList li:nth-child(2), #boardList li:nth-child(n+4):nth-child(-n+5){
+
+        #boardList li:nth-child(2), #boardList li:nth-child(n+4):nth-child(-n+5) {
             text-align: center;
         }
-        #boardList>li:nth-child(5n+4), #boardList>li:nth-child(5n+5){
+
+        #boardList > li:nth-child(5n+4), #boardList > li:nth-child(5n+5) {
             text-align: center;
         }
-        #writeBtn{
+
+        #writeBtn {
             margin: 10px 0;
         }
-        #search-select{
+
+        #search-select {
             width: auto;
             height: 38px;
             margin-right: 20px;
         }
-        #searchForm{
+
+        #searchForm {
             height: 50px;
             text-align: center;
             justify-content: center;
             margin: 20px 0;
         }
-        #search-div{
+
+        #search-div {
             width: 400px;
         }
     </style>
-        </head>
+</head>
 
 
 <body>
-    <div id="wrapper" class="container">
-        <nav id="sidebar">
-            <br/>
-            <ul class="sidebar-menu">
-                <li><a href="${pageContext.servletContext.contextPath}/board/notice" class="active">공지사항</a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/board/free">자유게시판</a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/board/resources">자료게시판</a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/board/inquiries">문의게시판</a></li>
-            </ul>
-        </nav>
-        <main>
-            <h1>게시판목록</h1>
-            <div id="writeBtn">
-                <button class="btn btn-warning" onclick="location.href='${pageContext.servletContext.contextPath}/board/write'">글쓰기</button>
-            </div>
+<div id="wrapper" class="container">
+    <nav id="sidebar">
+        <br/>
+        <ul class="sidebar-menu">
+            <li><a href="${pageContext.servletContext.contextPath}/board/notice" class="active">공지사항</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/board/free">자유게시판</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/board/resources">자료게시판</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/board/inquiries">문의게시판</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>게시판목록</h1>
+        <div id="writeBtn">
+            <button class="btn btn-warning"
+                    onclick="location.href='${pageContext.servletContext.contextPath}/board/write'">글쓰기
+            </button>
+        </div>
 
-            <div id="boardTop">
-                <div>총 레코드 수 : 9999개</div>
-                <div>현재 페이지 : 1/100</div>
-            </div>
-            <ul id="boardList">
-                <li>글번호</li>
-                <li>제목</li>
-                <li>작성자</li>
-                <li>조회수</li>
-                <li>작성일</li>
-                <!-- 임시데이터 -->
-                <li>10</li>
-                <li><a href="${pageContext.servletContext.contextPath}/board/view">제목입니다</a></li>
-                <li>작성자</li>
-                <li>0</li>
-                <li>2023-11-13</li>
+        <div id="boardTop">
+            <div>총 레코드 수 : 9999개</div>
+            <div>현재 페이지 : 1/100</div>
+        </div>
+        <ul id="boardList">
+            <li>글번호</li>
+            <li>제목</li>
+            <li>작성자</li>
+            <li>조회수</li>
+            <li>작성일</li>
+            <!-- 임시데이터 -->
+            <li>10</li>
+            <li><a href="${pageContext.servletContext.contextPath}/board/view">제목입니다</a></li>
+            <li>작성자</li>
+            <li>0</li>
+            <li>2023-11-13</li>
+        </ul>
+        <!-- 페이지 박스-->
+        <div class="page">
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
             </ul>
-            <!-- 페이지 박스-->
-            <div class="page">
-                <ul>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                </ul>
-            </div>
-            <!-- 검색박스 -->
-            <div class="post-end-line">
-                <div class="inboard-search-area">
-                    <div class="search flex-container"> <!-- Add a class to make this a flex container -->
-                        <form method="get" action="${pageContext.servletContext.contextPath}/board/list"
-                              onsubmit="return searchCheck()" id="searchForm" class="d-flex flex-wrap">
-                            <select name="searchKey" class="form-select" id="search-select">
-                                <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>제목</option>
-                                <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>글내용
-                                </option>
-                                <option value="userid" ${pVO.searchKey=='userid' ? 'selected' : '' }>글쓴이
-                                </option>
-                            </select>
-                            <div class="input-group mb-3" id="search-div">
-                                <input type="text" class="form-control inboard-search" placeholder="게시판 내 검색" name="searchWord" id="inboard-search" value="${pVO.searchWord}">
-                                <button class="btn btn-warning post-button" type="submit" value="search"id="search-button">search</button>
-                            </div>
-                        </form>
-                        <c:if test="${LogStatus=='Y'}">
-                            <a href="${pageContext.servletContext.contextPath}/board/write">
-                                <input type="button" value="글 작성" class="post-button" id="write-button">
-                            </a>
-                        </c:if>
-                    </div>
+        </div>
+        <!-- 검색박스 -->
+        <div class="post-end-line">
+            <div class="inboard-search-area">
+                <div class="search flex-container"> <!-- Add a class to make this a flex container -->
+                    <form method="get" action="${pageContext.servletContext.contextPath}/board/list"
+                          onsubmit="return searchCheck()" id="searchForm" class="d-flex flex-wrap">
+                        <select name="searchKey" class="form-select" id="search-select">
+                            <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>제목</option>
+                            <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>글내용
+                            </option>
+                            <option value="userid" ${pVO.searchKey=='userid' ? 'selected' : '' }>글쓴이
+                            </option>
+                        </select>
+                        <div class="input-group mb-3" id="search-div">
+                            <input type="text" class="form-control inboard-search" placeholder="게시판 내 검색"
+                                   name="searchWord" id="inboard-search" value="${pVO.searchWord}">
+                            <button class="btn btn-warning post-button" type="submit" value="search" id="search-button">
+                                search
+                            </button>
+                        </div>
+                    </form>
+                    <c:if test="${LogStatus=='Y'}">
+                        <a href="${pageContext.servletContext.contextPath}/board/write">
+                            <input type="button" value="글 작성" class="post-button" id="write-button">
+                        </a>
+                    </c:if>
                 </div>
             </div>
-        </main>
-       <!-- <c:url var="prevUrl" value="/board/list">
+        </div>
+    </main>
+    <!-- <c:url var="prevUrl" value="/board/list">
             <c:param name="nowPage" value="${pVO.nowPage-1}"/>
             <c:param name="searchKey" value="${pVO.searchKey}"/>
             <c:param name="searchWord" value="${pVO.searchWord}"/>
@@ -298,7 +314,7 @@
                 </c:choose>
             </ul>
         </div>-->
-    </div>
+</div>
 </body>
 
 </html>

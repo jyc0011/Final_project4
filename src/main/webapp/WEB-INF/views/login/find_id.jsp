@@ -1,135 +1,136 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-		<!DOCTYPE html>
-		<html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
 
-		<head>
-			<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<title>Insert title here</title>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Insert title here</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-			<style>
-				body {
-					margin: 0 auto;
-				}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            margin: 0 auto;
+        }
 
-				main {
-					width: 1200px;
-					margin: 0 auto;
-				}
+        main {
+            width: 1200px;
+            margin: 0 auto;
+        }
 
-				#find_id_form>h1 {
-					text-align: center;
-				}
+        #find_id_form > h1 {
+            text-align: center;
+        }
 
-				#find_id_form>ul>li {
-					list-style-type: none;
-					margin-top: 5px;
-					margin-bottom: 5px;
-					margin-left: 350px;
-				}
+        #find_id_form > ul > li {
+            list-style-type: none;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-left: 350px;
+        }
 
-				.submitbtn {
-					background-color: #FFB300;
-					border: none;
-					color: white;
-				}
+        .submitbtn {
+            background-color: #FFB300;
+            border: none;
+            color: white;
+        }
 
-				#find {
-					width: 400px;
-					height: 40px;
-					line-height: 40px;
-				}
+        #find {
+            width: 400px;
+            height: 40px;
+            line-height: 40px;
+        }
 
-				#username,
-				#email {
-					width: 400px;
-					height: 40px;
-					line-height: 40px;
-				}
+        #username,
+        #email {
+            width: 400px;
+            height: 40px;
+            line-height: 40px;
+        }
 
-				#finded{
-					width: 600px;
-					height : 50px;
-					margin-left: 280px;
-					display: none;
-				}
-				#finded>p {
-					text-align: center;
-				}
+        #finded {
+            width: 600px;
+            height: 50px;
+            margin-left: 280px;
+            display: none;
+        }
 
-				#back,
-				#find_pwd {
-					float: right;
-					margin: 20px 10px;
-				}
-			</style>
-			<script>
-				$(function () {
-					$("#find_pwd").on('click', function () {
-						location.href = "/login/findpwd";
-					});
-					$("#back").on('click', function () {
-						location.href = "/login";
-					});
-					$("#find").click(function () {
-						event.preventDefault();
-						var username = $("#username").val();
-						var email = $("#email").val();
-						$.ajax({
-							type : "POST",
-							url : "/login/findidOk",
-							data : {username : username,email : email},
-							success : function(r){
-								console.log(r);
-								if(r == "") {
-									$("#finded").css('display', 'block');
-									$("#find_pwd").css('display', 'none');
-									$("#result").text("아이디를 찾을 수 없습니다.");
-								}else{
-									$("#finded").css('display', 'block');
-									$("#find_pwd").css('display', 'block');
-									$("#result").text("아이디는 " + r + " 입니다.");
+        #finded > p {
+            text-align: center;
+        }
 
-								}
+        #back,
+        #find_pwd {
+            float: right;
+            margin: 20px 10px;
+        }
+    </style>
+    <script>
+        $(function () {
+            $("#find_pwd").on('click', function () {
+                location.href = "/login/findpwd";
+            });
+            $("#back").on('click', function () {
+                location.href = "/login";
+            });
+            $("#find").click(function () {
+                event.preventDefault();
+                var username = $("#username").val();
+                var email = $("#email").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/login/findidOk",
+                    data: {username: username, email: email},
+                    success: function (r) {
+                        console.log(r);
+                        if (r == "") {
+                            $("#finded").css('display', 'block');
+                            $("#find_pwd").css('display', 'none');
+                            $("#result").text("아이디를 찾을 수 없습니다.");
+                        } else {
+                            $("#finded").css('display', 'block');
+                            $("#find_pwd").css('display', 'block');
+                            $("#result").text("아이디는 " + r + " 입니다.");
 
-
-							},
-							error : function(e){
-								console.log(e.responseText);
-							}
-
-						});
-
-					});
+                        }
 
 
-				});
-			</script>
-		</head>
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
 
-		<body>
-			<main>
-				<form method="post" id="find_id_form">
-					<h1>아이디 찾기</h1>
-					<ul>
-						<li><label>이름</label></li>
-						<li><input type="text" name="username" id="username" placeholder="이름을 입력해주세요." /></li>
-						<li><label>이메일</label></li>
-						<li><input type="text" name="email" id="email" placeholder="이메일을 입력해주세요." /></li>
-						<li><input type="submit" name="find" id="find" value="찾기" class="submitbtn" /></li>
-					</ul>
-				</form>
-				<div id="finded">
-					<hr />
-					<p id="result"></p>
-					<input type="button" value="뒤로가기" class="submitbtn" id="back" />
-					<input type="button" value="비밀번호찾기" class="submitbtn" id="find_pwd" />
-				</div>
-			</main>
-		</body>
+                });
 
-		</html>
+            });
+
+
+        });
+    </script>
+</head>
+
+<body>
+<main>
+    <form method="post" id="find_id_form">
+        <h1>아이디 찾기</h1>
+        <ul>
+            <li><label>이름</label></li>
+            <li><input type="text" name="username" id="username" placeholder="이름을 입력해주세요."/></li>
+            <li><label>이메일</label></li>
+            <li><input type="text" name="email" id="email" placeholder="이메일을 입력해주세요."/></li>
+            <li><input type="submit" name="find" id="find" value="찾기" class="submitbtn"/></li>
+        </ul>
+    </form>
+    <div id="finded">
+        <hr/>
+        <p id="result"></p>
+        <input type="button" value="뒤로가기" class="submitbtn" id="back"/>
+        <input type="button" value="비밀번호찾기" class="submitbtn" id="find_pwd"/>
+    </div>
+</main>
+</body>
+
+</html>

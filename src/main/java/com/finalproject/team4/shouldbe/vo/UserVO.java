@@ -21,8 +21,8 @@ public class UserVO {
 
     public String getLangText() {
         langText = "";
-        for(String h: lang) {
-            langText += h+"/";
+        for (String h : lang) {
+            langText += h + "/";
         }
         return langText;
     }
