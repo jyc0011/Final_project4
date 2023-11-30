@@ -168,8 +168,22 @@
 				}
 				/* 광고 이미지 끝*/
 
-
-
+				.slide{
+					margin-bottom: 30px;
+				}
+				#intro{
+					display: flex;
+					flex-direction: row;
+					font-size: 2em;
+					font-weight: bold;
+					line-height: 200px;
+				}
+				#intro img{
+					margin: 20px 10px;
+				}
+				#intro-box{
+					margin-bottom: 30px;
+				}
 
 			</style>
 		</head>
@@ -212,6 +226,21 @@
 				</div>
 				<!--셀렉트 버튼 끝-->
 
+				<div id="intro-box">
+					<div id="intro">
+						<img src="../../image/main/chat.png">
+						<p>실시간 채팅으로 원어민과 대화해요!</p>
+					</div>
+					<div id="intro">
+						<p>다양한 언어를 배워봐요!</p>
+						<img src="../../image/main/map.png">
+					</div>
+					<div id="intro">
+						<img src="../../image/main/community.png">
+						<p>다양한 사람들과 교류할 수 있어요!</p>
+					</div>
+				</div>
+
 				<!--유튜브 박스 시작----------------------------------------------------->
 				<div class="youtube_box">
 					<div class="youtube_video"><!--1.7777배-->
@@ -232,6 +261,46 @@
 				</a>
 				<!--광고 이미지 끝-->
 
+				<!-- Carousel -->
+				<div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+					<!-- Indicators/dots -->
+					<div class="carousel-indicators">
+						<button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+						<button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+						<button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+						<button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
+						<button type="button" data-bs-target="#demo" data-bs-slide-to="4"></button>
+					</div>
+
+					<!-- The slideshow/carousel -->
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img src=">../../image/banner/banner1.png" alt="banner1" class="d-block" style="width:100%">
+						</div>
+						<div class="carousel-item">
+							<img src="../../image/banner/banner2.png" alt="banner2" class="d-block" style="width:100%">
+						</div>
+						<div class="carousel-item">
+							<img src="../../image/banner/banner3.png" alt="banner3" class="d-block" style="width:100%">
+						</div>
+						<div class="carousel-item active">
+							<img src="../../image/banner/banner4.png" alt="banner4" class="d-block" style="width:100%">
+						</div>
+						<div class="carousel-item">
+							<img src="../../image/banner/banner5.png" alt="banner5" class="d-block" style="width:100%">
+						</div>
+					</div>
+
+					<!-- Left and right controls/icons -->
+					<button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon"></span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+						<span class="carousel-control-next-icon"></span>
+					</button>
+				</div>
+				<div>
 
 
 				<body>
