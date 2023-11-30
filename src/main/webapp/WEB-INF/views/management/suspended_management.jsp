@@ -35,7 +35,7 @@
 		}
 		
 		#member_management{
-			height:1000px;
+			height:auto;
 			margin: 50px auto;
 			width: 100%;
 		}
@@ -61,6 +61,20 @@
 		}
 		#list_content{
 			border-bottom: 1px solid #ddd;
+		}
+		.pagination {
+			justify-content: center;
+		}
+		.pagination .page-link {
+			color: black;
+			text-decoration: none;
+			background-color: transparent;
+		}
+
+		/* Style for the active page link */
+		.pagination .page-link.active {
+			background-color: #ffe3a0;
+			color: black;
 		}
 		#side_menu > li:nth-child(3){
 			font-weight: bold;
@@ -128,6 +142,36 @@
 
 		        </tbody>
 		    </table>
+		</div>
+		<div>
+			<div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+				<div class="pagination" style="display: flex">
+					<div class="paging">
+						<ul class="pagination justify-content-center d-flex">
+							<c:if test="${pVO.page > 1}">
+								<li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
+								</a></li>
+							</c:if>
+							<c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+								<c:if test="${i <= pVO.totalPage}">
+									<c:choose>
+										<c:when test="${i != pVO.page}">
+											<li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link active" href="">${i}</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
+							</c:forEach>
+							<c:if test="${pVO.page < pVO.totalPage}">
+								<li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
+								</a></li>
+							</c:if>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
