@@ -135,6 +135,7 @@
 						<td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
 					</c:forEach>
 
+
 		        </tbody>
 		    </table>
 		</div>
