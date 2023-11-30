@@ -106,7 +106,7 @@
 		                <th class="suspend_reason">정지사유</th>
 		                <td class="writing_count">작성글/댓글 수</td>
 		                <td class="report_count">신고횟수</td>
-		                <td class="unsuspend_button"><input type="button" value="정지해제"></td>
+		                <td class="unsuspend_button"><input type="button" value="정지해제" class="btn btn-dark"></td>
 
 		        	</tr>
 
@@ -119,7 +119,7 @@
 							<th class="suspend_reason">정지사유</th>
 							<td class="writing_count">작성글/댓글 수</td>
 							<td class="report_count">신고횟수</td>
-							<td class="unsuspend_button"><input type="button" value="정지해제"></td>
+							<td class="unsuspend_button"><input type="button" value="정지해제" class="btn btn-dark"></td>
 						</tr>
 					</c:forEach>
 
