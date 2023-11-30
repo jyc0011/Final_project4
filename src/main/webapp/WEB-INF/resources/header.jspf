@@ -28,7 +28,7 @@
         .login {
             position: absolute;
             right: 0;
-            top: 50%;
+            top: 30%;
             transform: translateY(-50%);
         }
 
@@ -97,6 +97,11 @@
             display: table;
             clear: both;
         }
+
+        .login-button{
+            text-decoration: none;
+            color: black;
+        }
     </style>
 
 </head>
@@ -126,7 +131,7 @@
             <a href="${pageContext.servletContext.contextPath}/logout" class="login-button">로그아웃</a>
         </c:if>
         <c:if test="${logStatus!='Y'}">
-            <a href="${pageContext.servletContext.contextPath}/login" class="login-button">로그인</a>
+            <a href="${pageContext.servletContext.contextPath}/login" class="login-button">로그인/회원가입</a>
         </c:if>
     </div>
 </div>

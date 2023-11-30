@@ -10,6 +10,20 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+			<script>
+				$(function(){
+					let youtube_url="";
+					$(".youtube_link").on("click", function(){
+						youtube_url= $(this).attr("id");
+
+						$("#youtube_iframe").attr("src",youtube_url);
+						console.log(youtube_url);
+						$(".youtube_link").css("background-color", "#fff");
+						$(this).css("background-color", "#ddd");
+					});
+				});
+			</script>
+
 			<style>
 				body {
 					margin: 0 auto;
@@ -89,10 +103,13 @@
 					width: 1200px;
 					height: 400px;
 				}
+
 				.banner_img:hover img{
 					transform: scale(1.2);
 					transition: 1s;
 				}
+
+
 				.hover_text {
 					position: absolute;
 					top: 50%;
@@ -106,12 +123,13 @@
 				}
 				/* 메인 이미지 끝*/
 
+				/*FFD954 f2ab39*/
 				/* 셀렉트 박스 시작********************************************/
 				.select_box {
 					width: 1200px;
 					height: 400px;
 					padding: 0.5em;
-					background-color:  #fff;
+					background-color: #fff ;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-evenly;
@@ -133,15 +151,56 @@
 					width: 100%;
 					height: 100%;
 				}
+
+				.box{
+					display:inline-block;
+					position: relative;
+				}
+				.box:hover:after,
+				.box:hover > .select_box_text
+				{
+					display:block;
+				}
+				.box:after,.select_box_text{
+					display:none;
+				}
+
+				.box:after{
+					content:'';
+					position: absolute;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					left: 0;
+					background: rgba(0, 0, 0, 0.8);
+					z-index: 10;
+				}
+
+				.box {
+					overflow: hidden;
+				}
+
+				.select_box_text {
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate( -50%, -50% );
+					color: #fff;
+					z-index: 20;
+					font-weight: 600;
+					font-size: 30px;
+				}
+
 				/* 셀렉트 박스 끝*/
 
 				/* 유튜브 박스 시작********************************************/
 				.youtube_box{
 					width: 1200px;
 					height: 500px;
-					border: 10px solid #69491a;
-					border-radius: 50px;
+					border: 10px solid #E4B660;
+					/*border-radius: 50px;*/
 					display: flex;
+					overflow: hidden;
 				}
 				.youtube_video{
 					width: 67%;
@@ -151,12 +210,47 @@
 					/*margin: auto;*/
 					width:100%;
 					height:100%;/*780px  452px*/
-					border-radius: 40px;
+					/*border-radius: 40px;*/
 				}
-				.youtube_link{
+				.youtube_link_box{
 					width: 33%;
 					height: 100%;
-					border: 1px solid #ddd;
+
+				}
+				.youtube_link_list{
+					width: 100%;
+					height: 100%;
+					padding: 0;
+				}
+				.youtube_link_list li{
+					list-style-type: none;
+					width: 100%;
+					height: 14%;
+
+
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+				.youtube_link_list li div{
+					white-space: nowrap;
+					overflow:hidden;
+					text-overflow: ellipsis;
+					margin:auto 20px;
+				}
+				.youtube_link{
+					cursor: pointer;
+					font-size: 20px;
+				}
+				.youtube_link:hover{
+					background-color: #ddd;
+
+				}
+
+
+				.link_title{
+					font-weight: 600;
+					font-size: 40px;
 				}
 
 				/* 유튜브 박스 끝*/
@@ -171,18 +265,28 @@
 				.slide{
 					margin-bottom: 30px;
 				}
-				#intro{
+				.intro{
 					display: flex;
 					flex-direction: row;
 					font-size: 2em;
 					font-weight: bold;
 					line-height: 200px;
 				}
-				#intro img{
+				.intro img{
 					margin: 20px 10px;
+					transition: all 0.5s linear;
 				}
 				#intro-box{
 					margin-bottom: 30px;
+				}
+				.intro:hover #intro_phone{
+					transform: rotateY( 180deg );
+				}
+				.intro:hover #intro_laptop{
+					transform: rotateY( 180deg );
+				}
+				.intro:hover #intro_map{
+					transform: translateX( +50px );
 				}
 
 			</style>
@@ -193,7 +297,6 @@
 				<!--메인 이미지 시작------------------------------------------------------>
 				<div class="banner_img"><!--a href="#;" -->
 					<img src="/image/img_main_1.jpg" alt=" 배경">
-					<p class="hover_text"></p>
 					<p class="hover_text">
 						소통과 학습<br/>
 						쇼드비에 오신걸 환영합니다.
@@ -201,67 +304,7 @@
 				</div>
 				<!--메인 이미지 끝-->
 
-				<!--셀렉트 버튼 시작------------------------------------------------------>
-				<div class="select_box">
-					<a href="#;" class="box">
-						<div class="">
-							<img class="select_box_img" src="/image/img_selectbox_people.png">
-						</div>
-					</a>
-					<a href="#;" class="box">
-						<div class="">
-							<img class="select_box_img" src="/image/img_selectbox_board.png">
-						</div>
-					</a>
-					<a href="#;" class="box">
-					<div class="">
-						<img class="select_box_img" src="/image/img_selectbox_quiz.png">
-					</div>
-					</a>
-					<a href="#;" class="box">
-					<div class="">
-						<img class="select_box_img" src="/image/img_selectbox_chat.png">
-					</div>
-					</a>
-				</div>
-				<!--셀렉트 버튼 끝-->
-
-				<div id="intro-box">
-					<div id="intro">
-						<img src="../../image/main/chat.png">
-						<p>실시간 채팅으로 원어민과 대화해요!</p>
-					</div>
-					<div id="intro">
-						<p>다양한 언어를 배워봐요!</p>
-						<img src="../../image/main/map.png">
-					</div>
-					<div id="intro">
-						<img src="../../image/main/community.png">
-						<p>다양한 사람들과 교류할 수 있어요!</p>
-					</div>
-				</div>
-
-				<!--유튜브 박스 시작----------------------------------------------------->
-				<div class="youtube_box">
-					<div class="youtube_video"><!--1.7777배-->
-						<iframe  src="https://www.youtube.com/embed/IcFD_MKHa7M?si=82yNyVvjhcA24jau" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-					</div>
-					<div class="youtube_link">
-						<div>dsfd</div>
-					</div>
-				</div>
-				<!--유튜브 박스 끝-->
-
-				<!--광고 이미지 시작------------------------------------------------------>
-				<a href="#;" class="main_ad_box">
-					<img src="/image/img_main_ad2.jpg">
-				</a>
-				<a href="#;" class="main_ad_box">
-					<img src="/image/img_main_ad.png" >
-				</a>
-				<!--광고 이미지 끝-->
-
-				<!-- Carousel -->
+				<!-- Carousel 시작 ----------------------------------------------------->
 				<div id="demo" class="carousel slide" data-bs-ride="carousel">
 
 					<!-- Indicators/dots -->
@@ -300,20 +343,85 @@
 						<span class="carousel-control-next-icon"></span>
 					</button>
 				</div>
-				<div>
+
+				<!-- Carousel 끝 -->
+
+				<!--인트로 박스 시작------------------------------------------------------>
+				<div id="intro-box">
+					<div class="intro" >
+						<img id="intro_phone" src="../../image/main/chat.png">
+						<p>실시간 채팅으로 원어민과 대화해요!</p>
+					</div>
+					<div class="intro" >
+						<p>다양한 언어를 배워봐요!</p>
+						<img id="intro_map" src="../../image/main/map.png">
+					</div>
+					<div class="intro" >
+						<img id="intro_laptop" src="../../image/main/community.png">
+						<p>다양한 사람들과 교류할 수 있어요!</p>
+					</div>
+				</div>
+				<!--인트로 박스 끝 -->
+
+				<!--셀렉트 버튼 시작------------------------------------------------------>
+				<div class="select_box">
+					<a href="#;" class="box">
+						<img class="select_box_img" src="/image/img_selectbox_people.png">
+						<div class="select_box_text">마이<br/> 페이지</div>
+					</a>
+					<a href="#;" class="box">
+						<img class="select_box_img" src="/image/img_selectbox_board.png">
+						<div class="select_box_text">게시판</div>
+					</a>
+					<a href="#;" class="box">
+						<img class="select_box_img" src="/image/img_selectbox_quiz.png">
+						<div class="select_box_text">퀴즈</div>
+					</a>
+					<a href="#;" class="box">
+						<img class="select_box_img" src="/image/img_selectbox_chat.png">
+						<div class="select_box_text">채팅</div>
+					</a>
+				</div>
+				<!--셀렉트 버튼 끝-->
 
 
-				<body>
 
-				</body>
+				<!--유튜브 박스 시작----------------------------------------------------->
+				<div class="youtube_box">
+					<div class="youtube_video"><!--1.7777배-->
+						<iframe id="youtube_iframe" src="https://www.youtube.com/embed/IcFD_MKHa7M?si=82yNyVvjhcA24jau" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</div>
+					<div class="youtube_link_box">
+						<ul class="youtube_link_list">
+							<li class="link_title">추천 영상</li>
+							<li class="youtube_link" id="https://www.youtube.com/embed/IcFD_MKHa7M?si=82yNyVvjhcA24jau" style="background-color:#ddd"><div>[프랭크쌤영어_레벨2]왕초보영어회화1강</div></li>
+							<li class="youtube_link" id="https://www.youtube.com/embed/WLMBviBCwIU?si=py5kV8w-moGMkQYq"><div>10시간 자연스러운 영어 듣기 연습 ( 자막 있음 )</div></li>
+							<li class="youtube_link" id="https://www.youtube.com/embed/P42xvsj7J_U?si=v4ycUwKDDkNMKjQU"><div>미드 프렌즈(Friends) 시즌1 전체 영어표현 409 문장 연속듣기 (영어회화, 영어공부)</div></li>
+							<li class="youtube_link" id="https://www.youtube.com/embed/_50HS70urTw?si=PeY1Qa1aaKgm_flI"><div>생활영어 1000문장 그냥 틀어두십쇼 1,2,3편 몰아듣기</div></li>
+							<li class="youtube_link" id="https://www.youtube.com/embed/XtaV2XKryQI?si=z-qzKHI_t0sGnGPr"><div>영어회화 300문장 켜놓고 흘려듣기 하세요 | 생활영어 | 영어공부</div></li>
+							<li class="youtube_link" id="https://www.youtube.com/embed/dChiYEk7Lxc?si=nGdxrRha0jlF8B5b"><div>이 영상 하나면 영어 어순 이해 끝 ! (영어 말 순서)</div></li>
+						</ul>
+					</div>
+				</div>
+				<!--유튜브 박스 끝-->
+
+				<!--광고 이미지 시작------------------------------------------------------>
+				<a href="http://www.yanadoo.co.kr" class="main_ad_box">
+					<img src="/image/img_main_ad2.jpg">
+				</a>
+				<a href="https://www.kyowonedu.com/KEP/Aicando.jsp" class="main_ad_box">
+					<img src="/image/img_main_ad.png" >
+				</a>
+				<!--광고 이미지 끝-->
+
+
+
 
 			</main>
-			<div class="temp-login">
-				<br />
-				<p>현재 아이디 : ${logId} / 로그인 상태 : ${logStatus}</p>
-			</div>
-
-
+				<div class="temp-login">
+					<br />
+					<p>현재 아이디 : ${logId} / 로그인 상태 : ${logStatus}</p>
+				</div>
 		</body>
 
 		</html>

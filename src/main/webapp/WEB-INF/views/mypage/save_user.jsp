@@ -28,6 +28,8 @@
         #content {
             padding: 20px;
             width: 80%;
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar-menu {
@@ -52,10 +54,16 @@
             color: white;
         }
 
+        .list-inline{
+            background-color: #ffe3a0;
+            padding: 10px;
+        }
+
         .list-inline li a {
             text-decoration: none;
-            color: #cccccc;
+            color: black;
             font-size: 20px;
+            font-weight: bold;
         }
 
         .post-card {
@@ -65,15 +73,19 @@
             margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
         }
-
         .pagination {
             justify-content: center;
         }
+        .pagination .page-link {
+            color: black;
+            text-decoration: none;
+            background-color: transparent;
+        }
 
-
-        .emphasized {
-            color: black; /* 강조 스타일, 색상은 예시입니다 */
-            font-weight: bold;
+        /* Style for the active page link */
+        .pagination .page-link.active {
+            background-color: #ffe3a0;
+            color: black;
         }
     </style>
     <script>
@@ -89,7 +101,6 @@
             });
         });
     </script>
-
 </head>
 
 <body>
@@ -105,54 +116,55 @@
         </ul>
     </div>
     <div id="content">
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save/chat">채팅 저장소</a>
-            </li>
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save/quiz">퀴즈 저장소</a>
-            </li>
-        </ul>
-        <hr/>
-        <div class="col-md-4">
-            <div class="post-card">
-                <strong>I want to learn Korean happily!</strong>
-                <p>즐겁게 한국어를 배우고 싶어요!</p>
+        <div>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_user">채팅 저장소</a>
+                </li>
+                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save/quiz">퀴즈 저장소</a>
+                </li>
+            </ul>
+            <div class="col-md-4">
+                <div class="post-card">
+                    <strong>I want to learn Korean happily!</strong>
+                    <p>즐겁게 한국어를 배우고 싶어요!</p>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div style="display: flex; justify-content: space-between">
-    <div style="width: 80px"></div>
-    <div>
-        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
-            <div class="pagination" style="display: flex">
-                <div class="paging">
-                    <ul class="pagination justify-content-center d-flex">
-                        <c:if test="${pVO.page > 1}">
-                            <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
-                            </a></li>
-                        </c:if>
-                        <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
-                            <c:if test="${i <= pVO.totalPage}">
-                                <c:choose>
-                                    <c:when test="${i != pVO.page}">
-                                        <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li class="page-item"><a class="page-link active" href="">${i}</a></li>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:if>
-                        </c:forEach>
-                        <c:if test="${pVO.page < pVO.totalPage}">
-                            <li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
-                            </a></li>
-                        </c:if>
-                    </ul>
+        <div>
+            <div>
+                <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+                    <div class="pagination" style="display: flex">
+                        <div class="paging">
+                            <ul class="pagination justify-content-center d-flex">
+                                <c:if test="${pVO.page > 1}">
+                                    <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
+                                    </a></li>
+                                </c:if>
+                                <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                                    <c:if test="${i <= pVO.totalPage}">
+                                        <c:choose>
+                                            <c:when test="${i != pVO.page}">
+                                                <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item"><a class="page-link active" href="">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${pVO.page < pVO.totalPage}">
+                                    <li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
+                                    </a></li>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 
 </html>

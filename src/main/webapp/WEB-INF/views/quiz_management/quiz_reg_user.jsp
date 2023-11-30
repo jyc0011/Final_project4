@@ -12,6 +12,7 @@
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	<style>
 		.container{
+			width: 1200px;
 			display: flex;
 		}
 		#side_menu{
@@ -34,7 +35,7 @@
 		}
 		
 		#member_management{
-			width: 1200px;
+			width: 100%;
 			height:1000px;
 			margin: 50px auto;
 			
@@ -58,7 +59,7 @@
 			
 		}
 		#user_input_list{
-			width:1200px;
+			width:100%;
 			height:1000px;
 		}
 
@@ -69,13 +70,12 @@
   			margin: 10px auto;
 		}*/
 		#user_input_list{
-			width: 1100px;
 			height : 800px;
 			
 		}
 		.user_input{
 			text-align: center;
-			width: 1000px;
+			width: 100%;
 			height: 150px;
 			display: flex;
 			border-bottom: 1px solid #ddd;
@@ -114,6 +114,10 @@
 		}
 		h1{
 			padding-bottom: 20px;
+		}
+		#side_menu > li:nth-child(7){
+			font-weight: bold;
+			font-size: 18px;
 		}
 		
 

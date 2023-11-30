@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .container {
+            width: 1200px;
             display: flex;
             flex-direction: row;
         }
@@ -32,7 +33,7 @@
             background-color: #ddd;
         }
         main {
-            width: 1200px;
+            width: 100%;
             height:1000px;
             margin: 50px auto;
             display: flex;
@@ -47,7 +48,7 @@
             border-bottom: 4px solid #000;
         }
         .reply_list th{
-            width:120px;
+            width:130px;
             height:40px;
             line-height: 40px;
             text-align: center;
@@ -63,11 +64,38 @@
             text-align: center;
         }
         .reply_list th:nth-child(7n+3), .reply_list td:nth-child(7n+3){
-            max-width: 260px;
+            max-width: 230px;
             width: 260px;
+        }
+        .board_list th:nth-child(7n+4), .board_list td:nth-child(7n+4){
+            width: 100px;
+        }
+        .board_list th:nth-child(7n+5), .board_list td:nth-child(7n+5){
+            width: 100px;
+        }
+        .board_list th:nth-child(7n+6), .board_list td:nth-child(7n+6){
+            width: 140px;
         }
         #list_content{
             border-bottom: 1px solid #ddd;
+        }
+        .pagination {
+            justify-content: center;
+        }
+        .pagination .page-link {
+            color: black;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        /* Style for the active page link */
+        .pagination .page-link.active {
+            background-color: #ffe3a0;
+            color: black;
+        }
+        #side_menu > li:nth-child(6){
+            font-weight: bold;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -119,7 +147,36 @@
                     </tbody>
                 </table>
             </div>
-
+            <div>
+                <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+                    <div class="pagination" style="display: flex">
+                        <div class="paging">
+                            <ul class="pagination justify-content-center d-flex">
+                                <c:if test="${pVO.page > 1}">
+                                    <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
+                                    </a></li>
+                                </c:if>
+                                <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                                    <c:if test="${i <= pVO.totalPage}">
+                                        <c:choose>
+                                            <c:when test="${i != pVO.page}">
+                                                <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item"><a class="page-link active" href="">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${pVO.page < pVO.totalPage}">
+                                    <li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
+                                    </a></li>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </body>

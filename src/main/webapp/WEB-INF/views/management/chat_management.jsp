@@ -12,6 +12,7 @@
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	<style>
 		.container{
+			width: 1200px;
 			display: flex;
 		}
 		#side_menu{
@@ -34,8 +35,8 @@
 		}
 		
 		#member_management{
-			width: 1200px;
-			height:1000px;
+			height:auto;
+			width: 100%;
 			margin: 50px auto;
 			
 		}
@@ -56,12 +57,12 @@
 			border-bottom: 4px solid #000;
 		}
 		.management_list th{
-			width:12%;
+			width:150px;
 			height:40px;
 			line-height: 40px;
 		}
 		.management_list td{
-			width:12%;
+			width:150px;
 			height:100px;
 		}
 		#list_content{
@@ -70,8 +71,24 @@
 		.management_list .chat_content{
 			width: 40%;
 		}
-		
+		#side_menu > li:nth-child(8){
+			font-weight: bold;
+			font-size: 18px;
+		}
+		.pagination {
+			justify-content: center;
+		}
+		.pagination .page-link {
+			color: black;
+			text-decoration: none;
+			background-color: transparent;
+		}
 
+		/* Style for the active page link */
+		.pagination .page-link.active {
+			background-color: #ffe3a0;
+			color: black;
+		}
 	</style>
 </head>
 <body>
@@ -91,7 +108,6 @@
 	</div>
 	<div id="member_management">
 		<h1 id="quiz_list_title">채팅 관리</h1>
-		
 		<div class="col-sm-12">
 			<table id="example" class="display" style="width:100%">
 		        <thead id="list_head">
@@ -117,28 +133,56 @@
 		                </td>
 		                <td class="report_count">신고횟수111</td>
 		                <td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
-
 		        	</tr>
-
 					<c:forEach var="acVO" items="${aclist}">
-						<td class="reported_id">${acVO.user_id}</td>
-						<td class="user_id">${acVO.user_name}</td>
-						<td class="chat_content">
-							<div class="origin">
-								sdf
-							</div>
-							<div class="translation">
-								asdfsadfsadfsaf
-							</div>
-						</td>
-						<td class="report_count">신고횟수111</td>
-						<td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
+						<tr>
+							<td class="reported_id">${acVO.user_id}</td>
+							<td class="user_id">${acVO.user_name}</td>
+							<td class="chat_content">
+								<div class="origin">
+									sdf
+								</div>
+								<div class="translation">
+									asdfsadfsadfsaf
+								</div>
+							</td>
+							<td class="report_count">신고횟수111</td>
+							<td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
+						</tr>
 					</c:forEach>
-
 		        </tbody>
 		    </table>
 		</div>
-
+		<div>
+			<div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+				<div class="pagination" style="display: flex">
+					<div class="paging">
+						<ul class="pagination justify-content-center d-flex">
+							<c:if test="${pVO.page > 1}">
+								<li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
+								</a></li>
+							</c:if>
+							<c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+								<c:if test="${i <= pVO.totalPage}">
+									<c:choose>
+										<c:when test="${i != pVO.page}">
+											<li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link active" href="">${i}</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
+							</c:forEach>
+							<c:if test="${pVO.page < pVO.totalPage}">
+								<li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
+								</a></li>
+							</c:if>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 </body>
