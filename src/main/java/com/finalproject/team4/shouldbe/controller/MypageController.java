@@ -48,8 +48,24 @@ public class MypageController {
     }
 
     @GetMapping("/mypage/friend_user")
-    public ModelAndView mypage_friend_user() {
+    public ModelAndView mypage_friend_user(HttpSession session, FriendVO fVO) {
         ModelAndView mav = new ModelAndView();
+        String followed_user_id = (String)session.getAttribute("logId");
+        List<FriendVO> flist = service.friendList(followed_user_id);
+        System.out.println(flist.toString());
+        String following_user_id = "";
+        mav.addObject("flist", flist);
+        try{
+            for(int i=0; i<flist.size(); i++){
+                following_user_id = flist.get(i).getFollowing_user_id();
+                System.out.println(following_user_id);
+                fVO = service.friendprofile(following_user_id);
+                System.out.println(fVO);
+                mav.addObject("fpList" + i, fVO);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         mav.setViewName("mypage/friend_user");
         return mav;
     }
@@ -74,7 +90,7 @@ public class MypageController {
         ModelAndView mav = new ModelAndView();
         List<BoardReplyVO> list = service.mypage_post_board_reply(user_id);
         System.out.println(list.toString());
-
+        
         mav.addObject("list", list);
         mav.setViewName("mypage/post_user_reply");
         return mav;

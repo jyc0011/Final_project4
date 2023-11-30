@@ -11,4 +11,6 @@ public interface MypageService {
     public List<BoardReplyVO> mypage_post_board_reply(String userid);
     public List<SaveMessageVO> getSaveMessageList(PagingVO pvo, String userid);
     public int totalRecord(String userid);
+    public List<FriendVO> friendList(String followed_user_id);
+    public FriendVO friendprofile(String following_user_id);
 }

@@ -23,4 +23,11 @@
         ORDER BY msg_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
+
+    <select id="friendList" resultType="FriendVO">
+        select following_user_id from friend where followed_user_id=#{followed_user_id}
+    </select>
+    <select id="friendprofile" resultType="FriendVO">
+        select user_name, profile_content, profile_img from users where user_id=#{following_user_id}
+    </select>
 </mapper>
