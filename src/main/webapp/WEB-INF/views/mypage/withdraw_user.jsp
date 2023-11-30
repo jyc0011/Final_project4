@@ -52,7 +52,14 @@
 			}
 
 			.account-deletion-form {
-				width: 300px;
+				width: 100%;
+			}
+			#withdraw-div{
+				margin-top: 100px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
 			}
 		</style>
 		<script>
@@ -87,7 +94,6 @@
 	<body>
 		<div id="wrapper" class="container-fluid">
 			<div id="sidebar">
-				<h3>회원정보수정</h3>
 				<ul class="sidebar-menu">
 					<li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
@@ -98,16 +104,17 @@
 			</div>
 			<div id="content">
 				<div class="account-deletion-form">
-						<h2>탈퇴하기</h2>
+					<div id="withdraw-div">
 						<div class="mb-3">
 							<label for="password" class="form-label">비밀번호</label>
-							<input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
+							<input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요" style="width: 300px">
 						</div>
 						<div class="mb-3">
 							<label for="password-confirm" class="form-label">비밀번호확인</label>
-							<input type="password" class="form-control" id="password-confirm" placeholder="비밀번호를 다시 입력하세요">
+							<input type="password" class="form-control" id="password-confirm" placeholder="비밀번호를 다시 입력하세요" style="width: 300px">
 						</div>
-						<button type="button" class="btn btn-warning" onclick="confirmDeletion()">탈퇴하기</button>
+						<button type="button" class="btn btn-warning" onclick="confirmDeletion()" style="width: auto">탈퇴하기</button>
+					</div>
 				</div>
 			</div>
 		</div>

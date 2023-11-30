@@ -27,7 +27,15 @@
 
                 #content {
                     padding: 20px;
+                    margin-top: 20px;
                     width: 80%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .row{
+                    display: flex;
+                    justify-content: center;
                 }
 
                 .sidebar-menu {
@@ -50,6 +58,9 @@
                 .active {
                     background-color: #ffe3a0;
                     color: white;
+                }
+                #userEditForm{
+                    width: 700px;
                 }
             </style>
             <script>
@@ -84,18 +95,17 @@
                     </ul>
                 </div>
                 <div id="content" class="col-10">
-                    <h2 class="mb-4">회원정보수정</h2>
 
                     <div class="text-center mb-3">
                         <img src="${pageContext.servletContext.contextPath}/image/logo.png" id="profile_img" name="profile_img" class="rounded-circle" alt="Profile Image" style="width: 150px; height: 150px; object-fit: cover;">
                     </div>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary me-2">이미지 변경</button>
+                        <button type="button" class="btn btn-warning me-2">이미지 변경</button>
                         <button type="button" class="btn btn-secondary" id="basicimg">기본 이미지로 변경</button>
                     </div>
 
-                    <form method="post" action="${pageContext.servletContext.contextPath}/mypage/editProfileOk" onsubmit="editCheck()">
+                    <form method="post" action="${pageContext.servletContext.contextPath}/mypage/editProfileOk" onsubmit="editCheck()" id="userEditForm">
                         <div class="row mb-3 mt-3">
                             <label for="userid" class="col-sm-2 col-form-label">아이디</label>
                             <div class="col-sm-10">
@@ -132,9 +142,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-10 offset-sm-2">
-                                <button type="submit" id="edit" class="btn btn-primary">수정하기</button>
-                            </div>
+                            <button type="submit" id="edit" class="btn btn-warning" style="width: auto">수정하기</button>
                         </div>
                     </form>
                 </div>
