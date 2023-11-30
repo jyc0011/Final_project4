@@ -35,7 +35,7 @@
 		
 		#member_management{
 			width: 1200px;
-			height:1000px;
+			height:auto;
 			margin: 50px auto;
 			
 		}
@@ -70,8 +70,20 @@
 		.management_list .chat_content{
 			width: 40%;
 		}
-		
+		.pagination {
+			justify-content: center;
+		}
+		.pagination .page-link {
+			color: black;
+			text-decoration: none;
+			background-color: transparent;
+		}
 
+		/* Style for the active page link */
+		.pagination .page-link.active {
+			background-color: #ffe3a0;
+			color: black;
+		}
 	</style>
 </head>
 <body>
@@ -91,55 +103,76 @@
 	</div>
 	<div id="member_management">
 		<h1 id="quiz_list_title">채팅 관리</h1>
-		
 		<div class="col-sm-12">
 			<table id="example" class="display" style="width:100%">
-		        <thead id="list_head">
-		            <tr class="management_list">
-		                <th class="reported_id">신고받은 ID</th>
-		                <th class="user_id">신고한 ID</th>
-		                <th class="chat_content">채팅 내용</th>
-		                <th class="report_count">신고횟수</th>
-		                <th class="suspend_button"></th>
-		            </tr>
-		        </thead>
-		        <tbody id = "list_content">
-		        	<tr class="management_list">
-		        		<td class="reported_id">신고받은 ID</td>
-		                <td class="user_id">신고한 ID</td>
-		                <td class="chat_content">
-		                	<div class="origin">
-		                		sdf
-		                	</div>
-		                	<div class="translation">
-		                		asdfsadfsadfsaf
-		                	</div>
-		                </td>
-		                <td class="report_count">신고횟수111</td>
-		                <td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
-
-		        	</tr>
-
-					<c:forEach var="acVO" items="${aclist}">
-						<td class="reported_id">${acVO.user_id}</td>
-						<td class="user_id">${acVO.user_name}</td>
+				<thead id="list_head">
+				<tr class="management_list">
+					<th class="reported_id">신고받은 ID</th>
+					<th class="user_id">신고한 ID</th>
+					<th class="chat_content">채팅 내용</th>
+					<th class="report_count">신고횟수</th>
+					<th class="suspend_button"></th>
+				</tr>
+				</thead>
+				<tbody id="list_content">
+				<!-- Commented out or removed example row
+                <tr class="management_list">
+                    <td class="reported_id">신고받은 ID</td>
+                    <td class="user_id">신고한 ID</td>
+                    <td class="chat_content">
+                        <div class="origin">sdf</div>
+                        <div class="translation">as</div>
+                    </td>
+                    <td class="report_count">11</td>
+                    <td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
+                </tr>
+                -->
+				<c:forEach var="acVO" items="${aclist}">
+					<tr class="management_list">
+						<td class="reported_id">${acVO.reportedId}</td> <!-- Assuming acVO has reportedId property -->
+						<td class="user_id">${acVO.userId}</td> <!-- Assuming acVO has userId property -->
 						<td class="chat_content">
-							<div class="origin">
-								sdf
-							</div>
-							<div class="translation">
-								asdfsadfsadfsaf
-							</div>
+							<div class="origin">${acVO.originalMessage}</div> <!-- Assuming acVO has originalMessage property -->
+							<div class="translation">${acVO.translatedMessage}</div> <!-- Assuming acVO has translatedMessage property -->
 						</td>
-						<td class="report_count">신고횟수111</td>
+						<td class="report_count">${acVO.reportCount}</td> <!-- Assuming acVO has reportCount property -->
 						<td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
-					</c:forEach>
+					</tr>
+				</c:forEach>
+				</tbody>
+			</table>
 
-
-		        </tbody>
-		    </table>
 		</div>
-
+		<div>
+			<div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+				<div class="pagination" style="display: flex">
+					<div class="paging">
+						<ul class="pagination justify-content-center d-flex">
+							<c:if test="${pVO.page > 1}">
+								<li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
+								</a></li>
+							</c:if>
+							<c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+								<c:if test="${i <= pVO.totalPage}">
+									<c:choose>
+										<c:when test="${i != pVO.page}">
+											<li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link active" href="">${i}</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
+							</c:forEach>
+							<c:if test="${pVO.page < pVO.totalPage}">
+								<li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
+								</a></li>
+							</c:if>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 </body>

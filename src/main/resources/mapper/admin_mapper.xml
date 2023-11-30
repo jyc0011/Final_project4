@@ -4,6 +4,8 @@
 
     <select id="adminMemberList" resultType="com.finalproject.team4.shouldbe.vo.AdminMemberVO">
        select  profile_img, user_name, user_id, time, count_report from users
+       ORDER BY user_id
+           LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
     <!--
         <select id="adminMemberList" resultType="com.finalproject.team4.shouldbe.vo.AdminMemberVO">
@@ -17,8 +19,14 @@
         </select>
     -->
 
+    <select id="countSuspendedMember" resultType="int">
+        SELECT COUNT(*) FROM users
+    </select>
+
     <select id="adminSuspendedList" resultType="com.finalproject.team4.shouldbe.vo.AdminSuspendedVO">
         select  profile_img, user_name, user_id, time, count_report from users
+        ORDER BY user_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
 
     <!--
@@ -34,9 +42,14 @@
            join coments c on u.user_id=c.user_id
         </select>
     -->
+    <select id="countWithdrawnMember" resultType="int">
+        SELECT COUNT(*) FROM users
+    </select>
 
     <select id="adminWithdrawnList" resultType="com.finalproject.team4.shouldbe.vo.AdminWithdrawnVO">
         select  profile_img, user_name, user_id, time, count_report from users
+        ORDER BY user_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
 
     <!--
@@ -54,9 +67,16 @@
     -->
 
     <select id="adminChatList" resultType="com.finalproject.team4.shouldbe.vo.AdminChatVO">
-        select  profile_img, user_name, user_id, time, count_report from users
+        select * from message
+        ORDER BY msg_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
-
+    <!-- Select a paginated list of board entries -->
+    <select id="selectMessage" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.MessageVO">
+        SELECT * FROM message
+        ORDER BY msg_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
     <!-- 진행중
         <select id="adminChatList" resultType="com.finalproject.team4.shouldbe.vo.AdminChatVO">
            select u.profile_img, u.user_id, u.user_name,
@@ -75,5 +95,31 @@
         SELECT * FROM posts
         ORDER BY post_id  <!-- Replace 'some_column' with the actual column you want to sort by -->
         LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
+
+    <select id="countBoardReply" resultType="int">
+        SELECT COUNT(*) FROM comments
+    </select>
+
+    <!-- Select a paginated list of board entries -->
+    <select id="selectBoardReply" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.BoardReplyVO">
+        SELECT * FROM comments
+        ORDER BY comment_id
+        LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
+
+    <select id="countMessage" resultType="int">
+        SELECT COUNT(*) FROM message
+    </select>
+
+    <select id="countMember" resultType="int">
+        SELECT COUNT(*) FROM users
+    </select>
+
+    <!-- Select a paginated list of board entries -->
+    <select id="selectMember" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.UserVO">
+        SELECT * FROM users
+        ORDER BY user_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
 </mapper>

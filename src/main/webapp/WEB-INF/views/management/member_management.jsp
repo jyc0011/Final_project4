@@ -35,7 +35,7 @@
 		
 		#member_management{
 			width: 1200px;
-			height:1000px;
+			height:auto;
 			margin: 50px auto;
 			
 		}
@@ -64,18 +64,31 @@
 		}
 		/*프로필*/
 		#list_content .user_profile_box{
-			width: 100px;
-			height: 100px;
+			width: 50px;
+			height: 50px;
 			border-radius: 70%;
 			overflow: hidden;
 			background-color: #ddd;
 		}
 		#list_content  .profile{
-			width: 100%;
-			height: 100%;
+			width: 50px;
+			height: 50px;
 			object-fit: cover;
 		}
+		.pagination {
+			justify-content: center;
+		}
+		.pagination .page-link {
+			color: black;
+			text-decoration: none;
+			background-color: transparent;
+		}
 
+		/* Style for the active page link */
+		.pagination .page-link.active {
+			background-color: #ffe3a0;
+			color: black;
+		}
 	</style>
 </head>
 <body>
@@ -95,9 +108,6 @@
 	</div>
 	<div id="member_management">
 		<h1 id="quiz_list_title">현재 회원 관리</h1>
-		
-		
-		
 		<div class="col-sm-12">
 			<table id="example" class="display" style="width:100%">
 		        <thead id="list_head">
@@ -128,7 +138,7 @@
 		        	</tr>
 					<c:forEach var="amVO" items="${amlist}">
 						<tr class="management_list">
-							<td class="user_profile">${amVO.profile_img}</td>
+							<td class="user_profile"><img class="profile" src="${amVO.profile_img}"></td>
 							<td class="user_name">${amVO.user_name}</td>
 							<td class="user_id">${amVO.user_id}</td>
 							<td class="time">${amVO.time}</td>
@@ -141,7 +151,36 @@
 		        </tbody>
 		    </table>
 		</div>
-
+		<div>
+			<div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+				<div class="pagination" style="display: flex">
+					<div class="paging">
+						<ul class="pagination justify-content-center d-flex">
+							<c:if test="${pVO.page > 1}">
+								<li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
+								</a></li>
+							</c:if>
+							<c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+								<c:if test="${i <= pVO.totalPage}">
+									<c:choose>
+										<c:when test="${i != pVO.page}">
+											<li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link active" href="">${i}</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
+							</c:forEach>
+							<c:if test="${pVO.page < pVO.totalPage}">
+								<li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
+								</a></li>
+							</c:if>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 </body>
