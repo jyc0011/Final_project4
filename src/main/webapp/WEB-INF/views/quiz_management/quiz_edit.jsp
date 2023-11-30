@@ -12,6 +12,7 @@
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	<style>
 		.container{
+			width: 1200px;
 			display: flex;
 		}
 		#side_menu{
@@ -34,7 +35,7 @@
 		}
 		
 		#member_management{
-			width: 1200px;
+			width: 100%;
 			height:1000px;
 			margin: 50px auto;
 			
@@ -97,6 +98,10 @@
 			display: flex;
 			justify-content: space-around;
 			line-height: 70px;
+		}
+		#side_menu > li:nth-child(7){
+			font-weight: bold;
+			font-size: 18px;
 		}
 
 	</style>

@@ -14,6 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <style>
         .container {
+            width: 1200px;
             display: flex;
             flex-direction: row;
         }
@@ -33,25 +34,24 @@
             background-color: #ddd;
         }
         section {
-            width: 40%;
+            width: 450px;
             height: auto;
-            margin: 0 0 20px 80px;
+            margin: 20px;
             position: relative;
         }
         section > h2 {
             text-align: center;
         }
         main{
-            width: 1200px;
             height:1000px;
             margin: 50px auto;
         }
         #dashboard {
-            width: 1200px;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
             align-content: space-around;
+            margin-left: 20px;
         }
         #boardList > li,
         #replyList > li {
@@ -65,19 +65,27 @@
             text-overflow: ellipsis;
         }
         #boardList > li:nth-child(3n+2) {
-            width: 220px;
+            width: 200px;
         }
         #replyList > li:nth-child(3n+1) {
-            width: 145px;
+            width: 130px;
         }
         #replyList > li:nth-child(3n+2) {
             width: 175px;
+        }
+        #boardList > li:nth-child(-n+3), #replyList > li:nth-child(-n+3){
+            font-weight: bold;
+            font-size: 17px;
         }
         #chart, #dashboardTitle {
             text-align: center;
         }
         #dashboardTitle{
             margin-bottom: 50px;
+        }
+        #side_menu > li:nth-child(1){
+            font-weight: bold;
+            font-size: 18px;
         }
     </style>
 </head>
