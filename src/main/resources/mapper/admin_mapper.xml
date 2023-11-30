@@ -66,4 +66,14 @@
            join chat_report cr on u.user_id=cr.user_id
         </select>
     -->
+    <select id="countBoard" resultType="int">
+        SELECT COUNT(*) FROM posts
+    </select>
+
+    <!-- Select a paginated list of board entries -->
+    <select id="selectBoard" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.BoardVO">
+        SELECT * FROM posts
+        ORDER BY post_id  <!-- Replace 'some_column' with the actual column you want to sort by -->
+        LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
 </mapper>
