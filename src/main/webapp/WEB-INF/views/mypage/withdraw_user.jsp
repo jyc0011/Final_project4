@@ -55,6 +55,33 @@
 				width: 300px;
 			}
 		</style>
+		<script>
+			function confirmDeletion() {
+				var password = $('#password').val();
+				var password_confirm = $('#password-confirm').val();
+				var userConfirmed;
+				if(password != password_confirm){
+					alert("비밀번호가 일치하지 않습니다. 다시입력하세요.");
+					return false;
+				}else if(password == ""){
+					alert("비밀번호를 입력해주세요.");
+					return false;
+				}else{
+					userConfirmed = confirm("정말 탈퇴하시겠습니까?");
+				}
+	
+				if (userConfirmed) {
+					$.ajax({
+						url: '${pageContext.servletContext.contextPath}/mypage/withdrawOk',
+						type: "GET",
+						data: {
+							password: password
+							
+						}
+					});
+				}
+			}
+		</script>
 	</head>
 
 	<body>
@@ -85,21 +112,4 @@
 			</div>
 		</div>
 	</body>
-	<script>
-		function confirmDeletion() {
-			var userConfirmed = confirm("정말 탈퇴하시겠습니까?");
-
-			if (userConfirmed) {
-				var password = $('#password').val();
-				var password_confirm = $('#password-confirm').val();
-				if(password == password_confirm){
-					return true;
-				}else{
-					alert("비밀번호가 일치하지 않습니다. 다시입력하세요.");
-					return false;
-				}
-			}
-		}
-	</script>
-
 	</html>
