@@ -75,6 +75,30 @@
 					font-size: 20px;
 				}
 			</style>
+			<script>
+				$(function(){
+					// 친구삭제
+					$(document).on('click', '#deletefriend', function(){
+						var following_user_id = $("#following_user_id").val();
+						var followed_user_id = $(this).attr("title");
+						console.log(followed_user_id);
+						$.ajax({
+							url: '${pageContext.servletContext.contextPath}/mypage/deletefriend',
+							type: 'GET',
+							data: {
+								following_user_id: following_user_id,
+								followed_user_id: followed_user_id
+							},
+							success: function (response) {
+								document.location.reload();
+							},
+							error: function (error) {
+								console.log("An error occurred: " + error.responseText);
+							}
+						});
+					})
+				});
+			</script>
 		</head>
 
 		<body>
@@ -95,57 +119,24 @@
 						<li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/blackList">차단 목록</a></li>
 					</ul>
 					<hr />
-					<c:forEach var="i" items="${flist}">
+					<c:forEach var="flist" items="${flist}">
 						<div class="friend-card"><!--ajax 처리-->
 							<div class="friend-avatar">
-								<img src="${pageContext.servletContext.contextPath}/img/user.png" alt="Friend's Avatar" class="rounded-circle"
+								<img src="${pageContext.servletContext.contextPath}/img/${flist.profile_img}}" alt="Friend's Avatar" class="rounded-circle"
 									style="width: 50px; height: 50px;">
 							</div>
 							<div class="friend-info">
-								<strong>${fpList.user_name}</strong>
-								<p>${fpList.profile_content}</p>
+								<input type="hidden" id="following_user_id" name="following_user_id" value="${flist.following_user_id}"/>
+								<strong>${flist.user_name}</strong>
+								<p>${flist.profile_content}</p>
 							</div>
 							<div>
 								<button type="button" class="btn btn-primary btn-action">채팅하기</button>
-								<button type="button" class="btn btn-outline-secondary btn-action">친구삭제</button>
+								<button type="button" class="btn btn-outline-secondary btn-action" id="deletefriend" title="${flist.followed_user_id}">친구삭제</button>
 							</div>
 						</div>
 					</c:forEach>
 				</div>
 			</div>
 		</body>
-		<script>
-			$(document).ready(function () {
-				function loadFriends() {
-					var userId = 'your_user_id';
-					$.ajax({
-						url: '/get-friends', // URL
-						type: 'POST',
-						data: { userid: userId },
-						dataType: 'json',
-						success: function (response) {
-							response.forEach(function (friend) {
-								var friendCard = $('<div/>', { 'class': 'friend-card' });
-								var friendAvatar = $('<div/>', { 'class': 'friend-avatar' })
-									.append($('<img/>', { 'src': 'avatar_placeholder.png', 'alt': 'Friend\'s Avatar', 'class': 'rounded-circle', 'style': 'width: 50px; height: 50px;' }));
-								var friendInfo = $('<div/>', { 'class': 'friend-info' })
-									.append($('<strong/>').text(friend.name))
-									.append($('<p/>').text(friend.status));
-
-								var chatButton = $('<button/>', { 'type': 'button', 'class': 'btn btn-primary btn-action' }).text('채팅하기');
-								var deleteButton = $('<button/>', { 'type': 'button', 'class': 'btn btn-outline-secondary btn-action' }).text('친구삭제');
-								friendCard.append(friendAvatar, friendInfo, chatButton, deleteButton);
-								$('#content').append(friendCard);
-							});
-						},
-						error: function (xhr, status, error) {
-							console.error("An error occurred: " + error);
-						}
-					});
-				}
-				loadFriends();
-			});
-		</script>
-
-
 		</html>
