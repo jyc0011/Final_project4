@@ -47,9 +47,9 @@ public class MypageServiceImpl implements MypageService{
     public List<FriendVO> friendList(String followed_user_id) {
         return mapper.friendList(followed_user_id);
     }
-    
+
     @Override
-    public FriendVO friendprofile(String following_user_id) {
-        return mapper.friendprofile(following_user_id);
+    public int friendDelete(String followed_user_id, String following_user_id) {
+        return mapper.friendDelete(followed_user_id, following_user_id);
     }
 }

@@ -14,3 +14,4 @@ public class FriendVO {
     private String profile_content;
     private String profile_img;
 }
+

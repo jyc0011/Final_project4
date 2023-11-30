@@ -12,5 +12,5 @@ public interface MypageService {
     public List<SaveMessageVO> getSaveMessageList(PagingVO pvo, String userid);
     public int totalRecord(String userid);
     public List<FriendVO> friendList(String followed_user_id);
-    public FriendVO friendprofile(String following_user_id);
+    public int friendDelete(String followed_user_id, String following_user_id);
 }
