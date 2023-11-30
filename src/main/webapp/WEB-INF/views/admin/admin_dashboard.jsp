@@ -11,6 +11,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <style>
         .container {
             display: flex;
@@ -76,7 +77,7 @@
             text-align: center;
         }
         #dashboardTitle{
-            margin-bottom: 100px;
+            margin-bottom: 50px;
         }
     </style>
 </head>
@@ -100,8 +101,8 @@
         <div id="dashboard">
             <section id="preferred">
                 <h2>선호언어</h2>
-                <div id="chart">
-                    막대그래프
+                <div id="">
+                    <canvas id="bar-chart-horizontal" width="450" height="200"></canvas>
                 </div>
             </section>
             <section id="recent-board">
@@ -129,9 +130,9 @@
                 </ul>
             </section>
             <section id="visitor">
-                <h2>방문자수</h2>
+                <h2>월별 방문자수</h2>
                 <div id="chart">
-                    선그래프
+                    <canvas id="line-chart" width="450" height="200"></canvas>
                 </div>
             </section>
             <section id="recent-reply">
@@ -161,6 +162,58 @@
         </div>
     </main>
 </div>
+<script>
+    new Chart(document.getElementById("bar-chart-horizontal"), {
+        type: 'horizontalBar',
+        data: {
+            labels: ["Korean", "English", "Japanese"],
+            datasets: [
+                {
+                    label: "preferred language",
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#c45850"],
+                    data: [1278,1607,934]
+                }
+            ]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: false,
+                text: 'preferred language'
+            }
+        }
+    });
+
+    new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+            labels: [1,2,3,4,5,6,7,8,9,10],
+            datasets: [{
+                data: [186,214,406,606,907,1111,1133,1221,1333,1878],
+                label: "Korean",
+                borderColor: "#3e95cd",
+                fill: false
+            }, {
+                data: [282,350,411,502,735,1109,1507,1802,2000,2267],
+                label: "English",
+                borderColor: "#8e5ea2",
+                fill: false
+            }, {
+                data: [168,170,178,190,263,376,508,647,875,1134],
+                label: "Japanese",
+                borderColor: "#c45850",
+                fill: false
+            }
+            ]
+        },
+        options: {
+            title: {
+                display: false,
+                text: 'visitor'
+            }
+        }
+    });
+</script>
 </body>
 
 </html>

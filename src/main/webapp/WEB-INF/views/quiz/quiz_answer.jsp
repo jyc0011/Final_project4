@@ -30,7 +30,6 @@
             margin: auto;
             padding: 50px 15px;
             border-radius: 5px;
-            background-color: #f9f9f9;
         }
 
         .quiz-content, .user-answer, .correct-answer, .result {
@@ -63,35 +62,43 @@
     </style>
     <script>
         $(document).ready(function () {
-            console.log('${quizInfo}');
+            var level = ${quizVO.level};
+            var levelDescription = "";
+            switch (level) {
+                case 1: levelDescription = "쉬움"; break;
+                case 2: levelDescription = "중간"; break;
+                case 3: levelDescription = "어려움"; break;
+                default: levelDescription = "알 수 없음";
+            }
+            $('#level').text(levelDescription);
         });
 
         function saveQuiz() {
-            var quizId = '${quizInfo.quizId}';
+            var quizId =${quizVO.quiz_id};
             $.ajax({
                 url: '/quiz/save',
                 type: 'POST',
                 data: {
-                    quizId: quizId
+                    quizId: quizId,
                 },
                 success: function () {
                     alert('정보가 성공적으로 저장되었습니다.');
                 },
                 error: function () {
-                    console.log("Error");
+                    alert("이미 저장된 내용입니다!");
                 }
             });
         }
 
         function nextQuiz() {
-            var level = '${quizInfo.level}'; // JSP 변수에서 레벨 가져오기
+            var level = '${quizVO.level}'; // JSP 변수에서 레벨 가져오기
             console.log(level)
             var url;
-            if (level === '쉬움') {
+            if (level === '1') {
                 url = '/quiz/easy';
-            } else if (level === '중간') {
+            } else if (level === '2') {
                 url = '/quiz/medium';
-            } else if (level === '어려움') {
+            } else if (level === '3') {
                 url = '/quiz/hard';
             } else {
                 url = '/quiz';
@@ -105,23 +112,23 @@
 
 <body>
 <main class="quiz-container">
-    <h1 id="level" class="quiz-level">난이도: ${quizInfo.level}</h1>
+    <h1 id="level" class="quiz-level">${quizVO.level}</h1>
     <hr/>
     <div class="quiz-content">
         <label>퀴즈 내용:</label>
-        <p id="quizContent">${quizInfo.quizContent}</p>
+        <p id="quizContent">${quizVO.quiz_content}</p>
     </div>
     <div class="user-answer">
         <label>사용자 답변:</label>
-        <p id="userAnswer">${quizInfo.userAnswer}</p>
+        <p id="userAnswer">${user_answer}</p>
     </div>
     <div class="correct-answer">
         <label>정답:</label>
-        <p id="correctAnswer">${quizInfo.correctAnswer}</p>
+        <p id="correctAnswer">${quizVO.answer}</p>
     </div>
     <div class="result">
         <label>결과:</label>
-        <p id="result">${quizInfo.result == 'correct' ? '정답입니다!' : '틀렸습니다.'}</p>
+        <p id="result">${result == 'correct' ? '정답입니다!' : '틀렸습니다.'}</p>
     </div>
 </main>
 <div class="buttons">
