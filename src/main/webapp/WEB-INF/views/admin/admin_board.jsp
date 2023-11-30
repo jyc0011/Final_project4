@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .container {
+            width: 1200px;
             display: flex;
             flex-direction: row;
         }
@@ -32,7 +33,7 @@
             background-color: #ddd;
         }
         main {
-            width: 1200px;
+            width: 100%;
             height:1000px;
             margin: 50px auto;
             display: flex;
@@ -50,14 +51,14 @@
             font-weight: bold;
         }
         .board_list th{
-            width:120px;
+            width:130px;
             height:40px;
             line-height: 40px;
             text-align: center;
         }
         .board_list td{
             padding: 0 10px;
-            width: 120px;
+            width: 130px;
             max-width: 120px;
             height:100px;
             white-space: nowrap;
@@ -66,11 +67,24 @@
             text-align: center;
         }
         .board_list th:nth-child(7n+3), .board_list td:nth-child(7n+3){
-            width: 260px;
+            width: 230px;
             max-width: 260px;
+        }
+        .board_list th:nth-child(7n+4), .board_list td:nth-child(7n+4){
+            width: 100px;
+        }
+        .board_list th:nth-child(7n+5), .board_list td:nth-child(7n+5){
+            width: 100px;
+        }
+        .board_list th:nth-child(7n+6), .board_list td:nth-child(7n+6){
+            width: 140px;
         }
         #list_content{
             border-bottom: 1px solid #ddd;
+        }
+        #side_menu > li:nth-child(5){
+            font-weight: bold;
+            font-size: 18px;
         }
         .pagination {
             justify-content: center;

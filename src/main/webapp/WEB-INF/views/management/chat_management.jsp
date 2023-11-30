@@ -12,6 +12,7 @@
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	<style>
 		.container{
+			width: 1200px;
 			display: flex;
 		}
 		#side_menu{
@@ -34,8 +35,8 @@
 		}
 		
 		#member_management{
-			width: 1200px;
 			height:auto;
+			width: 100%;
 			margin: 50px auto;
 			
 		}
@@ -56,12 +57,12 @@
 			border-bottom: 4px solid #000;
 		}
 		.management_list th{
-			width:12%;
+			width:150px;
 			height:40px;
 			line-height: 40px;
 		}
 		.management_list td{
-			width:12%;
+			width:150px;
 			height:100px;
 		}
 		#list_content{
@@ -69,6 +70,10 @@
 		}
 		.management_list .chat_content{
 			width: 40%;
+		}
+		#side_menu > li:nth-child(8){
+			font-weight: bold;
+			font-size: 18px;
 		}
 		.pagination {
 			justify-content: center;
@@ -105,6 +110,52 @@
 		<h1 id="quiz_list_title">채팅 관리</h1>
 		<div class="col-sm-12">
 			<table id="example" class="display" style="width:100%">
+		        <thead id="list_head">
+		            <tr class="management_list">
+		                <th class="reported_id">신고받은 ID</th>
+		                <th class="user_id">신고한 ID</th>
+		                <th class="chat_content">채팅 내용</th>
+		                <th class="report_count">신고횟수</th>
+		                <th class="suspend_button"></th>
+		            </tr>
+		        </thead>
+		        <tbody id = "list_content">
+		        	<tr class="management_list">
+		        		<td class="reported_id">신고받은 ID</td>
+		                <td class="user_id">신고한 ID</td>
+		                <td class="chat_content">
+		                	<div class="origin">
+		                		sdf
+		                	</div>
+		                	<div class="translation">
+		                		asdfsadfsadfsaf
+		                	</div>
+		                </td>
+		                <td class="report_count">신고횟수111</td>
+		                <td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
+
+		        	</tr>
+
+					<c:forEach var="acVO" items="${aclist}">
+						<tr>
+							<td class="reported_id">${acVO.user_id}</td>
+							<td class="user_id">${acVO.user_name}</td>
+							<td class="chat_content">
+								<div class="origin">
+									sdf
+								</div>
+								<div class="translation">
+									asdfsadfsadfsaf
+								</div>
+							</td>
+							<td class="report_count">신고횟수111</td>
+							<td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
+						</tr>
+					</c:forEach>
+
+
+		        </tbody>
+		    </table>
 				<thead id="list_head">
 				<tr class="management_list">
 					<th class="reported_id">신고받은 ID</th>
