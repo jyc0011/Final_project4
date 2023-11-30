@@ -12,4 +12,8 @@
         select post_id, user_id, title, content, views, board_cat, write_date
         from posts where board_cat=#{board_cat}
     </select>
+    <insert id="boardInsert">
+        insert into posts(user_id, title, content, board_cat)
+        values(#{user_id}, #{title}, #{content}, #{board_cat})
+    </insert>
 </mapper>
