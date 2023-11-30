@@ -62,7 +62,19 @@
 		#list_content{
 			border-bottom: 1px solid #ddd;
 		}
-		
+		/*프로필*/
+		#list_content .user_profile_box{
+			width: 100px;
+			height: 100px;
+			border-radius: 70%;
+			overflow: hidden;
+			background-color: #ddd;
+		}
+		#list_content  .profile{
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
 
 	</style>
 </head>
@@ -90,7 +102,7 @@
 			<table id="example" class="display" style="width:100%">
 		        <thead id="list_head">
 		            <tr class="management_list">
-		            	<th class="profile_img"></th>
+		            	<th class="user_profile"></th>
 		                <th class="user_name">닉네임</th>
 		                <th class="user_id">아이디</th>
 		                <th class="time">가입일</th>
@@ -101,23 +113,28 @@
 		        </thead>
 		        <tbody id = "list_content">
 		        	<tr class="management_list">
-		        		<td class="user_name"></td>
+		        		<td class="user_profile">
+							<div class="user_profile_box">
+								<img class="profile" src="/image/user.png">
+							</div>
+
+						</td>
 		        		<td class="user_name">닉네임</td>
 		                <td class="user_id">아이디</td>
 		                <td class="time">가입일</td>
 		                <td class="writing_count">작성글/댓글 수</td>
 		                <td class="report_count">신고횟수</td>
-						<td class="suspend_button"><input type="button" value="계정정지"></td>
+						<td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
 		        	</tr>
 					<c:forEach var="amVO" items="${amlist}">
 						<tr class="management_list">
-							<td class="user_name">${amVO.profile_img}</td>
+							<td class="user_profile">${amVO.profile_img}</td>
 							<td class="user_name">${amVO.user_name}</td>
 							<td class="user_id">${amVO.user_id}</td>
 							<td class="time">${amVO.time}</td>
 							<td class="writing_count">작성글/댓글 수</td>
 							<td class="report_count">${amVO.count_report}</td>
-							<td class="suspend_button"><input type="button" value="계정정지"></td>
+							<td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
 						</tr>
 					</c:forEach>
 

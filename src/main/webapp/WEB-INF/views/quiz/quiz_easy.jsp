@@ -40,9 +40,11 @@
 	<hr />
 	<b id="quiz_content">${quiz.quiz_content}</b>
 	<form method="post" action="/quiz/checkAnswer">
-		<input type="text" name="userAnswer" placeholder="정답 입력" />
-		<input type="hidden" name="quizContent" id="quiz_cont" />
-		<input type="hidden" name="level" id="level" value="쉬움" />
+		<input type="text" name="user_answer" placeholder="정답 입력" />
+		<input type="hidden" name="quiz_id" value="${quiz.quiz_id}" />
+		<input type="hidden" name="quiz_content" value="${quiz.quiz_content}" />
+		<input type="hidden" name="level" value="${quiz.level}" />
+		<input type="hidden" name="quiz_lang" value="${quiz.quiz_lang}" />
 		<input type="submit" value="제출" />
 	</form>
 </main>

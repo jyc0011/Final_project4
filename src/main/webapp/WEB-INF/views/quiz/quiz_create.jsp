@@ -57,6 +57,30 @@
     </style>
     <script>
         $(document).ready(function () {
+            $('#quiz_lang').change(function() {
+                var selectedLanguage = $(this).val();
+                $('#quiz_content').val(''); // 언어가 변경될 때마다 내용 초기화
+                $('#warning-message').hide(); // 메시지 숨기기
+
+                $('#quiz_content').on('input', function() {
+                    var value = $(this).val();
+                    var isValid = true;
+
+                    if (selectedLanguage === 'ko' && /[^ㄱ-ㅎㅏ-ㅣ가-힣\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'en' && /[^a-zA-Z\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'jp' && /[^ぁ-ゔゞァ-ヺー龰\s]/.test(value)) {
+                        isValid = false;
+                    }
+
+                    if (!isValid) {
+                        $('#warning-message').show();
+                    } else {
+                        $('#warning-message').hide();
+                    }
+                });
+            });
             $('#submitButton').prop('disabled', true);
 
             $('#answer, #quiz_content').on('input', function () {
@@ -119,7 +143,7 @@
                 <option value="3">어려움</option>
             </select>
         </div>
-
+        <div id="warning-message" style="display: none; color: red;">잘못된 입력입니다. 언어에 맞는 문자를 입력해주세요.</div>
         <div class="form-group">
             <input type="text" id="quiz_content" placeholder="문제"/>
             <input type="text" id="answer" placeholder="정답"/>

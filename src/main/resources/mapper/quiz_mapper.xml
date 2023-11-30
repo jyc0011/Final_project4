@@ -4,7 +4,7 @@
 
     <select id="findQuiz" resultType="QuizVO">
         SELECT *
-        FROM quiz <!--테이블 'quiz' 해결 불가-->
+        FROM quiz
         WHERE level = #{level}
     </select>
 
@@ -20,8 +20,18 @@
         WHERE quiz_id = #{quiz_id} AND user_id = #{user_id}
     </select>
 
+    <select id="existsUserAnswerInfo" resultType="boolean">
+        SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END
+        FROM user_quiz
+        WHERE quiz_id = #{quiz_id} AND user_id = #{user_id}
+    </select>
+
     <insert id="insertQuizInfo">
         INSERT INTO save_quiz (quiz_id, user_id) VALUES (#{quiz_id}, #{user_id})
+    </insert>
+
+    <insert id="insertUserAnswerInfo">
+        INSERT INTO user_quiz (quiz_id, user_id, correct) VALUES (#{quiz_id}, #{user_id}, #{correct})
     </insert>
 
     <insert id="insertQuiz" useGeneratedKeys="true" keyProperty="quiz_id">
