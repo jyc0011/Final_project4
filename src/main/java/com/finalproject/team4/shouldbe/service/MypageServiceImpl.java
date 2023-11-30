@@ -42,4 +42,14 @@ public class MypageServiceImpl implements MypageService{
     public List<SaveMessageVO> getSaveMessageList(PagingVO pvo,String userid) {
         return mapper.selectSaveMessages(pvo, userid);
     }
+
+    @Override
+    public List<FriendVO> friendList(String followed_user_id) {
+        return mapper.friendList(followed_user_id);
+    }
+    
+    @Override
+    public FriendVO friendprofile(String following_user_id) {
+        return mapper.friendprofile(following_user_id);
+    }
 }

@@ -95,20 +95,22 @@
 						<li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/blackList">차단 목록</a></li>
 					</ul>
 					<hr />
-					<div class="friend-card"><!--ajax 처리-->
-						<div class="friend-avatar">
-							<img src="${pageContext.servletContext.contextPath}/img/user.png" alt="Friend's Avatar" class="rounded-circle"
-								style="width: 50px; height: 50px;">
+					<c:forEach var="i" items="${flist}">
+						<div class="friend-card"><!--ajax 처리-->
+							<div class="friend-avatar">
+								<img src="${pageContext.servletContext.contextPath}/img/user.png" alt="Friend's Avatar" class="rounded-circle"
+									style="width: 50px; height: 50px;">
+							</div>
+							<div class="friend-info">
+								<strong>${fpList.user_name}</strong>
+								<p>${fpList.profile_content}</p>
+							</div>
+							<div>
+								<button type="button" class="btn btn-primary btn-action">채팅하기</button>
+								<button type="button" class="btn btn-outline-secondary btn-action">친구삭제</button>
+							</div>
 						</div>
-						<div class="friend-info">
-							<strong>이름</strong>
-							<p>프로필코멘트</p>
-						</div>
-						<div>
-							<button type="button" class="btn btn-primary btn-action">채팅하기</button>
-							<button type="button" class="btn btn-outline-secondary btn-action">친구삭제</button>
-						</div>
-					</div>
+					</c:forEach>
 				</div>
 			</div>
 		</body>
