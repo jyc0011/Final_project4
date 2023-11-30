@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -97,11 +98,21 @@ public class BoardController {
     }
 
     @GetMapping({"/board/free/write", "/board/notice/write", "/board/resources/write", "/board/inquiries/write"})
-    public String write(HttpServletRequest request) {
-       return"board/board_write";
+    public ModelAndView write(HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+
+        try {
+            String[] params = request.getRequestURI().split("/");
+            String boardType= params[2];
+            mav.setViewName("board/board_write");
+            mav.addObject("category", boardType);
+            return mav;
+        } catch (Exception e) {
+            return null;
+        }
     }
     @PostMapping({"/board/free/writeOk", "/board/notice/writeOk", "/board/resources/writeOk", "/board/inquiries/writeOk"})
-    public String writeOk(HttpServletRequest request, BoardVO bVO){
+    public String writeOk(HttpServletRequest request, HttpSession session, BoardVO bVO){
         try {
             String[] params = request.getRequestURI().split("/");
             String boardType= params[2];
@@ -121,9 +132,12 @@ public class BoardController {
                 default:
                     return null;
             }
-            boardService.boardInsert(bVO);
+            bVO.setUser_id((String)session.getAttribute("logId"));
+            int result = boardService.boardInsert(bVO);
+            System.out.println("result : "+result);
             return "redirect:/board/"+boardType;
         }catch(Exception e){
+            e.printStackTrace();
             return null;
         }
     }
@@ -139,5 +153,6 @@ public class BoardController {
     public String edit() {
         return "board/board_edit";
     }
+
 
 }

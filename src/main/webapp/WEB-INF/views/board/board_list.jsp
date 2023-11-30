@@ -196,14 +196,20 @@
         <li>등록일</li>
         <!-- 데이터 표시 -->
         <c:forEach var="bVO" items="${list}">
-            <li>${bVO.no}</li>
-            <li><a href="/campus/board/view?no=${bVO.no}&nowPage=${pVO.nowPage}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${bVO.subject}</a></li>
-            <li>${bVO.userid}</li>
-            <li>${bVO.hit}</li>
-            <li>${bVO.writedate}</li>
+            <li>${bVO.post_id}</li>
+            <c:url var="nextUrl" value="/board/${pVO.board_cat}/view">
+                <c:param name="no" value="${bVO.post_id}"/>
+                <c:param name="searchKey" value="${pVO.searchKey}"/>
+                <c:param name="searchWord" value="${pVO.searchWord}"/>
+            </c:url>
+           <li><a href="${nextUrl}">${bVO.title}</a></li>
+            <li>${bVO.user_id}</li>
+            <li>${bVO.views}</li>
+            <li>${bVO.write_date}</li>
         </c:forEach>
     </ul>
     <!-- 페이지 박스-->
+    <!-- todo: 페이지 인식해서 보이게 -->
     <div class="page">
         <ul>
             <li>1</li>
