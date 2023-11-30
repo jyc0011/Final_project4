@@ -44,17 +44,6 @@ public class BoardController {
         }*/
         /*return "board/board_list";
     }*/
-
-    private String getUri(PagingVO pVO) {
-        int page = pVO.getNowPage();
-        String searchType = pVO.getSearchKey();
-        String keyword = pVO.getSearchWord();
-        String category = pVO.getCategory(); // Fetch category info
-        String postSort = pVO.getPostSort(); // Fetch sort option
-
-        return UriUtil.makeSearch(page, searchType, keyword, category, postSort);
-    }
-
     @GetMapping("/board")
     public String freeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
         return "board/board_list";

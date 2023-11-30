@@ -13,4 +13,14 @@
     <select id="mypage_post_board_reply" resultType="BoardReplyVO">
         select comment_id, post_id ,user_id, content, date_format(write_date, '%y-%m-%d') write_date from comments where user_id=#{user_id};
     </select>
+    <select id="countSaveMessages" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM save_message WHERE save_user_id = #{userid}
+    </select>
+
+    <select id="selectSaveMessages" parameterType="map" resultType="SaveMessageVO">
+        SELECT msg_id, save_user_id FROM save_message
+        WHERE save_user_id = #{userid}
+        ORDER BY msg_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
 </mapper>
