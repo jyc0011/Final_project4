@@ -9,7 +9,7 @@ public interface BoardService {
     public List<BoardVO> boardPageList(PagingVO pVO);
     public int totalRecord(PagingVO pVO);
     public BoardVO boardSelect(int post_id);
-    public void hitCount(int post_id);
+    public void viewCount(int post_id);
     public int boardUpdate(BoardVO vo);
     public int boardDelete(int post_id);
 }

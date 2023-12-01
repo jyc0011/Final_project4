@@ -61,7 +61,7 @@ public class BoardController {
         return UriUtil.makeSearch(page, searchType, keyword, category, postSort);
     }
 
-    @GetMapping({"/board/free", "/board/notice", "/board/resources", "/board/inquiries"})
+    @GetMapping({"/board/free", "/board/notice", "/board/inquiries"})
     public ModelAndView board(HttpServletRequest request, PagingVO pVO) {
         ModelAndView mav = new ModelAndView();
         try {
@@ -73,9 +73,6 @@ public class BoardController {
                     break;
                 case "free":
                     pVO.setBoard_cat("free");
-                    break;
-                case "resources":
-                    pVO.setBoard_cat("resources");
                     break;
                 case "inquiries":
                     pVO.setBoard_cat("inquiries");
@@ -97,7 +94,7 @@ public class BoardController {
         return mav;
     }
 
-    @GetMapping({"/board/free/write", "/board/notice/write", "/board/resources/write", "/board/inquiries/write"})
+    @GetMapping({"/board/free/write", "/board/notice/write", "/board/inquiries/write"})
     public ModelAndView write(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
 
@@ -111,7 +108,7 @@ public class BoardController {
             return null;
         }
     }
-    @PostMapping({"/board/free/writeOk", "/board/notice/writeOk", "/board/resources/writeOk", "/board/inquiries/writeOk"})
+    @PostMapping({"/board/free/writeOk", "/board/notice/writeOk", "/board/inquiries/writeOk"})
     public String writeOk(HttpServletRequest request, HttpSession session, BoardVO bVO){
         try {
             String[] params = request.getRequestURI().split("/");
@@ -122,9 +119,6 @@ public class BoardController {
                     break;
                 case "free":
                     bVO.setBoard_cat("free");
-                    break;
-                case "resources":
-                    bVO.setBoard_cat("resources");
                     break;
                 case "inquiries":
                     bVO.setBoard_cat("inquiries");
@@ -143,9 +137,16 @@ public class BoardController {
     }
 
 
-    @GetMapping("/board/free/view")
-    public String view() {
-        return "board/board_view";
+    @GetMapping({"/board/free/view", "board/notice/view", "board/inquiries/view"})
+    public ModelAndView view(int no) {
+        ModelAndView mav = new ModelAndView();
+        boardService.viewCount(no);
+        var vo = boardService.boardSelect(no);
+        mav.addObject("vo", vo);
+        //mav.addObject("pVO", pVO);
+        mav.setViewName("board/board_view");
+
+        return mav;
     }
 
 

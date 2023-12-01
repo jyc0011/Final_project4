@@ -38,8 +38,8 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public void hitCount(int post_id) {
-        Mapper.hitCount(post_id);
+    public void viewCount(int post_id) {
+        Mapper.viewCount(post_id);
     }
 
     @Override
