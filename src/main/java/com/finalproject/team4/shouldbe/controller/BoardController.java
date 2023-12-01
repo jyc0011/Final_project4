@@ -1,18 +1,29 @@
 package com.finalproject.team4.shouldbe.controller;
 
+import com.finalproject.team4.shouldbe.service.BoardService;
+import com.finalproject.team4.shouldbe.util.UriUtil;
+import com.finalproject.team4.shouldbe.vo.BoardVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class BoardController {
+    @Autowired
+    BoardService boardService;
 
-    /*    @Autowired
-        BoardService service;
-        @RequestMapping(value = "/board/free", method = RequestMethod.GET)
-        public String freeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) { */
+/*    @Autowired
+    BoardService service;
+    @RequestMapping(value = "/board/free", method = RequestMethod.GET)
+    public String freeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) { */
     //var temp = service.boardPageList();
     //System.out.println(temp);
         /*try {
@@ -39,39 +50,110 @@ public class BoardController {
         }*/
         /*return "board/board_list";
     }*/
-    @GetMapping("/board")
-    public String freeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
-        return "board/board_list";
+
+    private String getUri(PagingVO pVO) {
+        int page = pVO.getNowPage();
+        String searchType = pVO.getSearchKey();
+        String keyword = pVO.getSearchWord();
+        String category = pVO.getBoard_cat(); // Fetch category info
+        String postSort = pVO.getPostSort(); // Fetch sort option
+
+        return UriUtil.makeSearch(page, searchType, keyword, category, postSort);
     }
 
-    @GetMapping("/board/notice")
-    public String noticeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
-        return "board/board_list";
+    @GetMapping({"/board/free", "/board/notice", "/board/inquiries"})
+    public ModelAndView board(HttpServletRequest request, PagingVO pVO) {
+        ModelAndView mav = new ModelAndView();
+        try {
+            String[] params = request.getRequestURI().split("/");
+            String boardType= params[2];
+            switch (boardType) {
+                case "notice":
+                    pVO.setBoard_cat("notice");
+                    break;
+                case "free":
+                    pVO.setBoard_cat("free");
+                    break;
+                case "inquiries":
+                    pVO.setBoard_cat("inquiries");
+                    break;
+                default:
+                    return null;
+            }
+        }catch(Exception e){
+            return null;
+        }
+
+        //총레코드 수
+        pVO.setTotalRecord(boardService.totalRecord(pVO));
+        //DB선택(page, 검색)
+        List<BoardVO> list = boardService.boardPageList(pVO);
+        mav.addObject("list", list);
+        mav.addObject("pVO", pVO);
+        mav.setViewName("board/board_list");
+        return mav;
     }
 
-    @GetMapping("/board/resources")
-    public String resourcesBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
-        return "board/board_list";
+    @GetMapping({"/board/free/write", "/board/notice/write", "/board/inquiries/write"})
+    public ModelAndView write(HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+
+        try {
+            String[] params = request.getRequestURI().split("/");
+            String boardType= params[2];
+            mav.setViewName("board/board_write");
+            mav.addObject("category", boardType);
+            return mav;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    @PostMapping({"/board/free/writeOk", "/board/notice/writeOk", "/board/inquiries/writeOk"})
+    public String writeOk(HttpServletRequest request, HttpSession session, BoardVO bVO){
+        try {
+            String[] params = request.getRequestURI().split("/");
+            String boardType= params[2];
+            switch (boardType) {
+                case "notice":
+                    bVO.setBoard_cat("notice");
+                    break;
+                case "free":
+                    bVO.setBoard_cat("free");
+                    break;
+                case "inquiries":
+                    bVO.setBoard_cat("inquiries");
+                    break;
+                default:
+                    return null;
+            }
+            bVO.setUser_id((String)session.getAttribute("logId"));
+            int result = boardService.boardInsert(bVO);
+            System.out.println("result : "+result);
+            return "redirect:/board/"+boardType;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    @GetMapping("/board/inquiries")
-    public String inquiriesBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) {
-        return "board/board_list";
+
+    @GetMapping({"/board/free/view", "board/notice/view", "board/inquiries/view"})
+    public ModelAndView view(int no) {
+        ModelAndView mav = new ModelAndView();
+        boardService.viewCount(no);
+        var vo = boardService.boardSelect(no);
+        mav.addObject("vo", vo);
+        //mav.addObject("pVO", pVO);
+        mav.setViewName("board/board_view");
+
+        return mav;
     }
 
-    @GetMapping("/board/free/view")
-    public String view() {
-        return "board/board_view";
-    }
-
-    @GetMapping("/board/write")
-    public String write() {
-        return "board/board_write";
-    }
 
     @GetMapping("/board/edit")
     public String edit() {
         return "board/board_edit";
     }
+
 
 }
