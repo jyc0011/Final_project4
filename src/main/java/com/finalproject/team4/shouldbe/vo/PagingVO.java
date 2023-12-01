@@ -31,7 +31,11 @@ public class PagingVO {
 
     public void setTotalRecord(int totalRecord) {
         this.totalRecord = totalRecord;
+        if(totalRecord==0){
+            this.setTotalPage(1);
+        }else{
         this.setTotalPage((int) Math.ceil(totalRecord / (double) onePageRecord));
+        }
     }
 
 }
