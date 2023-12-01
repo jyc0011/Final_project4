@@ -58,51 +58,51 @@
                 var userid = $("#userid").val();
                 var email = $("#email").val();
                 $.ajax({
-                    type : "POST",
-                    url : "/login/sendcode",
-                    data : {userid : userid,email : email},
-                    success : function(r){
+                    type: "POST",
+                    url: "/login/sendcode",
+                    data: {userid: userid, email: email},
+                    success: function (r) {
                         console.log(r);
-                        if(r == true) {
+                        if (r == true) {
                             $("#verification").show();
                             $("#result").text("이메일이 발송되었습니다,");
 
-                        }else{
+                        } else {
                             $("#verification").hide();
                             $("#result").text("존재하지 않는 아이디 혹은 이메일입니다.");
 
                         }
                     },
-                    error : function(e){
+                    error: function (e) {
                         console.log(e.responseText);
                     }
 
                 });
             });
 
-            $("#verifybtn").click(function(){
+            $("#verifybtn").click(function () {
                 event.preventDefault();
 
                 var userid = $("#userid").val();
                 var code = $("#code").val();
                 var email = $("#email").val();
                 $.ajax({
-                    type : "POST",
-                    url : "/login/verify",
-                    data : {userid : userid, code : code, email: email},
-                    success : function(r){
+                    type: "POST",
+                    url: "/login/verify",
+                    data: {userid: userid, code: code, email: email},
+                    success: function (r) {
                         console.log(r);
-                        if(r == true) {
+                        if (r == true) {
 
                             alert("변경된 비밀번호가 이메일로 발송되었습니다");
-                            location.href='/';
-                        }else{
+                            location.href = '/';
+                        } else {
                             alert("오류!")
                         }
 
 
                     },
-                    error : function(e){
+                    error: function (e) {
                         console.log(e.responseText);
                     }
 

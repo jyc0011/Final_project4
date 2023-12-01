@@ -57,12 +57,12 @@
     </style>
     <script>
         $(document).ready(function () {
-            $('#quiz_lang').change(function() {
+            $('#quiz_lang').change(function () {
                 var selectedLanguage = $(this).val();
                 $('#quiz_content').val(''); // 언어가 변경될 때마다 내용 초기화
                 $('#warning-message').hide(); // 메시지 숨기기
 
-                $('#quiz_content').on('input', function() {
+                $('#quiz_content').on('input', function () {
                     var value = $(this).val();
                     var isValid = true;
 

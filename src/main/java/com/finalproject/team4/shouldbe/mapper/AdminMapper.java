@@ -8,19 +8,31 @@ import java.util.List;
 
 @Mapper
 public interface AdminMapper {
-    public List<AdminMemberVO> adminMemberList(@Param("pvo") PagingVO pvo);
-    public List<AdminSuspendedVO> adminSuspendedList(@Param("pvo") PagingVO pvo);
-    public List<AdminWithdrawnVO> adminWithdrawnList(@Param("pvo") PagingVO pvo);
-    public List<AdminChatVO> adminChatList(@Param("pvo") PagingVO pvo);
-    public int countBoard();
-    public List<BoardVO> selectBoard (@Param("pvo") PagingVO pvo);
-    public int countBoardReply();
-    public List<BoardReplyVO> selectBoardReply(@Param("pvo") PagingVO pvo);
-    public List<MessageVO> selectMessage(@Param("pvo") PagingVO pvo);
-    public int countMessage();
-    public int countMember();
-    public List<UserVO> selectMember(@Param("pvo") PagingVO pvo);
-    public int countSuspendedMember();
+    List<AdminMemberVO> adminMemberList(@Param("pvo") PagingVO pvo);
 
-    public int countWithdrawnMember();
+    List<AdminSuspendedVO> adminSuspendedList(@Param("pvo") PagingVO pvo);
+
+    List<AdminWithdrawnVO> adminWithdrawnList(@Param("pvo") PagingVO pvo);
+
+    List<AdminChatVO> adminChatList(@Param("pvo") PagingVO pvo);
+
+    int countBoard();
+
+    List<BoardVO> selectBoard(@Param("pvo") PagingVO pvo);
+
+    int countBoardReply();
+
+    List<BoardReplyVO> selectBoardReply(@Param("pvo") PagingVO pvo);
+
+    List<MessageVO> selectMessage(@Param("pvo") PagingVO pvo);
+
+    int countMessage();
+
+    int countMember();
+
+    List<UserVO> selectMember(@Param("pvo") PagingVO pvo);
+
+    int countSuspendedMember();
+
+    int countWithdrawnMember();
 }

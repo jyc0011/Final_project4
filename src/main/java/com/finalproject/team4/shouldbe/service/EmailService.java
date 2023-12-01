@@ -1,15 +1,11 @@
 package com.finalproject.team4.shouldbe.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.internet.MimeMessage;
 import java.security.SecureRandom;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +30,8 @@ public class EmailService {
         return authNum;
 
     }
-    public String sendNewPasswd(String email){
+
+    public String sendNewPasswd(String email) {
         String authNum = createCode();
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();

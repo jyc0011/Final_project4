@@ -5,18 +5,31 @@ import com.finalproject.team4.shouldbe.vo.*;
 import java.util.List;
 
 public interface AdminService {
-    public List<AdminMemberVO> adminMemberList(PagingVO pvo);
-    public List<AdminSuspendedVO> adminSuspendedList(PagingVO pvo);
-    public int totalSuspendedMemberRecord();
-    public List<AdminWithdrawnVO> adminWithdrawnList(PagingVO pvo);
-    public List<AdminChatVO> adminChatList(PagingVO pvo);
-    public int totalBoardRecord();
-    public List<BoardVO> getBoardList_admin(PagingVO pvo);
-    public int totalReplyRecord();
-    public List<BoardReplyVO> getReplyList_admin(PagingVO pvo);
-    public int totalMessageRecord();
-    public List<MessageVO> getMessageList_admin(PagingVO pvo);
-    public List<UserVO> getMemberList_admin(PagingVO pvo);
-    public int totalMemberRecord();
-    public int totalWithdrawnMemberRecord();
+    List<AdminMemberVO> adminMemberList(PagingVO pvo);
+
+    List<AdminSuspendedVO> adminSuspendedList(PagingVO pvo);
+
+    int totalSuspendedMemberRecord();
+
+    List<AdminWithdrawnVO> adminWithdrawnList(PagingVO pvo);
+
+    List<AdminChatVO> adminChatList(PagingVO pvo);
+
+    int totalBoardRecord();
+
+    List<BoardVO> getBoardList_admin(PagingVO pvo);
+
+    int totalReplyRecord();
+
+    List<BoardReplyVO> getReplyList_admin(PagingVO pvo);
+
+    int totalMessageRecord();
+
+    List<MessageVO> getMessageList_admin(PagingVO pvo);
+
+    List<UserVO> getMemberList_admin(PagingVO pvo);
+
+    int totalMemberRecord();
+
+    int totalWithdrawnMemberRecord();
 }

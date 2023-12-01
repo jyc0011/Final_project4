@@ -65,10 +65,17 @@
             var level = ${quizVO.level};
             var levelDescription = "";
             switch (level) {
-                case 1: levelDescription = "쉬움"; break;
-                case 2: levelDescription = "중간"; break;
-                case 3: levelDescription = "어려움"; break;
-                default: levelDescription = "알 수 없음";
+                case 1:
+                    levelDescription = "쉬움";
+                    break;
+                case 2:
+                    levelDescription = "중간";
+                    break;
+                case 3:
+                    levelDescription = "어려움";
+                    break;
+                default:
+                    levelDescription = "알 수 없음";
             }
             $('#level').text(levelDescription);
         });

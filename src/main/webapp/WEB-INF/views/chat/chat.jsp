@@ -97,10 +97,10 @@
                 recipientId: recipient,
                 content: msg
             }),
-            success: function(response) {
+            success: function (response) {
                 // 성공 로직
             },
-            error: function(error) {
+            error: function (error) {
                 // 에러 처리
             }
         });

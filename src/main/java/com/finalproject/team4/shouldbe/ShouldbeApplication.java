@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @MapperScan(basePackages = "com.finalproject.team4.shouldbe.mapper")
 public class ShouldbeApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(ShouldbeApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ShouldbeApplication.class, args);
+    }
 
 }

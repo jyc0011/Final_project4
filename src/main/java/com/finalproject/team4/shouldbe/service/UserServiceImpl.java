@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper mapper;
+
     @Override
     public int useridCheck(String userid) {
         return mapper.useridCheck(userid);
