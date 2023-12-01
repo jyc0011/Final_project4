@@ -38,7 +38,7 @@ public class ChatController {
         return mv;
     }
 
-    @RequestMapping("/chattingForm")
+    @RequestMapping("/chatting")
     public ModelAndView chat() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("chat/chatting");
@@ -46,8 +46,8 @@ public class ChatController {
         return mv;
     }
 
-    @MessageMapping("/chatting")
-    @SendTo("/topic/messages")
+    @MessageMapping("/chattings")
+    @SendTo("/topic/message")
     public OutputMessageVO send(MessageVO vo) {
         System.out.println(vo.toString());
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());

@@ -45,10 +45,8 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.15.2'
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.15.2'
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.15.2'
-    implementation group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.3'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.7.16'
     implementation group: 'org.springframework', name: 'spring-messaging', version: '5.2.25.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-websocket', version: '5.3.25'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
