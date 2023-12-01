@@ -15,15 +15,6 @@ public class UserVO {
     private String nation;
     private int sex;
     private String date;
-    private String[] lang;
-    private String langText;
+    private String lang;
     private String salt;
-
-    public String getLangText() {
-        langText = "";
-        for(String h: lang) {
-            langText += h+"/";
-        }
-        return langText;
-    }
 }
