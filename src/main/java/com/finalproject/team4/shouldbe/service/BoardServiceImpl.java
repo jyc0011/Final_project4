@@ -3,15 +3,13 @@ package com.finalproject.team4.shouldbe.service;
 import com.finalproject.team4.shouldbe.mapper.BoardMapper;
 import com.finalproject.team4.shouldbe.vo.BoardVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Provider;
 import java.util.List;
 
 @Service
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 
     @Autowired
     BoardMapper Mapper;

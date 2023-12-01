@@ -1,722 +1,2034 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-		<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-				<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-						<jsp:useBean id="today" class="java.util.Date" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<jsp:useBean id="today" class="java.util.Date"/>
 
-						<!DOCTYPE html>
-						<html>
+<!DOCTYPE html>
+<html>
 
-						<head>
-							<meta charset="UTF-8">
-							<title></title>
-						</head>
-						<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-						<body>
-							<div class="bodyWrap">
-								<div class="chatTitleWrap">
+<body>
+<div class="bodyWrap">
+    <div class="chatTitleWrap">
 									<span class="chatTitle">
 										채팅리스트
 									</span>
-									<span class="chatBtn">
-										<input type="button" id="newChatBtn" value="새로운 채팅" />
+        <span class="chatBtn">
+										<input type="button" id="newChatBtn" value="새로운 채팅"/>
 									</span>
-								</div>
-								<div class="chatList">
-									<c:forEach items="${chatRoomList}" var="ChatRoomDTO">
-										<c:if test="${ChatRoomDTO.chatRoomVo.chat_type == 0 }"><!-- 1:1채팅방 이라면 -->
-											<div class="listContent singleChat"
-												id="${ChatRoomDTO.chatRoomVo.chatRoomNum}"
-												data-chat_nickname="${ChatRoomDTO.chatReadVoList[0].chat_memberNick}"
-												data-chat_userid="${ChatRoomDTO.chatReadVoList[0].chat_memberId}">
-										</c:if>
-										<c:if test="${ChatRoomDTO.chatRoomVo.chat_type == 1 }"><!-- 멀티 채팅방 이라면 -->
-											<div class="listContent multiChat"
-												id="${ChatRoomDTO.chatRoomVo.chatRoomNum}"
-												data-chatroom_num="${ChatRoomDTO.chatRoomVo.chatRoomNum}">
-										</c:if>
-										<div class="firstWrap">
-											<c:if test="${ChatRoomDTO.chatRoomVo.chat_type == 0 }">
-												<c:choose>
-													<c:when test="${pageContext.request.serverName == 'localhost'}">
-														<img src="/resources/img/profile_img/<c:out value="
-															${ChatRoomDTO.chatReadVoList[0].chat_memberId}" />.png?${random}"
-														class="singleMemberImage"
-														onerror="this.src='/resources/img/profile_img/basicProfile.png'"/>
-													</c:when>
-													<c:otherwise>
-														<img src="/upload/<c:out value="
-															${ChatRoomDTO.chatReadVoList[0].chat_memberId}" />.png?${random}"
-														class="singleMemberImage"
-														onerror="this.src='/ROOT/resources/img/profile_img/basicProfile.png'"
-														/>
-													</c:otherwise>
-												</c:choose>
-											</c:if>
-											<c:if test="${ChatRoomDTO.chatRoomVo.chat_type == 1 }">
-												<c:choose>
-													<c:when test="${pageContext.request.serverName == 'localhost'}">
-														<c:forEach items="${ChatRoomDTO.chatReadVoList}"
-															var="chatReadVO" begin="0" end="3">
-															<img src="/resources/img/profile_img/<c:out value="
-																${chatReadVO.chat_memberId}" />.png?${random}"
-															class="multiMemberImage"
-															onerror="this.src='/resources/img/profile_img/basicProfile.png'"/>
-														</c:forEach>
-													</c:when>
-													<c:otherwise>
-														<c:forEach items="${ChatRoomDTO.chatReadVoList}"
-															var="chatReadVO" begin="0" end="3">
-															<img src="/upload/<c:out value="
-																${chatReadVO.chat_memberId}" />.png?${random}"
-															class="multiMemberImage"
-															onerror="this.src='/ROOT/resources/img/profile_img/basicProfile.png'"
-															/>
-														</c:forEach>
-													</c:otherwise>
-												</c:choose>
-											</c:if>
-										</div>
-										<div class="secondWrap">
-											<div class="chatNick">
-												<c:if test="${ChatRoomDTO.chatRoomVo.chat_type == 0 }">
-													${ChatRoomDTO.chatReadVoList[0].chat_memberNick}
-												</c:if>
-												<c:if test="${ChatRoomDTO.chatRoomVo.chat_type == 1 }">
-													<c:if test="${ChatRoomDTO.chatRoomVo.chat_title != null}">
-														${ChatRoomDTO.chatRoomVo.chat_title}
-													</c:if>
-													<c:if test="${ChatRoomDTO.chatRoomVo.chat_title == null}">
-														<c:forEach items="${ChatRoomDTO.chatReadVoList}"
-															var="chatReadVO" varStatus="status">
-															<c:if test="${!status.last}">
-																${chatReadVO.chat_memberNick},
-															</c:if>
-															<c:if test="${status.last}">
-																${chatReadVO.chat_memberNick}
-															</c:if>
-														</c:forEach>
-													</c:if>
-												</c:if>
-											</div>
-											<div class="memberCount">
-												<c:if test="${ChatRoomDTO.chatRoomVo.chat_type == 1 }">
-													(${ChatRoomDTO.chatRoomVo.headCount})
-												</c:if>
-											</div>
-											<div class="chatContent">
-												${ChatRoomDTO.chatContentVo.chat_content}
-											</div>
-										</div>
-										<div class="thirdWrap">
-											<div class="chatDate">
-												<fmt:formatDate var="nowDate" value="${today}" pattern="yyyy-MM-dd" />
-												<fmt:formatDate var="regDate"
-													value="${ChatRoomDTO.chatContentVo.regDate}" pattern="yyyy-MM-dd" />
-												<c:choose>
-													<c:when test="${nowDate == regDate}">
-														<fmt:formatDate value="${ChatRoomDTO.chatContentVo.regDate}"
-															pattern="a HH:mm" />
-													</c:when>
-													<c:otherwise>
-														<fmt:formatDate value="${ChatRoomDTO.chatContentVo.regDate}"
-															pattern="yyyy-MM-dd" />
-													</c:otherwise>
-												</c:choose>
-											</div>
-											<c:if test="${ChatRoomDTO.notReadCnt != 0 }">
-												<div class="chatCnt">
-													${ChatRoomDTO.notReadCnt}+
-												</div>
-											</c:if>
-										</div>
-								</div>
-								</c:forEach>
-							</div>
-							</div>
-
-							<div id="backGround"></div>
-							<div id="userListWrap">
-								<div id="title">
-									채팅할 회원을 선택해주세요
-								</div>
-								<div id="chosenMembers">
-								</div>
-								<div id="searchWrap">
-									<input id="search" type='text' value='' oninput="search(this,30)"
-										placeholder=" 회원검색" autofocus />
-								</div>
-								<div id="userList">
-									<!-- 회원리스트 -->
-								</div>
-								<div id="buttonWrap">
-									<div id="chatInviteWrap">
-										<input type="button" class="newChatBtn" id="chatInvite" value="초대"
-											disabled='disabled' />
-									</div>
-									<div id="chatCancelWrap">
-										<input type="button" class="newChatBtn" id="chatCancel" value="취소" />
-									</div>
-								</div>
-							</div>
-						</body>
-						<script>
-							var csrfHeaderName = "${_csrf.headerName}";
-							var csrfTokenValue = "${_csrf.token}";
-							var serverName = '${pageContext.request.serverName}';
-							var random = Math.random();
-							var backGround = $("#backGround");
-							var userListWrap = $("#userListWrap");
+    </div>
+    <div class="chatList">
+        <c:forEach items="${chatRoomList}" var="ChatRoomDTO">
+        <c:if test="${ChatRoomDTO.chatRoomVo.chat_type == 0 }"><!-- 1:1채팅방 이라면 -->
+        <div class="listContent singleChat"
+             id="${ChatRoomDTO.chatRoomVo.chatRoomNum}"
+             data-chat_nickname="${ChatRoomDTO.chatReadVoList[0].chat_memberNick}"
+             data-chat_userid="${ChatRoomDTO.chatReadVoList[0].chat_memberId}">
+            </c:if>
+            <c:if test="${ChatRoomDTO.chatRoomVo.chat_type == 1 }"><!-- 멀티 채팅방 이라면 -->
+            <div class="listContent multiChat"
+                 id="${ChatRoomDTO.chatRoomVo.chatRoomNum}"
+                 data-chatroom_num="${ChatRoomD
+        .chatRoomVo.chatRoomNum}">
+                </c:if>
 
-							//myId = '${userInfo.username}';  
+        <div class="firstWrap">
+                    <c:if test="${ChatRoo
+        chatRoomVo.chat_type == 0 }">
+                        <c:choose>
 
-							$(document).ajaxSend(function (e, xhr, options) {
+                        <c:when test="${pageContext.reue
 
-								xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-							});
+                rName == 'local
+                        >
 
-							$("#newChatBtn").on("click", function (event) {
 
-								if (isLimited()) {
-									openAlert("채팅방 생성 권한이 제한되어 있습니다");
-									return;
-								}
 
-								openUserList();
-							});
+                              <img src="/resou
+                        /profile_img/<c
+                        lue="
 
-							$("#chatCancel").on("click", function (event) {
+                        							${ChatRoomDTO.chatReadVoList[0].chat_memberId}" />.png?${random}"
 
-								closeUserList();
-							});
 
-							$("#chatInvite").on("click", function (event) {
 
-								var chosenUser = $(".chosenUser").get();
+                        class="singleMemberIma
 
-								createChatRoom(chosenUser);
-							});
+                        or="this.src='/resources
+                        e_img
+                        ile.png
 
+                                                    <c:otherwise>
 
-							function createChatRoom(chosenUser) {
 
-								<sec: authorize access="isAuthenticated()">
-									var myId = '${userInfo.username}';
-									var myNickName = '${userInfo.member.nickName}';
-								</sec: authorize>
+                        rc="/u
+                        out value="
 
-								if (myId == null) {
+        tRoomDTO.chatReadVoList[0].chat_memberId}" />.png?${r
+                                              class="singleMemberImage"
 
-									openAlert("로그인 해주세요");
+                           onerror="this.src='/ROOT
+                g/profile_img/basicProfile.png'"
 
-									return;
-								}
+                          />
+                            </c:otherwise>
 
-								if (isLimited()) {
+                c:choose>
+                    </c:if>
+                    <c:if te
+            oomDTO.
+            chat_type == 1 }">
+                        <c:choose>
 
-									openAlert("채팅방 생성 기능이 제한되어 있습니다");
+                hen test="${pageContext.request.se
+                localhost'}">
 
-									return;
-								}
+                h items="${ChatRoomDTO.chatReadVoList}"
 
-								var chatRoomData = {
-									roomOwnerId: myId,
-									roomOwnerNick: myNickName,
-									chat_type: 1,
-									headCount: chosenUser.length + 1
-								};
 
-								var chatMemberVoArray = new Array(chosenUser.length);
+            "chatReadVO" begin="0"
+                                                 <img src="/resources/i
+                    g/<c:out v
+                        									${chatReadVO.chat_memberId}" />.png?${random}"
 
-								if (chosenUser.length == 1) {
+                                              class="multiMemberImage"
+                                         onerror="this.src='/resources/img/profile_img/ba
+                                 "/>
 
-									var chatRoomData = {
-										roomOwnerId: myId,
-										roomOwnerNick: myNickName,
-										chat_type: 0,
-										headCount: chosenUser.length + 1
-									};
+                                 forEach>
+                            </c:when>
 
-									var chatMemberData = {
+                        herwise>
 
-										chat_memberId: $(chosenUser[0]).data("user_id"),
-										chat_memberNick: $(chosenUser[0]).data("nick_name")
-									};
 
-									var commonData = {
-										chatRoomVO: chatRoomData,
-										chatMemberVO: chatMemberData
-									};
+                             items="${ChatRoomDTO.chatReadVoList}"
+                                           var="chatReadVO" begin="0" end=
 
-									commonService.createSingleChat(commonData,
+                                 oad/<c:out value="
+																${chatReadVO.chat_memberId}" />.pn
 
-										function (result, status) {
 
-											if (status == "success") {
+                    s="multiMem
 
-												closeUserList();
+                                    onerror="this.src='/ROOT/resources/
+                    mg/basicPr
+                                                          />
 
-												var popupX = (window.screen.width / 2) - (400 / 2);
+                            h>
+                            </c:otherwise>
 
-												var popupY = (window.screen.height / 2) - (500 / 2);
+                                             </c:choose>
 
-												window.open('/chatRoom/' + result + '?userId=' + myId, "title" + result, 'height=500, width=400, screenX=' + popupX + ', screenY= ' + popupY);
-											}
-										},
+                                           </div>
+                <div class="secondWrap">
+                    <div class="chatNick">
 
-										function (status) {
+                                     f test="${ChatRoomDTO.ch
+                                     pe == 0 }">
+                            ${ChatRoomDTO.chatReadVoLi
+                            erNick}
 
-											if (status == "error") {
+                              </c
 
-												openAlert("Server Error(관리자에게 문의해주세요)");
-											}
-										}
-									);
+                            {ChatRoomDTO.chatRoomVo.chat_type == 1 }">
 
-								} else {
+                                              <c:if test="${ChatRoomDTO.ch
+                                tle != null}">
+                                ${ChatRoomDTO.chatRoomVo.chat_title}
 
-									for (var i = 0; i < chosenUser.length; i++) {
+                                      </c:if>
 
-										var chatMemberData = {
+                                     if test="${ChatRoomDTO.chatRo
+        Vo.chat_title == null}">
 
-											chat_memberId: $(chosenUser[i]).data("user_id"),
-											chat_memberNick: $(chosenUser[i]).data("nick_name")
-										};
 
-										chatMemberVoArray[i] = chatMemberData;
-									}
 
-									var commonData = {
-										chatRoomVO: chatRoomData,
-										chatMemberVoArray: chatMemberVoArray
-									};
+                            ms="${ChatRo
 
-									commonService.createMultiChat(commonData,
+          VoList}"
 
-										function (result, status) {
 
-											if (status == "success") {
+                  var
+                 varSt
+            s">
 
-												closeUserList();
 
-												var popupX = (window.screen.width / 2) - (400 / 2);
 
-												var popupY = (window.screen.height / 2) - (500 / 2);
+                        est="$
 
-												window.open('/chatRoom/' + result + '?userId=' + myId, "title" + result, 'height=500, width=400, screenX=' + popupX + ', screenY= ' + popupY);
-											}
-										},
 
-										function (status) {
 
-											if (status == "error") {
+                                     ${
+                        dVO.cha
 
-												openAlert("Server Error(관리자에게 문의해주세요)");
-											}
-										}
-									);
-								}
-							}
+                                    </c:if>
 
-							$(document).on("click", ".multiChat", function (event) {
 
-								<sec: authorize access="isAuthenticated()">
-									var myId = '${userInfo.username}';
-								</sec: authorize>
 
-								if (myId == null) {
 
-									openAlert("로그인 해주세요");
+                             <c:if test="${sta
+                        ">
 
-									return;
-								}
+                                         ${chatR
+                        membe
 
-								var chatroom_num = $(this).data("chatroom_num");
 
-								var popupX = (window.screen.width / 2) - (400 / 2);
 
-								var popupY = (window.screen.height / 2) - (500 / 2);
 
-								window.open('/chatRoom/' + chatroom_num + '?userId=' + myId, "title" + chatroom_num, 'height=500, width=400, screenX=' + popupX + ', screenY= ' + popupY);
-							});
+                                </c
 
-							function openUserList() {
 
-								backGround.css("display", "block");
-								userListWrap.css("display", "block");
 
-								getChatUserList(showChatUserList, showError);
-							}
+                             </c:if>
 
-							function closeUserList() {
+             </c:if>
 
-								backGround.css("display", "none");
-								userListWrap.css("display", "none");
 
-								var chosenMembers = $("#chosenMembers");
+                      <div class="memberCount">
 
-								chosenMembers.html("");//선택한 멤버 초기화
 
-								var search = $("#search");
+                :if test="${ChatRoomDTO.chatRoo
 
-								search.val("");//키워드 초기화
+                                 1 }">
 
-								var chatInvite = $("#chatInvite");//초대버튼 비활성화
-								chatInvite.attr("disabled", true);
-								chatInvite.css("background-color", "#EAEAEA");
-								chatInvite.css("color", "gray");
-							}
+                                           DTO.chatRoomVo.headCount})
 
-							function getChatUserList(callback, error, keyword) {
 
-								$.ajax({
-									type: 'get',
-									url: '/getChatUserList?keyword=' + keyword,
-									success: function (result, status, xhr) {
-										if (callback) {
-											callback(result, status);
-										}
-									},
-									error: function (xhr, status, er) {
-										if (error) {
-											error(status);
-										}
-									}
-								});
-							}
+                             </
+                                          </div>
 
-							function search(obj, maxByte) {
 
-								checkInputVal(obj, 30);
-								getChatUserList(showChatUserList, showError, obj.value);
-							}
+                              ss="chatContent">
 
-							function checkInputVal(obj, maxByte) {
 
-								var str = obj.value;
-								var stringByteLength = 0;
-								var reStr;
+                t
+                            tent
 
-								stringByteLength = (function (s, b, i, c) {
 
-									for (b = i = 0; c = s.charCodeAt(i++);) {
 
-										b += c >> 11 ? 3 : c >> 7 ? 2 : 1;
-										if (b > maxByte) {
-											break;
-										}
+                /div>
 
-										reStr = str.substring(0, i);
-									}
+                    <div class="th
 
-									return b
+                     <div class="ch
 
-								})(str);
+                        ate var="no
+                    "${today}"
+                                  M-dd"/>
 
-								if (stringByteLength > maxByte) {
-									obj.value = reStr;
-								}
+                formatD
+                            e"
 
-								obj.focus();
-							}
+                                                   value="${ChatR
+                ontent
+            " patt
+            M-dd"/>
 
-							function showError(status) {
 
-								if (status == "error") {
+                choose>
 
-									openAlert("Server Error(관리자에게 문의해주세요)");
-								}
-							}
+                                                      <c:when test="${nowDate == regDate}">
 
-							function showChatUserList(chatUserList, status) {
 
-								if (status == "success") {
+                               ate va
+                            DTO.chat
+                                    ate}"
+                                                pattern="a H:
 
-									var length = chatUserList.length;
-									var userList = $("#userList");
-									var str = "";
-									var nickName;
-									var userId;
 
-									for (var i = 0; i < length || 0; i++) {
 
-										nickName = chatUserList[i].nickName;
-										userId = chatUserList[i].userId;
+                                 :when>
+                            <c
 
-										str += "<div class='userWrap' data-user_id='" + userId + "' data-nick_name='" + nickName + "'>"
-										str += "<span class='userImage'>";
-										if (serverName == 'localhost') {
-											str += "<img src='/resources/img/profile_img/" + userId + ".png?" + random + "' class='memberImage hideUsermenu' onerror='this.src=\"/resources/img/profile_img/basicProfile.png\"'/>&nbsp"
 
-										} else {
-											str += "<img src='/upload/" + userId + ".png?" + random + "' class='memberImage hideUsermenu' onerror='this.src=\"/ROOT/resources/img/profile_img/basicProfile.png\"'/>&nbsp"
-										}
-										str += "</span>";
-										str += "<span class='userNickname'>"
-										str += nickName
-										str += "</span>";
-										str += "</div>";
-									}
+                        formatDate val
 
-									userList.html(str);
 
-									$(".userWrap").on("click", function (event) {
+                  tVo.regDate}"
 
-										var chosenMembers = $("#chosenMembers");
-										var str = $.trim(chosenMembers.html());
-										var user_id = $(this).data("user_id");
-										var nick_name = $(this).data("nick_name");
 
-										if (str == "") {
 
-											str += "<span id='user" + user_id + "' class='chosenUser' data-user_id='" + user_id + "' data-nick_name='" + nick_name + "'>" + nick_name + "</span>";
+                        =
+                                                        </c:ot
 
-										} else {
 
-											var chosenUser = $("#user" + user_id);
 
-											if (chosenUser.length > 0) {
 
-												chosenUser.remove();
-												chosenMembers = $("#chosenMembers");
-												str = $.trim(chosenMembers.html());
+                                 <
+                    ChatRoomDTO
+                != 0 }
+                               <div class="chatCnt">
 
-											} else {
+                                                          ${C
+                                                         }+
 
-												str += "<span id='user" + user_id + "' class='chosenUser' data-user_id='" + user_id + "' data-nick_name='" + nick_name + "'> " + nick_name + "</span>";
-											}
-										}
 
-										chosenMembers.html(str);
+                                     :if
+                              </d
 
-										var chosenUsers = $(".chosenUser");
 
-										if (chosenUsers.length > 0) {
+                                           ch>
 
-											var chatInvite = $("#chatInvite");
-											chatInvite.attr("disabled", false);
-											chatInvite.css("background-color", "#7151fc");
-											chatInvite.css("color", "white");
+                        di
 
-										} else {
 
-											var chatInvite = $("#chatInvite");
-											chatInvite.attr("disabled", true);
-											chatInvite.css("background-color", "#EAEAEA");
-											chatInvite.css("color", "gray");
-										}
-									});
-								}
-							}
+    <div id="backGr
+                                                  <div id="userListWra
+                           <div id="titl
 
-							function getChatRoomList(userId, callback, error) {
+                                     팅할 회원을
 
-								$.ajax({
-									type: 'get',
-									url: '/getChatRoomList?userId=' + userId,
-									success: function (result, status, xhr) {
-										if (callback) {
-											callback(result, status);
-										}
-									},
-									error: function (xhr, status, er) {
-										if (error) {
-											error(status);
-										}
-									}
-								});
-							}
+                                                                  <div id="chosenMem
 
-							function reChatRoomList() {
 
-								getChatRoomList('${userInfo.username}', function (result, status) {
+                                   <div
 
-									if (status == "success") {
+                       <input i
+                ype='te
+            ' onin
+            (
 
-										var str = "";
+                        placeholder="
+                                ofocus
+                          </div>
 
-										for (var i = 0; i < result.length; i++) {
 
-											var chat_type = result[i].chatRoomVo.chat_type;
-											var chatRoomNum = result[i].chatRoomVo.chatRoomNum;
+                               rList">
 
-											if (chat_type == 0) {
 
-												var chat_nickname = result[i].chatReadVoList[0].chat_memberNick;
-												var chat_memberId = result[i].chatReadVoList[0].chat_memberId;
-												var chat_type_name = 'singleChat';
 
-												str += "<div class='listContent " + chat_type_name + "' id='" + chatRoomNum + "' data-chat_nickname='" + chat_nickname + "' data-chat_userid='" + chat_memberId + "'>";
+               리스
 
-											} else if (chat_type == 1) {
+                                </div>
+        <
 
-												var chat_type_name = 'multiChat';
+                          tt
+                               <d
 
-												str += "<div class='listContent " + chat_type_name + "' id='" + chatRoomNum + "' data-chatroom_num='" + chatRoomNum + "'>";
-											}
+          InviteWrap">
 
-											str += "<div class='firstWrap'>";
 
-											if (result[i].chatRoomVo.chat_type == 0) {
 
-												var userId = result[i].chatReadVoList[0].chat_memberId;
+                "button" class=
+                        tBt
 
-												if (serverName == 'localhost') {
 
-													str += "<img src='/resources/img/profile_img/" + userId + ".png?" + random + "' class='singleMemberImage' onerror='this.src=\"/resources/img/profile_img/basicProfile.png\"'/>"
 
-												} else {
+                                   nvite
 
-													str += "<img src='/upload/" + userId + ".png?" + random + "' class='singleMemberImage' onerror='this.src=\"/ROOT/resources/img/profile_img/basicProfile.png\"'/>"
-												}
 
-											} else if (result[i].chatRoomVo.chat_type == 1) {
 
-												var length = result[i].chatReadVoList.length;
 
-												if (serverName == 'localhost') {
 
-													if (length > 3) {
 
-														for (var j = 0; j < 4; j++) {
 
-															var userId = result[i].chatReadVoList[j].chat_memberId;
 
-															str += " <img src='/resources/img/profile_img/" + userId + ".png?" + random + "' class='multiMemberImage' onerror='this.src=\"/resources/img/profile_img/basicProfile.png\"'/>"
 
-														}
 
-													} else {
 
-														for (var j = 0; j < result[i].chatReadVoList.length; j++) {
 
-															var userId = result[i].chatReadVoList[j].chat_memberId;
 
-															str += " <img src='/resources/img/profile_img/" + userId + ".png?" + random + "' class='multiMemberImage' onerror='this.src=\"/resources/img/profile_img/basicProfile.png\"'/>"
+                                 lWrap">
 
-														}
-													}
+                        ut type=
 
-												} else {
 
-													if (length > 3) {
+                             "n
 
-														for (var j = 0; j < 4; j++) {
 
-															var userId = result[i].chatReadVoList[j].chat_memberId;
+                               "chat
 
-															str += " <img src='/upload/" + userId + ".png?" + random + "' class='multiMemberImage' onerror='this.src=\"/ROOT/resources/img/profile_img/basicProfile.png\"'/>"
-														}
 
-													} else {
 
-														for (var j = 0; j < result[i].chatReadVoList.length; j++) {
 
-															var userId = result[i].chatReadVoList[j].chat_memberId;
 
-															str += " <img src='/upload/" + userId + ".png?" + random + "' class='multiMemberImage' onerror='this.src=\"/ROOT/resources/img/profile_img/basicProfile.png\"'/>"
-														}
-													}
-												}
-											}
+               div>
 
-											str += "</div>";//firstWrap
+                </div>
+</
+                                   var
 
-											str += " <div class='secondWrap'>";
+                 ame = "
+                        Na
 
-											str += "<div class='chatNick'>";
+                 = "$
+                     ";
+    var serverName = '
+                             .request.
 
-											if (result[i].chatRoomVo.chat_type == 0) {
 
-												str += result[i].chatReadVoList[0].chat_memberNick;
+                om
+                        ();
+    var backG
 
-											} else if (result[i].chatRoomVo.chat_type == 1) {
+                        ;
+    v
+                rap
 
-												if (result[i].chatRoomVo.chat_title != null) {
 
-													str += result[i].chatRoomVo.chat_title;
+                    rListWrap")
 
-												} else {
 
-													for (var j = 0; j < result[i].chatReadVoList.length; j++) {
 
-														if (j == result[i].chatReadVoList.length - 1) {
+    $(document
+                unctio
 
-															str += result[i].chatReadVoList[j].chat_memberNick;
 
-														} else {
+            {
 
-															str += result[i].chatReadVoList[j].chat_memberNick + ", ";
-														}
-													}
-												}
-											}
+        xhr.setReque
+                f
+             c
 
-											str += "</div>";//chatNick
 
-											str += " <div class='memberCount'>";
 
-											if (result[i].chatRoomVo.chat_type == 1) {
+                    $("#newChatBtn").on("click", function
 
-												str += "(" + result[i].chatRoomVo.headCount + ")";
-											}
 
-											str += "</div>";//memberCount
 
-											str += "<div class='chatContent'>";
-											str += result[i].chatContentVo.chat_content;
-											str += "</div>";//chatContent
+                            if
 
-											str += "</div>";//secondWrap
+                                       openAlert("채팅방 생성 권
+                                 );
 
-											str += "<div class='thirdWrap'>";
+               e
 
-											str += "<div class='chatDate'>";
+                            }
 
-											var nowTime = new Date();
-											var lastChatTime = new Date(result[i].chatContentVo.regDate);
-											var chatDate;
+                                    Lis
 
-											if (nowTime.getDate() == lastChatTime.getDate()) {
+                });
 
-												chatDate = commonService.displayDayTime(result[i].chatContentVo.regDate);
 
-											} else {
+                                      ncel").on("click", f
 
-												chatDate = commonService.displayYearMonthTime(result[i].chatContentVo.regDate);
-											}
+        close
 
-											str += chatDate;
 
-											str += "</div>";//chatDate
+                                   tI
+                                             unction (even
+                                   var chosenUser = $(".chosenUser").get
 
-											if (result[i].notReadCnt != 0) {
 
-												str += "<div class='chatCnt'>";
 
-												str += result[i].notReadCnt;
+                                 chosenUse
 
-												str += "+</div>";//chatCnt
-											}
 
-											str += "</div></div>";//thirdWrap
-										}
 
-										$(".chatList").html(str);
-									}
-								},
+                            om
 
-									function (status) {
 
-										if (status == "error") {
 
-											openAlert("Server Error(관리자에게 문의해주세요)");
-										}
-									}
-								);
-							}
 
-						</script>
 
-						</html>
+                        c: auth
+                ="isAut
+                ">
+
+                        var myId = '${use
+
+                            }'
+                            var my
+                    {userI
+                ickName
+
+
+             autho
+
+
+
+
+
+
+
+                                        openAlert("로그인 해주세요");
+
+
+                               return;
+
+
+
+
+                                                      mited()
+                                                          o
+                        "채팅방 생성 기능이 제한되어 있습
+
+
+
+                                                 var chatRoomData = {
+
+                                       nerId: myId,
+
+
+                                rNick: myNickName,
+
+                            ch
+                        1,
+
+                                                 chosenUser.l
+
+                         };
+
+
+
+
+                            ew Array(c
+
+                                 ength
+                           if (
+                ength =
+
+                           atRoomDat
+
+
+                                          ,
+                roomOwn
+
+                           ickName,
+                chat_type: 0,
+
+                    dCount:
+                                    ngth +
+
+
+
+                           var
+
+                            erData
+
+                        memberI
+                        r[0]
+                user_id"),
+                chat_membe
+                               chosenUser[0]).data("nick_name")
+
+                                                        var commonData = {
+
+                                         chatRoomVO: chatRoom
+                                                  chatMemberVO: ch
+
+                                ;
+
+                common
+
+
+                                    eSingleChat(commonData,
+
+
+                                ti
+
+
+                            status) {
+
+
+                         if (st
+                    ess")
+
+
+                      closeUserList();
+
+
+                      var popupX =
+
+                reen.width / 2) -
+
+
+                var popupY = (wi
+
+                    n.heigh
+                     (
+
+
+
+                        .op
+
+                Room/' + result + '?
+                yId, "
+
+            ight=500, width
+
+
+
+                pupX
+                    = ' + popupY);
+
+
+                         },
+
+
+                    on (s
+
+
+                                    status
+                r")
+
+
+                          openAlert"S
+                    리자
+
+
+                                        }
+                }
+
+                                   );
+
+                } else {
+
+
+                                            0; i < chosenUserle
+
+                         va
+
+
+                            = {
+
+
+
+                at_memberId: $(chosenU
+
+
+                                            r
+
+
+                           chat_member
+                             se
+                nick_n
+
+
+
+
+
+                         VoArray[i] = cha
+                                                  }
+
+
+
+
+                nData =
+
+            chatRo
+                  om
+
+                        chatMe
+
+                                  :
+
+
+                        ay
+                };
+
+
+                               commonSer
+                                eMulti
+                        onData
+
+                functio
+                        , st
+
+                                            i
+                                  success") {
+
+
+                rList();
+
+
+                                 var popupX = (window.sc
+
+                         (
+
+
+                               var po
+
+
+                        en.height / 2) - (500
+
+
+                        atRoom/' + result + '?userId=' + myId, "ti
+                ul
+
+
+                         500, width=400, sc
+
+                            op
+                        creenY= ' + p
+
+                               }
+
+
+
+                function (
+
+
+                          if (
+
+                        r") {
+
+
+
+                                     er Error(관리자에게 문의해주세요)");
+
+
+
+                        }
+
+
+
+                  );
+                }
+                }
+
+
+
+
+                  (document).on("click", ".
+                t", function (event
+
+
+                  <sec: authorize access="isAuthentica
+
+                               var myId = '${use
+
+                ame}';
+                </sec: authorize>
+
+
+
+
+                     f
+                ul
+
+
+                t
+
+
+
+
+
+                return
+
+
+
+                               var
+                num
+                t
+
+
+
+
+
+                        var po
+
+
+
+                .screen.width / 2) - (400 / 2);
+
+
+
+
+                       op
+
+
+                cre
+
+
+
+            (500 / 2);
+
+
+
+
+
+                n(
+
+
+           troom_num + '?u
+
+                    yId, "title" + chatroom
+
+
+
+
+
+
+
+        =' + p
+
+                 scr
+
+
+
+
+
+                      });
+
+
+
+
+                 op
+            () {
+
+
+                    bac
+                 s(
+
+         "bl
+
+
+
+
+
+                rListWrap
+
+        lay
+
+                ;
+
+
+
+
+
+                  etChatUserList(s
+
+                                        or);
+
+
+                      }
+
+
+                                 clo
+
+                    backGround.css("
+
+
+
+                      userLi
+
+                di
+                no
+
+
+
+
+                 $("#chosen
+
+
+
+                chosenMembe
+
+                   ;/
+
+
+
+
+
+                search");
+
+
+
+                            "
+
+
+
+
+                ha
+
+                              vite"
+
+
+
+                   화
+
+
+                tI
+
+
+                ", true);
+
+
+
+                          I
+
+
+
+
+
+
+                           A
+
+
+
+                te
+
+                ", "gray");
+
+
+
+
+                             function getCh
+
+                llback,
+                w
+
+                          $.ajax
+
+                             type: 'get
+
+
+
+
+                     '
+
+                          t?keyword
+
+
+
+
+
+
+                            u
+
+                sult, status, xhr
+
+                c
+
+
+
+
+                esult, status);
+
+
+
+
+
+
+
+
+                    tion (x
+
+                {
+
+
+
+
+                              error(status);
+
+
+
+
+
+
+                 });
+                }
+
+
+
+
+
+
+                    se
+
+
+                xByte) {
+
+
+
+
+                   nputVal(obj, 30);
+
+
+
+
+                    st(showChatUse
+                Error, ob
+
+
+
+
+                             }
+
+
+
+
+                 o
+
+                         t
+
+
+
+                        m
+
+
+
+
+
+                   = obj.value;
+
+
+
+
+
+
+                th = 0;
+                var reSt
+
+
+
+
+
+                         ringByteLength = (function (
+
+
+
+                          for (b = i = 0
+
+                arCodeAt(i++);) {
+
+
+
+
+
+                7
+
+
+
+
+
+
+                     Byte) {
+
+
+
+
+
+                  }
+
+
+
+
+
+                g
+
+
+
+
+                        return b
+
+                }
+
+
+
+
+
+                            if (stringByteLength > maxBy
+
+
+
+                alue = r
+
+
+
+                                  o
+
+
+                }
+
+
+
+
+                o
+
+                r(status) {
+
+
+                 (status ==
+
+                                        openAlert("S
+
+
+                          세요
+                           }
+
+
+
+                  function s
+                ist(chatUserLi
+
+
+                f (
+                =
+
+
+
+
+                  var lengt
+
+
+
+                .length;
+
+                a
+                t = $("#userList");
+                v
+
+
+
+                  var nick
+
+
+                    var us
+
+
+
+                     for (va
+                i < l
+                0; i++) {
+
+
+                       n
+
+                          atUserList[i].nickName;
+
+
+                use
+
+                serList[i].use
+
+                            str +
+
+
+
+                ='userWrap' data-user_id
+
+                                ta-nick_name='" +
+
+
+
+
+
+
+                class='userImage'>";
+
+
+
+
+                     rName ==
+
+                t
+
+
+
+                           str += "<img src='/resources/
+
+
+                /" + use
+
+
+
+
+                          "
+
+
+                e
+
+
+
+
+        o
+
+        is.src=\"/r
+
+
+                /profile_im
+
+                                >&nbsp"
+
+
+
+
+
+
+
+
+
+                  /upload/"
+                .png?" + rando
+                s
+
+                e h
+                e
+
+
+
+
+      /ROOT/res
+
+
+
+        le_img/b
+
+                .
+        nbsp"
+
+
+
+
+
+                  an>";
+
+
+
+        tr +=
+
+
+
+             erNickn
+
+        str += ni
+
+
+
+
+                  r += "</span>";
+
+
+
+        r +
+
+
+
+
+
+
+
+
+        l(str);
+
+
+
+                        click", function (
+
+
+
+
+
+
+        ers = $("#chosenMemb
+
+
+
+
+                var s
+
+                m
+
+
+
+               tml());
+                var u
+
+
+        ).data("
+
+                       var nick_n
+                t
+
+
+                ("nick_name");
+
+
+
+
+                == "") {
+
+
+                                 "<span
+
+
+
+
+
+                e
+
+
+                  ser_id='"
+                    "' data-nick_n
+                c
+
+        " +
+    m
+
+    an>"
+
+                        }
+
+
+
+        User = $("#user
+
+
+
+
+      chose
+
+                 > 0)
+
+                        chos
+
+
+
+
+
+        s = $("#chosenM
+
+
+
+
+                m
+
+
+
+                ;
+
+
+
+                } else {
+                       str += "<sp
+
+
+
+
+                ass='chosenUser' data-us
+
+
+
+               d + "
+
+        k_nam
+
+
+            name +
+                k_nam
+            n>";
+
+
+
+               }
+
+
+
+
+    enMembers.html
+
+
+
+              var
+
+
+
+            osenUse
+
+
+
+
+    n
+
+    {
+
+                var chatInvite = $("#chatInvit
+
+                   chatInvite.attr
+
+                    false);
+
+
+
+            vite.css("backgr
+
+
+
+
+            vite.cs
+
+
+
+               ite");
+
+
+
+
+                                  var chatIn
+
+                             )
+
+
+                      Invite.attr(
+
+
+
+                rue);
+
+
+                chatInvite.css("bac
+
+
+                r", "#EAEAEA");
+                ch
+                            or", "gray");
+
+
+                ;
+                }
+
+
+
+
+                unction getChatRoo
+
+                            back
+
+
+
+
+                    type: 'get',
+
+
+                : '/getChatRoomList?userId=' + use
+                         success
+
+                result,
+
+
+                   ) {
+                if
+
+
+                sult, st
+
+
+
+
+
+                              err
+                               t
+
+
+                     if
+
+
+
+
+
+
+                r(status);
+
+
+                              }
+                     });
+                      }
+
+
+
+
+                h
+                t
+
+
+
+
+                   getChatRoomList
+
+                            ame}
+
+                                    st
+
+                                    if
+
+
+                success") {
+
+                var s
+
+
+                r i = 0
+
+
+                       .le
+                {
+
+
+
+                                   = result[i].c
+
+
+
+
+
+                        chatRoomNum
+                        ch
+                             m;
+
+
+
+
+
+                        _type == 0
+
+                a
+                     ckn
+                s
+
+
+
+                st[
+                e
+
+
+
+                               var chat_
+
+                esult[i].chatR
+
+                0].
+
+
+
+
+                    r chat_type
+
+                gleCh
+                                           str += "<div
+                    Con
+                a
+
+
+
+                    atRoomNum + "' data
+
+
+
+
+                           name + "' data-chat_userid=
+                                 +
+
+
+
+                      } else i
+
+
+
+                a
+
+
+
+            'mu
+
+
+
+
+                    = "<div class='listContent " + chat
+
+         + "' id
+
+              data-chatroo
+
+                hatRoomNu
+                                      }
+
+
+                "
+
+
+                    '>";
+
+                if
+                c
+
+            pe == 0) {
+
+                var use
+                t[
+
+
+                          0].chat_
+
+
+
+    e
+
+    'localhost') {
+
+
+
+
+
+                    img src='/resources/img/profile_img/" + userId + ".png?
+
+                             s='singleMemb
+
+                    rror='thi
+
+
+
+                                  g
+
+                basicPro
+
+                        "
+
+
+
+                 {
+
+
+                        img src='/upl
+
+                 + ".png?" + random
+
+                                  MemberImage
+
+
+
+                /resources/img/profile_im
+
+
+
+
+
+                }
+
+                } else if (result[i].chatR
+                            pe == 1) {
+
+                var le
+
+                                        R
+
+                gth;
+
+
+
+
+
+                oc
+
+                             if (lengt
+
+                            for (var j =
+
+                        ) {
+
+
+
+
+
+                            lt[i].chatReadVoList[j].c
+
+
+
+
+
+
+                resources/img/profile_img/" + userId + ".png?" +
+
+                ass='multiMembe
+                        r
+
+                        \"/r
+
+
+
+
+
+                        il
+
+                                 }
+
+
+
+                                                        for (var j =
+
+
+
+                            List.length; j++) {
+
+
+
+
+                V
+
+                _memberId;
+
+                str += " <img src='/r
+
+                rofile_img/" + userId + ".png?" + random + "'
+
+
+
+                            error='t
+
+                                                 o
+
+
+
+                                          }
+
+
+
+                } else {
+
+
+
+                (length
+
+
+
+
+                        0; j < 4;
+
+                       var userId = r
+
+                            eadVoList[j].chat_memberId;
+
+
+
+                            src='/upload/" + userId + ".png?
+
+                                    l
+
+
+
+                                                              T
+
+
+
+                sicProfi
+
+
+
+
+
+                                               } else {
+
+
+
+                       result[i].chatReadVoList.length; j++) {
+
+
+
+                sult[i].chatReadVoList[j].chat_memberId;
+
+
+
+                                    =
+
+                                pload/"
+
+                                              d
+                '
+
+                ge' oner
+
+
+
+                                                   r
+
+
+
+                _img/bas
+
+
+
+                                               }
+                }
+                }
+
+
+
+
+                  str += "</div>";//firstWrap
+
+
+
+                div class='secondWrap'>";
+
+
+
+                                    i
+                                i
+
+
+
+                                              c
+
+
+
+                                    {
+
+
+
+                = r
+
+                                        a
+                t
+
+
+
+
+
+
+                                          (result[i].chatRoomVo.chat_
+
+
+
+                       if (result[i].chat
+
+                itle != null) {
+
+
+
+                t[i].chatR
+                                    e
+
+
+
+
+
+
+
+                u
+
+
+
+
+
+
+
+                if (j ==
+
+
+
+                                               ength - 1) {
+
+
+
+                tr += result[i]
+
+
+
+                berNick;
+
+                }
+
+
+
+
+                                    t
+                                c
+
+
+
+
+
+
+                      }
+
+
+
+                       }
+
+
+
+
+
+                        += "</div>";//c
+
+
+
+                        r += " <
+
+                r
+
+
+
+                                           t[i].chatRoomVo.chat_type == 1) {
+
+
+
+
+
+                      a
+
+
+
+
+
+
+
+
+
+                                          emberCount
+
+
+
+
+
+                                t'>";
+                str += resu
+
+
+
+
+
+
+
+
+
+
+
+
+
+                v>";//seco
+
+
+
+                                           iv class='thir
+
+
+
+                                    c
+
+
+
+
+
+
+
+
+                         lastChatT
+
+
+
+                        ContentVo.regD
+
+
+                            te;
+
+
+                         tDate
+                        a
+
+
+
+
+                                   onService.displayDayTime
+                                       ntentVo.regDa
+
+
+                                 e {
+
+
+
+
+                la
+
+                        e(result[i].chatContentVo.reg
+
+
+                                   }
+
+
+
+
+                        = c
+
+
+
+                /chatDate
+
+                if (result[i].not
+
+
+
+                                  str +=
+
+                            >";
+
+                                str +
+
+                otReadCnt;
+
+
+
+
+
+
+                         /chatCn
+
+
+
+                tr +=
+
+                >";//third
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                s
+
+
+
+                                           f
+
+
+
+
+
+
+
+                                        v
+
+
+
+
+
+
+
+             }
+
+
+
+
+
+                            }
+
+
+
+                /
+
+
+
+
+
+
+
+
+
+</html>

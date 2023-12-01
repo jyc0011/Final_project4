@@ -1,4 +1,3 @@
-
 package com.finalproject.team4.shouldbe.vo;
 
 import lombok.AllArgsConstructor;

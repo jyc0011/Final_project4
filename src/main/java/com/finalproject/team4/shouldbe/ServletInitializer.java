@@ -1,20 +1,21 @@
 package com.finalproject.team4.shouldbe;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import javax.servlet.descriptor.JspPropertyGroupDescriptor;
 import org.apache.catalina.Context;
+import org.apache.tomcat.util.descriptor.web.JspConfigDescriptorImpl;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroup;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroupDescriptorImpl;
-import org.apache.tomcat.util.descriptor.web.JspConfigDescriptorImpl;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
+
+import javax.servlet.descriptor.JspPropertyGroupDescriptor;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 @Component

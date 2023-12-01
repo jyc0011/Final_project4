@@ -79,7 +79,7 @@
     <script>
         $(document).ready(function () {
             var result = "${result}";
-            if ( result != "") {
+            if (result != "") {
                 alert(result);
             }
         })

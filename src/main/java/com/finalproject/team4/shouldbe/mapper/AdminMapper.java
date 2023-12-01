@@ -8,10 +8,31 @@ import java.util.List;
 
 @Mapper
 public interface AdminMapper {
-    public List<AdminMemberVO> adminMemberList();
-    public List<AdminSuspendedVO> adminSuspendedList();
-    public List<AdminWithdrawnVO> adminWithdrawnList();
-    public List<AdminChatVO> adminChatList();
-    public int countBoard();
-    public List<BoardVO> selectBoard (@Param("pvo") PagingVO pvo);
+    List<AdminMemberVO> adminMemberList(@Param("pvo") PagingVO pvo);
+
+    List<AdminSuspendedVO> adminSuspendedList(@Param("pvo") PagingVO pvo);
+
+    List<AdminWithdrawnVO> adminWithdrawnList(@Param("pvo") PagingVO pvo);
+
+    List<AdminChatVO> adminChatList(@Param("pvo") PagingVO pvo);
+
+    int countBoard();
+
+    List<BoardVO> selectBoard(@Param("pvo") PagingVO pvo);
+
+    int countBoardReply();
+
+    List<BoardReplyVO> selectBoardReply(@Param("pvo") PagingVO pvo);
+
+    List<MessageVO> selectMessage(@Param("pvo") PagingVO pvo);
+
+    int countMessage();
+
+    int countMember();
+
+    List<UserVO> selectMember(@Param("pvo") PagingVO pvo);
+
+    int countSuspendedMember();
+
+    int countWithdrawnMember();
 }

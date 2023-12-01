@@ -54,7 +54,7 @@
             color: white;
         }
 
-        .list-inline{
+        .list-inline {
             background-color: #ffe3a0;
             padding: 10px;
         }
@@ -73,9 +73,11 @@
             margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
         }
+
         .pagination {
             justify-content: center;
         }
+
         .pagination .page-link {
             color: black;
             text-decoration: none;
@@ -118,9 +120,11 @@
     <div id="content">
         <div>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_user">채팅 저장소</a>
+                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_user">채팅
+                    저장소</a>
                 </li>
-                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save/quiz">퀴즈 저장소</a>
+                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save/quiz">퀴즈
+                    저장소</a>
                 </li>
             </ul>
             <div class="col-md-4">
@@ -140,11 +144,13 @@
                                     <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
                                     </a></li>
                                 </c:if>
-                                <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                                <c:forEach var="i" begin="${pVO.startPage}"
+                                           end="${pVO.startPage + pVO.onePageCount - 1}">
                                     <c:if test="${i <= pVO.totalPage}">
                                         <c:choose>
                                             <c:when test="${i != pVO.page}">
-                                                <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
+                                                <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a>
+                                                </li>
                                             </c:when>
                                             <c:otherwise>
                                                 <li class="page-item"><a class="page-link active" href="">${i}</a></li>

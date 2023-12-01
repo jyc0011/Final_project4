@@ -75,7 +75,7 @@
     <script>
         $(document).ready(function () {
             var result = "${result}";
-            if ( result != "") {
+            if (result != "") {
                 alert(result);
             }
         })
@@ -198,7 +198,7 @@
                     return false;
                 }
                 if (!isCheckedEmail()) {
-					alert("이메일 인증을 진행해주세요!");
+                    alert("이메일 인증을 진행해주세요!");
                     return false;
                 }
                 //todo : 나머지 폼 검사(이름, 이메일, 국적, 성별, 언어 최소요구사항)

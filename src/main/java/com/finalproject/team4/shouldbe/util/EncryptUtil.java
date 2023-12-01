@@ -7,7 +7,7 @@ public class EncryptUtil {
 
     public String encrypt(String plainText, String salt) {
         try {
-            var salted = plainText+salt;
+            var salted = plainText + salt;
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(salted.getBytes());
 
@@ -38,7 +38,6 @@ public class EncryptUtil {
         for (byte b : salt) {
             sb.append(String.format("%02x", b));
         }
-        ;
 
         return sb.toString();
     }
