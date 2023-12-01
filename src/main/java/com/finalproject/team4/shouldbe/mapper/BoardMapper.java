@@ -2,27 +2,26 @@ package com.finalproject.team4.shouldbe.mapper;
 
 import com.finalproject.team4.shouldbe.vo.BoardVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    List<BoardVO> boardPageList();
+    public int boardInsert(BoardVO vo);
 
-    int BoardInsert(BoardVO vo);
+    public List<BoardVO> boardPageList(PagingVO pVO);
 
-    List<BoardVO> BoardPageList(PagingVO pVO);
+	public int totalRecord(PagingVO pVO);
 
-    int totalRecord(PagingVO pVO);
+	public BoardVO boardSelect(int post_id);
 
-    BoardVO BoardSelect(int post_id);
+	public void viewCount(int post_id);
 
-    void hitCount(int post_id);
+	public int boardUpdate(BoardVO vo);
 
-    int BoardUpdate(BoardVO vo);
+	public int boardDelete(int post_id);
 
-    int BoardDelete(int post_id);
-
-    void increaseLike(int post_id);
+	public void increaseLike(int post_id);
 }
