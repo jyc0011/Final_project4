@@ -5,22 +5,15 @@ import com.finalproject.team4.shouldbe.service.UserService;
 import com.finalproject.team4.shouldbe.util.EncryptUtil;
 import com.finalproject.team4.shouldbe.vo.LoginVO;
 import com.finalproject.team4.shouldbe.vo.UserVO;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-
-import java.security.SecureRandom;
-import java.time.LocalDate;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
 
 @Controller
 public class UserController {
@@ -29,6 +22,7 @@ public class UserController {
     @Autowired
     EmailService emailService;
     EncryptUtil encrypt = new EncryptUtil();
+
     @GetMapping("/login")
     public String login(HttpSession session) {
         if (session.getAttribute("logStatus") == "Y") {
@@ -49,18 +43,19 @@ public class UserController {
         session.invalidate();//회원가입중 새로고침시 인증정보 날리기
         return "create_membership/create_membership";
     }
+
     @PostMapping("/create/sendcode")
     @ResponseBody
     public boolean createSendCode(@RequestParam("email") String email, HttpSession session) {
 
         //System.out.println(result);
-            try {
-                var authNum = emailService.sendAuthMail(email);
-                session.setAttribute("authNum", authNum);
-                session.setAttribute("authTime", System.currentTimeMillis());
-                return true;
-            }catch(Exception e){
-            }
+        try {
+            var authNum = emailService.sendAuthMail(email);
+            session.setAttribute("authNum", authNum);
+            session.setAttribute("authTime", System.currentTimeMillis());
+            return true;
+        } catch (Exception e) {
+        }
         return false;
     }
 
@@ -68,14 +63,14 @@ public class UserController {
     @ResponseBody
     public boolean createVerifyCode(@RequestParam("code") String code, HttpSession session) {
         System.out.println("/create/verify");
-        var time = (long)session.getAttribute("authTime");
-        if(System.currentTimeMillis() > time+1000*60*3){
+        var time = (long) session.getAttribute("authTime");
+        if (System.currentTimeMillis() > time + 1000 * 60 * 3) {
             //System.out.println("시간초과");
             session.removeAttribute("authNum");
             session.removeAttribute("authTime");
             return false;
         }
-        if(!code.equals(session.getAttribute("authNum"))){
+        if (!code.equals(session.getAttribute("authNum"))) {
             //System.out.println("번호미일치");
             return false;
         }
@@ -89,7 +84,7 @@ public class UserController {
 
     @PostMapping("/createOk")
     public String createOk(UserVO vo, HttpSession session, RedirectAttributes redirect) {
-        if(session.getAttribute("emailValid")!="Y" || session.getAttribute("idValid")!="Y"){
+        if (session.getAttribute("emailValid") != "Y" || session.getAttribute("idValid") != "Y") {
             redirect.addFlashAttribute("result", "이메일, 아이디 중복검사를 해주세요");
             return "redirect:/create";
         }
@@ -168,7 +163,7 @@ public class UserController {
 
         int result = userService.userCheckId(userid, email);
         //System.out.println(result);
-        if(result == 1){
+        if (result == 1) {
             //email발송
             try {
                 var authNum = emailService.sendAuthMail(email);
@@ -176,23 +171,24 @@ public class UserController {
                 session.setAttribute("authNum", authNum);
                 session.setAttribute("authTime", System.currentTimeMillis());
                 return true;
-            }catch(Exception e){
+            } catch (Exception e) {
                 return false;
             }
         }
         return false;
     }
+
     @PostMapping("/login/verify")
     @ResponseBody
     public boolean verifyCode(@RequestParam("code") String code, @RequestParam("userid") String userid, @RequestParam("email") String email, HttpSession session) {
-        var time = (long)session.getAttribute("authTime");
-        if(System.currentTimeMillis() > time+1000*60*3){
+        var time = (long) session.getAttribute("authTime");
+        if (System.currentTimeMillis() > time + 1000 * 60 * 3) {
             //System.out.println("시간초과");
             session.removeAttribute("authNum");
             session.removeAttribute("authTime");
             return false;
         }
-        if(!code.equals(session.getAttribute("authNum"))){
+        if (!code.equals(session.getAttribute("authNum"))) {
             //System.out.println("번호미일치");
             session.removeAttribute("authNum");
             session.removeAttribute("authTime");

@@ -1,18 +1,18 @@
 package com.finalproject.team4.shouldbe.controller;
 
-import com.finalproject.team4.shouldbe.vo.QuizVO;
 import com.finalproject.team4.shouldbe.service.QuizService;
+import com.finalproject.team4.shouldbe.vo.QuizVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
-
 
 
 @Controller
@@ -77,7 +77,7 @@ public class QuizController {
         String userId = (String) session.getAttribute("logId");
         quizService.saveQuizAnswer(quiz_id, userId, result);
 
-        mav.addObject("user_answer",user_answer);
+        mav.addObject("user_answer", user_answer);
         mav.addObject("quizVO", quizVO);
         mav.addObject("result", result);
         return mav;

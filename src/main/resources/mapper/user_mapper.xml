@@ -6,7 +6,7 @@
     </select>
     <insert id="useridInsert">
         insert into users(user_id, user_name, password, salt, email, nation, sex, lang)
-        values(#{userid}, #{username}, #{userpwd}, #{salt}, #{email}, #{nation}, #{sex}, #{langText})
+        values(#{userid}, #{username}, #{userpwd}, #{salt}, #{email}, #{nation}, #{sex}, #{lang})
     </insert>
     <select id ="userLoginCheck" resultType="LoginVO">
         select password, salt, user_name from users where user_id=#{param1};

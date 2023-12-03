@@ -63,18 +63,11 @@
                     <h1>글 내용 보기</h1>
 
                     <ul>
-                        <li>번호 : 1, 글쓴이 : 작성자, 조회수 : 10, 작성일 : 2023-11-13</li>
-                        <li>제목 : 제목</li>
-                        <li>내용</li>
+                        <li>번호 : ${vo.post_id}, 글쓴이 : ${vo.user_id} , 조회수 : ${vo.views}, 작성일 : ${vo.write_date}</li>
+                        <li>제목 : ${vo.title}</li>
+                        <li>${vo.content}</li>
                     </ul>
                 </div>
-                <ul>
-                    <li>번호 : 1, 글쓴이 : 작성자, 조회수 : 10, 작성일 : 2023-11-13</li>
-                    <li>제목 : 제목</li>
-                    <li>내용</li>
-                </ul>
-                </div>
-
                 <hr>
                 <div>
                     목록
@@ -95,7 +88,7 @@
                     <!-- 로그인 상태일 때 댓글쓰기 -->
                     <form method="post" id="replyForm">
                         <!--  원글 글번호 -->
-                        <input type="hidden" name="no" value="${vo.no}" />
+                        <input type="hidden" name="no" value="${vo.post_id}" />
                         <textarea name="coment" id="coment"></textarea>
                         <!-- button은 form안에있을경우 input type submit과 동일 -->
                         <button>댓글등록</button>

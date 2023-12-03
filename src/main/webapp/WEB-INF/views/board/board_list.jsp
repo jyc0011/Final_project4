@@ -1,146 +1,108 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-        <!DOCTYPE html>
-        <html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
 
-        <head>
-            <meta charset="UTF-8">
-            <title>게시판 글 목록</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-            <style>
-                main {
-                    width: 1000px;
-                    margin: 0 auto;
-                }
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 글 목록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        main {
+            width: 1000px;
+            margin: 0 auto;
+        }
 
-                /* 초기화 */
-                body,
-                ul,
-                li {
-                    margin: 0;
-                    padding: 0;
-                    list-style-type: none;
-                }
+        /* 초기화 */
+        body,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
 
-                /* link초기화 */
-                a:link,
-                a:visited,
-                a:hover,
-                a:active {
-                    color: black;
-                    text-decoration: none;
-                }
-
-                /* header */
-                header>div {
-                    height: 100px;
-                    width: 1000px;
-                    line-height: 100px;
-                    font-size: 50px;
-                    background-color: #EBE5D9;
-                    color: #577D86;
-                    text-align: center;
-                    margin: 0 auto;
-                }
-
-                .topMenu>ul {
-                    height: 40px;
-                    margin: 0 auto;
-                    width: 1000px;
-                }
-
-                .topMenu li  {
-                    float:  left;
-                    padding: 0px 30px;
-                    height: 40px;
-                    line-height:  40px;
-
-                }
-
-        
-        .topMenu a:link,
-               
-        .topMenu a:visited  {
-                    color: white;
-                }
-
-        
-        .topMenu a:hover  {
-                    color:  yellow;
-                }
+        /* link초기화 */
+        a:link,
+        a:visited,
+        a:hover,
+        a:active {
+            color: black;
+            text-decoration: none;
+        }
 
 
-                #boardTop>div {
-                    float: left;
-                    width: 50%;
-                }
+        #boardTop > div {
+            float: left;
+            width: 50%;
+        }
 
-                #boardTop {
-                    height: 50px;
-                }
+        #boardTop {
+            height: 50px;
+        }
 
-                #boardTop>div:last-of-type {
-                    text-align: right;
-                }
+        #boardTop > div:last-of-type {
+            text-align: right;
+        }
 
-                #boardList {
-                    overflow: auto;
-                }
+        #boardList {
+            overflow: hidden;
+        }
 
-                #boardList .page>ul {
-                    margin: 30px 0px 0px;
-                    overflow: auto;
-                }
+        #boardList .page > ul {
+            margin: 30px 0;
+            overflow: auto;
+        }
 
-                #boardList>li {
-                    float: left;
-                    height: 40px;
-                    line-height: 40px;
-                    border-bottom: 1px solid #ddd;
-                    width: 10%;
-                }
+        #boardList > li {
+            float: left;
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 1px solid #ddd;
+            width: 10%;
+        }
 
-                #boardList>li:nth-child(5n+2) {
-                    width: 60%;
-                    /* 내용이 길면 ...으로 제목 겹침 방 */
-                    white-space: nowrap;
-                   
+        #boardList > li:nth-child(5n+2) {
+            width: 60%;
+            /* 내용이 길면 ...으로 제목 겹침 방 */
+            white-space: nowrap;
+
             /* 줄바꾸지 않음 */
-                    overflow: hidden;
-                   
-            /* 넘친 데이터 숨기기*/
-                    text-overflow: ellipsis;
-                   
-            /* 넘친 데이터 ...표  */
-                }
+            overflow: hidden;
 
-                .page {
-                    text-align: center;
-                    height: 50px;
-                    width: 300px;
-                    margin: 0 auto;
+            /* 넘친 데이터 숨기기*/
+            text-overflow: ellipsis;
+
+            /* 넘친 데이터 ...표  */
+        }
+
+        .page {
+            text-align: center;
+            height: 35px;
+            width: 300px;
+            margin: 5px auto;
         }
 
         .page > ul {
+            padding-top: 5px;
             display: table;
-            margin-left: auto;
-                    margin-right: auto;
-                }
+            text-align: center;
+            margin: 0 auto;
+        }
 
-                .page li {
-                    float: left;
-                    height: 40px;
-                    line-height: 40px;
-                    padding: 10px;
-                }
+        .page li {
+            float: left;
+            padding: 5px;
+            line-height: 20px;
+        }
 
-                .search {
-                    text-align: center;
-                }
-        
+        .search {
+            text-align: center;
+        }
+
         #sideMenu {
             list-style-type: none;
             padding: 0px;
@@ -169,25 +131,30 @@
             color: #fff;
         }
     </style>
-        </head>
+    <script>
+        window.onload = function () {
+            var pVO = "${pVO}";
+            console.log(pVO);
+        }
+    </script>
+</head>
 
-        
+
 <ul id="sideMenu">
-    <li><a href="#" class="current">공지사항</a></li>
-    <li><a href="#">자유게시판</a></li>
-    <li><a href="#">문의게시판</a></li>
+    <li><a href="${pageContext.servletContext.contextPath}/board/notice"
+           <c:if test="${pVO.board_cat=='notice'}">class="current"</c:if>>공지사항</a></li>
+    <li><a href="${pageContext.servletContext.contextPath}/board/free"
+           <c:if test="${pVO.board_cat=='free'}">class="current"</c:if>>자유게시판</a></li>
+    <li><a href="${pageContext.servletContext.contextPath}/board/inquiries"
+           <c:if test="${pVO.board_cat=='inquiries'}">class="current"</c:if>>문의게시판</a></li>
 </ul>
 
 <body>
-            <main>
-                <h1>게시판목록</h1>
-                <div>
-                    <a href="">글쓰기</a>
-                </div>
-
+<main>
+    <h1>게시판목록</h1>
     <div id="boardTop">
-        <div>총 레코드 수 : 9999개</div>
-        <div>현재 페이지 : 1/100</div>
+        <div>총 레코드 수 : ${pVO.totalRecord}</div>
+        <div>현재 페이지 : 1/${pVO.totalPage}</div>
     </div>
     <ul id="boardList">
         <li>번호</li>
@@ -195,23 +162,89 @@
         <li>글쓴이</li>
         <li>조회수</li>
         <li>등록일</li>
-        <!-- 임시데이터 -->
-        <li>10</li>
-        <li><a href="${pageContext.servletContext.contextPath}/board/view">제목입니다</a></li>
-        <li>작성자</li>
-        <li>0</li>
-        <li>2023-11-13</li>
+        <!-- 데이터 표시 -->
+        <c:forEach var="bVO" items="${list}">
+            <li>${bVO.post_id}</li>
+            <c:url var="viewUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/view">
+                <c:param name="no" value="${bVO.post_id}"/>
+                <c:param name="searchKey" value="${pVO.searchKey}"/>
+                <c:param name="searchWord" value="${pVO.searchWord}"/>
+            </c:url>
+            <li><a href="${viewUrl}">${bVO.title}</a></li>
+            <li>${bVO.user_id}</li>
+            <li>${bVO.views}</li>
+            <li>${bVO.write_date}</li>
+        </c:forEach>
     </ul>
+    <div style="float:right">
+        <c:if test="${'Y'.equals(logStatus)}">
+            <input type="button" value="글 작성" class="post-button" id="write-button"
+                   onclick="location.href='${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/write'">
+        </c:if>
+    </div>
     <!-- 페이지 박스-->
+    <!-- todo: 페이지 인식해서 보이게 -->
     <div class="page">
         <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
+            <!-- prev 페이지 -->
+            <c:url var="prevUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}">
+                <c:param name="nowPage" value="${pVO.nowPage-1}"/>
+                <c:if test="${pVO.searchWord!=null}">
+                    <c:param name="searchKey" value="${pVO.searchKey}"/>
+                    <c:param name="searchWord" value="${pVO.searchWord}"/>
+                </c:if>
+            </c:url>
+            <c:choose>
+                <c:when test="${pVO.nowPage == 1}">
+                    <li style="color: #ddd">prev</li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="${prevUrl}">prev</a></li>
+                </c:otherwise>
+            </c:choose>
+            <!-- 페이지 번호 -->
+            <c:forEach var="cnt" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
+                <c:if test="${cnt<=pVO.totalPage}">
+                    <!-- 페이지번호가 마지막 페이지보다 작거나 같을때만 번호 출력 -->
+                    <c:if test="${cnt==pVO.nowPage }">
+                        <!-- 현재 보고있는 페이지 -->
+                        <li style="background-color: #ddd">${cnt}</li>
+                    </c:if>
+                    <!-- 현재 보고있는 페이지가 아닐경우 -->
+                    <c:if test="${cnt!=pVO.nowPage}">
+                        <c:url var="pageUrl"
+                               value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/view">
+                            <c:param name="nowPage" value="${cnt}"/>
+                            <c:if test="${pVO.searchWord!=null}">
+                                <c:param name="searchKey" value="${pVO.searchKey}"/>
+                                <c:param name="searchWord" value="${pVO.searchWord}"/>
+                            </c:if>
+                        </c:url>
+                        <li>
+                            <a href="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}?nowPage=${cnt}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${cnt}</a>
+                        </li>
+                    </c:if>
+                </c:if>
+            </c:forEach>
+            <!-- next 페이지 -->
+            <c:url var="nextUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}">
+                <c:param name="nowPage" value="${pVO.nowPage+1}"/>
+                <c:if test="${pVO.searchWord!=null}">
+                    <c:param name="searchKey" value="${pVO.searchKey}"/>
+                    <c:param name="searchWord" value="${pVO.searchWord}"/>
+                </c:if>
+            </c:url>
+            <c:choose>
+                <c:when test="${pVO.nowPage == pVO.totalPage}">
+                    <li style="color:#ddd">next</li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="${nextUrl}">next</a></li>
+                </c:otherwise>
+            </c:choose>
         </ul>
     </div>
+
     <!-- 검색박스 -->
     <div class="post-end-line">
         <div class="inboard-search-area">
@@ -226,77 +259,11 @@
                         </option>
                     </select>
                     <input type="search" name="searchWord" id="inboard-search" value="${pVO.searchWord}"
-                           class="inboard-search" placeholder="게시판 내 검색">
-                    <input type="submit" value="search" class="post-button" id="search-button">
+                           class="inboard-search" placeholder="게시판 내 검색"/>
+                    <input type="submit" value="search" class="post-button" id="search-button"/>
                 </form>
-                <c:if test="${LogStatus=='Y'}">
-                    <a href="${pageContext.servletContext.contextPath}/board/write">
-                        <input type="button" value="글 작성" class="post-button" id="write-button">
-                    </a>
-                </c:if>
             </div>
         </div>
-    </div>
-    <c:url var="prevUrl" value="/board/list">
-        <c:param name="nowPage" value="${pVO.nowPage-1}"/>
-        <c:param name="searchKey" value="${pVO.searchKey}"/>
-        <c:param name="searchWord" value="${pVO.searchWord}"/>
-        <c:param name="category" value="${pVO.category}"/>
-        <c:param name="postSort" value="${pVO.postSort}"/>
-    </c:url>
-
-    <c:url var="nextUrl" value="/board/list">
-        <c:param name="nowPage" value="${pVO.nowPage+1}"/>
-        <c:param name="searchKey" value="${pVO.searchKey}"/>
-        <c:param name="searchWord" value="${pVO.searchWord}"/>
-        <c:param name="category" value="${pVO.category}"/>
-        <c:param name="postSort" value="${pVO.postSort}"/>
-    </c:url>
-    <div class="paging">
-        <ul>
-            <!-- prev 페이지 -->
-            <c:choose>
-                <c:when test="${pVO.nowPage == 1}">
-                    <li>prev</li>
-                </c:when>
-                <c:otherwise>
-                    <li><a href="${prevUrl}">prev</a></li>
-                </c:otherwise>
-            </c:choose>
-
-            <!-- 번호 페이지 -->
-            <c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}"
-                       step="1">
-                <c:if test="${p <= pVO.totalPage}">
-                    <c:url var="pageNumUrl" value="/board/list">
-                        <c:param name="nowPage" value="${p}"/>
-                        <c:param name="searchKey" value="${pVO.searchKey}"/>
-                        <c:param name="searchWord" value="${pVO.searchWord}"/>
-                        <c:param name="category" value="${pVO.category}"/>
-                        <c:param name="postSort" value="${pVO.postSort}"/>
-                    </c:url>
-                    <c:choose>
-                        <c:when test="${p == pVO.nowPage}">
-                            <li class="paging-button active">${p}</li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="paging-button">
-                                <a href="${pageNumUrl}">${p}</a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:if>
-            </c:forEach>
-            <!-- next 페이지 -->
-            <c:choose>
-                <c:when test="${pVO.nowPage < pVO.totalPage}">
-                    <li><a href="${nextUrl}">next</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li>next</li>
-                </c:otherwise>
-            </c:choose>
-        </ul>
     </div>
 </main>
 </body>

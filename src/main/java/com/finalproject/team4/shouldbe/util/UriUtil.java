@@ -1,10 +1,10 @@
 package com.finalproject.team4.shouldbe.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class UriUtil {
 
@@ -26,11 +26,7 @@ public class UriUtil {
             return "";
         }
 
-        try {
-            return URLEncoder.encode(value, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Encoding not supported", e);
-        }
+        return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 
 }

@@ -14,45 +14,53 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <style>
         .container {
+            width: 1200px;
             display: flex;
             flex-direction: row;
         }
-        #side_menu{
-            padding:98px 0 0 0;
-            width:150px;
-            height:1000px;
+
+        #side_menu {
+            padding: 98px 0 0 0;
+            width: 150px;
+            height: 1000px;
             list-style-type: none;
         }
-        #side_menu>li>a{
+
+        #side_menu > li > a {
             text-decoration: none;
             color: black;
             display: block;
             padding: 10px;
         }
-        #side_menu li a:hover{
+
+        #side_menu li a:hover {
             background-color: #ddd;
         }
+
         section {
-            width: 40%;
+            width: 450px;
             height: auto;
-            margin: 0 0 20px 80px;
+            margin: 20px;
             position: relative;
         }
+
         section > h2 {
             text-align: center;
         }
-        main{
-            width: 1200px;
-            height:1000px;
+
+        main {
+            height: 1000px;
             margin: 50px auto;
         }
+
         #dashboard {
-            width: 1200px;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
             align-content: space-around;
+            margin-left: 20px;
         }
+
         #boardList > li,
         #replyList > li {
             float: left;
@@ -64,20 +72,35 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         #boardList > li:nth-child(3n+2) {
-            width: 220px;
+            width: 200px;
         }
+
         #replyList > li:nth-child(3n+1) {
-            width: 145px;
+            width: 130px;
         }
+
         #replyList > li:nth-child(3n+2) {
             width: 175px;
         }
+
+        #boardList > li:nth-child(-n+3), #replyList > li:nth-child(-n+3) {
+            font-weight: bold;
+            font-size: 17px;
+        }
+
         #chart, #dashboardTitle {
             text-align: center;
         }
-        #dashboardTitle{
+
+        #dashboardTitle {
             margin-bottom: 50px;
+        }
+
+        #side_menu > li:nth-child(1) {
+            font-weight: bold;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -170,13 +193,13 @@
             datasets: [
                 {
                     label: "preferred language",
-                    backgroundColor: ["#3e95cd", "#8e5ea2","#c45850"],
-                    data: [1278,1607,934]
+                    backgroundColor: ["#3e95cd", "#8e5ea2", "#c45850"],
+                    data: [1278, 1607, 934]
                 }
             ]
         },
         options: {
-            legend: { display: false },
+            legend: {display: false},
             title: {
                 display: false,
                 text: 'preferred language'
@@ -187,19 +210,19 @@
     new Chart(document.getElementById("line-chart"), {
         type: 'line',
         data: {
-            labels: [1,2,3,4,5,6,7,8,9,10],
+            labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             datasets: [{
-                data: [186,214,406,606,907,1111,1133,1221,1333,1878],
+                data: [186, 214, 406, 606, 907, 1111, 1133, 1221, 1333, 1878],
                 label: "Korean",
                 borderColor: "#3e95cd",
                 fill: false
             }, {
-                data: [282,350,411,502,735,1109,1507,1802,2000,2267],
+                data: [282, 350, 411, 502, 735, 1109, 1507, 1802, 2000, 2267],
                 label: "English",
                 borderColor: "#8e5ea2",
                 fill: false
             }, {
-                data: [168,170,178,190,263,376,508,647,875,1134],
+                data: [168, 170, 178, 190, 263, 376, 508, 647, 875, 1134],
                 label: "Japanese",
                 borderColor: "#c45850",
                 fill: false

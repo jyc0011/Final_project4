@@ -1,15 +1,13 @@
 package com.finalproject.team4.shouldbe.service;
 
+import com.finalproject.team4.shouldbe.mapper.QuizMapper;
+import com.finalproject.team4.shouldbe.vo.QuizVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.finalproject.team4.shouldbe.vo.QuizVO;
-import com.finalproject.team4.shouldbe.mapper.QuizMapper;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Random;
 
 @Service
 public class QuizServiceImpl implements QuizService {
@@ -27,7 +25,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public boolean saveQuiz(int quizId, String userId){
+    public boolean saveQuiz(int quizId, String userId) {
         boolean exists = QuizMapper.existsQuizInfo(quizId, userId);
         if (!exists) {
             QuizMapper.insertQuizInfo(quizId, userId);
@@ -37,13 +35,12 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public void saveQuizAnswer(int quizId, String userId, String correct){
-            if(correct=="correct"){
-                QuizMapper.insertUserAnswerInfo(quizId, userId,1);
-            }
-            else {
-                QuizMapper.insertUserAnswerInfo(quizId, userId,0);
-            }
+    public void saveQuizAnswer(int quizId, String userId, String correct) {
+        if (correct == "correct") {
+            QuizMapper.insertUserAnswerInfo(quizId, userId, 1);
+        } else {
+            QuizMapper.insertUserAnswerInfo(quizId, userId, 0);
+        }
     }
 
     @Override
