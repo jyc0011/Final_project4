@@ -146,14 +146,24 @@
                 <button class="btn btn-dark">단어 삭제</button>
             </div>
         </div>
+
         <div id="quiz_content">
-            <p>combination</p>
+            <p>${editlist[0].quiz_content}</p>
         </div>
         <div id="answerlist">
             <div id="answer">
                 <div id="quiz_answer">단어</div>
                 <button id="quiz_delete"> -</button>
             </div>
+
+            <c:forEach var="eVO1" items="${editlist}" varStatus="status">
+                <div id="answer">
+                    <div id="quiz_answer">${eVO1.answer}</div>
+                    <button id="quiz_delete"> -</button>
+                </div>
+
+            </c:forEach>
+
         </div>
 
 

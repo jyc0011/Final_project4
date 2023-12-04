@@ -15,6 +15,24 @@ public class AdminController {
     @Autowired
     AdminService service;
 
+    @GetMapping("/suspend")
+    public ModelAndView suspend(String user_id){
+        ModelAndView mav = new ModelAndView();
+        System.out.println(user_id);
+        int result=service.suspendInsert(user_id);
+        mav.setViewName("admin/admin_dashboard");
+        return mav;
+    }
+
+    @GetMapping("/boardDelete")
+    public ModelAndView boardDelete(int post_id){
+        ModelAndView mav = new ModelAndView();
+        System.out.println(post_id);
+        int result=service.postsDelete(post_id);
+        mav.setViewName("admin/admin_dashboard");
+        return mav;
+    }
+
     @GetMapping("/admin")
     public String admin() {
         return "admin/admin_dashboard";
@@ -107,8 +125,17 @@ public class AdminController {
 
 
     @GetMapping("/admin/quiz/list")
-    public String GoQuiz_list() {
-        return "quiz_management/quiz_list";
+    public ModelAndView GoQuiz_list() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("quiz_management/quiz_list");
+        List<QuizVO> quizlist1=service.quizlist(1);
+        List<QuizVO> quizlist2=service.quizlist(2);
+        List<QuizVO> quizlist3=service.quizlist(3);
+        //System.out.println(quizlist1.toString());
+        mav.addObject("quizlist1", quizlist1);
+        mav.addObject("quizlist2", quizlist2);
+        mav.addObject("quizlist3", quizlist3);
+        return mav;
     }
 
     @GetMapping("/admin/quiz/reg_manager")
@@ -122,7 +149,12 @@ public class AdminController {
     }
 
     @GetMapping("/admin/quiz_edit")
-    public String GoQuiz_edit() {
-        return "quiz_management/quiz_edit";
+    public ModelAndView GoQuiz_edit(int quiz_id) {
+        ModelAndView mav = new ModelAndView();
+        List<QuizVO> editlist=service.editlist(quiz_id);
+        System.out.println(editlist.toString());
+        mav.addObject("editlist", editlist);
+        mav.setViewName("quiz_management/quiz_edit");
+        return mav;
     }
 }

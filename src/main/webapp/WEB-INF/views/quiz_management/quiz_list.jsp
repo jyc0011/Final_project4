@@ -166,84 +166,17 @@
                         <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
                                                        class="btn btn-dark"></td>
                     </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
+                    <c:forEach var="qVO1" items="${quizlist1}" varStatus="status">
+                        <td class="lise_number">${status.count}</td>
+                        <td class="quiz_content">${qVO1.quiz_content}</td>
+                        <td class="edit_button">
+                            <a href="${pageContext.servletContext.contextPath}/admin/quiz_edit?quiz_id=${qVO1.quiz_id}">
+                                <input type="button" value="수정/삭제" class="btn btn-dark">
+                            </a>
+                        </td>
+                    </c:forEach>
+
+
                     </tbody>
                 </table>
             </div>
@@ -265,6 +198,16 @@
                         <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
                                                        class="btn btn-dark"></td>
                     </tr>
+
+                    <c:forEach var="qVO2" items="${quizlist2}" varStatus="status">
+                        <td class="lise_number">${status.count}</td>
+                        <td class="quiz_content">${qVO2.quiz_content}</td>
+                        <td class="edit_button">
+                            <a href="${pageContext.servletContext.contextPath}/admin/quiz_edit?quiz_id=${qVO2.quiz_id}">
+                                <input type="button" value="수정/삭제" class="btn btn-dark">
+                            </a>
+                        </td>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
@@ -286,6 +229,16 @@
                         <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
                                                        class="btn btn-dark"></td>
                     </tr>
+
+                    <c:forEach var="qVO3" items="${quizlist3}" varStatus="status">
+                        <td class="lise_number">${status.count}</td>
+                        <td class="quiz_content">${qVO3.quiz_content}</td>
+                        <td class="edit_button">
+                            <a href="${pageContext.servletContext.contextPath}/admin/quiz_edit?quiz_id=${qVO3.quiz_id}">
+                                <input type="button" value="수정/삭제" class="btn btn-dark">
+                            </a>
+                        </td>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
