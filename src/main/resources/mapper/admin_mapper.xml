@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalproject.team4.shouldbe.mapper.AdminMapper">
-
+    <!--
     <select id="adminMemberList" resultType="com.finalproject.team4.shouldbe.vo.AdminMemberVO">
         select profile_img, user_name, user_id, time, count_report
         from users
         ORDER BY user_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
-    <!--
-        <select id="adminMemberList" resultType="com.finalproject.team4.shouldbe.vo.AdminMemberVO">
-           select u.profile_img, u.user_id,u.user_name,u.time ,
-           (select count(*) from posts where u.user_id=p.user_id) posts_count,
-           (select count(*) from coments where u.user_id=c.user_id) coments_count,
-           u.count_report
-           from users u
-           join posts p on u.user_id=p.user_id
-           join coments c on u.user_id=c.user_id
-        </select>
-    -->
+   -->
+    <select id="quizlist" resultType="com.finalproject.team4.shouldbe.vo.QuizVO">
+        select quiz_id, level, quiz_lang, quiz_content from quiz where level=${level}
+    </select>
+
+    <select id="editlist" resultType="com.finalproject.team4.shouldbe.vo.QuizVO">
+        select q.quiz_id, q.level, q.quiz_lang, q.quiz_content, a.answer from quiz q join answer a on q.quiz_id=a.quiz_id
+        where a.quiz_id=${quiz_id}
+    </select>
+
+    <select id="adminMemberList" resultType="com.finalproject.team4.shouldbe.vo.AdminMemberVO">
+       select u.profile_img, u.user_id,u.user_name,u.time ,
+       (select count(*) from posts where u.user_id=p.user_id) posts_count,
+       (select count(*) from comments where u.user_id=c.user_id) coments_count,
+       u.count_report
+       from users u
+       join posts p on u.user_id=p.user_id
+       join comments c on u.user_id=c.user_id
+    </select>
+
+    <insert id="suspendInsert">
+        insert into suspended_users(user_id,suspended_period,reason) values(#{user_id},7,'사유2');
+    </insert>
 
     <select id="countSuspendedMember" resultType="int">
         SELECT COUNT(*)
@@ -31,6 +43,10 @@
         ORDER BY user_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
+
+    <delete id="postsDelete">
+        delete from posts where post_id=${post_id}
+    </delete>
 
     <!--
         <select id="adminSuspendedList" resultType="com.finalproject.team4.shouldbe.vo.AdminSuspendedVO">
