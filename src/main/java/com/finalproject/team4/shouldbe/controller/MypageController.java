@@ -22,7 +22,6 @@ public class MypageController {
     @GetMapping("/mypage/change_user")
     public ModelAndView mypage_change_user(@SessionAttribute(name = "logId") String userid) {
         ModelAndView mav = new ModelAndView();
-
         MypageVO myvo = service.mypage_info(userid);
         System.out.println(myvo.toString());
         mav.addObject("myvo", myvo);
@@ -109,7 +108,7 @@ public class MypageController {
         String userId = (String) session.getAttribute("logId");
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
-        pvo.setPage(page);
+        pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalRecord(userId));
         List<SaveMessageVO> saveMessages = service.getSaveMessageList(pvo, userId);
         mav.addObject("saveMessages", saveMessages);

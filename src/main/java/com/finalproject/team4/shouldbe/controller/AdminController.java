@@ -43,7 +43,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView("admin/admin_reply");
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
-        pvo.setPage(page);
+        pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalReplyRecord());
         List<BoardReplyVO> board = service.getReplyList_admin(pvo);
         mav.addObject("board", board);
@@ -56,7 +56,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView("admin/admin_board");
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
-        pvo.setPage(page);
+        pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalBoardRecord());
         List<BoardVO> board = service.getBoardList_admin(pvo);
         mav.addObject("board", board);
@@ -69,7 +69,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
-        pvo.setPage(page);
+        pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalMemberRecord());
         List<AdminMemberVO> amlist = service.adminMemberList(pvo);
         mav.addObject("amlist", amlist);
@@ -85,7 +85,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
-        pvo.setPage(page);
+        pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalSuspendedMemberRecord());
         List<AdminSuspendedVO> aslist = service.adminSuspendedList(pvo);
         mav.addObject("aslist", aslist);
@@ -99,7 +99,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
-        pvo.setPage(page);
+        pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalWithdrawnMemberRecord());
         List<AdminWithdrawnVO> awlist = service.adminWithdrawnList(pvo);
         mav.addObject("awlist", awlist);
@@ -114,7 +114,7 @@ public class AdminController {
 
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
-        pvo.setPage(page);
+        pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalMessageRecord());
         List<AdminChatVO> aclist = service.adminChatList(pvo);
         mav.addObject("aclist", aclist);

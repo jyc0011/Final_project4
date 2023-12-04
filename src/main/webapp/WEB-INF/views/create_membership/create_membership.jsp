@@ -16,33 +16,31 @@
 
         main {
             width: 1200px;
-            height: 800px;
-            margin: 30px auto;
+            margin: 70px auto 30px;
             display: flex;
             justify-content: space-evenly;
             align-items: center;
             flex-direction: column;
         }
-
+        .box{
+            display: flex;
+            margin-top: 20px;
+        }
         h1 {
             text-align: center;
-            margin: 50px;
+            margin-bottom: 30px;
         }
 
         #create_Form > ul > li {
             list-style-type: none;
         }
 
-        .submitbtn {
-            background-color: #FFB300;
-            border: none;
-            color: white;
-        }
+
 
         #username, #userid, #userpwd, #userpwdCheck, #email, #authenticate {
             width: 400px;
             height: 40px;
-            margin: 15px auto;
+            margin: 5px auto;
         }
 
         #join, #cancel {
@@ -61,7 +59,8 @@
         }
 
         #checkcode, #idcheck, #sendcode {
-            margin: 20px;
+            margin: 0 20px;
+            width: 90px;
         }
 
         #nationselcet {
@@ -71,11 +70,94 @@
         .lang {
             margin: 10px auto;
         }
+        .input-container{
+            position:relative;
+            margin-bottom:25px;
+        }
+        .input-container label{
+            position:absolute;
+            top:0px;
+            left:0px;
+            font-size:16px;
+            pointer-event:none;
+            transition: all 0.5s ease-in-out;
+        }
+        .input-container input{
+            border:0;
+            border-bottom:1px solid #555;
+            padding:8px 0 5px 0;
+            font-size:16px;
+        }
+        .input-container input:focus{
+            border:none;
+            outline:none;
+            border-bottom:1px solid #e74c3c;
+        }
+        .btn{
+            color:#fff;
+            outline: none;
+            border: 0;
+            color: #fff;
+            padding:10px 20px;
+            text-transform:uppercase;
+            margin-top:20px;
+            border-radius:2px;
+            cursor:pointer;
+            position:relative;
+        }
+        /*.btn:after{
+            content:"";
+            position:absolute;
+            background:rgba(0,0,0,0.50);
+            top:0;
+            right:0;
+            width:100%;
+            height:100%;
+        }*/
+        .input-container input:focus ~ label,
+        .input-container input:valid ~ label{
+            top:-12px;
+            font-size:12px;
+
+        }
+        .submitBtn {
+            background-color: #FFB300;
+            border: none;
+            color: white;
+        }
+        input[type=checkbox], input[type=radio]{
+            margin: 0 0 0 20px;
+            padding: 0;
+        }
+
+        select::-ms-expand{
+            display: none;
+        }
+        .select{
+            -o-appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 100px;
+            height: 35px;
+            background: url("../../../image/select.png")no-repeat center right;
+            padding: 5px 30px 5px 10px;
+            border-radius: 4px;
+            outline: 0 none;
+        }
+        .select option{
+            background: #FFD954;
+            padding: 3px 0;
+        }
+
+        #termsCheck{
+            margin-top: 30px;
+        }
     </style>
     <script>
         $(document).ready(function () {
             var result = "${result}";
-            if (result != "") {
+            if ( result != "") {
                 alert(result);
             }
         })
@@ -126,8 +208,9 @@
                     success: function (r) {
                         if (r) {
                             alert("이메일이 전송되었습니다.");
-                            $("#authenticate").css('display', '');
-                            $("#checkcode").css('display', '');
+                            $("#emailCheckDiv").css('display', '');
+                            // $("#authenticate").css('display', '');
+                            // $("#checkcode").css('display', '');
                         } else {
                             alert("이메일 발송 오류");
                         }
@@ -198,7 +281,7 @@
                     return false;
                 }
                 if (!isCheckedEmail()) {
-                    alert("이메일 인증을 진행해주세요!");
+					alert("이메일 인증을 진행해주세요!");
                     return false;
                 }
                 //todo : 나머지 폼 검사(이름, 이메일, 국적, 성별, 언어 최소요구사항)
@@ -212,54 +295,92 @@
 </head>
 <body>
 <main>
-    <h1>회원가입</h1>
-    <form method="post" action="/createOk" id="create_Form">
-        <ul>
-            <li><label>이름</label></li>
-            <li><input type="text" id="username" name="username"/></li>
-            <li><label>아이디</label></li>
-            <li>
-                <input type="text" id="userid" name="userid"/>
+    <div class="box">
+        <form method="post" action="/createOk" id="create_Form">
+            <div class="input-container">
+                <input type="text" name="username" id="username" required=""/>
+                <label>이름</label>
+            </div>
+            <div class="input-container">
+                <input type="text" name="userid" id="userid" required=""/>
+                <label>아이디</label>
                 <input type="hidden" id="isIdChecked" value="N">
-                <input type="button" value="아이디체크" id="idcheck" class="submitbtn"/>
-            </li>
-            <li><label>비밀번호</label></li>
-            <li><input type="password" id="userpwd" name="userpwd" onchange="checkpwd()"/></li>
-            <li><label>비밀번호 확인</label></li>
-            <li><input type="password" id="userpwdCheck" name="userpwdCheck" onchange="checkpwd()"/></li>
-            <li><span id="passwordCheckOk"></span></li>
-            <li><label>이메일</label></li>
-            <li>
-                <input type="text" id="email" name="email"/>
-                <input type="button" value="인증발송" id="sendcode" class="submitbtn"/>
-            </li>
-            <li>
-                <input type="text" id="authenticate" name="authenticate" style="display: none;"/>
-                <input type="button" value="인증하기" id="checkcode" class="submitbtn" style="display: none;"/>
-            </li>
-            <li><label>사용언어</label></li>
-            <li>
-                한국어 <input type="radio" class="lang" name="lang" value="ko"/>
-                일본어 <input type="radio" class="lang" name="lang" value="jp"/>
-                영어 <input type="radio" class="lang" name="lang" value="en"/>
-            </li>
-            <li><label style="float: left; margin: 20px auto; margin-right: 10px;">국적</label></li>
-            <li id="nationselcet">
-                <select id="nation" name="nation">
+                <input type="button" value="아이디체크" id="idcheck" class="btn btn-warning submitBtn" style="border-bottom: none"/>
+            </div>
+            <div class="input-container">
+                <input type="password" name="userpwd" id="userpwd" onchange="checkpwd()" required=""/>
+                <label>비밀번호</label>
+            </div>
+            <div class="input-container">
+                <input type="password" name="userpwdCheck" id="userpwdCheck" onchange="checkpwd()" required=""/>
+                <label>비밀번호 확인</label>
+            </div>
+            <div><span id="passwordCheckOk"></span></div>
+            <div class="input-container">
+                <input type="text" name="email" id="email" required=""/>
+                <label>이메일</label>
+                <input type="button" value="인증발송" id="sendcode" class="btn btn-warning submitBtn" style="border-bottom: none"/>
+            </div>
+            <div class="input-container" id="emailCheckDiv" style="display: none;">
+                <input type="text" id="authenticate" name="authenticate" required=""/>
+                <label>인증번호</label>
+                <input type="button" value="인증하기" id="checkcode" class="btn btn-warning submitBtn" style="border-bottom: none"/>
+            </div>
+            <div id="checkbox-div">
+                <div>
+                    <label style="margin-bottom: 5px">사용언어</label>
+                </div>
+                <div>
+                    <input type="checkbox" class="lang" name="lang" value="ko"/>
+                    <lebel>한국어</lebel>
+                </div>
+                <div>
+                    <input type="checkbox" class="lang" name="lang" value="jp"/>
+                    <lebel>일본어</lebel>
+                </div>
+                <div>
+                    <input type="checkbox" class="lang" name="lang" value="en"/>
+                    <lebel>영어</lebel>
+                </div>
+            </div>
+            <div>
+                <div style="margin:17px 0 5px">
+                    <lebel>국적</lebel>
+                </div>
+                <select name="nation" id="nation" class="select" style="margin-left: 20px">
+                    <option disabled selected>국적</option>
                     <option value="kor">한국</option>
                     <option value="us">미국</option>
                     <option value="jpn">일본</option>
                 </select>
-            </li>
-            <li><label style="float: left; margin-right: 10px;">성별</label></li>
-            <li>
-                남자 <input type="radio" class="sex" name="sex" value="0"/>
-                여자 <input type="radio" class="sex" name="sex" value="1"/>
-            </li>
-            <li><input type="submit" value="가입하기" id="join" class="submitbtn"/></li>
-            <li><input type="button" value="취소" id="cancel" class="submitbtn"/></li>
-        </ul>
-    </form>
+            </div>
+            <div>
+                <div style="margin-top: 17px">
+                    <label>성별</label>
+                </div>
+                <div>
+                    <input type="radio" class="sex" name="sex" value="0"/> 남자
+                </div>
+                <div>
+                    <input type="radio" class="sex" name="sex" value="1"/> 여자
+                </div>
+            </div>
+            <div id="termsCheck">
+                <div>
+                    <input type="checkbox"/>
+                    <span>이용약관 동의<strong>(필수)</strong></span>
+                </div>
+                <div>
+                    <input type="checkbox"/>
+                    <span>개인정보 수집 동의<strong>(필수)</strong></span>
+                </div>
+            </div>
+            <ul>
+                <li><input type="submit" value="가입하기" id="join" class="btn btn-warning submitBtn"/></li>
+                <li><input type="button" value="취소" id="cancel" class="btn btn-warning submitBtn"/></li>
+            </ul>
+        </form>
+    </div>
 </main>
 </body>
 </html>
