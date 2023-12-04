@@ -98,6 +98,10 @@
                     display: table;
                     clear: both;
                 }
+                .login a{
+                    text-decoration: none;
+                    color: black;
+                }
             </style>
 
         </head>
@@ -110,26 +114,26 @@
                 $(this).find('.dropdown-content').hide();
             });
 
-        </script>
-        <!-- 로고, 로그인,로그아웃, 마이페이지, 유저아이콘 -->
-        <div class="banner">
-            <div class="logo-area">
-                <a href="${pageContext.servletContext.contextPath}/"><img
-                        src="${pageContext.servletContext.contextPath}/image/logo.png" class="logo"></a>
-                <!-- 로고 이미지 -->
-            </div>
-            <div class="login">
-                <c:if test="${logStatus=='Y'}">
-                    <a href="${pageContext.servletContext.contextPath}/Mypage?id=${logId}"> <!-- 마이페이지 -->
-                        <img src="${pageContext.servletContext.contextPath}/image/user.png" class="user-icon" id="user-icon" style="border-radius: 50%; width: 30px; height: auto;" /></a>
-                    <!--유저로고-->
-                    <a href="${pageContext.servletContext.contextPath}/logout" class="login-button">로그아웃</a>
-                </c:if>
-                <c:if test="${logStatus!='Y'}">
-                    <a href="${pageContext.servletContext.contextPath}/login" class="login-button">로그인</a>
-                </c:if>
-            </div>
-        </div>
+</script>
+<!-- 로고, 로그인,로그아웃, 마이페이지, 유저아이콘 -->
+<div class="banner">
+    <div class="logo-area">
+        <a href="${pageContext.servletContext.contextPath}/"><img
+                src="${pageContext.servletContext.contextPath}/image/logo.png" class="logo"></a>
+        <!-- 로고 이미지 -->
+    </div>
+    <div class="login">
+        <c:if test="${logStatus=='Y'}">
+            <a href="${pageContext.servletContext.contextPath}/Mypage?id=${logId}"> <!-- 마이페이지 -->
+                <img src="${pageContext.servletContext.contextPath}/image/user.png" class="user-icon" id="user-icon" style="border-radius: 50%; width: 30px; height: auto;"/></a>
+            <!--유저로고-->
+            <a href="${pageContext.servletContext.contextPath}/logout" class="login-button">로그아웃</a>
+        </c:if>
+        <c:if test="${logStatus!='Y'}">
+            <a href="${pageContext.servletContext.contextPath}/login" class="login-button">로그인</a> | <a href="${pageContext.servletContext.contextPath}/create" class="login-button">회원가입</a>
+        </c:if>
+    </div>
+</div>
 
         <div class="nav">
             <div class="category">

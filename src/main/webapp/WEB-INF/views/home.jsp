@@ -269,6 +269,18 @@
             font-size: 40px;
         }
 
+        .jb-text {
+            padding: 15px 20px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+        }
+        .youtube_link:hover + .jb-text {
+            display: block;
+        }
+
         /* 유튜브 박스 끝*/
 
         /* 광고 이미지 시작********************************************/
@@ -423,21 +435,27 @@
                     style="background-color:#ddd">
                     <div>[프랭크쌤영어_레벨2]왕초보영어회화1강</div>
                 </li>
+                <div class="jb-text">[프랭크쌤영어_레벨2]왕초보영어회화1강</div>
                 <li class="youtube_link" id="https://www.youtube.com/embed/WLMBviBCwIU?si=py5kV8w-moGMkQYq">
                     <div>10시간 자연스러운 영어 듣기 연습 ( 자막 있음 )</div>
                 </li>
+                <div class="jb-text">10시간 자연스러운 영어 듣기 연습 ( 자막 있음 )</div>
                 <li class="youtube_link" id="https://www.youtube.com/embed/P42xvsj7J_U?si=v4ycUwKDDkNMKjQU">
                     <div>미드 프렌즈(Friends) 시즌1 전체 영어표현 409 문장 연속듣기 (영어회화, 영어공부)</div>
                 </li>
+                <div class="jb-text">미드 프렌즈(Friends) 시즌1 전체 영어표현 409 문장 연속듣기 (영어회화, 영어공부)</div>
                 <li class="youtube_link" id="https://www.youtube.com/embed/_50HS70urTw?si=PeY1Qa1aaKgm_flI">
                     <div>생활영어 1000문장 그냥 틀어두십쇼 1,2,3편 몰아듣기</div>
                 </li>
+                <div class="jb-text">생활영어 1000문장 그냥 틀어두십쇼 1,2,3편 몰아듣기</div>
                 <li class="youtube_link" id="https://www.youtube.com/embed/XtaV2XKryQI?si=z-qzKHI_t0sGnGPr">
                     <div>영어회화 300문장 켜놓고 흘려듣기 하세요 | 생활영어 | 영어공부</div>
                 </li>
+                <div class="jb-text">영어회화 300문장 켜놓고 흘려듣기 하세요 | 생활영어 | 영어공부</div>
                 <li class="youtube_link" id="https://www.youtube.com/embed/dChiYEk7Lxc?si=nGdxrRha0jlF8B5b">
                     <div>이 영상 하나면 영어 어순 이해 끝 ! (영어 말 순서)</div>
                 </li>
+                <div class="jb-text">이 영상 하나면 영어 어순 이해 끝 ! (영어 말 순서)</div>
             </ul>
         </div>
     </div>

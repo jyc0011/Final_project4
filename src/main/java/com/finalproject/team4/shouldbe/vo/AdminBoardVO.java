@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminMemberVO {
-    private String profile_img;
-    private String user_name;
+public class AdminBoardVO {
+    private String board_cat;
+    private String board_title;
+    private String content;
     private String user_id;
-    private String time;
-    private int posts_count;
-    private int comments_count;
-    private int count_report;
+    private int report_count;
+    private String report_reason;
+
 }

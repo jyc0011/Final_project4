@@ -17,10 +17,9 @@
 
         main {
             width: 1200px;
-            height: 600px;
-            margin: 30px auto;
+            margin: 0 auto;
             display: flex;
-            justify-content: space-evenly;
+            padding: 100px 0;
             align-items: center;
             flex-direction: column;
         }
@@ -35,19 +34,71 @@
             margin-bottom: 5px;
         }
 
-        .submitbtn {
+        .submitBtn {
             background-color: #FFB300;
             border: none;
             color: white;
             width: 400px;
-            height: 40px;
-            line-height: 40px;
         }
 
         .inputs {
             width: 400px;
             height: 40px;
             line-height: 40px;
+            margin: 5px 0;
+        }
+
+        .input-container{
+            position:relative;
+            margin-bottom:25px;
+        }
+        .input-container label{
+            position:absolute;
+            top:0px;
+            left:0px;
+            font-size:16px;
+            pointer-event:none;
+            transition: all 0.5s ease-in-out;
+        }
+        .input-container input{
+            border:0;
+            border-bottom:1px solid #555;
+            background:transparent;
+            width:100%;
+            padding:8px 0 5px 0;
+            font-size:16px;
+        }
+        .input-container input:focus{
+            border:none;
+            outline:none;
+            border-bottom:1px solid #e74c3c;
+        }
+        .btn{
+            color:#fff;
+            outline: none;
+            border: 0;
+            color: #fff;
+            padding:10px 20px;
+            text-transform:uppercase;
+            margin-top:30px;
+            border-radius:2px;
+            cursor:pointer;
+            position:relative;
+        }
+        /*.btn:after{
+            content:"";
+            position:absolute;
+            background:rgba(0,0,0,0.50);
+            top:0;
+            right:0;
+            width:100%;
+            height:100%;
+        }*/
+        .input-container input:focus ~ label,
+        .input-container input:valid ~ label{
+            top:-12px;
+            font-size:12px;
+
         }
     </style>
     <script>
@@ -58,51 +109,51 @@
                 var userid = $("#userid").val();
                 var email = $("#email").val();
                 $.ajax({
-                    type: "POST",
-                    url: "/login/sendcode",
-                    data: {userid: userid, email: email},
-                    success: function (r) {
+                    type : "POST",
+                    url : "/login/sendcode",
+                    data : {userid : userid,email : email},
+                    success : function(r){
                         console.log(r);
-                        if (r == true) {
+                        if(r == true) {
                             $("#verification").show();
                             $("#result").text("이메일이 발송되었습니다,");
 
-                        } else {
+                        }else{
                             $("#verification").hide();
                             $("#result").text("존재하지 않는 아이디 혹은 이메일입니다.");
 
                         }
                     },
-                    error: function (e) {
+                    error : function(e){
                         console.log(e.responseText);
                     }
 
                 });
             });
 
-            $("#verifybtn").click(function () {
+            $("#verifybtn").click(function(){
                 event.preventDefault();
 
                 var userid = $("#userid").val();
                 var code = $("#code").val();
                 var email = $("#email").val();
                 $.ajax({
-                    type: "POST",
-                    url: "/login/verify",
-                    data: {userid: userid, code: code, email: email},
-                    success: function (r) {
+                    type : "POST",
+                    url : "/login/verify",
+                    data : {userid : userid, code : code, email: email},
+                    success : function(r){
                         console.log(r);
-                        if (r == true) {
+                        if(r == true) {
 
                             alert("변경된 비밀번호가 이메일로 발송되었습니다");
-                            location.href = '/';
-                        } else {
+                            location.href='/';
+                        }else{
                             alert("오류!")
                         }
 
 
                     },
-                    error: function (e) {
+                    error : function(e){
                         console.log(e.responseText);
                     }
 
@@ -116,23 +167,23 @@
 <body>
 <main>
     <form method="post" id=find_pwd_form>
-        <h1>비밀번호 찾기</h1>
-        <ul>
-            <li><label>아이디</label></li>
-            <li><input type="text" name="userid" id="userid" class="inputs" placeholder="아이디를 입력해주세요."/></li>
-            <li><label>이메일</label></li>
-            <li><input type="text" name="email" id="email" class="inputs" placeholder="이메일을 입력해주세요."/></li>
-            <li style="margin-bottom: 50px"><input type="submit" name="find" id="find" value="인증번호 보내기"
-                                                   class="submitbtn"/></li>
+        <div class="input-container">
+            <input type="text" name="userid" id="userid" class="inputs" required=""/>
+            <label>아이디</label>
+        </div>
+        <div class="input-container">
+            <input type="text" name="email" id="email" class="inputs" required=""/>
+            <label>이메일</label>
+        </div>
+        <button type="submit" name="find" id="find" class="btn btn-warning submitBtn">인증번호 보내기</button>
 
-        </ul>
-        <div id="result" style="text-align: center"></div>
-        <div id="verification" style="display: none">
-            <ul>
-                <li><label>인증번호 입력</label></li>
-                <li><input type="text" name="code" id="code" class="inputs"/></li>
-                <li><input type="submit" id="verifybtn" class="submitbtn"/></li>
-            </ul>
+        <div id="result" style="text-align: center; color: darkred; margin-top: 5px"></div>
+        <div id="verification" style="display: none; margin-top: 20px">
+            <div class="input-container">
+                <input type="text" name="code" id="code" class="inputs" required=""/>
+                <label>인증번호 입력</label>
+            </div>
+            <input type="submit" id="verifybtn" class="btn btn-warning submitBtn"/>
         </div>
     </form>
 </main>
