@@ -15,13 +15,16 @@
         #loginForm > ul > li,
         #link > ul > li {
             list-style-type: none;
+            text-align: center;
+        }
+        ul{
+            padding: 0;
         }
 
         #link {
-            margin-top: 10px;
+            margin-top: 30px;
             width: 500px;
             height: 50px;
-            margin-left: 310px;
         }
 
         #link > ul > li {
@@ -43,25 +46,31 @@
         #logo {
             margin-bottom: 30px;
             width: 300px;
-            margin-left: 425px;
         }
 
         main {
             width: 1200px;
             margin: 0 auto;
+            padding: 100px 0;
+            display: flex;
+            justify-content: center;
+            justify-items: center;
+            flex-direction: column;
+            align-items: center;
         }
-
+        .box{
+            display: flex;
+        }
         #userpwd,
         #userid {
             margin-top: 5px;
             margin-bottom: 5px;
-            margin-left: 350px;
             width: 400px;
             height: 40px;
             line-height: 40px;
         }
 
-        .submitbtn {
+        .submitBtn {
             background-color: #FFB300;
             border: none;
             color: white;
@@ -70,10 +79,62 @@
         #login {
             margin-top: 30px;
             margin-bottom: 10px;
-            margin-left: 350px;
             width: 400px;
-            height: 40px;
-            line-height: 40px;
+        }
+        #loginForm{
+        }
+
+        .input-container{
+            position:relative;
+            margin-bottom:25px;
+        }
+        .input-container label{
+            position:absolute;
+            top:0px;
+            left:0px;
+            font-size:16px;
+            pointer-event:none;
+            transition: all 0.5s ease-in-out;
+        }
+        .input-container input{
+            border:0;
+            border-bottom:1px solid #555;
+            background:transparent;
+            width:100%;
+            padding:8px 0 5px 0;
+            font-size:16px;
+        }
+        .input-container input:focus{
+            border:none;
+            outline:none;
+            border-bottom:1px solid #e74c3c;
+        }
+        .btn{
+            color:#fff;
+            outline: none;
+            border: 0;
+            color: #fff;
+            padding:10px 20px;
+            text-transform:uppercase;
+            margin-top:20px;
+            border-radius:2px;
+            cursor:pointer;
+            position:relative;
+        }
+        /*.btn:after{
+            content:"";
+            position:absolute;
+            background:rgba(0,0,0,0.50);
+            top:0;
+            right:0;
+            width:100%;
+            height:100%;
+        }*/
+        .input-container input:focus ~ label,
+        .input-container input:valid ~ label{
+            top:-12px;
+            font-size:12px;
+
         }
     </style>
     <script>
@@ -88,13 +149,19 @@
 
 <body style="margin: 0 auto;">
 <main>
-    <form method="post" action="/loginOk" id="loginForm">
-        <ul>
-            <li><input type="text" name="userid" id="userid" placeholder="아이디"></li>
-            <li><input type="password" name="userpwd" id="userpwd" placeholder="비밀번호"></li>
-            <li><input type="submit" name="login" id="login" value="로그인" class="submitbtn"/></li>
-        </ul>
-    </form>
+    <div class="box">
+        <form method="post" action="/loginOk" id="loginForm">
+            <div class="input-container">
+                <input type="text" name="userid" id="userid" required=""/>
+                <label>아이디</label>
+            </div>
+            <div class="input-container">
+                <input type="password" name="userpwd" id="userpwd" required=""/>
+                <label>비밀번호</label>
+            </div>
+            <button type="submit" name="login" id="login" class="btn btn-warning submitBtn">로그인</button>
+        </form>
+    </div>
     <div id="link">
         <ul>
             <li><a href="create">회원가입</a></li>
