@@ -29,24 +29,37 @@
         }
     </style>
     <script>
+        window.onload = function () {
+            document.getElementById("cancelBtn").onclick = function () {
+                window.history.back();
+            }
+        }
     </script>
+</head>
 
 <body>
 <main>
     <h1>게시글 작성</h1>
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label"> 제목</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요.">
-    </div>
-    <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
-                  placeholder="내용을 입력하세요."></textarea>
-    </div>
-    <div id="writeButton">
-        <button type="button" class="btn btn-secondary">취소</button>
-        <button type="button" class="btn btn-warning">작성</button>
-    </div>
+    <c:if test="${category=='free'}">자유게시판</c:if>
+    <c:if test="${category=='notice'}">공지사항</c:if>
+    <c:if test="${category=='inquiries'}">문의게시판</c:if>
+    <c:if test="${category=='resources'}">자료게시판</c:if><br>
+    <form method="post"
+          action="${pageContext.servletContext.contextPath}/board/${category}/writeOk">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label"> 제목</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요." name="title">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
+                      placeholder="내용을 입력하세요." name="content"></textarea>
+        </div>
+        <div id="writeButton">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
+            <button type="submit" class="btn btn-warning">작성</button>
+        </div>
+    </form>
 
 </main>
 </body>

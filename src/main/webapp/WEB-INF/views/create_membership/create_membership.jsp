@@ -239,9 +239,9 @@
             </li>
             <li><label>사용언어</label></li>
             <li>
-                한국어 <input type="checkbox" class="lang" name="lang" value="ko"/>
-                일본어 <input type="checkbox" class="lang" name="lang" value="jp"/>
-                영어 <input type="checkbox" class="lang" name="lang" value="en"/>
+                한국어 <input type="radio" class="lang" name="lang" value="ko"/>
+                일본어 <input type="radio" class="lang" name="lang" value="jp"/>
+                영어 <input type="radio" class="lang" name="lang" value="en"/>
             </li>
             <li><label style="float: left; margin: 20px auto; margin-right: 10px;">국적</label></li>
             <li id="nationselcet">
