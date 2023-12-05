@@ -64,6 +64,11 @@
         #userEditForm {
             width: 700px;
         }
+
+        .btn-outline-secondary{
+            width: 130px;
+            margin-right: 10px;
+        }
     </style>
     <script>
         function editCheck() {
@@ -82,6 +87,18 @@
                 $("#profile_img").attr("src", "${pageContext.servletContext.contextPath}/image/user.png");
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var selectedLanguages = '${myvo.lang}'.split(',');
+            selectedLanguages.forEach(function(lang) {
+                var checkbox = document.getElementById('lang-' + lang);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+
+        });
+
     </script>
 </head>
 
@@ -100,8 +117,9 @@
     <div id="content" class="col-10">
 
         <div class="text-center mb-3">
-            <img src="${pageContext.servletContext.contextPath}/image/logo.png" id="profile_img" name="profile_img"
-                 class="rounded-circle" alt="Profile Image" style="width: 150px; height: 150px; object-fit: cover;">
+            <img src="${myvo.profile_img}" id="profile_img" name="profile_img"
+                 class="rounded-circle" alt="Profile Image" style="width: 150px; height: 150px; object-fit: cover;"
+                 onerror="this.onerror=null; this.src='${pageContext.servletContext.contextPath}/image/user.png';">
         </div>
 
         <div class="text-center">
@@ -131,15 +149,19 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="language" class="col-sm-2 col-form-label">사용가능언어</label>
+                <label class="col-sm-2 col-form-label">사용가능언어</label>
                 <div class="col-sm-10">
-                    <select class="form-select" id="language" name="lang" value="${myvo.lang}">
-                        <option value="ko">한국어</option>
-                        <option value="en">English</option>
-                        <option value="jp">日本語</option>
-                        <!-- Other language options -->
-                    </select>
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-ko" value="ko" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-ko">한국어</label>
+
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-en" value="en" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-en">English</label>
+
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-jp" value="jp" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-jp">日本語</label>
                 </div>
+
+
             </div>
             <div class="row mb-3">
                 <label for="intro" class="col-sm-2 col-form-label">자기소개</label>
