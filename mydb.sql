@@ -228,4 +228,11 @@ create table block_list
     block_reason varchar(200),
     FOREIGN KEY (block_id) REFERENCES users (user_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
-)
+);
+
+CREATE TABLE msg_trans
+(
+    msg_id       INT         NOT NULL,
+    trans_content LONGTEXT NOT NULL,
+    FOREIGN KEY (msg_id) REFERENCES message (msg_id)
+);

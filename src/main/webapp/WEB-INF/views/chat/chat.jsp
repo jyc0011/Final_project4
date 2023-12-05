@@ -270,7 +270,7 @@
                                         <img src="${profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
                                     </i>
                                     <p>${message.content}</p>
-                                    <p>${message.send_date}</p>
+                                    <p>${message.trans_content}</p>
                                 </div>
                             </li>
                         </c:when>
@@ -287,6 +287,7 @@
                                              style="width: 100%; height: 100%; object-fit: cover;">
                                     </i>
                                     <p>${message.content}</p>
+                                    <p>${message.trans_content}</p>
                                 </div>
                             </li>
                         </c:otherwise>
@@ -315,6 +316,7 @@
     var messageArea = document.querySelector('#messageArea');
     var connectingElement = document.querySelector('.connecting');
     const fromId = "${fromId}";
+    const otherId = "${otherId}";
     const chatId = ${chatId};
     var username = "${userId}";
     var stompClient = null;
@@ -352,7 +354,8 @@
                 chat_id: chatId,
                 sender: username,
                 content: messageInput.value,
-                from_id: fromId
+                from_id: fromId,
+                other_id : otherId
             };
             stompClient.send('/app/chat.sendMessage/${chatId}', {}, JSON.stringify(chatMessage));
             messageInput.value = '';
@@ -409,7 +412,11 @@
         const textElement = document.createElement('p');
         const messageText = document.createTextNode(message.content);
         textElement.appendChild(messageText);
-
+        const transTextElement = document.createElement('p');
+        transTextElement.classList.add('translated-text');
+        const transMessageText = document.createTextNode(message.trans_content);
+        transTextElement.appendChild(transMessageText);
+        textElement.appendChild(transTextElement);
         messageElement.appendChild(textElement);
         messageArea.appendChild(messageElement);
         messageArea.scrollTop = messageArea.scrollHeight;

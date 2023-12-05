@@ -44,9 +44,20 @@
         WHERE user_id = #{userId}
     </select>
 
+    <select id="getUserLang" resultType="String">
+        SELECT nation
+        FROM users
+        WHERE user_id = #{userId}
+    </select>
+
     <insert id="insertMessage" useGeneratedKeys="true" keyProperty="msg_id">
         INSERT INTO message (chat_id, is_from_id, content, is_read)
         VALUES (#{chat_id}, #{is_from_id}, #{content}, 0)
+    </insert>
+
+    <insert id="insertTransMessage">
+        INSERT INTO msg_trans (msg_id, trans_content)
+        VALUES (#{msgId}, #{s})
     </insert>
 
     <update id="insertLastMessage">
@@ -124,4 +135,10 @@
         INSERT INTO save_message (msg_id, save_user_id)
         VALUES (#{msgId},#{userId})
     </insert>
+
+    <select id="getTransMsg" resultType="String">
+        SELECT trans_content
+        FROM msg_trans
+        WHERE msg_id = #{msgId}
+    </select>
 </mapper>

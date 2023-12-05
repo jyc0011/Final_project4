@@ -2,6 +2,7 @@ package com.finalproject.team4.shouldbe.service;
 
 import com.finalproject.team4.shouldbe.mapper.ChatMapper;
 import com.finalproject.team4.shouldbe.util.EncryptUtil;
+import com.finalproject.team4.shouldbe.util.Translate;
 import com.finalproject.team4.shouldbe.vo.ChatRoomVO;
 import com.finalproject.team4.shouldbe.vo.MessageVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
@@ -44,8 +45,11 @@ public class ChatService {
         List<MessageVO> messages = chatMapper.getMessagesByChatId(chatId);
         String sharedKey = chatMapper.getSharedKey(chatId, userId);
         for (MessageVO message : messages) {
+            message.setTrans_content(chatMapper.getTransMsg(message.getMsg_id()));
             String decryptedContent = EncryptUtil.decryptAES(message.getContent(), sharedKey);
+            String decryptedTransContent=EncryptUtil.decryptAES(message.getTrans_content(), sharedKey);
             message.setContent(decryptedContent);
+            message.setTrans_content(decryptedTransContent);
         }
         chatMapper.updateMessagesAsRead(chatId);
         return messages;
@@ -59,11 +63,23 @@ public class ChatService {
     public int saveMessage(MessageVO message) throws Exception {
         String sharedKey = chatMapper.getSharedKey(message.getChat_id(), message.getSender());
         String encryptedContent = EncryptUtil.encryptAES(message.getContent(), sharedKey);
+        String contentLang= Translate.detect_lang(message.getContent());
+        System.out.println("contentLang "+ contentLang);
+        String userLang=chatMapper.getUserLang(message.getOther_id());
+        System.out.println(contentLang+" "+userLang+" "+message.getContent());
+        if (!contentLang.equals(userLang)) {
+            String transContext = Translate.translate_content(contentLang, userLang, message.getContent());
+            message.setTrans_content(transContext);
+        } else {
+            message.setTrans_content(message.getContent());
+        }
+        message.setTrans_content(EncryptUtil.encryptAES(message.getTrans_content(), sharedKey));
         message.setContent(encryptedContent);
         chatMapper.insertMessage(message);
         chatMapper.insertLastMessage(message);
-        String decryptedContent = EncryptUtil.decryptAES(message.getContent(), sharedKey);
-        message.setContent(decryptedContent);
+        chatMapper.insertTransMessage(message.getMsg_id(), message.getTrans_content());
+        message.setContent(EncryptUtil.decryptAES(message.getContent(), sharedKey));
+        message.setTrans_content(EncryptUtil.decryptAES(message.getTrans_content(), sharedKey));
         return message.getMsg_id();
     }
 

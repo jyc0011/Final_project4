@@ -34,8 +34,8 @@
     </insert>
 
     <insert id="insertUserAnswerInfo">
-        INSERT INTO user_quiz (quiz_id, user_id, correct)
-        VALUES (#{quiz_id}, #{user_id}, #{correct})
+        INSERT INTO user_quiz (quiz_id, user_id)
+        VALUES (#{quiz_id}, #{user_id})
     </insert>
 
     <insert id="insertQuiz" useGeneratedKeys="true" keyProperty="quiz_id">

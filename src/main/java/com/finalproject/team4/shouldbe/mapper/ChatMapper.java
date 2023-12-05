@@ -46,4 +46,10 @@ public interface ChatMapper {
     ChatRoomVO getChatByChatId(int chatId);
 
     void saveMessageToMypage(String userId, int msgId);
+
+    String getUserLang(String userId);
+
+    void insertTransMessage(int msgId, String s);
+
+    String getTransMsg(int msgId);
 }
