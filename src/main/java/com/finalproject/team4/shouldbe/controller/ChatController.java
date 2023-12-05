@@ -112,10 +112,18 @@ public class ChatController {
         pvo.setNowPage(page);
         pvo.setTotalRecord(chatservice.totalPartnerRecord(userId));
         List<UserVO> partner = chatservice.getPartnerById(pvo, userId);
-        mav.addObject("myId", userId);
+        System.out.println(partner);
         mav.addObject("pVO", pvo);
         mav.addObject("partner", partner);
         mav.setViewName("chat/chatPartner");
         return mav;
     }
+
+    @RequestMapping("/chat/start")
+    public String startChat(@RequestParam("userId") String otherUserId, HttpSession session) {
+        String currentUserId = (String) session.getAttribute("logId");
+        int chatId = chatservice.startChat(currentUserId, otherUserId);
+        return "redirect:/chat?chat_id=" + chatId + "&other_user_id=" + otherUserId + "&from_id=" + currentUserId;
+    }
+
 }

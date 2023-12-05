@@ -30,4 +30,6 @@ public interface ChatMapper {
     int countUserPartner(String userId);
 
     List<UserVO> getUserPartnerList(PagingVO pvo, String userId);
+
+    void createChatRoom(ChatRoomVO newChatRoom);
 }

@@ -17,4 +17,6 @@ public class UserVO {
     private String date;
     private String lang;
     private String salt;
+    private String profile_img;
+    private String profile_content;
 }

@@ -55,4 +55,34 @@
             last_time   = NOW()
         WHERE chat_id = #{chat_id}
     </update>
+
+    <select id="countUserPartner" resultType="int">
+        SELECT COUNT(*)
+        FROM users
+        WHERE user_id != #{userId}
+          AND NOT EXISTS (
+            SELECT 1
+            FROM chat_list
+            WHERE (from_id = #{userId} AND to_id = users.user_id)
+           OR (to_id = #{userId} AND from_id = users.user_id)
+            )
+    </select>
+
+    <select id="getUserPartnerList" resultType="UserVO">
+        SELECT user_id AS userid, user_name AS username, email, nation, sex, lang, profile_img, profile_content
+        FROM users
+        WHERE user_id != #{userId}
+          AND NOT EXISTS (
+            SELECT 1
+            FROM chat_list
+            WHERE (from_id = #{userId} AND to_id = users.user_id)
+           OR (to_id = #{userId} AND from_id = users.user_id)
+            )
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
+
+    <insert id="createChatRoom" useGeneratedKeys="true" keyProperty="chat_id">
+        INSERT INTO chat_list (from_id, to_id, last_content)
+        VALUES (#{from_id}, #{to_id},"new chat")
+    </insert>
 </mapper>

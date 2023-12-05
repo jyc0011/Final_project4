@@ -58,4 +58,12 @@ public class ChatService {
     public List<UserVO> getPartnerById(PagingVO pvo, String userId) {
         return chatMapper.getUserPartnerList(pvo, userId);
     }
+
+    public int startChat(String currentUserId, String otherUserId) {
+            ChatRoomVO newChatRoom = new ChatRoomVO();
+            newChatRoom.setFrom_id(currentUserId);
+            newChatRoom.setTo_id(otherUserId);
+            chatMapper.createChatRoom(newChatRoom);
+            return newChatRoom.getChat_id();
+    }
 }
