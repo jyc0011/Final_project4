@@ -14,6 +14,7 @@ CREATE TABLE users (
                        manager TINYINT DEFAULT 0,
                        count_report INT NOT NULL DEFAULT 0
 );
+ALTER TABLE users ADD COLUMN withdraw TINYINT NOT NULL DEFAULT 0;
 
 -- Friend Table
 CREATE TABLE friend (
@@ -200,3 +201,12 @@ CREATE TABLE post_report (
                              report_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                              FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+-- block_list 테이블 생성
+create table block_list(
+	block_id varchar(45) NOT NULL,
+    user_id varchar(45) NOT NULL,
+    block_reason varchar(200),
+    FOREIGN KEY (block_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+)

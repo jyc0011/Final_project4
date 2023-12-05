@@ -77,16 +77,16 @@
     </style>
     <script>
         $(function () {
-            // 친구삭제
-            $(document).on('click', '#deletefriend', function () {
-                var following_user_id = $("#following_user_id").val();
-                var followed_user_id = $(this).attr("title");
+            // 차단 해제
+            $(document).on('click', '#unlock', function () {
+                var block_id = $("#block_id").val();
+                var user_id = $(this).attr("title");
                 $.ajax({
-                    url: '${pageContext.servletContext.contextPath}/mypage/deletefriend',
+                    url: '${pageContext.servletContext.contextPath}/mypage/unlock',
                     type: 'GET',
                     data: {
-                        following_user_id: following_user_id,
-                        followed_user_id: followed_user_id
+                        block_id: block_id,
+                        user_id: user_id
                     },
                     success: function (response) {
                         document.location.reload();
@@ -114,30 +114,27 @@
     </div>
     <div id="content" class="col-10">
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구
-                목록</a></li>
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/blockList">차단 목록</a>
+            <li class="list-inline-item">
+                <a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구 목록</a>
+            </li>
+            <li class="list-inline-item">
+                <a href="${pageContext.servletContext.contextPath}/mypage/blocklist">차단 목록</a>
             </li>
         </ul>
         <hr/>
-        <c:forEach var="flist" items="${flist}">
-            <div class="friend-card"><!--ajax 처리-->
+        <c:forEach var="blist" items="${blist}">
+            <div class="friend-card">
                 <div class="friend-avatar">
-                    <img src="${pageContext.servletContext.contextPath}/img/${flist.profile_img}}" alt="Friend's Avatar"
-                         class="rounded-circle"
-                         style="width: 50px; height: 50px;">
+                    <img src="${pageContext.servletContext.contextPath}/image/user.png" alt="Friend's Avatar"
+                        class="rounded-circle" style="width: 50px; height: 50px;">
                 </div>
                 <div class="friend-info">
-                    <input type="hidden" id="following_user_id" name="following_user_id"
-                           value="${flist.following_user_id}"/>
-                    <strong>${flist.user_name}</strong>
-                    <p>${flist.profile_content}</p>
+                    <input type="hidden" name="block_id" id="block_id" value="${blist.block_id}"/>
+                    <strong>${blist.user_name}</strong>
+                    <p>${blist.block_reason}</p>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary btn-action">채팅하기</button>
-                    <button type="button" class="btn btn-outline-secondary btn-action" id="deletefriend"
-                            title="${flist.followed_user_id}">친구삭제
-                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-action" id="unlock" title="${blist.user_id}">차단해제</button>
                 </div>
             </div>
         </c:forEach>
