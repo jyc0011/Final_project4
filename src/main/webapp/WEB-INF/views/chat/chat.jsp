@@ -14,7 +14,7 @@
             box-sizing: border-box;
         }
 
-        html,body {
+        html, body {
             height: 100%;
         }
 
@@ -137,7 +137,7 @@
             position: relative;
         }
 
-        #chat-page .message-others i {
+        #chat-page .message-others img {
             position: absolute;
             width: 42px;
             height: 42px;
@@ -154,7 +154,7 @@
             text-transform: uppercase;
         }
 
-        #chat-page .message-mine i {
+        #chat-page .message-mine img {
             position: absolute;
             width: 42px;
             height: 42px;
@@ -183,6 +183,7 @@
         .message-mine {
             text-align: right;
         }
+
         .message-mine > i {
             float: right;
         }
@@ -240,6 +241,7 @@
                                         <img src="${profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
                                     </i>
                                     <p>${message.content}</p>
+                                    <p>${message.send_date}</p>
                                 </div>
                             </li>
                         </c:when>
@@ -248,7 +250,8 @@
                                 <div class="text-container">
                                     <span class="username">${otherId}</span>
                                     <i style="position: absolute; width: 42px; height: 42px; left: 10px;">
-                                        <img src="${other_profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <img src="${other_profile_img}"
+                                             style="width: 100%; height: 100%; object-fit: cover;">
                                     </i>
                                     <p>${message.content}</p>
                                 </div>
@@ -261,7 +264,8 @@
         <form id="messageForm" name="messageForm">
             <div class="form-group">
                 <div class="input-group clearfix">
-                    <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
+                    <input type="text" id="message" placeholder="Type a message..." autocomplete="off"
+                           class="form-control"/>
                     <button type="submit" class="primary">Send</button>
                 </div>
             </div>
@@ -277,17 +281,17 @@
     var messageInput = document.querySelector('#message');
     var messageArea = document.querySelector('#messageArea');
     var connectingElement = document.querySelector('.connecting');
+    const fromId = "${fromId}";
+    const chatId = ${chatId};
     var username = "${userId}";
     var stompClient = null;
-    var colors = [
-        '#2196F3', '#32c787', '#00BCD4', '#ff5652',
-        '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
-    ];
+    const userProfileImage = "${profile_img}";
+    const otherUserProfileImage = "${other_profile_img}";
 
     function connect() {
         console.log("Connect");
         console.log("Username:", username);
-        if(username) {
+        if (username) {
             chatPage.classList.remove('hidden');
 
             var socket = new SockJS('/ws');
@@ -299,12 +303,7 @@
 
     function onConnected() {
         console.log("Connected to WebSocket");
-        stompClient.subscribe('/topic/public', onMessageReceived);
-        stompClient.send("/app/chat.addUser",
-            {},
-            JSON.stringify({sender: username, type: 'JOIN'})
-        )
-        connectingElement.classList.add('hidden');
+        stompClient.subscribe('/topic/public/${chatId}', onMessageReceived);
     }
 
     function onError(error) {
@@ -315,66 +314,50 @@
 
     function sendMessage(event) {
         var messageContent = messageInput.value.trim();
-        if(messageContent && stompClient) {
+        if (messageContent && stompClient) {
             var chatMessage = {
+                chat_id:chatId,
                 sender: username,
                 content: messageInput.value,
-                type: 'CHAT'
+                from_id: fromId
             };
-            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+            stompClient.send('/app/chat.sendMessage/${chatId}', {}, JSON.stringify(chatMessage));
             messageInput.value = '';
         }
         event.preventDefault();
     }
 
-    function createAvatarElement(sender) {
-        const avatarElement = document.createElement('i');
-        const avatarText = document.createTextNode(sender[0]);
-        avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(sender);
-        return avatarElement;
-    }
-
     function onMessageReceived(payload) {
         const message = JSON.parse(payload.body);
         const messageElement = document.createElement('li');
-        const avatarElement = createAvatarElement(message.sender);
-
-        if (message.type === 'JOIN' || message.type === 'LEAVE') {
-            messageElement.classList.add('event-message');
-            message.content = message.sender + (message.type === 'JOIN' ? ' joined!' : ' left!');
-        } else {
-            messageElement.classList.add('chat-message');
-            const textContainer = document.createElement('div');
-            textContainer.classList.add('text-container');
-            const usernameElement = document.createElement('span');
-            const usernameText = document.createTextNode(message.sender);
-            usernameElement.appendChild(usernameText);
-            messageElement.appendChild(usernameElement);
-            messageElement.classList.add(message.sender === username ? 'message-mine' : 'message-others');
-            messageElement.appendChild(avatarElement);
-        }
+        const avatarElement = document.createElement('img');
+        avatarElement.src = message.sender === username ? userProfileImage : otherUserProfileImage;
+        avatarElement.style.width = '42px';
+        avatarElement.style.height = '42px';
+        avatarElement.style.borderRadius = '50%';
+        avatarElement.style.objectFit = 'cover';
+        messageElement.classList.add('chat-message');
+        const textContainer = document.createElement('div');
+        textContainer.classList.add('text-container');
+        const usernameElement = document.createElement('span');
+        const usernameText = document.createTextNode(message.sender);
+        usernameElement.appendChild(usernameText);
+        messageElement.appendChild(usernameElement);
+        messageElement.classList.add(message.sender === username ? 'message-mine' : 'message-others');
+        messageElement.appendChild(avatarElement);
 
         const textElement = document.createElement('p');
         const messageText = document.createTextNode(message.content);
         textElement.appendChild(messageText);
-
 
         messageElement.appendChild(textElement);
         messageArea.appendChild(messageElement);
         messageArea.scrollTop = messageArea.scrollHeight;
     }
 
-    function getAvatarColor(messageSender) {
-        var hash = 0;
-        for (var i = 0; i < messageSender.length; i++) {
-            hash = 31 * hash + messageSender.charCodeAt(i);
-        }
-        var index = Math.abs(hash % colors.length);
-        return colors[index];
-    }
     connect();
     messageForm.addEventListener('submit', sendMessage, true)
+    messageArea.scrollTop = messageArea.scrollHeight;
 </script>
 </body>
 </html>

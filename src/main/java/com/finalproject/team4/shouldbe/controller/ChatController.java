@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static org.springframework.messaging.simp.SimpMessageHeaderAccessor.getSessionAttributes;
+
 @Controller
 public class ChatController {
 	@Autowired
@@ -26,12 +28,14 @@ public class ChatController {
 	ChatService chatservice;
 
 	@RequestMapping("/chat/list")
-	public ModelAndView chat_room_list(HttpServletRequest request,
+	public ModelAndView chat_room_list(HttpSession session,
 									   @RequestParam(required = false, defaultValue = "1") int page) {
 		ModelAndView mav = new ModelAndView();
-		HttpSession session = request.getSession();
+		if (session.getAttribute("logStatus") != "Y") {
+			mav.setViewName("redirect:/login");
+			return mav;
+		}
 		String userId = (String) session.getAttribute("logId");
-		System.out.println(userId);
 		PagingVO pvo = new PagingVO();
 		pvo.setOnePageRecord(10);
 		pvo.setNowPage(page);
@@ -45,17 +49,6 @@ public class ChatController {
 		return mav;
 	}
 
-	@RequestMapping("/chat.l")
-	public ModelAndView chat_room(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView();
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("logId");
-		MypageVO myvo =myservice.mypage_info(userId);
-		mv.addObject("myvo",myvo);
-		mv.setViewName("chat/chat");
-		return mv;
-	}
-
 	@RequestMapping("/chat")
 	public ModelAndView privateChat(@RequestParam("chat_id") int chatId,
 									@RequestParam("other_user_id") String otherUserId,
@@ -64,9 +57,10 @@ public class ChatController {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("logId");
+		session.setAttribute("chatId", chatId);
 		List<MessageVO> pastMessages = chatservice.getMessagesByChatId(chatId);
-		String profile_img=chatservice.getProfileImg(userId);
-		String other_profile_img=chatservice.getProfileImg(otherUserId);
+		String profile_img = chatservice.getProfileImg(userId);
+		String other_profile_img = chatservice.getProfileImg(otherUserId);
 		mav.addObject("other_profile_img", other_profile_img);
 		mav.addObject("profile_img", profile_img);
 		mav.addObject("otherId", otherUserId);
@@ -79,32 +73,28 @@ public class ChatController {
 		return mav;
 	}
 
-
-	@MessageMapping("/chat.sendMessage")
-	@SendTo("/topic/public")
-	public ChatMessage sendMessage(
-			@Payload ChatMessage chatMessage
-	) {
-		return chatMessage;
-	}
-
-	@MessageMapping("/chat/private/{userId}")
-	@SendTo("/topic/private/{userId}")
-	public MessageVO sendPrivateMessage(MessageVO vo, @DestinationVariable String userId) {
-		// Logic for sending a message in a private chat
-		// Save the chat message to the database, set additional attributes, etc.
-
+	@MessageMapping("/chat.sendMessage/{chatId}")
+	@SendTo("/topic/public/{chatId}")
+	public MessageVO sendPrivateMessage(@Payload MessageVO vo) {
+		String userId = vo.getSender();
+		String fromId=vo.getFrom_id();
+		if (userId.equals(fromId)){
+			vo.setIs_from_id(1);
+		}else{
+			vo.setIs_from_id(0);
+		}
+		vo.setMsg_id(chatservice.saveMessage(vo));
 		return vo;
 	}
 
-	@MessageMapping("/chat.addUser")
-	@SendTo("/topic/public")
-	public ChatMessage addUser(
-			@Payload ChatMessage chatMessage,
+	@MessageMapping("/chat.addUser/{chatId}")
+	@SendTo("/topic/public/{chatId}")
+	public MessageVO addUser(
+			@Payload MessageVO chatMessage,
 			SimpMessageHeaderAccessor headerAccessor
 	) {
-		// Add username in web socket session
-		headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+		String username = (String) headerAccessor.getSessionAttributes().get("username");
+		String sessionChatId = (String) headerAccessor.getSessionAttributes().get("chatId");
 		return chatMessage;
 	}
 }

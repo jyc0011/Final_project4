@@ -14,6 +14,11 @@
         ORDER BY last_time DESC
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
+    <select id="countUnreadMessages" resultType="int">
+        SELECT COUNT(*)
+        FROM message
+        WHERE chat_id = #{chatId} AND is_read = 0 AND is_from_id != #{isFromId}
+    </select>
 
     <select id="getMessagesByChatId" resultType="MessageVO">
         SELECT * FROM message
@@ -21,7 +26,25 @@
         ORDER BY send_time
     </select>
 
+    <update id="updateMessagesAsRead">
+        UPDATE message
+        SET is_read = 1
+        WHERE chat_id = #{chatId} AND is_read = 0
+    </update>
+
     <select id="getProfileImg" resultType="String">
         SELECT profile_img FROM users WHERE user_id = #{userId}
     </select>
+
+    <insert id="insertMessage" useGeneratedKeys="true" keyProperty="msg_id">
+        INSERT INTO message (chat_id, is_from_id, content, is_read)
+        VALUES (#{chat_id}, #{is_from_id}, #{content}, 0)
+    </insert>
+
+    <update id="insertLastMessage">
+        UPDATE chat_list
+        SET last_content= #{content},
+            last_time = NOW()
+        WHERE chat_id=#{chat_id}
+    </update>
 </mapper>

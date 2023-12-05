@@ -20,12 +20,18 @@ public class MypageController {
 
     // 마이페이지 프로필
     @GetMapping("/mypage/change_user")
-    public ModelAndView mypage_change_user(@SessionAttribute(name = "logId") String userid) {
+    public ModelAndView mypage_change_user(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        if (session.getAttribute("logStatus") != "Y") {
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
+        String userid=(String) session.getAttribute("logId");
         MypageVO myvo = service.mypage_info(userid);
         System.out.println(myvo.toString());
         mav.addObject("myvo", myvo);
         mav.setViewName("mypage/change_user");
+
         return mav;
     }
 

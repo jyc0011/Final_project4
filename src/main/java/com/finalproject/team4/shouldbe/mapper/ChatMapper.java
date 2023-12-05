@@ -11,7 +11,11 @@ import java.util.List;
 public interface ChatMapper {
 
     List<ChatRoomVO> getCurrentUserChatRooms(PagingVO pvo, String userId);
+    int countUnreadMessages(int chatId, int isFromId);
     int countUserChatRooms(String userId);
     List<MessageVO> getMessagesByChatId(int chatId);
+    void updateMessagesAsRead(int chatId);
     String getProfileImg(String userId);
+    void insertMessage(MessageVO message);
+    void insertLastMessage(MessageVO message);
 }

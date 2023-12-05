@@ -21,13 +21,16 @@ public class QuizController {
     private QuizService quizService;
 
     @GetMapping("/quiz/main")
-    public String quiz_list() {
+    public String quiz_list(HttpSession session) {
+        if (!"Y".equals(session.getAttribute("logStatus"))) {
+            return "redirect:/login";
+        }
         return "/quiz/quiz_main";
     }
 
     @GetMapping("/quiz/create")
-    public String quiz_create(HttpServletRequest request) {
-        if (!"Y".equals(request.getSession().getAttribute("logStatus"))) {
+    public String quiz_create(HttpSession session) {
+        if (!"Y".equals(session.getAttribute("logStatus"))) {
             return "redirect:/login";
         }
         return "/quiz/quiz_create";
