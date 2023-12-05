@@ -78,50 +78,6 @@
             min-height: 38px;
         }
 
-        button.default {
-            color: #333;
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
-        }
-
-        button.primary {
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
-            color: #fff;
-        }
-
-        button.accent {
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
-            color: #fff;
-        }
-
-        #username-page {
-            text-align: center;
-        }
-
-        .username-page-container {
-            background: #fff;
-            box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
-            border-radius: 2px;
-            width: 100%;
-            max-width: 500px;
-            display: inline-block;
-            margin-top: 42px;
-            vertical-align: middle;
-            position: relative;
-            padding: 35px 55px 35px;
-            min-height: 250px;
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            margin-top: -160px;
-        }
-
-        .username-page-container .username-submit {
-            margin-top: 10px;
-        }
-
-
         #chat-page {
             position: relative;
             height: 100%;
@@ -132,7 +88,6 @@
             margin-left: auto;
             margin-right: auto;
             background-color: #fff;
-            box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
             margin-top: 30px;
             height: calc(100% - 60px);
             max-height: 600px;
@@ -178,15 +133,33 @@
 
         #chat-page .chat-message {
             padding-left: 68px;
+            padding-right: 68px;
             position: relative;
         }
 
-        #chat-page .chat-message i {
+        #chat-page .message-others i {
             position: absolute;
             width: 42px;
             height: 42px;
             overflow: hidden;
             left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 18px;
+            line-height: 42px;
+            color: #fff;
+            text-align: center;
+            border-radius: 50%;
+            font-style: normal;
+            text-transform: uppercase;
+        }
+
+        #chat-page .message-mine i {
+            position: absolute;
+            width: 42px;
+            height: 42px;
+            overflow: hidden;
+            right: 10px;
             display: inline-block;
             vertical-align: middle;
             font-size: 18px;
@@ -206,6 +179,14 @@
         #chat-page .chat-message p {
             color: #43464b;
         }
+
+        .message-mine {
+            text-align: right;
+        }
+        .message-mine > i {
+            float: right;
+        }
+
 
         #messageForm .input-group input {
             float: left;
@@ -233,86 +214,49 @@
         .connecting {
             padding-top: 5px;
             text-align: center;
-            color: #777;
             position: absolute;
             top: 65px;
             width: 100%;
-        }
-
-
-        @media screen and (max-width: 730px) {
-
-            .chat-container {
-                margin-left: 10px;
-                margin-right: 10px;
-                margin-top: 10px;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .chat-container {
-                height: calc(100% - 30px);
-            }
-
-            .username-page-container {
-                width: auto;
-                margin-left: 15px;
-                margin-right: 15px;
-                padding: 25px;
-            }
-
-            #chat-page ul {
-                height: calc(100% - 120px);
-            }
-
-            #messageForm .input-group button {
-                width: 65px;
-            }
-
-            #messageForm .input-group input {
-                width: calc(100% - 70px);
-            }
-
-            .chat-header {
-                padding: 10px;
-            }
-
-            .connecting {
-                top: 60px;
-            }
-
-            .chat-header h2 {
-                font-size: 1.1em;
-            }
         }
     </style>
 </head>
 
 <body>
-<div id="username-page">
-    <div class="username-page-container">
-        <h1 class="title">Type your username to enter the Chatroom</h1>
-        <form id="usernameForm" name="usernameForm">
-            <div class="form-group">
-                <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
-            </div>
-            <div class="form-group">
-                <button type="submit" class="accent username-submit">Start Chatting</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div id="chat-page" class="hidden">
+<div id="chat-page">
     <div class="chat-container">
         <div class="chat-header">
-            <h2>Spring WebSocket Chat Demo - By Alibou</h2>
-        </div>
-        <div class="connecting">
-            Connecting...
+            <h2>Spring WebSocket Chat</h2>
         </div>
         <ul id="messageArea">
-
+            <div class="chat-messages">
+                <c:forEach var="message" items="${pastMessages}">
+                    <c:choose>
+                        <c:when test="${(message.is_from_id == 1 and userId == fromId)
+                        or (message.is_from_id == 0 and userId != fromId)}">
+                            <li class="message-mine chat-message">
+                                <div class="text-container">
+                                    <span class="username">${userId}</span>
+                                    <i style="position: absolute; width: 42px; height: 42px; right: 10px;">
+                                        <img src="${profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </i>
+                                    <p>${message.content}</p>
+                                </div>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="message-others chat-message">
+                                <div class="text-container">
+                                    <span class="username">${otherId}</span>
+                                    <i style="position: absolute; width: 42px; height: 42px; left: 10px;">
+                                        <img src="${other_profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </i>
+                                    <p>${message.content}</p>
+                                </div>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </div>
         </ul>
         <form id="messageForm" name="messageForm">
             <div class="form-group">
@@ -328,59 +272,46 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script>
-    'use strict';
-
-    var usernamePage = document.querySelector('#username-page');
     var chatPage = document.querySelector('#chat-page');
-    var usernameForm = document.querySelector('#usernameForm');
     var messageForm = document.querySelector('#messageForm');
     var messageInput = document.querySelector('#message');
     var messageArea = document.querySelector('#messageArea');
     var connectingElement = document.querySelector('.connecting');
-
+    var username = "${userId}";
     var stompClient = null;
-    var username = null;
-
     var colors = [
         '#2196F3', '#32c787', '#00BCD4', '#ff5652',
         '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
     ];
 
-    function connect(event) {
-        username = document.querySelector('#name').value.trim();
-
+    function connect() {
+        console.log("Connect");
+        console.log("Username:", username);
         if(username) {
-            usernamePage.classList.add('hidden');
             chatPage.classList.remove('hidden');
 
             var socket = new SockJS('/ws');
             stompClient = Stomp.over(socket);
-
+            console.log("Connect");
             stompClient.connect({}, onConnected, onError);
         }
-        event.preventDefault();
     }
 
-
     function onConnected() {
-        // Subscribe to the Public Topic
+        console.log("Connected to WebSocket");
         stompClient.subscribe('/topic/public', onMessageReceived);
-
-        // Tell your username to the server
         stompClient.send("/app/chat.addUser",
             {},
             JSON.stringify({sender: username, type: 'JOIN'})
         )
-
         connectingElement.classList.add('hidden');
     }
 
-
     function onError(error) {
+        console.error("WebSocket Error", error);
         connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
         connectingElement.style.color = 'red';
     }
-
 
     function sendMessage(event) {
         var messageContent = messageInput.value.trim();
@@ -396,44 +327,43 @@
         event.preventDefault();
     }
 
+    function createAvatarElement(sender) {
+        const avatarElement = document.createElement('i');
+        const avatarText = document.createTextNode(sender[0]);
+        avatarElement.appendChild(avatarText);
+        avatarElement.style['background-color'] = getAvatarColor(sender);
+        return avatarElement;
+    }
 
     function onMessageReceived(payload) {
-        var message = JSON.parse(payload.body);
+        const message = JSON.parse(payload.body);
+        const messageElement = document.createElement('li');
+        const avatarElement = createAvatarElement(message.sender);
 
-        var messageElement = document.createElement('li');
-
-        if(message.type === 'JOIN') {
+        if (message.type === 'JOIN' || message.type === 'LEAVE') {
             messageElement.classList.add('event-message');
-            message.content = message.sender + ' joined!';
-        } else if (message.type === 'LEAVE') {
-            messageElement.classList.add('event-message');
-            message.content = message.sender + ' left!';
+            message.content = message.sender + (message.type === 'JOIN' ? ' joined!' : ' left!');
         } else {
             messageElement.classList.add('chat-message');
-
-            var avatarElement = document.createElement('i');
-            var avatarText = document.createTextNode(message.sender[0]);
-            avatarElement.appendChild(avatarText);
-            avatarElement.style['background-color'] = getAvatarColor(message.sender);
-
-            messageElement.appendChild(avatarElement);
-
-            var usernameElement = document.createElement('span');
-            var usernameText = document.createTextNode(message.sender);
+            const textContainer = document.createElement('div');
+            textContainer.classList.add('text-container');
+            const usernameElement = document.createElement('span');
+            const usernameText = document.createTextNode(message.sender);
             usernameElement.appendChild(usernameText);
             messageElement.appendChild(usernameElement);
+            messageElement.classList.add(message.sender === username ? 'message-mine' : 'message-others');
+            messageElement.appendChild(avatarElement);
         }
 
-        var textElement = document.createElement('p');
-        var messageText = document.createTextNode(message.content);
+        const textElement = document.createElement('p');
+        const messageText = document.createTextNode(message.content);
         textElement.appendChild(messageText);
 
-        messageElement.appendChild(textElement);
 
+        messageElement.appendChild(textElement);
         messageArea.appendChild(messageElement);
         messageArea.scrollTop = messageArea.scrollHeight;
     }
-
 
     function getAvatarColor(messageSender) {
         var hash = 0;
@@ -443,8 +373,7 @@
         var index = Math.abs(hash % colors.length);
         return colors[index];
     }
-
-    usernameForm.addEventListener('submit', connect, true)
+    connect();
     messageForm.addEventListener('submit', sendMessage, true)
 </script>
 </body>

@@ -140,15 +140,8 @@
                 userConfirmed = confirm("정말 탈퇴하시겠습니까?");
             }
 
-            if (userConfirmed) {
-                $.ajax({
-                    url: '${pageContext.servletContext.contextPath}/mypage/withdrawOk',
-                    type: "GET",
-                    data: {
-                        password: password
-
-                    }
-                });
+            if (!userConfirmed) {
+				return false;
             }
         }
     </script>
@@ -166,17 +159,20 @@
 				</ul>
 			</div>
 			<div class="withdraw-box">
-				<div class="box">
-					<div class="input-container">
-						<input type="password" name="password" id="password" required=""/>
-						<label for="password" class="form-label">비밀번호</label>
+				<form method="get" action="${pageContext.servletContext.contextPath}/mypage/withdrawOk">
+					<input type="hidden" name="user_id" id="user_id" value="${logId}"/>
+					<div class="box">
+						<div class="input-container">
+							<input type="password" name="password" id="password" required=""/>
+							<label for="password" class="form-label">비밀번호</label>
+						</div>
+						<div class="input-container">
+							<input type="password" name="password-confirm" id="password-confirm" required=""/>
+							<label for="password" class="form-label">비밀번호 확인</label>
+						</div>
+						<button type="submit" class="btn btn-warning submitBtn" onclick="confirmDeletion()">탈퇴하기</button>
 					</div>
-					<div class="input-container">
-						<input type="password" name="password-confirm" id="password-confirm" required=""/>
-						<label for="password" class="form-label">비밀번호 확인</label>
-					</div>
-					<button type="button" class="btn btn-warning submitBtn" onclick="confirmDeletion()">탈퇴하기</button>
-				</div>
+				</form>
 			</div>
 		</div>
 	</body>
