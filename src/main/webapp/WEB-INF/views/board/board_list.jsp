@@ -249,13 +249,13 @@
     <div class="post-end-line">
         <div class="inboard-search-area">
             <div class="search flex-container"> <!-- Add a class to make this a flex container -->
-                <form method="get" action="${pageContext.servletContext.contextPath}/board/list"
+                <form method="get" action="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}"
                       onsubmit="return searchCheck()">
                     <select name="searchKey">
                         <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>제목</option>
                         <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>글내용
                         </option>
-                        <option value="userid" ${pVO.searchKey=='userid' ? 'selected' : '' }>글쓴이
+                        <option value="user_id" ${pVO.searchKey=='user_id' ? 'selected' : '' }>글쓴이
                         </option>
                     </select>
                     <input type="search" name="searchWord" id="inboard-search" value="${pVO.searchWord}"
