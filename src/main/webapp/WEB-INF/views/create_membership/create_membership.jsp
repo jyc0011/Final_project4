@@ -71,10 +71,12 @@
         .lang {
             margin: 10px auto;
         }
-
-        .input-container {
-            position: relative;
-            margin-bottom: 25px;
+        .input-container{
+            position:relative;
+            margin-top:25px;
+        }
+        .input-container:nth-child(1) {
+            margin-top: 0;
         }
 
         .input-container label {
@@ -98,9 +100,8 @@
             outline: none;
             border-bottom: 1px solid #e74c3c;
         }
-
-        .btn {
-            color: #fff;
+        .submitBtn{
+            color:#fff;
             outline: none;
             border: 0;
             padding: 10px 20px;
@@ -147,21 +148,30 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            width: 100px;
-            height: 35px;
-            background: url("../../../image/select.png") no-repeat center right;
-            padding: 5px 30px 5px 10px;
+            width: 130px;
+            height: 38px;
+            background: url("../../../image/select.png")no-repeat center right;
+            padding: 5px 30px 5px 20px;
             border-radius: 4px;
             outline: 0 none;
+            border: 1px solid #6c757d;
+            cursor: pointer;
         }
-
-        .select option {
+        .select option{
             background: #FFD954;
             padding: 3px 0;
         }
 
         #termsCheck {
             margin-top: 30px;
+        }
+
+        .col-sm-10{
+            margin-left: 20px;
+        }
+        .btn-outline-secondary{
+            width: 130px;
+            margin:  5px 10px 0 0;
         }
     </style>
     <script>
@@ -294,6 +304,13 @@
                     alert("이메일 인증을 진행해주세요!");
                     return false;
                 }
+
+                var terms1Checked = document.getElementById('terms1').checked;
+                var terms2Checked = document.getElementById('terms2').checked;
+                if (!terms1Checked || !terms2Checked) {
+                    alert("약관에 동의하세요.");
+                    return false;
+                }
                 //todo : 나머지 폼 검사(이름, 이메일, 국적, 성별, 언어 최소요구사항)
 
                 return true;
@@ -341,7 +358,7 @@
             </div>
             <div id="checkbox-div">
                 <div>
-                    <label style="margin-bottom: 5px">사용언어</label>
+                    <label style="margin: 20px 0 5px 0">사용언어</label>
                 </div>
                 <div>
                     <input type="checkbox" class="lang" name="lang" value="ko"/>
@@ -371,21 +388,20 @@
                 <div style="margin-top: 17px">
                     <label>성별</label>
                 </div>
-                <div>
-                    <input type="radio" class="sex" name="sex" value="0"/> 남자
-                </div>
-                <div>
-                    <input type="radio" class="sex" name="sex" value="1"/> 여자
+                <div class="col-sm-10">
+                    <input type="radio" class="btn-check sex" name="options-outlined sex" id="secondary-outlined-0" autocomplete="off" checked>
+                    <label class="btn btn-outline-secondary" for="secondary-outlined-0" value="0">남자</label>
+
+                    <input type="radio" class="btn-check sex" name="options-outlined sex" id="secondary-outlined-1" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="secondary-outlined-1" value="1">여자</label>
                 </div>
             </div>
             <div id="termsCheck">
                 <div>
-                    <input type="checkbox"/>
-                    <span>이용약관 동의<strong>(필수)</strong></span>
+                    <label style="cursor: pointer"><input type="checkbox" id="terms1" style="margin-right: 5px; cursor: pointer"/>이용약관 동의<strong>(필수)</strong></label>
                 </div>
                 <div>
-                    <input type="checkbox"/>
-                    <span>개인정보 수집 동의<strong>(필수)</strong></span>
+                    <label style="cursor: pointer"><input type="checkbox" id="terms2" style="margin-right: 5px; cursor: pointer"/>개인정보 수집 동의<strong>(필수)</strong></label>
                 </div>
             </div>
             <ul>

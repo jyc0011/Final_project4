@@ -74,9 +74,9 @@
             display: block;
         }
 
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
+                .dropdown-content a:hover {
+                    background-color: #f1f1f1;
+                }
 
         .dropdown:hover .dropdown-content {
             display: block;
@@ -125,33 +125,31 @@
     <div class="login">
         <c:if test="${logStatus=='Y'}">
             <a href="${pageContext.servletContext.contextPath}/Mypage?id=${logId}"> <!-- 마이페이지 -->
-                <img src="${pageContext.servletContext.contextPath}/image/user.png" class="user-icon" id="user-icon"
-                     style="border-radius: 50%; width: 30px; height: auto;"/></a>
+                <img src="${pageContext.servletContext.contextPath}/image/user.png" class="user-icon" id="user-icon" style="border-radius: 50%; width: 30px; height: auto;"/></a>
             <!--유저로고-->
             <a href="${pageContext.servletContext.contextPath}/logout" class="login-button">로그아웃</a>
         </c:if>
         <c:if test="${logStatus!='Y'}">
-            <a href="${pageContext.servletContext.contextPath}/login" class="login-button">로그인</a> | <a
-                href="${pageContext.servletContext.contextPath}/create" class="login-button">회원가입</a>
+            <a href="${pageContext.servletContext.contextPath}/login" class="login-button">로그인</a> | <a href="${pageContext.servletContext.contextPath}/create" class="login-button">회원가입</a>
         </c:if>
     </div>
 </div>
 
-<div class="nav">
-    <div class="category">
-        <!-- 마이페이지 Dropdown -->
-        <div class="dropdown">
-            <a href="${pageContext.servletContext.contextPath}/mypage/change_user" class="dropbtn">마이페이지</a>
-            <c:if test="${logStatus=='Y'}">
-                <div class="dropdown-content">
-                    <a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a>
-                    <a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한 글</a>
-                    <a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a>
-                    <a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a>
-                    <a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a>
+        <div class="nav">
+            <div class="category">
+                <!-- 마이페이지 Dropdown -->
+                <div class="dropdown">
+                    <a href="${pageContext.servletContext.contextPath}/mypage/change_user" class="dropbtn">마이페이지</a>
+                    <c:if test="${logStatus=='Y'}">
+                        <div class="dropdown-content">
+                            <a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a>
+                            <a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한 글</a>
+                            <a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a>
+                            <a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a>
+                            <a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a>
+                        </div>
+                    </c:if>
                 </div>
-            </c:if>
-        </div>
 
         <!-- 게시판 Dropdown -->
         <div class="dropdown">
