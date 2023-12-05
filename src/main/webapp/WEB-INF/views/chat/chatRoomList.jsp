@@ -15,10 +15,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .container {
-            width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            border-radius: 4px;
+            border-radius: 10px;
+            font-family: 'Arial', sans-serif;
         }
         .container h2 {
             color: #333;
@@ -27,26 +28,61 @@
         }
 
         .chat-room-list {
-            /* Styles specific to chat room list */
             list-style-type: none;
+            margin: 0;
             padding: 0;
         }
 
-        .chat-room-list li {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+        .chat-room-list a li {
+            border: 1px solid #eee;
+            padding: 15px;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
         }
 
-        .chat-room-list li a {
+        .chat-room-list a li:hover {
+            background-color: #f7f7f7;
+        }
+
+        .chat-room-list a {
             text-decoration: none;
+            color: black;
+            font-size: 1.1em;
+            font-weight: bold;
+            flex-grow: 1; /* Allows the link to fill the space */
         }
 
-        .chat-room-list li:hover {
-            background-color: #f0f0f0;
+        .chat-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            color: #333;
+        }
+
+        .chat-last-content {
+            font-size: 1.5em;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+        }
+
+        .unread-count {
+            color: #784214;
+            margin-left: 50px;
+        }
+
+        .last-message-time {
+            color: grey;
+            font-size: 0.9em;
+            margin-top: 4px;
+        }
+
+        .chat-details div {
+            margin-top: 5px;
         }
 
         .pagination {
@@ -71,9 +107,9 @@
     <h2>Your Chat Rooms</h2>
     <ul class="chat-room-list">
         <c:forEach var="chatRoom" items="${chatRoom}">
-            <li>
-                <a href="${pageContext.request.contextPath}/chat?chat_id=${chatRoom.chat_id}&other_user_id=${
+            <a href="${pageContext.request.contextPath}/chat?chat_id=${chatRoom.chat_id}&other_user_id=${
             chatRoom.from_id != myId ? chatRoom.from_id : chatRoom.to_id}&from_id=${chatRoom.from_id}">
+                <li>
                     <c:choose>
                         <c:when test="${chatRoom.from_id != myId}">
                             ${chatRoom.from_id}
@@ -82,8 +118,16 @@
                             ${chatRoom.to_id}
                         </c:otherwise>
                     </c:choose>
-                </a>
+
+                <div class="chat-details">
+                    <div class="chat-last-content">
+                        <div>${chatRoom.last_content}</div>
+                        <div class="unread-count"> ${chatRoom.not_read}</div>
+                    </div>
+                    <div class="last-message-time">Last message time: ${chatRoom.last_time}</div>
+                </div>
             </li>
+            </a>
         </c:forEach>
     </ul>
 

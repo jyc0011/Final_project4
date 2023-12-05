@@ -17,14 +17,33 @@ public class ChatService {
         return chatMapper.countUserChatRooms(userId);
     }
     public List<ChatRoomVO> getCurrentUserChatRooms(PagingVO pvo, String userId) {
-        return chatMapper.getCurrentUserChatRooms(pvo, userId);
+        List<ChatRoomVO> chatRooms = chatMapper.getCurrentUserChatRooms(pvo, userId);
+        for (ChatRoomVO chatRoom : chatRooms) {
+            int unreadCount;
+            if(chatRoom.getFrom_id().equals(userId)){
+                unreadCount = chatMapper.countUnreadMessages(chatRoom.getChat_id(),1);
+            }else{
+                unreadCount = chatMapper.countUnreadMessages(chatRoom.getChat_id(),0);
+            }
+
+            chatRoom.setNot_read(unreadCount);
+        }
+        return chatRooms;
     }
 
     public List<MessageVO> getMessagesByChatId(int chatId) {
-        return chatMapper.getMessagesByChatId(chatId);
+        List<MessageVO> message = chatMapper.getMessagesByChatId(chatId);
+        chatMapper.updateMessagesAsRead(chatId);
+        return message;
     }
 
     public String getProfileImg(String userId) {
         return chatMapper.getProfileImg(userId);
+    }
+
+    public int saveMessage(MessageVO message) {
+        chatMapper.insertMessage(message);
+        chatMapper.insertLastMessage(message);
+        return message.getMsg_id();
     }
 }

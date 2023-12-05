@@ -119,7 +119,7 @@
 <div class="banner">
     <div class="logo-area">
         <a href="${pageContext.servletContext.contextPath}/"><img
-                src="${pageContext.servletContext.contextPath}/image/logo.png" class="logo"></a>
+                src="${pageContext.servletContext.contextPath}/image/logo.png" class="logo" height="110px"></a>
         <!-- 로고 이미지 -->
     </div>
     <div class="login">
