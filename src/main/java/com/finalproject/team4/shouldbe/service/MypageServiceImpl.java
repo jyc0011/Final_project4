@@ -51,4 +51,24 @@ public class MypageServiceImpl implements MypageService {
     public int friendDelete(String followed_user_id, String following_user_id) {
         return mapper.friendDelete(followed_user_id, following_user_id);
     }
+    
+    @Override
+    public List<BlockVO> blockList(String user_id) {
+        return mapper.blockList(user_id);
+    }
+
+    @Override
+    public int block_id_unlock(String block_id, String user_id) {
+        return mapper.block_id_unlock(block_id, user_id);
+    }
+    
+    @Override
+    public int withdraw_user_date(String user_id) {
+        return mapper.withdraw_user_date(user_id);
+    }
+
+    @Override
+    public int withdraw_user(String user_id) {
+        return mapper.withdraw_user(user_id);
+    }
 }

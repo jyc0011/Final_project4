@@ -20,7 +20,14 @@ public interface MypageMapper {
 
     int friendDelete(String followed_user_id, String following_user_id);
 
+    List<BlockVO> blockList(String user_id);
+
+    int block_id_unlock(String block_id, String user_id);
+
     int countSaveMessages(String userid);
 
+    int withdraw_user_date(String user_id);
+    int withdraw_user(String user_id);
+    
     List<SaveMessageVO> selectSaveMessages(@Param("pvo") PagingVO pvo, @Param("userid") String userid);
 }
