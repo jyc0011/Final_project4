@@ -36,7 +36,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public void saveQuizAnswer(int quizId, String userId, String correct) {
-        if (correct == "correct") {
+        if (correct.equals("correct")) {
             QuizMapper.insertUserAnswerInfo(quizId, userId, 1);
         } else {
             QuizMapper.insertUserAnswerInfo(quizId, userId, 0);
@@ -51,9 +51,8 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     @Transactional
-    public boolean createQuiz(QuizVO quizVO) {
+    public void createQuiz(QuizVO quizVO) {
         QuizMapper.insertQuiz(quizVO);
         QuizMapper.insertAnswer(quizVO);
-        return true;
     }
 }

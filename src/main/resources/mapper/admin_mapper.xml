@@ -10,26 +10,34 @@
     </select>
    -->
     <select id="quizlist" resultType="com.finalproject.team4.shouldbe.vo.QuizVO">
-        select quiz_id, level, quiz_lang, quiz_content from quiz where level=${level}
+        select quiz_id, level, quiz_lang, quiz_content
+        from quiz
+        where level = ${level}
     </select>
 
     <select id="editlist" resultType="com.finalproject.team4.shouldbe.vo.QuizVO">
-        select q.quiz_id, q.level, q.quiz_lang, q.quiz_content, a.answer from quiz q join answer a on q.quiz_id=a.quiz_id
-        where a.quiz_id=${quiz_id}
+        select q.quiz_id, q.level, q.quiz_lang, q.quiz_content, a.answer
+        from quiz q
+                 join answer a on q.quiz_id = a.quiz_id
+        where a.quiz_id = ${quiz_id}
     </select>
 
     <select id="adminMemberList" resultType="com.finalproject.team4.shouldbe.vo.AdminMemberVO">
-       select u.profile_img, u.user_id,u.user_name,u.time ,
-       (select count(*) from posts where u.user_id=p.user_id) posts_count,
-       (select count(*) from comments where u.user_id=c.user_id) coments_count,
-       u.count_report
-       from users u
-       join posts p on u.user_id=p.user_id
-       join comments c on u.user_id=c.user_id
+        select u.profile_img,
+               u.user_id,
+               u.user_name,
+               u.time,
+               (select count(*) from posts where u.user_id = p.user_id)    posts_count,
+               (select count(*) from comments where u.user_id = c.user_id) coments_count,
+               u.count_report
+        from users u
+                 join posts p on u.user_id = p.user_id
+                 join comments c on u.user_id = c.user_id
     </select>
 
     <insert id="suspendInsert">
-        insert into suspended_users(user_id,suspended_period,reason) values(#{user_id},7,'사유2');
+        insert into suspended_users(user_id, suspended_period, reason)
+        values (#{user_id}, 7, '사유2');
     </insert>
 
     <select id="countSuspendedMember" resultType="int">
@@ -45,7 +53,9 @@
     </select>
 
     <delete id="postsDelete">
-        delete from posts where post_id=${post_id}
+        delete
+        from posts
+        where post_id = ${post_id}
     </delete>
 
     <!--

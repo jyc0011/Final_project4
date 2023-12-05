@@ -22,10 +22,12 @@
             align-items: center;
             flex-direction: column;
         }
-        .box{
+
+        .box {
             display: flex;
             margin-top: 20px;
         }
+
         h1 {
             text-align: center;
             margin-bottom: 30px;
@@ -34,7 +36,6 @@
         #create_Form > ul > li {
             list-style-type: none;
         }
-
 
 
         #username, #userid, #userpwd, #userpwdCheck, #email, #authenticate {
@@ -70,41 +71,46 @@
         .lang {
             margin: 10px auto;
         }
-        .input-container{
-            position:relative;
-            margin-bottom:25px;
+
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
         }
-        .input-container label{
-            position:absolute;
-            top:0px;
-            left:0px;
-            font-size:16px;
-            pointer-event:none;
+
+        .input-container label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 16px;
+            pointer-event: none;
             transition: all 0.5s ease-in-out;
         }
-        .input-container input{
-            border:0;
-            border-bottom:1px solid #555;
-            padding:8px 0 5px 0;
-            font-size:16px;
+
+        .input-container input {
+            border: 0;
+            border-bottom: 1px solid #555;
+            padding: 8px 0 5px 0;
+            font-size: 16px;
         }
-        .input-container input:focus{
-            border:none;
-            outline:none;
-            border-bottom:1px solid #e74c3c;
+
+        .input-container input:focus {
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #e74c3c;
         }
-        .btn{
-            color:#fff;
+
+        .btn {
+            color: #fff;
             outline: none;
             border: 0;
-            color: #fff;
-            padding:10px 20px;
-            text-transform:uppercase;
-            margin-top:20px;
-            border-radius:2px;
-            cursor:pointer;
-            position:relative;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
         }
+
         /*.btn:after{
             content:"";
             position:absolute;
@@ -115,49 +121,53 @@
             height:100%;
         }*/
         .input-container input:focus ~ label,
-        .input-container input:valid ~ label{
-            top:-12px;
-            font-size:12px;
+        .input-container input:valid ~ label {
+            top: -12px;
+            font-size: 12px;
 
         }
+
         .submitBtn {
             background-color: #FFB300;
             border: none;
             color: white;
         }
-        input[type=checkbox], input[type=radio]{
+
+        input[type=checkbox], input[type=radio] {
             margin: 0 0 0 20px;
             padding: 0;
         }
 
-        select::-ms-expand{
+        select::-ms-expand {
             display: none;
         }
-        .select{
+
+        .select {
             -o-appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
             width: 100px;
             height: 35px;
-            background: url("../../../image/select.png")no-repeat center right;
+            background: url("../../../image/select.png") no-repeat center right;
             padding: 5px 30px 5px 10px;
             border-radius: 4px;
             outline: 0 none;
         }
-        .select option{
+
+        .select option {
             background: #FFD954;
             padding: 3px 0;
         }
 
-        #termsCheck{
+        #termsCheck {
             margin-top: 30px;
         }
     </style>
     <script>
         $(document).ready(function () {
             var result = "${result}";
-            if ( result != "") {
+            if (result != "") {
                 alert(result);
             }
         })
@@ -281,7 +291,7 @@
                     return false;
                 }
                 if (!isCheckedEmail()) {
-					alert("이메일 인증을 진행해주세요!");
+                    alert("이메일 인증을 진행해주세요!");
                     return false;
                 }
                 //todo : 나머지 폼 검사(이름, 이메일, 국적, 성별, 언어 최소요구사항)
@@ -305,7 +315,8 @@
                 <input type="text" name="userid" id="userid" required=""/>
                 <label>아이디</label>
                 <input type="hidden" id="isIdChecked" value="N">
-                <input type="button" value="아이디체크" id="idcheck" class="btn btn-warning submitBtn" style="border-bottom: none"/>
+                <input type="button" value="아이디체크" id="idcheck" class="btn btn-warning submitBtn"
+                       style="border-bottom: none"/>
             </div>
             <div class="input-container">
                 <input type="password" name="userpwd" id="userpwd" onchange="checkpwd()" required=""/>
@@ -319,12 +330,14 @@
             <div class="input-container">
                 <input type="text" name="email" id="email" required=""/>
                 <label>이메일</label>
-                <input type="button" value="인증발송" id="sendcode" class="btn btn-warning submitBtn" style="border-bottom: none"/>
+                <input type="button" value="인증발송" id="sendcode" class="btn btn-warning submitBtn"
+                       style="border-bottom: none"/>
             </div>
             <div class="input-container" id="emailCheckDiv" style="display: none;">
                 <input type="text" id="authenticate" name="authenticate" required=""/>
                 <label>인증번호</label>
-                <input type="button" value="인증하기" id="checkcode" class="btn btn-warning submitBtn" style="border-bottom: none"/>
+                <input type="button" value="인증하기" id="checkcode" class="btn btn-warning submitBtn"
+                       style="border-bottom: none"/>
             </div>
             <div id="checkbox-div">
                 <div>

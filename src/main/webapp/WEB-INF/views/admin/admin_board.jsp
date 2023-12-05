@@ -171,7 +171,9 @@
                         <td class="user_id">${bVO.content}</td>
                         <td class="report_count">${bVO.user_id}/${bVO.user_id}</td>
                         <td class="report_reason">${bVO.board_cat}</td>
-                        <td class="del_button"><a href="${pageContext.servletContext.contextPath}/boardDelete?post_id=${bVO.post_id}"><input type="button" value="게시글삭제" class="btn btn-dark"></a></td>
+                        <td class="del_button"><a
+                                href="${pageContext.servletContext.contextPath}/boardDelete?post_id=${bVO.post_id}"><input
+                                type="button" value="게시글삭제" class="btn btn-dark"></a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

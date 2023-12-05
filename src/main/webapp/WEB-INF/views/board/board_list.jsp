@@ -16,12 +16,14 @@
             margin: auto;
             display: flex;
         }
+
         .container {
             width: 1200px;
             display: flex;
             flex-direction: row;
         }
-        main{
+
+        main {
             width: 80%;
             padding: 20px;
         }
@@ -119,6 +121,7 @@
             height: 100vh;
             border-right: 1px solid #ccc;
         }
+
         .sidebar-menu {
             list-style-type: none;
             padding: 0;
@@ -135,35 +138,42 @@
         .sidebar-menu li a:hover {
             background-color: #ddd;
         }
+
         .active {
             background-color: #ffe3a0;
             color: white;
         }
 
-        #boardList li:nth-child(-n+5){
+        #boardList li:nth-child(-n+5) {
             font-weight: bold;
         }
-        #boardList li:nth-child(2), #boardList li:nth-child(n+4):nth-child(-n+5){
+
+        #boardList li:nth-child(2), #boardList li:nth-child(n+4):nth-child(-n+5) {
             text-align: center;
         }
-        #boardList>li:nth-child(5n+4), #boardList>li:nth-child(5n+5){
+
+        #boardList > li:nth-child(5n+4), #boardList > li:nth-child(5n+5) {
             text-align: center;
         }
-        #writeBtn{
+
+        #writeBtn {
             margin: 10px 0;
         }
-        #search-select{
+
+        #search-select {
             width: auto;
             height: 38px;
             margin-right: 20px;
         }
-        #searchForm{
+
+        #searchForm {
             height: 50px;
             text-align: center;
             justify-content: center;
             margin: 20px 0;
         }
-        #search-div{
+
+        #search-div {
             width: 400px;
         }
     </style>
@@ -176,124 +186,145 @@
 </head>
 
 <body>
-    <div id="wrapper" class="container">
-        <nav id="sidebar">
-            <br/>
-            <ul class="sidebar-menu">
-                <li><a href="${pageContext.servletContext.contextPath}/board/notice"
-                       <c:if test="${pVO.board_cat=='notice'}">class="current active"</c:if>>공지사항</a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/board/free"
-                       <c:if test="${pVO.board_cat=='free'}">class="current active"</c:if>>자유게시판</a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/board/inquiries"
-                       <c:if test="${pVO.board_cat=='inquiries'}">class="current active"</c:if>>문의게시판</a></li>
-            </ul>
-        </nav>
-        <main>
-            <h1>게시판목록</h1>
-            <div id="boardTop">
-                <div>총 레코드 수 : ${pVO.totalRecord}</div>
-                <div>현재 페이지 : 1/${pVO.totalPage}</div>
-            </div>
-            <ul id="boardList">
-                <li>글번호</li>
-                <li>제목</li>
-                <li>작성자</li>
-                <li>조회수</li>
-                <li>작성일</li>
-                <!-- 데이터 표시 -->
-                <c:forEach var="bVO" items="${list}">
-                    <li>${bVO.post_id}</li>
-                    <c:url var="viewUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/view">
-                        <c:param name="no" value="${bVO.post_id}"/>
+<div id="wrapper" class="container">
+    <nav id="sidebar">
+        <br/>
+        <ul class="sidebar-menu">
+            <li><a href="${pageContext.servletContext.contextPath}/board/notice"
+                   <c:if test="${pVO.board_cat=='notice'}">class="current active"</c:if>>공지사항</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/board/free"
+                   <c:if test="${pVO.board_cat=='free'}">class="current active"</c:if>>자유게시판</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/board/inquiries"
+                   <c:if test="${pVO.board_cat=='inquiries'}">class="current active"</c:if>>문의게시판</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>게시판목록</h1>
+        <div id="boardTop">
+            <div>총 레코드 수 : ${pVO.totalRecord}</div>
+            <div>현재 페이지 : 1/${pVO.totalPage}</div>
+        </div>
+        <ul id="boardList">
+            <li>글번호</li>
+            <li>제목</li>
+            <li>작성자</li>
+            <li>조회수</li>
+            <li>작성일</li>
+            <!-- 데이터 표시 -->
+            <c:forEach var="bVO" items="${list}">
+                <li>${bVO.post_id}</li>
+                <c:url var="viewUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/view">
+                    <c:param name="no" value="${bVO.post_id}"/>
+                    <c:param name="searchKey" value="${pVO.searchKey}"/>
+                    <c:param name="searchWord" value="${pVO.searchWord}"/>
+                </c:url>
+                <li><a href="${viewUrl}">${bVO.title}</a></li>
+                <li>${bVO.user_id}</li>
+                <li>${bVO.views}</li>
+                <li>${bVO.write_date}</li>
+            </c:forEach>
+        </ul>
+        <div style="float:right">
+            <c:if test="${'Y'.equals(logStatus)}">
+                <input type="button" value="글 작성" class="post-button" id="write-button"
+                       onclick="location.href='${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/write'">
+            </c:if>
+        </div>
+        <!-- 페이지 박스-->
+        <!-- todo: 페이지 인식해서 보이게 -->
+        <div class="page">
+            <ul>
+                <!-- prev 페이지 -->
+                <c:url var="prevUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}">
+                    <c:param name="nowPage" value="${pVO.nowPage-1}"/>
+                    <c:if test="${pVO.searchWord!=null}">
                         <c:param name="searchKey" value="${pVO.searchKey}"/>
                         <c:param name="searchWord" value="${pVO.searchWord}"/>
-                    </c:url>
-                    <li><a href="${viewUrl}">${bVO.title}</a></li>
-                    <li>${bVO.user_id}</li>
-                    <li>${bVO.views}</li>
-                    <li>${bVO.write_date}</li>
+                    </c:if>
+                </c:url>
+                <c:choose>
+                    <c:when test="${pVO.nowPage == 1}">
+                        <li style="color: #ddd">prev</li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${prevUrl}">prev</a></li>
+                    </c:otherwise>
+                </c:choose>
+                <!-- 페이지 번호 -->
+                <c:forEach var="cnt" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
+                    <c:if test="${cnt<=pVO.totalPage}">
+                        <!-- 페이지번호가 마지막 페이지보다 작거나 같을때만 번호 출력 -->
+                        <c:if test="${cnt==pVO.nowPage }">
+                            <!-- 현재 보고있는 페이지 -->
+                            <li style="background-color: #ddd">${cnt}</li>
+                        </c:if>
+                        <!-- 현재 보고있는 페이지가 아닐경우 -->
+                        <c:if test="${cnt!=pVO.nowPage}">
+                            <c:url var="pageUrl"
+                                   value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/view">
+                                <c:param name="nowPage" value="${cnt}"/>
+                                <c:if test="${pVO.searchWord!=null}">
+                                    <c:param name="searchKey" value="${pVO.searchKey}"/>
+                                    <c:param name="searchWord" value="${pVO.searchWord}"/>
+                                </c:if>
+                            </c:url>
+                            <li>
+                                <a href="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}?nowPage=${cnt}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${cnt}</a>
+                            </li>
+                        </c:if>
+                    </c:if>
                 </c:forEach>
+                <!-- next 페이지 -->
+                <c:url var="nextUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}">
+                    <c:param name="nowPage" value="${pVO.nowPage+1}"/>
+                    <c:if test="${pVO.searchWord!=null}">
+                        <c:param name="searchKey" value="${pVO.searchKey}"/>
+                        <c:param name="searchWord" value="${pVO.searchWord}"/>
+                    </c:if>
+                </c:url>
+                <c:choose>
+                    <c:when test="${pVO.nowPage == pVO.totalPage}">
+                        <li style="color:#ddd">next</li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${nextUrl}">next</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
-            <div style="float:right">
-                <c:if test="${'Y'.equals(logStatus)}">
-                    <input type="button" value="글 작성" class="post-button" id="write-button"
-                           onclick="location.href='${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/write'">
-                </c:if>
-            </div>
-            <!-- 페이지 박스-->
-            <!-- todo: 페이지 인식해서 보이게 -->
-            <div class="page">
-                <ul>
-                    <!-- prev 페이지 -->
-                    <c:url var="prevUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}">
-                        <c:param name="nowPage" value="${pVO.nowPage-1}"/>
-                        <c:if test="${pVO.searchWord!=null}">
-                            <c:param name="searchKey" value="${pVO.searchKey}"/>
-                            <c:param name="searchWord" value="${pVO.searchWord}"/>
-                        </c:if>
-                    </c:url>
-                    <c:choose>
-                        <c:when test="${pVO.nowPage == 1}">
-                            <li style="color: #ddd">prev</li>
-                        </c:when>
-                        <c:otherwise>
-                            <li><a href="${prevUrl}">prev</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                    <!-- 페이지 번호 -->
-                    <c:forEach var="cnt" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
-                        <c:if test="${cnt<=pVO.totalPage}">
-                            <!-- 페이지번호가 마지막 페이지보다 작거나 같을때만 번호 출력 -->
-                            <c:if test="${cnt==pVO.nowPage }">
-                                <!-- 현재 보고있는 페이지 -->
-                                <li style="background-color: #ddd">${cnt}</li>
-                            </c:if>
-                            <!-- 현재 보고있는 페이지가 아닐경우 -->
-                            <c:if test="${cnt!=pVO.nowPage}">
-                                <c:url var="pageUrl"
-                                       value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/view">
-                                    <c:param name="nowPage" value="${cnt}"/>
-                                    <c:if test="${pVO.searchWord!=null}">
-                                        <c:param name="searchKey" value="${pVO.searchKey}"/>
-                                        <c:param name="searchWord" value="${pVO.searchWord}"/>
-                                    </c:if>
-                                </c:url>
-                                <li>
-                                    <a href="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}?nowPage=${cnt}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${cnt}</a>
-                                </li>
-                            </c:if>
-                        </c:if>
-                    </c:forEach>
-                    <!-- next 페이지 -->
-                    <c:url var="nextUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}">
-                        <c:param name="nowPage" value="${pVO.nowPage+1}"/>
-                        <c:if test="${pVO.searchWord!=null}">
-                            <c:param name="searchKey" value="${pVO.searchKey}"/>
-                            <c:param name="searchWord" value="${pVO.searchWord}"/>
-                        </c:if>
-                    </c:url>
-                    <c:choose>
-                        <c:when test="${pVO.nowPage == pVO.totalPage}">
-                            <li style="color:#ddd">next</li>
-                        </c:when>
-                        <c:otherwise>
-                            <li><a href="${nextUrl}">next</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
+        </div>
 
+        <!-- 검색박스 -->
+        <div class="post-end-line">
+            <div class="inboard-search-area">
+                <div class="search flex-container"> <!-- Add a class to make this a flex container -->
+                    <form method="get" action="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}"
+                          onsubmit="return searchCheck()">
+                        <select name="searchKey">
+                            <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>제목</option>
+                            <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>글내용
+                            </option>
+                            <option value="user_id" ${pVO.searchKey=='user_id' ? 'selected' : '' }>글쓴이
+                            </option>
+                        </select>
+                        <input type="search" name="searchWord" id="inboard-search" value="${pVO.searchWord}"
+                               class="inboard-search" placeholder="게시판 내 검색"/>
+                        <input type="submit" value="search" class="post-button" id="search-button"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
     <!-- 검색박스 -->
     <div class="post-end-line">
         <div class="inboard-search-area">
             <div class="search flex-container"> <!-- Add a class to make this a flex container -->
-                <form method="get" action="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}"
+                <form method="get" action="${pageContext.servletContext.contextPath}/board/list"
                       onsubmit="return searchCheck()">
                     <select name="searchKey">
                         <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>제목</option>
                         <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>글내용
                         </option>
-                        <option value="user_id" ${pVO.searchKey=='user_id' ? 'selected' : '' }>글쓴이
+                        <option value="userid" ${pVO.searchKey=='userid' ? 'selected' : '' }>글쓴이
                         </option>
                     </select>
                     <input type="search" name="searchWord" id="inboard-search" value="${pVO.searchWord}"
@@ -303,29 +334,8 @@
             </div>
         </div>
     </div>
-</main>
-            <!-- 검색박스 -->
-            <div class="post-end-line">
-                <div class="inboard-search-area">
-                    <div class="search flex-container"> <!-- Add a class to make this a flex container -->
-                        <form method="get" action="${pageContext.servletContext.contextPath}/board/list"
-                              onsubmit="return searchCheck()">
-                            <select name="searchKey">
-                                <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>제목</option>
-                                <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>글내용
-                                </option>
-                                <option value="userid" ${pVO.searchKey=='userid' ? 'selected' : '' }>글쓴이
-                                </option>
-                            </select>
-                            <input type="search" name="searchWord" id="inboard-search" value="${pVO.searchWord}"
-                                   class="inboard-search" placeholder="게시판 내 검색"/>
-                            <input type="submit" value="search" class="post-button" id="search-button"/>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
+    </main>
+</div>
 </body>
 
 </html>

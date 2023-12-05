@@ -18,9 +18,9 @@ public interface QuizMapper {
 
     void insertQuizInfo(@Param("quiz_id") int quizId, @Param("user_id") String userId);
 
-    int insertQuiz(QuizVO quizVO);
+    void insertQuiz(QuizVO quizVO);
 
-    int insertUserAnswerInfo(@Param("quiz_id") int quizId, @Param("user_id") String userId, @Param("correct") int correct);
+    void insertUserAnswerInfo(@Param("quiz_id") int quizId, @Param("user_id") String userId, @Param("correct") int correct);
 
     void insertAnswer(QuizVO quizVO);
 

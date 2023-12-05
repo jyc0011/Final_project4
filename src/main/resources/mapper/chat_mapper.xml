@@ -4,24 +4,29 @@
     <select id="countUserChatRooms" resultType="int">
         SELECT COUNT(*)
         FROM chat_list
-        WHERE from_id = #{userId} OR to_id = #{userId}
+        WHERE from_id = #{userId}
+           OR to_id = #{userId}
     </select>
 
     <select id="getCurrentUserChatRooms" resultType="ChatRoomVO">
         select *
         from chat_list
-        where from_id = #{userId} or to_id = #{userId}
+        where from_id = #{userId}
+           or to_id = #{userId}
         ORDER BY last_time DESC
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
     <select id="countUnreadMessages" resultType="int">
         SELECT COUNT(*)
         FROM message
-        WHERE chat_id = #{chatId} AND is_read = 0 AND is_from_id != #{isFromId}
+        WHERE chat_id = #{chatId}
+          AND is_read = 0
+          AND is_from_id != #{isFromId}
     </select>
 
     <select id="getMessagesByChatId" resultType="MessageVO">
-        SELECT * FROM message
+        SELECT *
+        FROM message
         WHERE chat_id = #{chatId}
         ORDER BY send_time
     </select>
@@ -29,11 +34,14 @@
     <update id="updateMessagesAsRead">
         UPDATE message
         SET is_read = 1
-        WHERE chat_id = #{chatId} AND is_read = 0
+        WHERE chat_id = #{chatId}
+          AND is_read = 0
     </update>
 
     <select id="getProfileImg" resultType="String">
-        SELECT profile_img FROM users WHERE user_id = #{userId}
+        SELECT profile_img
+        FROM users
+        WHERE user_id = #{userId}
     </select>
 
     <insert id="insertMessage" useGeneratedKeys="true" keyProperty="msg_id">
@@ -44,7 +52,7 @@
     <update id="insertLastMessage">
         UPDATE chat_list
         SET last_content= #{content},
-            last_time = NOW()
-        WHERE chat_id=#{chat_id}
+            last_time   = NOW()
+        WHERE chat_id = #{chat_id}
     </update>
 </mapper>

@@ -6,9 +6,13 @@ import java.util.List;
 
 public interface AdminService {
     List<QuizVO> editlist(int quiz_id);
+
     List<QuizVO> quizlist(int level);
+
     int postsDelete(int post_id);
+
     int suspendInsert(String user_id);
+
     List<AdminMemberVO> adminMemberList(PagingVO pvo);
 
     List<AdminSuspendedVO> adminSuspendedList(PagingVO pvo);

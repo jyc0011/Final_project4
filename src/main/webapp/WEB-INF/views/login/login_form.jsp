@@ -17,7 +17,8 @@
             list-style-type: none;
             text-align: center;
         }
-        ul{
+
+        ul {
             padding: 0;
         }
 
@@ -58,9 +59,11 @@
             flex-direction: column;
             align-items: center;
         }
-        .box{
+
+        .box {
             display: flex;
         }
+
         #userpwd,
         #userid {
             margin-top: 5px;
@@ -81,46 +84,51 @@
             margin-bottom: 10px;
             width: 400px;
         }
-        #loginForm{
+
+        #loginForm {
         }
 
-        .input-container{
-            position:relative;
-            margin-bottom:25px;
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
         }
-        .input-container label{
-            position:absolute;
-            top:0px;
-            left:0px;
-            font-size:16px;
-            pointer-event:none;
+
+        .input-container label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 16px;
+            pointer-event: none;
             transition: all 0.5s ease-in-out;
         }
-        .input-container input{
-            border:0;
-            border-bottom:1px solid #555;
-            background:transparent;
-            width:100%;
-            padding:8px 0 5px 0;
-            font-size:16px;
+
+        .input-container input {
+            border: 0;
+            border-bottom: 1px solid #555;
+            background: transparent;
+            width: 100%;
+            padding: 8px 0 5px 0;
+            font-size: 16px;
         }
-        .input-container input:focus{
-            border:none;
-            outline:none;
-            border-bottom:1px solid #e74c3c;
+
+        .input-container input:focus {
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #e74c3c;
         }
-        .btn{
-            color:#fff;
+
+        .btn {
+            color: #fff;
             outline: none;
             border: 0;
-            color: #fff;
-            padding:10px 20px;
-            text-transform:uppercase;
-            margin-top:20px;
-            border-radius:2px;
-            cursor:pointer;
-            position:relative;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
         }
+
         /*.btn:after{
             content:"";
             position:absolute;
@@ -131,9 +139,9 @@
             height:100%;
         }*/
         .input-container input:focus ~ label,
-        .input-container input:valid ~ label{
-            top:-12px;
-            font-size:12px;
+        .input-container input:valid ~ label {
+            top: -12px;
+            font-size: 12px;
 
         }
     </style>

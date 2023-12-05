@@ -49,7 +49,7 @@
 
 <body>
 <main>
-${vo.title}
+    ${vo.title}
 
     <h1>게시글 수정</h1>
     <c:if test="${vo.board_cat=='free'}">자유게시판</c:if>

@@ -3,6 +3,7 @@ package com.finalproject.team4.shouldbe.mapper;
 import com.finalproject.team4.shouldbe.vo.ChatRoomVO;
 import com.finalproject.team4.shouldbe.vo.MessageVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
+import com.finalproject.team4.shouldbe.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,11 +12,22 @@ import java.util.List;
 public interface ChatMapper {
 
     List<ChatRoomVO> getCurrentUserChatRooms(PagingVO pvo, String userId);
+
     int countUnreadMessages(int chatId, int isFromId);
+
     int countUserChatRooms(String userId);
+
     List<MessageVO> getMessagesByChatId(int chatId);
+
     void updateMessagesAsRead(int chatId);
+
     String getProfileImg(String userId);
+
     void insertMessage(MessageVO message);
+
     void insertLastMessage(MessageVO message);
+
+    int countUserPartner(String userId);
+
+    List<UserVO> getUserPartnerList(PagingVO pvo, String userId);
 }

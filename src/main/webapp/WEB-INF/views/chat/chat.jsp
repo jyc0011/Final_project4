@@ -100,7 +100,7 @@
             margin: 0;
             overflow: auto;
             overflow-y: scroll;
-            padding: 0 20px 0px 20px;
+            padding: 0 20px 0 20px;
             height: calc(100% - 150px);
         }
 
@@ -323,7 +323,7 @@
         var messageContent = messageInput.value.trim();
         if (messageContent && stompClient) {
             var chatMessage = {
-                chat_id:chatId,
+                chat_id: chatId,
                 sender: username,
                 content: messageInput.value,
                 from_id: fromId

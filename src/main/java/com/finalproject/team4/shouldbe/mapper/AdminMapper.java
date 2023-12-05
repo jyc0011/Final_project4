@@ -9,10 +9,13 @@ import java.util.List;
 @Mapper
 public interface AdminMapper {
     List<QuizVO> editlist(int quiz_id);
+
     List<QuizVO> quizlist(int level);
+
     int suspendInsert(String user_id);
 
     int postsDelete(int post_id);
+
     List<AdminMemberVO> adminMemberList(@Param("pvo") PagingVO pvo);
 
     List<AdminSuspendedVO> adminSuspendedList(@Param("pvo") PagingVO pvo);

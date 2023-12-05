@@ -21,6 +21,7 @@
             border-radius: 10px;
             font-family: 'Arial', sans-serif;
         }
+
         .container h2 {
             color: #333;
             text-align: center;
@@ -95,7 +96,6 @@
             background-color: transparent;
         }
 
-        /* Style for the active page link */
         .pagination .page-link.active {
             background-color: #ffe3a0;
             color: black;
@@ -119,14 +119,14 @@
                         </c:otherwise>
                     </c:choose>
 
-                <div class="chat-details">
-                    <div class="chat-last-content">
-                        <div>${chatRoom.last_content}</div>
-                        <div class="unread-count"> ${chatRoom.not_read}</div>
+                    <div class="chat-details">
+                        <div class="chat-last-content">
+                            <div>${chatRoom.last_content}</div>
+                            <div class="unread-count"> ${chatRoom.not_read}</div>
+                        </div>
+                        <div class="last-message-time">Last message time: ${chatRoom.last_time}</div>
                     </div>
-                    <div class="last-message-time">Last message time: ${chatRoom.last_time}</div>
-                </div>
-            </li>
+                </li>
             </a>
         </c:forEach>
     </ul>

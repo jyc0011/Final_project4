@@ -277,6 +277,7 @@
             position: absolute;
             display: none;
         }
+
         .youtube_link:hover + .jb-text {
             display: block;
         }

@@ -25,6 +25,7 @@
             width: 600px; /* 너비를 600px로 설정 */
             margin: 0 auto; /* 가운데 정렬 */
         }
+
         #showChat {
             margin: 0 auto;
             padding: 10px;
@@ -130,10 +131,10 @@
                 stompClient.subscribe('/topic/message', function (msg) {
                     console.log(msg);
                     var jsonMsg = JSON.parse(msg.body);
-                    console.log(jsonMsg+'123123123');
+                    console.log(jsonMsg + '123123123');
                     showChatMessage(jsonMsg);
                 });
-            },function (error) {
+            }, function (error) {
                 // 연결 실패 시 로그 출력
                 console.error("WebSocket 연결 실패:", error);
             });

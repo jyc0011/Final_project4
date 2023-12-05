@@ -63,67 +63,74 @@
             align-items: center;
         }
 
-		.submitBtn {
-			background-color: #FFB300;
-			border: none;
-			color: white;
-		}
-		.input-container{
-			position:relative;
-			margin-bottom:25px;
-		}
-		.input-container label{
-			position:absolute;
-			top:0px;
-			left:0px;
-			font-size:16px;
-			pointer-event:none;
-			transition: all 0.5s ease-in-out;
-		}
-		.input-container input{
-			border:0;
-			border-bottom:1px solid #555;
-			background:transparent;
-			width:100%;
-			padding:8px 0 5px 0;
-			font-size:16px;
-			margin: 5px 0;
-		}
-		.input-container input:focus{
-			border:none;
-			outline:none;
-			border-bottom:1px solid #e74c3c;
-		}
-		.btn{
-			color:#fff;
-			outline: none;
-			border: 0;
-			color: #fff;
-			padding:10px 20px;
-			text-transform:uppercase;
-			margin-top:30px;
-			border-radius:2px;
-			cursor:pointer;
-			position:relative;
-		}
-		.input-container input:focus ~ label,
-		.input-container input:valid ~ label{
-			top:-12px;
-			font-size:12px;
+        .submitBtn {
+            background-color: #FFB300;
+            border: none;
+            color: white;
+        }
 
-		}
-		.box{
-			display: flex;
-			flex-direction: column;
-			width: 400px;
-		}
-		.withdraw-box{
-			width: 100%;
-			display: flex;
-			align-items: center;
-			flex-direction: column;
-			margin-top: 170px;
-		}
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-container label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 16px;
+            pointer-event: none;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .input-container input {
+            border: 0;
+            border-bottom: 1px solid #555;
+            background: transparent;
+            width: 100%;
+            padding: 8px 0 5px 0;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .input-container input:focus {
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #e74c3c;
+        }
+
+        .btn {
+            color: #fff;
+            outline: none;
+            border: 0;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            margin-top: 30px;
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .input-container input:focus ~ label,
+        .input-container input:valid ~ label {
+            top: -12px;
+            font-size: 12px;
+
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+        }
+
+        .withdraw-box {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 170px;
+        }
     </style>
     <script>
         function confirmDeletion() {
@@ -141,39 +148,39 @@
             }
 
             if (!userConfirmed) {
-				return false;
+                return false;
             }
         }
     </script>
 </head>
 
-	<body>
-		<div id="wrapper" class="container-fluid">
-			<div id="sidebar">
-				<ul class="sidebar-menu">
-					<li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
-					<li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
-					<li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
-					<li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
-					<li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user" class="active">탈퇴하기</a></li>
-				</ul>
-			</div>
-			<div class="withdraw-box">
-				<form method="get" action="${pageContext.servletContext.contextPath}/mypage/withdrawOk">
-					<input type="hidden" name="user_id" id="user_id" value="${logId}"/>
-					<div class="box">
-						<div class="input-container">
-							<input type="password" name="password" id="password" required=""/>
-							<label for="password" class="form-label">비밀번호</label>
-						</div>
-						<div class="input-container">
-							<input type="password" name="password-confirm" id="password-confirm" required=""/>
-							<label for="password" class="form-label">비밀번호 확인</label>
-						</div>
-						<button type="submit" class="btn btn-warning submitBtn" onclick="confirmDeletion()">탈퇴하기</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</body>
-	</html>
+<body>
+<div id="wrapper" class="container-fluid">
+    <div id="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user" class="active">탈퇴하기</a></li>
+        </ul>
+    </div>
+    <div class="withdraw-box">
+        <form method="get" action="${pageContext.servletContext.contextPath}/mypage/withdrawOk">
+            <input type="hidden" name="user_id" id="user_id" value="${logId}"/>
+            <div class="box">
+                <div class="input-container">
+                    <input type="password" name="password" id="password" required=""/>
+                    <label for="password" class="form-label">비밀번호</label>
+                </div>
+                <div class="input-container">
+                    <input type="password" name="password-confirm" id="password-confirm" required=""/>
+                    <label for="password" class="form-label">비밀번호 확인</label>
+                </div>
+                <button type="submit" class="btn btn-warning submitBtn" onclick="confirmDeletion()">탈퇴하기</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

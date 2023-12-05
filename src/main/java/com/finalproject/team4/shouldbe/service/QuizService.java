@@ -9,7 +9,7 @@ public interface QuizService {
 
     boolean saveQuiz(int quizId, String userId);
 
-    boolean createQuiz(QuizVO quizVO);
+    void createQuiz(QuizVO quizVO);
 
     void saveQuizAnswer(int quizId, String userId, String correct);
 }
