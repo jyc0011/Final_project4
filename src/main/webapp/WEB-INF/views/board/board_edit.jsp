@@ -48,18 +48,21 @@
     </script>
 
 <body>
-<!-- todo: db에서 글 내용 가져와서 세팅-->
 <main>
+${vo.title}
 
-    <h1>게시글 작성</h1>
+    <h1>게시글 수정</h1>
+    <c:if test="${vo.board_cat=='free'}">자유게시판</c:if>
+    <c:if test="${vo.board_cat=='notice'}">공지사항</c:if>
+    <c:if test="${vo.board_cat=='inquiries'}">문의게시판</c:if>
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label"> 제목</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요.">
+        <!-- todo: 제목에 ",'등 처리 하는법, 내용 엔터처리 -->
+        <label for="exampleFormControlInput1" class="form-label">제목</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" value='${vo.title}'>
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
-                  placeholder="내용을 입력하세요."></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="10">${vo.content}</textarea>
     </div>
     <div id="writeButton">
         <button type="button" class="btn btn-secondary">취소</button>

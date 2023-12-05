@@ -56,6 +56,12 @@
 
             </style>
             <script>
+                window.onload =function() {
+                    document.getElementById("toList").onclick = function () {
+                        window.history.back();
+                    }
+                }
+
             </script>
         <body>
             <main>
@@ -70,18 +76,16 @@
                 </div>
                 <hr>
                 <div>
-                    목록
+                    <c:url var="editUrl" value="${pageContext.servletContext.contextPath}/board/${vo.board_cat}/edit">
+                        <c:param name="no" value="${vo.post_id}"/>
+                    </c:url>
+                    <!--todo: 버튼으로 변경-->
+                    <a id="toList">목록</a>
                     <!-- 현재글쓴이와 로그인 아이디가 같을 때만 수정 삭제 가능 -->
-                    <a href="">수정</a>
+                    <a href="${editUrl}">수정</a>
                     <a href="">삭제</a>
                 </div>
                 <hr>
-                <div>
-                    목록
-                    <!-- 현재글쓴이와 로그인 아이디가 같을 때만 수정 삭제 가능 -->
-                    <a href="">수정</a>
-                    <a href="">삭제</a>
-                </div>
 
                 <!-- 댓글 -->
                 <div id="replyArea">

@@ -226,7 +226,14 @@
 <div id="chat-page">
     <div class="chat-container">
         <div class="chat-header">
-            <h2>Spring WebSocket Chat</h2>
+            <c:choose>
+                <c:when test="${(message.is_from_id == 1 and userId == fromId) or (message.is_from_id == 0 and userId != fromId)}">
+                    <h2>${userId}님과의 채팅방</h2>
+                </c:when>
+                <c:otherwise>
+                    <h2>${otherId}님과의 채팅방</h2>
+                </c:otherwise>
+            </c:choose>
         </div>
         <ul id="messageArea">
             <div class="chat-messages">
