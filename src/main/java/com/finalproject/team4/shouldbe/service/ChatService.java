@@ -90,4 +90,16 @@ public class ChatService {
         chatMapper.updateLastContent(chat_id, encryptedContent);
         return chat_id;
     }
+
+    public void reportMessage(String userId, int msgId) throws Exception {
+        MessageVO messageInfo = chatMapper.findMessageInfo(msgId);
+        ChatRoomVO chatInfo=chatMapper.getChatByChatId(messageInfo.getChat_id());
+        String senderUserId = messageInfo.getIs_from_id() == 1 ? chatInfo.getFrom_id() : chatInfo.getTo_id();
+        chatMapper.reportMessage(senderUserId, msgId);
+    }
+
+
+    public void saveMessageToMypage(String userId, int msgId) throws Exception {
+        chatMapper.saveMessageToMypage(userId, msgId);
+    }
 }

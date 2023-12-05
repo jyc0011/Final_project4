@@ -18,4 +18,5 @@ public class MessageVO {
     private String send_date;
     private String sender;
     private String from_id;
+    private String trans_content;
 }

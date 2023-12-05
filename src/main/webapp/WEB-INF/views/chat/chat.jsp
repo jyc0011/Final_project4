@@ -212,12 +212,30 @@
             font-weight: 500;
         }
 
-        .connecting {
-            padding-top: 5px;
-            text-align: center;
+        .message-actions {
             position: absolute;
-            top: 65px;
-            width: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .report-button, .save-button {
+            margin-right: 5px;
+            font-size: 12px;
+            color: #444444;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .message-actions-other {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .report-button-other, .save-button-other {
+            margin-left: 5px;
+            font-size: 12px;
+            color: #444444;
+            cursor: pointer;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -242,6 +260,10 @@
                         <c:when test="${(message.is_from_id == 1 and userId == fromId)
                         or (message.is_from_id == 0 and userId != fromId)}">
                             <li class="message-mine chat-message">
+                                <div class="message-actions">
+                                    <a href="#" class="report-button-other" data-message-id="${message.msg_id}">Report</a>
+                                    <a href="#" class="save-button-other" data-message-id="${message.msg_id}">Save</a>
+                                </div>
                                 <div class="text-container">
                                     <span class="username">${userId}</span>
                                     <i style="position: absolute; width: 42px; height: 42px; right: 10px;">
@@ -254,6 +276,10 @@
                         </c:when>
                         <c:otherwise>
                             <li class="message-others chat-message">
+                                <div class="message-actions-other">
+                                    <a href="#" class="report-button" data-message-id="${message.msg_id}">Report</a>
+                                    <a href="#" class="save-button" data-message-id="${message.msg_id}">Save</a>
+                                </div>
                                 <div class="text-container">
                                     <span class="username">${otherId}</span>
                                     <i style="position: absolute; width: 42px; height: 42px; left: 10px;">
@@ -344,6 +370,33 @@
         avatarElement.style.borderRadius = '50%';
         avatarElement.style.objectFit = 'cover';
         messageElement.classList.add('chat-message');
+        const messageActions = document.createElement('div');
+        messageActions.classList.add(message.sender === username ? 'message-actions':'message-actions-other');
+
+        const reportButton = document.createElement('a');
+        reportButton.href = "#";
+        reportButton.classList.add(message.sender === username ? 'report-button' : 'report-button-other');
+        reportButton.textContent = "Report";
+        reportButton.dataset.messageId = message.msg_id;
+        reportButton.onclick = function(event) {
+            event.preventDefault();
+            reportMessage(this.dataset.messageId);
+        };
+
+        const saveButton = document.createElement('a');
+        saveButton.href = "#";
+        saveButton.classList.add(message.sender === username ? 'save-button' : 'save-button-other');
+        saveButton.textContent = "Save";
+        saveButton.dataset.messageId = message.msg_id; // Assuming msg_id is part of the payload
+        saveButton.onclick = function(event) {
+            event.preventDefault();
+            saveMessage(this.dataset.messageId);
+        };
+
+        messageActions.appendChild(reportButton);
+        messageActions.appendChild(saveButton);
+
+        messageElement.appendChild(messageActions);
         const textContainer = document.createElement('div');
         textContainer.classList.add('text-container');
         const usernameElement = document.createElement('span');
@@ -360,6 +413,55 @@
         messageElement.appendChild(textElement);
         messageArea.appendChild(messageElement);
         messageArea.scrollTop = messageArea.scrollHeight;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.report-button').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var messageId = this.getAttribute('data-message-id');
+                reportMessage(messageId);
+            });
+        });
+
+        document.querySelectorAll('.save-button').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var messageId = this.getAttribute('data-message-id');
+                // AJAX call to save message
+                saveMessage(messageId);
+            });
+        });
+    });
+
+    function reportMessage(messageId) {
+        console.log(messageId);
+        $.ajax({
+            url: '/chat/reportMessage',
+            method: 'POST',
+            data: { msg_id: messageId },
+            success: function() {
+                alert("Message reported successfully!");
+            },
+            error: function(error) {
+                alert("Error saving message: " + error);
+            }
+        });
+    }
+
+    function saveMessage(messageId) {
+        console.log(messageId);
+        $.ajax({
+            url: '/chat/saveMessage',
+            method: 'POST',
+            data: { msg_id: messageId },
+            success: function() {
+                alert("Message saved successfully!");
+            },
+            error: function(error) {
+                alert("Error saving message: " + error);
+            }
+        });
     }
 
     connect();

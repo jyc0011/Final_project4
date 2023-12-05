@@ -102,4 +102,26 @@
         FROM chat_encryption_keys
         WHERE chat_id = #{chatId} AND user_id = #{userId}
     </select>
+
+    <select id="findMessageInfo" resultType="MessageVO">
+        SELECT is_from_id, chat_id
+        FROM message
+        WHERE msg_id = #{msgId}
+    </select>
+
+    <insert id="reportMessage">
+        INSERT INTO message_report (user_id, msg_id)
+        VALUES (#{userId}, #{msgId})
+    </insert>
+
+    <select id="getChatByChatId" resultType="ChatRoomVO">
+        SELECT *
+        FROM chat_list
+        WHERE chat_id = #{chatId}
+    </select>
+
+    <insert id="saveMessageToMypage">
+        INSERT INTO save_message (msg_id, save_user_id)
+        VALUES (#{msgId},#{userId})
+    </insert>
 </mapper>

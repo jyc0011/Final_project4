@@ -38,4 +38,12 @@ public interface ChatMapper {
     void storeEncryptionKey(int chat_id, String user_id, String symmetric_key);
 
     String getSharedKey(int chatId, String userId);
+
+    MessageVO findMessageInfo(int msgId);
+
+    void reportMessage(String userId, int msgId);
+
+    ChatRoomVO getChatByChatId(int chatId);
+
+    void saveMessageToMypage(String userId, int msgId);
 }

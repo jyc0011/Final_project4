@@ -179,10 +179,6 @@ ALTER TABLE chat_list
 DROP
 COLUMN is_report;
 
--- message 테이블에 신고 추가
-ALTER TABLE message
-    ADD COLUMN is_report INT NOT NULL DEFAULT 0;
-
 -- suspended_users 테이블 생성
 CREATE TABLE suspended_users
 (
@@ -204,9 +200,9 @@ CREATE TABLE withdrawn_users
 );
 
 -- chat_report 테이블 생성
-CREATE TABLE chat_report
+CREATE TABLE message_report
 (
-    chat_report_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    message_report_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     user_id        VARCHAR(45) NOT NULL,
     msg_id         INT         NOT NULL,
     report_time    DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
