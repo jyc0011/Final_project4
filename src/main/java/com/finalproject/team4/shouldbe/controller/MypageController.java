@@ -21,8 +21,9 @@ public class MypageController {
 
     // 마이페이지 프로필
     @GetMapping("/mypage/change_user")
-    public ModelAndView mypage_change_user(@SessionAttribute(name = "logId") String userid) {
+    public ModelAndView mypage_change_user(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        String userid = (String)session.getAttribute("logId");
         MypageVO myvo = service.mypage_info(userid);
         System.out.println(myvo.toString());
         mav.addObject("myvo", myvo);
@@ -68,8 +69,9 @@ public class MypageController {
 
     // 차단목록
     @GetMapping("/mypage/blockList")
-    public ModelAndView mypage_blocklist(@SessionAttribute(name = "logId") String user_id) {
+    public ModelAndView mypage_blocklist(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        String user_id = (String)session.getAttribute("logId");
 
         List<BlockVO> blist = service.blockList(user_id);
         System.out.println(blist);
@@ -87,8 +89,10 @@ public class MypageController {
 
     // 게시글
     @GetMapping("/mypage/post_user")
-    public ModelAndView mypage_post_user(@SessionAttribute(name = "logId") String user_id) {
+    public ModelAndView mypage_post_user(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        String user_id = (String)session.getAttribute("logId");
         List<BoardVO> list = service.mypage_post_board(user_id);
 
         mav.addObject("list", list);
@@ -98,8 +102,9 @@ public class MypageController {
 
     // 댓글
     @GetMapping("/mypage/post_user/reply")
-    public ModelAndView mypage_post_user_reply(@SessionAttribute(name = "logId") String user_id) {
+    public ModelAndView mypage_post_user_reply(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        String user_id = (String)session.getAttribute("logId");
         List<BoardReplyVO> list = service.mypage_post_board_reply(user_id);
 
         mav.addObject("list", list);

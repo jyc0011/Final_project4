@@ -67,9 +67,8 @@
         values (#{user_id})
     </insert>
 
-    <delete id="withdraw_user">
-        delete
-        from users
-        where user_id = #{param1}
-    </delete>
+    <update id="withdraw_user">
+        update users set withdraw='1'
+        where user_id = #{user_id}
+    </update>
 </mapper>
