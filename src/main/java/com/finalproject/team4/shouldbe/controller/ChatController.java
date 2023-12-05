@@ -29,7 +29,7 @@ public class ChatController {
 
     @RequestMapping("/chat/list")
     public ModelAndView chat_room_list(HttpSession session,
-                                       @RequestParam(required = false, defaultValue = "1") int page) {
+                                       @RequestParam(required = false, defaultValue = "1") int page) throws Exception {
         ModelAndView mav = new ModelAndView();
         if (session.getAttribute("logStatus") != "Y") {
             mav.setViewName("redirect:/login");
@@ -53,12 +53,12 @@ public class ChatController {
     public ModelAndView privateChat(@RequestParam("chat_id") int chatId,
                                     @RequestParam("other_user_id") String otherUserId,
                                     @RequestParam("from_id") String fromId,
-                                    HttpServletRequest request) {
+                                    HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("logId");
         session.setAttribute("chatId", chatId);
-        List<MessageVO> pastMessages = chatservice.getMessagesByChatId(chatId);
+        List<MessageVO> pastMessages = chatservice.getMessagesByChatId(chatId,userId);
         String profile_img = chatservice.getProfileImg(userId);
         String other_profile_img = chatservice.getProfileImg(otherUserId);
         mav.addObject("other_profile_img", other_profile_img);
@@ -75,7 +75,7 @@ public class ChatController {
 
     @MessageMapping("/chat.sendMessage/{chatId}")
     @SendTo("/topic/public/{chatId}")
-    public MessageVO sendPrivateMessage(@Payload MessageVO vo) {
+    public MessageVO sendPrivateMessage(@Payload MessageVO vo) throws Exception {
         String userId = vo.getSender();
         String fromId = vo.getFrom_id();
         if (userId.equals(fromId)) {
@@ -120,7 +120,7 @@ public class ChatController {
     }
 
     @RequestMapping("/chat/start")
-    public String startChat(@RequestParam("userId") String otherUserId, HttpSession session) {
+    public String startChat(@RequestParam("userId") String otherUserId, HttpSession session) throws Exception {
         String currentUserId = (String) session.getAttribute("logId");
         int chatId = chatservice.startChat(currentUserId, otherUserId);
         return "redirect:/chat?chat_id=" + chatId + "&other_user_id=" + otherUserId + "&from_id=" + currentUserId;

@@ -82,7 +82,24 @@
     </select>
 
     <insert id="createChatRoom" useGeneratedKeys="true" keyProperty="chat_id">
-        INSERT INTO chat_list (from_id, to_id, last_content)
-        VALUES (#{from_id}, #{to_id},"new chat")
+        INSERT INTO chat_list (from_id, to_id)
+        VALUES (#{from_id}, #{to_id})
     </insert>
+
+    <update id="updateLastContent">
+        UPDATE chat_list
+        SET last_content = #{last_content}
+        WHERE chat_id = #{chatId}
+    </update>
+
+    <insert id="storeEncryptionKey">
+        INSERT INTO chat_encryption_keys (chat_id, user_id, symmetric_key)
+        VALUES (#{chat_id}, #{user_id}, #{symmetric_key})
+    </insert>
+
+    <select id="getSharedKey" resultType="String">
+        SELECT symmetric_key
+        FROM chat_encryption_keys
+        WHERE chat_id = #{chatId} AND user_id = #{userId}
+    </select>
 </mapper>

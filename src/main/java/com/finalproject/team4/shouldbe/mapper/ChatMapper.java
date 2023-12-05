@@ -32,4 +32,10 @@ public interface ChatMapper {
     List<UserVO> getUserPartnerList(PagingVO pvo, String userId);
 
     void createChatRoom(ChatRoomVO newChatRoom);
+
+    void updateLastContent(int chatId, String last_content);
+
+    void storeEncryptionKey(int chat_id, String user_id, String symmetric_key);
+
+    String getSharedKey(int chatId, String userId);
 }

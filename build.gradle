@@ -44,6 +44,8 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
     implementation 'javax.inject:javax.inject:1'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+
 }
 
 tasks.named('bootBuildImage') {

@@ -4,8 +4,8 @@ CREATE TABLE users
     user_id         VARCHAR(45) PRIMARY KEY NOT NULL,
     user_name       VARCHAR(45)             NOT NULL,
     password        VARCHAR(64)             NOT NULL,
-    salt            VARCHAR(64)             NOT NULL
-        email VARCHAR (45) NOT NULL,
+    salt            VARCHAR(64)             NOT NULL,
+    email           VARCHAR (45)            NOT NULL,
     nation          VARCHAR(45)             NOT NULL,
     sex             INT                     NOT NULL,
     lang            VARCHAR(45)             NOT NULL,
