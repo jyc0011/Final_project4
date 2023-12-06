@@ -8,16 +8,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminChatVO {
-    // private String from_id;
-    // private String to;
-    // private String content
-    private int count_report;
+    private int msg_id;//chat_report
+    private String user_id;//chat_report
+    private String content;//message:content
+    private int count_report;//users
+
+    /*chatreport
+    private int chat_report_id;
+    private String user_id;
+    private int msg_id;
+    private String report_time;
+     */
 
     //삭제 예정
-    private String profile_img;
-    private String user_name;
-    private String user_id;
-    private String time;
+   // private String profile_img;
+    //private String user_name;
+  //  private String user_id;
+    //private String time;
 
 
 }

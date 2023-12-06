@@ -154,14 +154,14 @@
                 <div class="pagination" style="display: flex">
                     <div class="paging">
                         <ul class="pagination justify-content-center d-flex">
-                            <c:if test="${pVO.page > 1}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
+                            <c:if test="${pVO.nowPage > 1}">
+                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage - 1}'"><
                                 </a></li>
                             </c:if>
                             <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
                                 <c:if test="${i <= pVO.totalPage}">
                                     <c:choose>
-                                        <c:when test="${i != pVO.page}">
+                                        <c:when test="${i != pVO.nowPage}">
                                             <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
                                         </c:when>
                                         <c:otherwise>
@@ -170,8 +170,8 @@
                                     </c:choose>
                                 </c:if>
                             </c:forEach>
-                            <c:if test="${pVO.page < pVO.totalPage}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
+                            <c:if test="${pVO.nowPage < pVO.totalPage}">
+                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage + 1}'">>
                                 </a></li>
                             </c:if>
                         </ul>
