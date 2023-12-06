@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardVO {
-    private int post_id;
-    private String user_id;
-    private String title;
-    private String content;
-    private int views;
-    private String board_cat;
-    private String write_date;
+    private int post_id; //posts
+    private String user_id; //posts
+    private String title; //posts
+    private String content; //posts
+    private int views; //posts
+    private String board_cat;//posts
+    private String write_date;//posts
 }
 

@@ -116,6 +116,21 @@
             background-color: #ffe3a0;
             color: black;
         }
+
+        .management_list>td{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 80px ;
+            padding:10px;
+        }
+
+        .board_title> a{
+            text-decoration: none;
+            color: black;
+            display: block;
+            padding: 10px;
+        }
     </style>
 </head>
 
@@ -165,11 +180,20 @@
                 </tr>
                 <c:forEach var="bVO" items="${board}">
                     <tr class="management_list">
-                        <td class="board">${bVO.post_id}</td>
-                        <td class="board_title">${bVO.user_id}</td>
-                        <td class="content">${bVO.title}</td>
-                        <td class="user_id">${bVO.content}</td>
-                        <td class="report_count">${bVO.user_id}/${bVO.user_id}</td>
+                        <td class="board">
+                            <c:choose>
+                                <c:when test="${bVO.board_cat=='notice'}">
+                                    정보 게시판
+                                </c:when>
+                                <c:when test="${bVO.board_cat=='resources'}">
+                                    자료 게시판
+                                </c:when>
+                            </c:choose>
+                        </td>
+                        <td class="board_title"><a href="/board/notice/view?no=${bVO.post_id}">${bVO.title}</a></td>
+                        <td class="content">${bVO.content}</td>
+                        <td class="user_id">${bVO.user_id}</td>
+                        <td class="report_count">${bVO.report_time}</td>
                         <td class="report_reason">${bVO.board_cat}</td>
                         <td class="del_button"><a
                                 href="${pageContext.servletContext.contextPath}/boardDelete?post_id=${bVO.post_id}"><input
@@ -184,14 +208,14 @@
                 <div class="pagination" style="display: flex">
                     <div class="paging">
                         <ul class="pagination justify-content-center d-flex">
-                            <c:if test="${pVO.page > 1}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
+                            <c:if test="${pVO.nowPage > 1}">
+                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage - 1}'"><
                                 </a></li>
                             </c:if>
                             <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
                                 <c:if test="${i <= pVO.totalPage}">
                                     <c:choose>
-                                        <c:when test="${i != pVO.page}">
+                                        <c:when test="${i != pVO.nowPage}">
                                             <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
                                         </c:when>
                                         <c:otherwise>
@@ -200,8 +224,8 @@
                                     </c:choose>
                                 </c:if>
                             </c:forEach>
-                            <c:if test="${pVO.page < pVO.totalPage}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
+                            <c:if test="${pVO.nowPage < pVO.totalPage}">
+                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage + 1}'">>
                                 </a></li>
                             </c:if>
                         </ul>

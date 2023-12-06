@@ -140,13 +140,13 @@
 
                 <c:forEach var="asVO" items="${aslist}">
                     <tr class="management_list">
-                        <td class="user_name"></td>
+                        <td class="user_name">${asVO.profile_img}</td>
                         <td class="user_name">${asVO.user_name}</td>
-                        <td class="user_id">아이디</td>
-                        <td class="time">정지일</td>
-                        <th class="suspend_reason">정지사유</th>
-                        <td class="writing_count">작성글/댓글 수</td>
-                        <td class="report_count">신고횟수</td>
+                        <td class="user_id">${asVO.user_id}</td>
+                        <td class="time">${asVO.suspended_time}</td>
+                        <th class="suspend_reason">${asVO.reason}</th>
+                        <td class="writing_count">${asVO.posts_count}/${asVO.comments_count}</td>
+                        <td class="report_count">${asVO.count_report}</td>
                         <td class="unsuspend_button"><input type="button" value="정지해제" class="btn btn-dark"></td>
                     </tr>
                 </c:forEach>
@@ -159,14 +159,14 @@
                 <div class="pagination" style="display: flex">
                     <div class="paging">
                         <ul class="pagination justify-content-center d-flex">
-                            <c:if test="${pVO.page > 1}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
+                            <c:if test="${pVO.nowPage > 1}">
+                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage - 1}'"><
                                 </a></li>
                             </c:if>
                             <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
                                 <c:if test="${i <= pVO.totalPage}">
                                     <c:choose>
-                                        <c:when test="${i != pVO.page}">
+                                        <c:when test="${i != pVO.nowPage}">
                                             <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a></li>
                                         </c:when>
                                         <c:otherwise>
@@ -175,8 +175,8 @@
                                     </c:choose>
                                 </c:if>
                             </c:forEach>
-                            <c:if test="${pVO.page < pVO.totalPage}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
+                            <c:if test="${pVO.nowPage < pVO.totalPage}">
+                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage + 1}'">>
                                 </a></li>
                             </c:if>
                         </ul>

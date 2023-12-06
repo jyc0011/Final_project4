@@ -2,24 +2,157 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalproject.team4.shouldbe.mapper.AdminMapper">
     <!--
+    //대시보드=====================================================
+
+    //게시글관리_보드삭제 버튼======================================================
+    //댓글관리======================================================
+    //퀴즈관리======================================================
+    //퀴즈관리_퀴즈등록페이지버튼======================================================
+    //퀴즈관리_유저퀴즈등록버튼======================================================
+    //퀴즈관리_등록된 퀴즈 리스트======================================================
+    //채팅관리======================================================
+
+    -->
+
+
+    <!--//현재회원관리===================================================== -->
+    <select id="countMember" resultType="int">
+        SELECT COUNT(*)
+        FROM users
+    </select>
     <select id="adminMemberList" resultType="com.finalproject.team4.shouldbe.vo.AdminMemberVO">
         select profile_img, user_name, user_id, time, count_report
         from users
         ORDER BY user_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
-   -->
+    <select id="postsCount" resultType="int">
+        select count(*) from posts where user_id=#{user_id}
+    </select>
+
+
+    <!--//정지회원관리====================================================== -->
+    <select id="countSuspendedMember" resultType="int">
+        SELECT COUNT(*)
+        FROM users
+    </select>
+    <select id="adminSuspendedList" resultType="com.finalproject.team4.shouldbe.vo.AdminSuspendedVO">
+        select suspended_id, user_id, suspended_time, suspended_period, reason
+        from suspended_users
+        ORDER BY user_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
+    <select id="getUserVO" resultType="com.finalproject.team4.shouldbe.vo.AdminSuspendedVO">
+        select profile_img,user_name,count_report from users where user_id=#{user_id}
+    </select>
+
+
+    <!--//정지회원관리_정지버튼====================================================== -->
+    <insert id="suspendInsert">
+        insert into suspended_users(user_id,suspended_period,reason) values(#{user_id},7,'사유2');
+    </insert>
+
+
+    <!--//탈퇴회원관리======================================================-->
+    <select id="countWithdrawnMember" resultType="int">
+        SELECT COUNT(*)
+        FROM users
+    </select>
+    <select id="adminWithdrawnList" resultType="com.finalproject.team4.shouldbe.vo.AdminWithdrawnVO">
+        select user_id, withdrawn_time
+        from withdrawn_users
+        ORDER BY user_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
+    <select id="adminWithdrawnListUsers" resultType="com.finalproject.team4.shouldbe.vo.AdminWithdrawnVO">
+        select profile_img, user_name,count_report
+        from users
+        where user_id=#{user_id}
+    </select>
+
+
+    <!--//게시글관리====================================================== -->
+    <select id="countBoard" resultType="int">
+        SELECT COUNT(*)
+        FROM post_report;
+    </select>
+    <select id="getBoardReportList" resultType="com.finalproject.team4.shouldbe.vo.BoardReportVO">
+        SELECT post_report_id,user_id,post_id,report_time FROM post_report
+        ORDER BY post_id  <!-- Replace 'some_column' with the actual column you want to sort by -->
+        LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
+    <select id="getPostsVO" resultType="com.finalproject.team4.shouldbe.vo.BoardReportVO">
+        select title,content,board_cat from posts where post_id=${post_id}
+    </select>
+
+
+    <!--//게시글관리_보드삭제 버튼======================================================-->
+    <delete id="postsDelete">
+        delete from posts where post_id=${post_id}
+    </delete>
+
+
+    <!--댓글관리======================================================-->
+    <select id="countBoardReply" resultType="int">
+        SELECT COUNT(*)
+        FROM comments
+    </select>
+    <select id="selectBoardReply" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.BoardReplyVO">
+        SELECT *
+        FROM comments
+        ORDER BY comment_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
+
+
+    <!--//퀴즈관리======================================================-->
     <select id="quizlist" resultType="com.finalproject.team4.shouldbe.vo.QuizVO">
         select quiz_id, level, quiz_lang, quiz_content
         from quiz
         where level = ${level}
     </select>
 
+    <!--퀴즈관리_퀴즈등록페이지버튼======================================================-->
+    <insert id="quizInsert">
+        insert into quiz(quiz_content,level,quiz_lang) values(#{quiz_content},${level},'eng');
+    </insert>
+    <select id="selectQuizId" resultType="int">
+        select quiz_id from quiz where quiz_content=#{quiz_content};
+    </select>
+    <insert id="answerInsert">
+        insert into answer(quiz_id,answer) values (${quiz_id},#{answer});
+    </insert>
+
+
+    <!--//퀴즈관리_등록된 퀴즈 리스트======================================================-->
     <select id="editlist" resultType="com.finalproject.team4.shouldbe.vo.QuizVO">
         select q.quiz_id, q.level, q.quiz_lang, q.quiz_content, a.answer
         from quiz q
                  join answer a on q.quiz_id = a.quiz_id
         where a.quiz_id = ${quiz_id}
+    </select>
+
+
+    <!--//채팅관리======================================================-->
+    <select id="countMessage" resultType="int">
+        SELECT COUNT(*)
+        FROM message
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+    <select id="commentsCount" resultType="int">
+        select count(*) from comments where user_id=#{user_id}
     </select>
 
     <select id="adminMemberList" resultType="com.finalproject.team4.shouldbe.vo.AdminMemberVO">
@@ -34,29 +167,11 @@
                  join posts p on u.user_id = p.user_id
                  join comments c on u.user_id = c.user_id
     </select>
+-->
 
-    <insert id="suspendInsert">
-        insert into suspended_users(user_id, suspended_period, reason)
-        values (#{user_id}, 7, '사유2');
-    </insert>
 
-    <select id="countSuspendedMember" resultType="int">
-        SELECT COUNT(*)
-        FROM users
-    </select>
 
-    <select id="adminSuspendedList" resultType="com.finalproject.team4.shouldbe.vo.AdminSuspendedVO">
-        select profile_img, user_name, user_id, time, count_report
-        from users
-        ORDER BY user_id
-            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
-    </select>
 
-    <delete id="postsDelete">
-        delete
-        from posts
-        where post_id = ${post_id}
-    </delete>
 
     <!--
         <select id="adminSuspendedList" resultType="com.finalproject.team4.shouldbe.vo.AdminSuspendedVO">
@@ -71,17 +186,11 @@
            join coments c on u.user_id=c.user_id
         </select>
     -->
-    <select id="countWithdrawnMember" resultType="int">
-        SELECT COUNT(*)
-        FROM users
-    </select>
 
-    <select id="adminWithdrawnList" resultType="com.finalproject.team4.shouldbe.vo.AdminWithdrawnVO">
-        select profile_img, user_name, user_id, time, count_report
-        from users
-        ORDER BY user_id
-            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
-    </select>
+
+
+
+
 
     <!--
         <select id="adminWithdrawnList" resultType="com.finalproject.team4.shouldbe.vo.AdminWithdrawnVO">
@@ -97,13 +206,6 @@
         </select>
     -->
 
-    <select id="adminChatList" resultType="com.finalproject.team4.shouldbe.vo.AdminChatVO">
-        select *
-        from message
-        ORDER BY msg_id
-            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
-    </select>
-    <!-- Select a paginated list of board entries -->
     <select id="selectMessage" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.MessageVO">
         SELECT *
         FROM message
@@ -119,40 +221,25 @@
            join chat_report cr on u.user_id=cr.user_id
         </select>
     -->
-    <select id="countBoard" resultType="int">
-        SELECT COUNT(*)
-        FROM posts
-    </select>
 
-    <!-- Select a paginated list of board entries -->
+
+    <!-- Select a paginated list of board entries
     <select id="selectBoard" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.BoardVO">
         SELECT * FROM posts
-        ORDER BY post_id  <!-- Replace 'some_column' with the actual column you want to sort by -->
+        ORDER BY post_id
         LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
+         Replace 'some_column' with the actual column you want to sort by -->
 
-    <select id="countBoardReply" resultType="int">
-        SELECT COUNT(*)
-        FROM comments
-    </select>
+
+
 
     <!-- Select a paginated list of board entries -->
-    <select id="selectBoardReply" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.BoardReplyVO">
-        SELECT *
-        FROM comments
-        ORDER BY comment_id
-            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
-    </select>
 
-    <select id="countMessage" resultType="int">
-        SELECT COUNT(*)
-        FROM message
-    </select>
 
-    <select id="countMember" resultType="int">
-        SELECT COUNT(*)
-        FROM users
-    </select>
+
+
+
 
     <!-- Select a paginated list of board entries -->
     <select id="selectMember" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.UserVO">
@@ -161,4 +248,5 @@
         ORDER BY user_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
+
 </mapper>
