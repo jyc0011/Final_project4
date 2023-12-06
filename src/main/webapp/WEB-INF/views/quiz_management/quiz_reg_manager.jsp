@@ -85,6 +85,7 @@
             height: 100px;
             border: 1px solid #ddd;
             font-size: 2em;
+            background-color: #333333;
         }
 
         .quiz_txt {
@@ -124,22 +125,77 @@
     <div id="member_management">
         <h1 id="quiz_list_title">관리자 퀴즈 등록</h1>
 
-        <div id="quiz_input">
-            <input type="text" name="quiz_content" class="quiz_txt" id="" placeholder="단어를 입력해 주세요">
-            <input type="text" name="answer" class="quiz_txt" id="" placeholder="정답을 입력해 주세요">
-        </div>
 
-        <div id="quiz_grade">
-            <button class="qqlist btn btn-secondary" id="quiz_easy">쉬움</button>
-            <button class="qqlist btn btn-secondary" id="quiz_medium">중간</button>
-            <button class="qqlist btn btn-secondary" id="quiz_hard">어려움</button>
-        </div>
 
         <div id="quiz_reg">
-            <button id="reg_button" class="btn btn-dark">등록하기</button>
         </div>
+
+        <form method="post" action="${pageContext.servletContext.contextPath}/quiz/reg" onsubmit="return selectCheck()">
+
+            <div id="quiz_input">
+                <input type="text" name="quiz_content" class="quiz_txt" id="quiz_content" placeholder="단어를 입력해 주세요">
+                <input type="text" name="answer" class="quiz_txt" id="answer" placeholder="정답을 입력해 주세요">
+            </div>
+
+            <div id="quiz_grade">
+                <button type="button" class="qqlist btn btn-secondary" id="quiz_easy" title="1">쉬움</button>
+                <button type="button" class="qqlist btn btn-secondary" id="quiz_medium" title="2">중간</button>
+                <button type="button" class="qqlist btn btn-secondary" id="quiz_hard" title="3">어려움</button>
+            </div>
+
+            <input
+                type="hidden"
+                id="level"
+                value="1"
+                size="20"
+                maxlength="10"
+                name="level"
+            />
+
+            <input
+                id="reg_button"
+                class="btn btn-dark"
+                type="submit"
+                name="reg"
+                value="등록하기"
+            />
+        </form>
 
     </div>
 </div>
+<script>
+    function selectCheck(){
+        if(document.getElementById("quiz_content").value===""){
+            alert("단어를 입력하세요..");
+            return false;
+        }
+        if(document.getElementById("answer").value===""){
+            alert("정답을 입력하세요..");
+            return false;
+        }
+        return true;
+
+        if(document.getElementById("level").value!="1"){
+            alert("난이도를 선택하세요");
+            return false;
+        }
+        return true;
+    }
+
+    $(document).on("click", "#quiz_grade>button", function () {
+        $("#level").attr("value", $(this).attr("title"));
+        $("button[title =" + $("#level").val() + "]")
+            .css("background", "#FFD954")
+            .css("border-radius", "0.3rem");
+        $("button[title !=" + $("#level").val() + "]").css("background", "#333333");
+    });
+
+    $("#quiz_content").keyup(function(){
+        $("#userid2").attr("value", $(this).attr("value"));
+    });
+    $("#answer").keyup(function(){
+        $("#userid3").attr("value", $(this).attr("value"));
+    });
+</script>
 </body>
 </html>

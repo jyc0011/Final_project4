@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardVO {
-    private int post_id; //posts
-    private String user_id; //posts
+public class BoardReportVO {
+    private int post_report_id;//post_report
+    private String user_id;//post_report
+    private int post_id;//post_report
+    private String report_time;//post_report
+
     private String title; //posts
     private String content; //posts
-    private int views; //posts
     private String board_cat;//posts
-    private String write_date;//posts
 }
-
