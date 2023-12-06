@@ -1,13 +1,11 @@
 package com.finalproject.team4.shouldbe.util;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import org.json.JSONObject;
+
+import java.io.*;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class Translate {
 
@@ -89,7 +87,7 @@ public class Translate {
                     while ((inputLine = br.readLine()) != null) {
                         response.append(inputLine);
                     }
-                    System.out.println("Error response: " + response.toString());
+                    System.out.println("Error response: " + response);
                 }
                 System.out.println("Response Code: " + responseCode);
                 return "error";
@@ -99,4 +97,23 @@ public class Translate {
             return "error";
         }
     }
+
+    public static boolean isDirectTrans(String sourceLang, String targetLang) {
+        Map<String, List<String>> pairs = new HashMap<>();
+        // 한국어(ko) ↔ 다른 언어들
+        pairs.put("ko", Arrays.asList("en", "ja", "zh-CN", "zh-TW", "vi", "th", "id", "fr", "es", "ru", "de", "it"));
+        // 영어(en) ↔ 다른 언어들
+        pairs.put("en", Arrays.asList("ja", "zh-CN", "zh-TW", "vi", "th", "id", "fr"));
+        // 일본어(ja) ↔ 다른 언어들
+        pairs.put("ja", Arrays.asList("zh-CN", "zh-TW", "vi", "th", "id", "fr"));
+        // 중국어 간체(zh-CN) ↔ 중국어 번체(zh-TW)
+        pairs.put("zh-CN", Arrays.asList("zh-TW"));
+        pairs.put("zh-TW", Arrays.asList("zh-CN"));
+
+        boolean directFromStoT = pairs.containsKey(sourceLang) && pairs.get(sourceLang).contains(targetLang);
+        boolean directFromTtoS = pairs.containsKey(targetLang) && pairs.get(targetLang).contains(sourceLang);
+
+        return directFromStoT || directFromTtoS;
+    }
+
 }

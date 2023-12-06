@@ -115,14 +115,14 @@
     </select>
 
     <select id="findMessageInfo" resultType="MessageVO">
-        SELECT is_from_id, chat_id
+        SELECT is_from_id, chat_id, content
         FROM message
         WHERE msg_id = #{msgId}
     </select>
 
     <insert id="reportMessage">
-        INSERT INTO message_report (user_id, msg_id)
-        VALUES (#{userId}, #{msgId})
+        INSERT INTO message_report (user_id, msg_id, content)
+        VALUES (#{userId}, #{msgId}, #{content})
     </insert>
 
     <select id="getChatByChatId" resultType="ChatRoomVO">
@@ -132,8 +132,8 @@
     </select>
 
     <insert id="saveMessageToMypage">
-        INSERT INTO save_message (msg_id, save_user_id)
-        VALUES (#{msgId},#{userId})
+        INSERT INTO save_message (msg_id, save_user_id, content)
+        VALUES (#{msgId},#{userId}, #{content})
     </insert>
 
     <select id="getTransMsg" resultType="String">

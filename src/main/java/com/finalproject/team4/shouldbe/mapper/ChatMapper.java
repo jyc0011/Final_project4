@@ -41,11 +41,11 @@ public interface ChatMapper {
 
     MessageVO findMessageInfo(int msgId);
 
-    void reportMessage(String userId, int msgId);
+    void reportMessage(String userId, int msgId, String content);
 
     ChatRoomVO getChatByChatId(int chatId);
 
-    void saveMessageToMypage(String userId, int msgId);
+    void saveMessageToMypage(String userId, int msgId, String content);
 
     String getUserLang(String userId);
 

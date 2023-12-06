@@ -68,7 +68,13 @@ public class ChatService {
         String userLang=chatMapper.getUserLang(message.getOther_id());
         System.out.println(contentLang+" "+userLang+" "+message.getContent());
         if (!contentLang.equals(userLang)) {
-            String transContext = Translate.translate_content(contentLang, userLang, message.getContent());
+            String transContext;
+            if (Translate.isDirectTrans(contentLang, userLang)) {
+                transContext = Translate.translate_content(contentLang, userLang, message.getContent());
+            } else {
+                String intermediateTranslation = Translate.translate_content(contentLang, "ko", message.getContent());
+                transContext = Translate.translate_content("ko", userLang, intermediateTranslation);
+            }
             message.setTrans_content(transContext);
         } else {
             message.setTrans_content(message.getContent());
@@ -110,12 +116,17 @@ public class ChatService {
     public void reportMessage(String userId, int msgId) throws Exception {
         MessageVO messageInfo = chatMapper.findMessageInfo(msgId);
         ChatRoomVO chatInfo=chatMapper.getChatByChatId(messageInfo.getChat_id());
+        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), messageInfo.getSender());
         String senderUserId = messageInfo.getIs_from_id() == 1 ? chatInfo.getFrom_id() : chatInfo.getTo_id();
-        chatMapper.reportMessage(senderUserId, msgId);
+        String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
+        chatMapper.reportMessage(senderUserId, msgId, content);
     }
 
 
     public void saveMessageToMypage(String userId, int msgId) throws Exception {
-        chatMapper.saveMessageToMypage(userId, msgId);
+        MessageVO messageInfo = chatMapper.findMessageInfo(msgId);
+        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), messageInfo.getSender());
+        String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
+        chatMapper.saveMessageToMypage(userId, msgId, content);
     }
 }
