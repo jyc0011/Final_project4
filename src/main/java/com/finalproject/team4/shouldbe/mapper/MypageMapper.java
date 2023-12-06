@@ -27,7 +27,8 @@ public interface MypageMapper {
     int countSaveMessages(String userid);
 
     int withdraw_user_date(String user_id);
+
     int withdraw_user(String user_id);
-    
+
     List<SaveMessageVO> selectSaveMessages(@Param("pvo") PagingVO pvo, @Param("userid") String userid);
 }

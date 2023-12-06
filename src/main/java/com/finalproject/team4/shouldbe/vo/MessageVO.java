@@ -1,6 +1,9 @@
 package com.finalproject.team4.shouldbe.vo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,4 +18,6 @@ public class MessageVO {
     private String send_date;
     private String sender;
     private String from_id;
+    private String trans_content;
+    private String other_id;
 }

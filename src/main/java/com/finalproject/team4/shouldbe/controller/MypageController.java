@@ -5,7 +5,10 @@ import com.finalproject.team4.shouldbe.util.EncryptUtil;
 import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,7 +30,7 @@ public class MypageController {
             mav.setViewName("redirect:/login");
             return mav;
         }
-        String userid=(String) session.getAttribute("logId");
+        String userid = (String) session.getAttribute("logId");
         MypageVO myvo = service.mypage_info(userid);
         System.out.println(myvo.toString());
         mav.addObject("myvo", myvo);
@@ -76,7 +79,7 @@ public class MypageController {
     @GetMapping("/mypage/blockList")
     public ModelAndView mypage_blocklist(HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        String user_id = (String)session.getAttribute("logId");
+        String user_id = (String) session.getAttribute("logId");
 
         List<BlockVO> blist = service.blockList(user_id);
         System.out.println(blist);
@@ -84,12 +87,12 @@ public class MypageController {
         mav.setViewName("mypage/blocklist_user");
         return mav;
     }
-    
+
     // 차단 해제
     @GetMapping("/mypage/unlock")
     @ResponseBody
-    public String unlock(@RequestParam("block_id") String block_id, @RequestParam("user_id") String user_id){
-        return service.block_id_unlock(block_id, user_id)+"";
+    public String unlock(@RequestParam("block_id") String block_id, @RequestParam("user_id") String user_id) {
+        return service.block_id_unlock(block_id, user_id) + "";
     }
 
     // 게시글
@@ -97,7 +100,7 @@ public class MypageController {
     public ModelAndView mypage_post_user(HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
-        String user_id = (String)session.getAttribute("logId");
+        String user_id = (String) session.getAttribute("logId");
         List<BoardVO> list = service.mypage_post_board(user_id);
 
         mav.addObject("list", list);
@@ -109,7 +112,7 @@ public class MypageController {
     @GetMapping("/mypage/post_user/reply")
     public ModelAndView mypage_post_user_reply(HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        String user_id = (String)session.getAttribute("logId");
+        String user_id = (String) session.getAttribute("logId");
         List<BoardReplyVO> list = service.mypage_post_board_reply(user_id);
 
         mav.addObject("list", list);
@@ -122,9 +125,10 @@ public class MypageController {
     public String mypage_withdraw_user() {
         return "mypage/withdraw_user";
     }
+
     // 회원탈퇴
     @GetMapping("/mypage/withdrawOk")
-    public String withdrawOk(@RequestParam("user_id") String user_id, @RequestParam("password") String password, RedirectAttributes redirect, HttpSession session){
+    public String withdrawOk(@RequestParam("user_id") String user_id, @RequestParam("password") String password, RedirectAttributes redirect, HttpSession session) {
         MypageVO mVo = service.mypage_info(user_id);
         System.out.println(mVo.toString());
 

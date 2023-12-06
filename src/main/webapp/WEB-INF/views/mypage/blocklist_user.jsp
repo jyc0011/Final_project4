@@ -126,7 +126,7 @@
             <div class="friend-card">
                 <div class="friend-avatar">
                     <img src="${pageContext.servletContext.contextPath}/image/user.png" alt="Friend's Avatar"
-                        class="rounded-circle" style="width: 50px; height: 50px;">
+                         class="rounded-circle" style="width: 50px; height: 50px;">
                 </div>
                 <div class="friend-info">
                     <input type="hidden" name="block_id" id="block_id" value="${blist.block_id}"/>
@@ -134,7 +134,9 @@
                     <p>${blist.block_reason}</p>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-outline-secondary btn-action" id="unlock" title="${blist.user_id}">차단해제</button>
+                    <button type="button" class="btn btn-outline-secondary btn-action" id="unlock"
+                            title="${blist.user_id}">차단해제
+                    </button>
                 </div>
             </div>
         </c:forEach>

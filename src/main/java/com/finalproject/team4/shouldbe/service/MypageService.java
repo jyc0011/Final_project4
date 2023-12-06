@@ -24,7 +24,8 @@ public interface MypageService {
     List<BlockVO> blockList(String user_id);
 
     int block_id_unlock(String block_id, String user_id);
-    
+
     int withdraw_user_date(String user_id);
+
     int withdraw_user(String user_id);
 }

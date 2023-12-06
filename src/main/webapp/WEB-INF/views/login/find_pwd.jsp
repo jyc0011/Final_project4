@@ -48,43 +48,47 @@
             margin: 5px 0;
         }
 
-        .input-container{
-            position:relative;
-            margin-bottom:25px;
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
         }
-        .input-container label{
-            position:absolute;
-            top:0px;
-            left:0px;
-            font-size:16px;
-            pointer-event:none;
+
+        .input-container label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 16px;
+            pointer-event: none;
             transition: all 0.5s ease-in-out;
         }
-        .input-container input{
-            border:0;
-            border-bottom:1px solid #555;
-            background:transparent;
-            width:100%;
-            padding:8px 0 5px 0;
-            font-size:16px;
+
+        .input-container input {
+            border: 0;
+            border-bottom: 1px solid #555;
+            background: transparent;
+            width: 100%;
+            padding: 8px 0 5px 0;
+            font-size: 16px;
         }
-        .input-container input:focus{
-            border:none;
-            outline:none;
-            border-bottom:1px solid #e74c3c;
+
+        .input-container input:focus {
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #e74c3c;
         }
-        .btn{
-            color:#fff;
+
+        .btn {
+            color: #fff;
             outline: none;
             border: 0;
-            color: #fff;
-            padding:10px 20px;
-            text-transform:uppercase;
-            margin-top:30px;
-            border-radius:2px;
-            cursor:pointer;
-            position:relative;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            margin-top: 30px;
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
         }
+
         /*.btn:after{
             content:"";
             position:absolute;
@@ -95,9 +99,9 @@
             height:100%;
         }*/
         .input-container input:focus ~ label,
-        .input-container input:valid ~ label{
-            top:-12px;
-            font-size:12px;
+        .input-container input:valid ~ label {
+            top: -12px;
+            font-size: 12px;
 
         }
     </style>
@@ -109,51 +113,51 @@
                 var userid = $("#userid").val();
                 var email = $("#email").val();
                 $.ajax({
-                    type : "POST",
-                    url : "/login/sendcode",
-                    data : {userid : userid,email : email},
-                    success : function(r){
+                    type: "POST",
+                    url: "/login/sendcode",
+                    data: {userid: userid, email: email},
+                    success: function (r) {
                         console.log(r);
-                        if(r == true) {
+                        if (r == true) {
                             $("#verification").show();
                             $("#result").text("이메일이 발송되었습니다,");
 
-                        }else{
+                        } else {
                             $("#verification").hide();
                             $("#result").text("존재하지 않는 아이디 혹은 이메일입니다.");
 
                         }
                     },
-                    error : function(e){
+                    error: function (e) {
                         console.log(e.responseText);
                     }
 
                 });
             });
 
-            $("#verifybtn").click(function(){
+            $("#verifybtn").click(function () {
                 event.preventDefault();
 
                 var userid = $("#userid").val();
                 var code = $("#code").val();
                 var email = $("#email").val();
                 $.ajax({
-                    type : "POST",
-                    url : "/login/verify",
-                    data : {userid : userid, code : code, email: email},
-                    success : function(r){
+                    type: "POST",
+                    url: "/login/verify",
+                    data: {userid: userid, code: code, email: email},
+                    success: function (r) {
                         console.log(r);
-                        if(r == true) {
+                        if (r == true) {
 
                             alert("변경된 비밀번호가 이메일로 발송되었습니다");
-                            location.href='/';
-                        }else{
+                            location.href = '/';
+                        } else {
                             alert("오류!")
                         }
 
 
                     },
-                    error : function(e){
+                    error: function (e) {
                         console.log(e.responseText);
                     }
 

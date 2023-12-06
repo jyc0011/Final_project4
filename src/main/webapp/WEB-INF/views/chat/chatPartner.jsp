@@ -2,17 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<jsp:useBean id="today" class="java.util.Date"/>
 
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Chat Rooms</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>New Chat Partners</title>
     <style>
         .container {
             max-width: 800px;
@@ -28,69 +26,59 @@
             margin-bottom: 20px;
         }
 
-        .chat-room-list {
+        .user-list {
             list-style-type: none;
-            margin: 0;
             padding: 0;
         }
 
-        .chat-room-list a li {
-            border: 1px solid #eee;
-            padding: 15px;
-            transition: background-color 0.2s;
+        .user-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            cursor: pointer;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
         }
 
-        .chat-room-list a li:hover {
-            background-color: #f7f7f7;
+        .user-list li {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .user-details {
+            display: flex;
+            align-items: center;
+        }
+        .user-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        .user-info h3 {
+            margin: 0;
+            margin-bottom: 5px;
         }
 
-        .chat-room-list a {
+        .user-info p {
+            margin: 2px 0;
+        }
+
+        .start-chat-btn {
             text-decoration: none;
             color: black;
-            font-size: 1.1em;
-            font-weight: bold;
-            flex-grow: 1; /* Allows the link to fill the space */
-        }
-
-        .chat-details {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            color: #333;
-        }
-
-        .chat-last-content {
-            font-size: 1.5em;
-            margin-bottom: 4px;
-            display: flex;
-            justify-content: flex-end;
-            width: 100%;
-        }
-
-        .truncated-content {
-            max-width: 450px;
-            overflow: hidden;
+            padding: 5px 10px;
+            border: 1px solid black;
+            border-radius: 4px;
             white-space: nowrap;
-            text-overflow: ellipsis;
         }
 
-        .unread-count {
-            color: #784214;
-            margin-left: 50px;
-        }
-
-        .last-message-time {
-            color: grey;
-            font-size: 0.9em;
-            margin-top: 4px;
-        }
-
-        .chat-details div {
-            margin-top: 5px;
+        .start-chat-btn:hover {
+            background-color: #ffe3a0;
+            color: black;
         }
 
         .pagination {
@@ -111,30 +99,39 @@
 </head>
 <body>
 <div class="container">
-    <h2>Your Chat Rooms</h2>
-    <ul class="chat-room-list">
-        <c:forEach var="chatRoom" items="${chatRoom}">
-            <a href="${pageContext.request.contextPath}/chat?chat_id=${chatRoom.chat_id}&other_user_id=${
-            chatRoom.from_id != myId ? chatRoom.from_id : chatRoom.to_id}&from_id=${chatRoom.from_id}">
-                <li>
-                    <c:choose>
-                        <c:when test="${chatRoom.from_id != myId}">
-                            ${chatRoom.from_id}
-                        </c:when>
-                        <c:otherwise>
-                            ${chatRoom.to_id}
-                        </c:otherwise>
-                    </c:choose>
-
-                    <div class="chat-details">
-                        <div class="chat-last-content">
-                            <div class="truncated-content">${chatRoom.last_content}</div>
-                            <div class="unread-count"> ${chatRoom.not_read}</div>
-                        </div>
-                        <div class="last-message-time">Last message time: ${chatRoom.last_time}</div>
+    <h2>Find New Chat Partners</h2>
+    <ul class="user-list">
+        <c:forEach var="user" items="${partner}">
+            <li class="user-item">
+                <div class="user-details">
+                    <img src="${user.profile_img}" alt="${user.username}" class="user-image" />
+                    <div class="user-info">
+                        <h3>${user.userid}</h3>
+                        <p>Email: ${user.email}</p>
+                        <p>국적 :
+                            <c:choose>
+                                <c:when test="${user.nation == 'kor'}">한국</c:when>
+                                <c:when test="${user.nation == 'usa'}">미국</c:when>
+                                <c:when test="${user.nation == 'jp'}">일본</c:when>
+                                <c:otherwise>${user.nation}</c:otherwise>
+                            </c:choose>
+                        </p>
+                        <p>사용 언어 :
+                            <c:forEach var="langCode" items="${fn:split(user.lang, '/')}" varStatus="status">
+                                <c:choose>
+                                    <c:when test="${langCode == 'ko'}">한국어</c:when>
+                                    <c:when test="${langCode == 'en'}">영어</c:when>
+                                    <c:when test="${langCode == 'jp'}">일본어</c:when>
+                                    <c:otherwise>${langCode}</c:otherwise>
+                                </c:choose>
+                                <c:if test="${!status.last}">, </c:if>
+                            </c:forEach>
+                        </p>
+                        <p>한마디 : ${user.profile_content}</p>
                     </div>
-                </li>
-            </a>
+                </div>
+                <a href="${pageContext.request.contextPath}/chat/start?userId=${user.userid}" class="start-chat-btn">Start Chat</a>
+            </li>
         </c:forEach>
     </ul>
 

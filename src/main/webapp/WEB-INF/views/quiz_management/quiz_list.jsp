@@ -167,6 +167,7 @@
                                                        class="btn btn-dark"></td>
                     </tr>
                     <c:forEach var="qVO1" items="${quizlist1}" varStatus="status">
+                    <tr class="management_list">
                         <td class="lise_number">${status.count}</td>
                         <td class="quiz_content">${qVO1.quiz_content}</td>
                         <td class="edit_button">
@@ -174,6 +175,7 @@
                                 <input type="button" value="수정/삭제" class="btn btn-dark">
                             </a>
                         </td>
+                    </tr>
                     </c:forEach>
 
 

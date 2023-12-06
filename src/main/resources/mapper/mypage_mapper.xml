@@ -51,8 +51,10 @@
     </delete>
 
     <select id="blockList" resultType="BlockVO">
-        select block_id, b.user_id, block_reason, user_name 
-        from users as u join block_list as b on u.user_id = b.block_id where b.user_id=#{user_id}
+        select block_id, b.user_id, block_reason, user_name
+        from users as u
+                 join block_list as b on u.user_id = b.block_id
+        where b.user_id = #{user_id}
     </select>
 
     <delete id="block_id_unlock">
@@ -63,12 +65,13 @@
     </delete>
 
     <insert id="withdraw_user_date">
-        insert into withdrawn_users (user_id) 
+        insert into withdrawn_users (user_id)
         values (#{user_id})
     </insert>
 
     <update id="withdraw_user">
-        update users set withdraw='1'
+        update users
+        set withdraw='1'
         where user_id = #{user_id}
     </update>
 </mapper>

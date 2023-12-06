@@ -8,20 +8,12 @@ import java.util.List;
 
 @Mapper
 public interface QuizMapper {
-    List<QuizVO> findQuiz(@Param("level") int level);
-
+    List<QuizVO> findQuiz(int level, String userId);
     List<String> findAnswersByQuizId(int quizId);
-
-    boolean existsQuizInfo(@Param("quiz_id") int quizId, @Param("user_id") String userId);
-
-    boolean existsUserAnswerInfo(@Param("quiz_id") int quizId, @Param("user_id") String userId);
-
-    void insertQuizInfo(@Param("quiz_id") int quizId, @Param("user_id") String userId);
-
-    int insertQuiz(QuizVO quizVO);
-
-    int insertUserAnswerInfo(@Param("quiz_id") int quizId, @Param("user_id") String userId, @Param("correct") int correct);
-
+    boolean existsQuizInfo(int quizId,String userId);
+    void insertQuizInfo(int quizId, String userId);
+    void insertQuiz(QuizVO quizVO);
+    void insertUserAnswerInfo(int quizId, String userId);
     void insertAnswer(QuizVO quizVO);
 
 }

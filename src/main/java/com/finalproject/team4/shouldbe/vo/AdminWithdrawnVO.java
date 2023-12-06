@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminWithdrawnVO {
-    private String profile_img;
-    private String user_name;
-    private String user_id;
-    //private String withdrawn_time;
-    // private int posts_count;
-    // private int comments_count;
-    private int count_report;
+    private String profile_img;//users
+    private String user_name;//users
+    private String user_id;//withdrawn_users
+    private String withdrawn_time;//withdrawn_users
+    private int posts_count;//setPosts_count
+    private int comments_count;//setComments_count
+    private int count_report;//users
 
     //밑에부터 삭제
-    private String time;
+    //private String time;
 }
