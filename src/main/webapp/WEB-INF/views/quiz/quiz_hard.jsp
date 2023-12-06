@@ -37,12 +37,61 @@
                 }
             });
         });
+        function displayLanguage() {
+            var quizLang = "${quiz.quiz_lang}";
+            var languageName = "";
+            switch(quizLang) {
+                case "ko":
+                    languageName = "한국어";
+                    break;
+                case "en":
+                    languageName = "영어";
+                    break;
+                case "jp":
+                    languageName = "일본어";
+                    break;
+                case "zh-CN":
+                    languageName = "중국어 간체";
+                    break;
+                case "zh-TW":
+                    languageName = "중국어 번체";
+                    break;
+                case "vi":
+                    languageName = "베트남어";
+                    break;
+                case "th":
+                    languageName = "태국어";
+                    break;
+                case "id":
+                    languageName = "인도네시아어";
+                    break;
+                case "fr":
+                    languageName = "프랑스어";
+                    break;
+                case "es":
+                    languageName = "스페인어";
+                    break;
+                case "ru":
+                    languageName = "러시아어";
+                    break;
+                case "de":
+                    languageName = "독일어";
+                    break;
+                case "it":
+                    languageName = "이탈리아어";
+                    break;
+                default:
+                    languageName = "알 수 없는 언어";
+            }
+            document.getElementById("language").innerText = languageName;
+        }
+        window.onload = displayLanguage;
     </script>
 </head>
 
 <body>
 <main>
-    <h1>어려움</h1>
+    <h1>어려움 : <span id="language"></span></h1>
     <hr/>
     <b id="quiz_content">${quiz.quiz_content}</b>
     <form method="post" action="/quiz/checkAnswer">

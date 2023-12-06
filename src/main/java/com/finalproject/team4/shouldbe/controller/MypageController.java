@@ -5,8 +5,12 @@ import com.finalproject.team4.shouldbe.util.EncryptUtil;
 import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -20,12 +24,18 @@ public class MypageController {
 
     // 마이페이지 프로필
     @GetMapping("/mypage/change_user")
-    public ModelAndView mypage_change_user(@SessionAttribute(name = "logId") String userid) {
+    public ModelAndView mypage_change_user(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        if (session.getAttribute("logStatus") != "Y") {
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
+        String userid = (String) session.getAttribute("logId");
         MypageVO myvo = service.mypage_info(userid);
         System.out.println(myvo.toString());
         mav.addObject("myvo", myvo);
         mav.setViewName("mypage/change_user");
+
         return mav;
     }
 
@@ -38,9 +48,9 @@ public class MypageController {
         int result = service.mypage_edit(vo);
 
         if (result > 0) {
-            mav.setViewName("mypage/change_user");
+            mav.setViewName("redirect:mypage/change_user");
         } else {
-            mav.setViewName("mypage/mypage_editResult");
+            mav.setViewName("redirect:mypage/mypage_editResult");
         }
         return mav;
     }
@@ -66,15 +76,31 @@ public class MypageController {
     }
 
     // 차단목록
-    @GetMapping("/mypage/blackList")
-    public String mypage_blacklist() {
-        return "mypage/blacklist_user";
+    @GetMapping("/mypage/blockList")
+    public ModelAndView mypage_blocklist(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        String user_id = (String) session.getAttribute("logId");
+
+        List<BlockVO> blist = service.blockList(user_id);
+        System.out.println(blist);
+        mav.addObject("blist", blist);
+        mav.setViewName("mypage/blocklist_user");
+        return mav;
+    }
+
+    // 차단 해제
+    @GetMapping("/mypage/unlock")
+    @ResponseBody
+    public String unlock(@RequestParam("block_id") String block_id, @RequestParam("user_id") String user_id) {
+        return service.block_id_unlock(block_id, user_id) + "";
     }
 
     // 게시글
     @GetMapping("/mypage/post_user")
-    public ModelAndView mypage_post_user(@SessionAttribute(name = "logId") String user_id) {
+    public ModelAndView mypage_post_user(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        String user_id = (String) session.getAttribute("logId");
         List<BoardVO> list = service.mypage_post_board(user_id);
 
         mav.addObject("list", list);
@@ -84,8 +110,9 @@ public class MypageController {
 
     // 댓글
     @GetMapping("/mypage/post_user/reply")
-    public ModelAndView mypage_post_user_reply(@SessionAttribute(name = "logId") String user_id) {
+    public ModelAndView mypage_post_user_reply(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        String user_id = (String) session.getAttribute("logId");
         List<BoardReplyVO> list = service.mypage_post_board_reply(user_id);
 
         mav.addObject("list", list);
@@ -96,8 +123,28 @@ public class MypageController {
     // 회원탈퇴
     @GetMapping("/mypage/withdraw_user")
     public String mypage_withdraw_user() {
-
         return "mypage/withdraw_user";
+    }
+
+    // 회원탈퇴
+    @GetMapping("/mypage/withdrawOk")
+    public String withdrawOk(@RequestParam("user_id") String user_id, @RequestParam("password") String password, RedirectAttributes redirect, HttpSession session) {
+        MypageVO mVo = service.mypage_info(user_id);
+        System.out.println(mVo.toString());
+
+        if (mVo == null) {
+            return "redirect:/mypage/withdraw_user";
+        } else if (encrypt.encrypt(password, mVo.getSalt()).equals(mVo.getPassword())) {
+            int result = service.withdraw_user_date(user_id);
+            int wresult = service.withdraw_user(user_id);
+            System.out.println("result:" + result);
+            System.out.println("wresult:" + wresult);
+            session.invalidate();
+            return "redirect:/";
+        }
+
+        redirect.addFlashAttribute("result", "회원탈퇴 실패, 비밀번호를 확인해주세요!");
+        return "redirect:/mypage/withdraw_user";
     }
 
     // 저장소

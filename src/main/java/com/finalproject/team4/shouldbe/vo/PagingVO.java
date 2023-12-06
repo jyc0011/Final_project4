@@ -1,8 +1,8 @@
 package com.finalproject.team4.shouldbe.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -28,10 +28,10 @@ public class PagingVO {
 
     public void setTotalRecord(int totalRecord) {
         this.totalRecord = totalRecord;
-        if(totalRecord==0){
+        if (totalRecord == 0) {
             this.setTotalPage(1);
-        }else{
-        this.setTotalPage((int) Math.ceil(totalRecord / (double) onePageRecord));
+        } else {
+            this.setTotalPage((int) Math.ceil(totalRecord / (double) onePageRecord));
         }
     }
 }

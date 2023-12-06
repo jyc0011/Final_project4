@@ -17,14 +17,23 @@
     </select>
     <insert id="boardInsert">
         insert into posts(user_id, title, content, board_cat)
-        values(#{user_id}, #{title}, #{content}, #{board_cat})
+        values (#{user_id}, #{title}, #{content}, #{board_cat})
     </insert>
     <update id="viewCount">
-        update posts set views = views + 1 where post_id = ${param1};
+        update posts
+        set views = views + 1
+        where post_id = ${param1};
     </update>
     <select id="boardSelect" resultType="BoardVO">
-        select post_id, user_id, title, content, views, board_cat, date_format(write_date, '%m-%d %H:%i')
-        as write_date from posts where post_id=#{param1};
-
+        select post_id,
+               user_id,
+               title,
+               content,
+               views,
+               board_cat,
+               date_format(write_date, '%m-%d %H:%i')
+                   as write_date
+        from posts
+        where post_id = #{param1};
     </select>
 </mapper>

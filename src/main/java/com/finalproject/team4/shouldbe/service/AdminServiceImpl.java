@@ -15,13 +15,25 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public List<QuizVO> editlist(int quiz_id){return mapper.editlist(quiz_id);}
+    public List<QuizVO> editlist(int quiz_id) {
+        return mapper.editlist(quiz_id);
+    }
+
     @Override
-    public List<QuizVO> quizlist(int level){return mapper.quizlist(level);}
+    public List<QuizVO> quizlist(int level) {
+        return mapper.quizlist(level);
+    }
+
     @Override
-    public int postsDelete(int post_id){return mapper.postsDelete(post_id);}
+    public int postsDelete(int post_id) {
+        return mapper.postsDelete(post_id);
+    }
+
     @Override
-    public int suspendInsert(String user_id){return mapper.suspendInsert(user_id);}
+    public int suspendInsert(String user_id) {
+        return mapper.suspendInsert(user_id);
+    }
+
     @Override
     public List<AdminMemberVO> adminMemberList(PagingVO pvo) {
         return mapper.adminMemberList(pvo);

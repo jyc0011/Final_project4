@@ -32,14 +32,18 @@
             border-radius: 5px;
         }
 
-        .quiz-content, .user-answer, .correct-answer, .result {
+        .quiz-lang , .quiz-content, .user-answer, .correct-answer, .result,{
             margin-bottom: 20px;
         }
 
-        .quiz-content label, .user-answer label, .correct-answer label, .result label {
+        .quiz-lang label, .quiz-content label, .user-answer label, .correct-answer label, .result label {
             display: block;
             font-weight: bold;
             margin-bottom: 10px;
+        }
+        .correct-answer {
+            max-width: 350px;
+            word-wrap: break-word;
         }
 
         .buttons {
@@ -112,6 +116,55 @@
             }
             window.location.href = url;
         }
+        function displayLanguage() {
+            var quizLang = "${quizVO.quiz_lang}";
+            var languageName = "";
+            switch(quizLang) {
+                case "ko":
+                    languageName = "한국어";
+                    break;
+                case "en":
+                    languageName = "영어";
+                    break;
+                case "jp":
+                    languageName = "일본어";
+                    break;
+                case "zh-CN":
+                    languageName = "중국어 간체";
+                    break;
+                case "zh-TW":
+                    languageName = "중국어 번체";
+                    break;
+                case "vi":
+                    languageName = "베트남어";
+                    break;
+                case "th":
+                    languageName = "태국어";
+                    break;
+                case "id":
+                    languageName = "인도네시아어";
+                    break;
+                case "fr":
+                    languageName = "프랑스어";
+                    break;
+                case "es":
+                    languageName = "스페인어";
+                    break;
+                case "ru":
+                    languageName = "러시아어";
+                    break;
+                case "de":
+                    languageName = "독일어";
+                    break;
+                case "it":
+                    languageName = "이탈리아어";
+                    break;
+                default:
+                    languageName = "알 수 없는 언어";
+            }
+            document.getElementById("language").innerText = languageName;
+        }
+        window.onload = displayLanguage;
     </script>
 
 
@@ -121,20 +174,24 @@
 <main class="quiz-container">
     <h1 id="level" class="quiz-level">${quizVO.level}</h1>
     <hr/>
+    <div class="quiz-lang">
+        <label>퀴즈 언어</label>
+        <p id="quizLang"><span id="language"></span></p>
+    </div>
     <div class="quiz-content">
-        <label>퀴즈 내용:</label>
+        <label>퀴즈 내용</label>
         <p id="quizContent">${quizVO.quiz_content}</p>
     </div>
     <div class="user-answer">
-        <label>사용자 답변:</label>
+        <label>사용자 답변</label>
         <p id="userAnswer">${user_answer}</p>
     </div>
     <div class="correct-answer">
-        <label>정답:</label>
+        <label>정답</label>
         <p id="correctAnswer">${quizVO.answer}</p>
     </div>
     <div class="result">
-        <label>결과:</label>
+        <label>결과</label>
         <p id="result">${result == 'correct' ? '정답입니다!' : '틀렸습니다.'}</p>
     </div>
 </main>

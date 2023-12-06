@@ -1,15 +1,15 @@
 {
-    "configurations": [
-        {
-            "type": "java",
-            "name": "Spring Boot-ShouldbeApplication<shouldbe>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "mainClass": "com.finalproject.team4.shouldbe.ShouldbeApplication",
-            "projectName": "shouldbe",
-            "args": "",
-            "envFile": "${workspaceFolder}/.env",
-            "vmArgs": "-Dfile.encoding=UTF-8"
-        }
-    ]
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-ShouldbeApplication<shouldbe>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.finalproject.team4.shouldbe.ShouldbeApplication",
+      "projectName": "shouldbe",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": "-Dfile.encoding=UTF-8"
+    }
+  ]
 }

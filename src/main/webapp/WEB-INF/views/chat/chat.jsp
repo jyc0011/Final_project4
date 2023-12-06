@@ -14,7 +14,7 @@
             box-sizing: border-box;
         }
 
-        html,body {
+        html, body {
             height: 100%;
         }
 
@@ -100,7 +100,7 @@
             margin: 0;
             overflow: auto;
             overflow-y: scroll;
-            padding: 0 20px 0px 20px;
+            padding: 0 20px 0 20px;
             height: calc(100% - 150px);
         }
 
@@ -137,7 +137,7 @@
             position: relative;
         }
 
-        #chat-page .message-others i {
+        #chat-page .message-others img {
             position: absolute;
             width: 42px;
             height: 42px;
@@ -154,7 +154,7 @@
             text-transform: uppercase;
         }
 
-        #chat-page .message-mine i {
+        #chat-page .message-mine img {
             position: absolute;
             width: 42px;
             height: 42px;
@@ -183,6 +183,7 @@
         .message-mine {
             text-align: right;
         }
+
         .message-mine > i {
             float: right;
         }
@@ -211,12 +212,30 @@
             font-weight: 500;
         }
 
-        .connecting {
-            padding-top: 5px;
-            text-align: center;
+        .message-actions {
             position: absolute;
-            top: 65px;
-            width: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .report-button, .save-button {
+            margin-right: 5px;
+            font-size: 12px;
+            color: #444444;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .message-actions-other {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .report-button-other, .save-button-other {
+            margin-left: 5px;
+            font-size: 12px;
+            color: #444444;
+            cursor: pointer;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -225,7 +244,14 @@
 <div id="chat-page">
     <div class="chat-container">
         <div class="chat-header">
-            <h2>Spring WebSocket Chat</h2>
+            <c:choose>
+                <c:when test="${(message.is_from_id == 1 and userId == fromId) or (message.is_from_id == 0 and userId != fromId)}">
+                    <h2>${userId}님과의 채팅방</h2>
+                </c:when>
+                <c:otherwise>
+                    <h2>${otherId}님과의 채팅방</h2>
+                </c:otherwise>
+            </c:choose>
         </div>
         <ul id="messageArea">
             <div class="chat-messages">
@@ -234,23 +260,34 @@
                         <c:when test="${(message.is_from_id == 1 and userId == fromId)
                         or (message.is_from_id == 0 and userId != fromId)}">
                             <li class="message-mine chat-message">
+                                <div class="message-actions">
+                                    <a href="#" class="report-button-other" data-message-id="${message.msg_id}">Report</a>
+                                    <a href="#" class="save-button-other" data-message-id="${message.msg_id}">Save</a>
+                                </div>
                                 <div class="text-container">
                                     <span class="username">${userId}</span>
                                     <i style="position: absolute; width: 42px; height: 42px; right: 10px;">
                                         <img src="${profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
                                     </i>
                                     <p>${message.content}</p>
+                                    <p>${message.trans_content}</p>
                                 </div>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="message-others chat-message">
+                                <div class="message-actions-other">
+                                    <a href="#" class="report-button" data-message-id="${message.msg_id}">Report</a>
+                                    <a href="#" class="save-button" data-message-id="${message.msg_id}">Save</a>
+                                </div>
                                 <div class="text-container">
                                     <span class="username">${otherId}</span>
                                     <i style="position: absolute; width: 42px; height: 42px; left: 10px;">
-                                        <img src="${other_profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <img src="${other_profile_img}"
+                                             style="width: 100%; height: 100%; object-fit: cover;">
                                     </i>
                                     <p>${message.content}</p>
+                                    <p>${message.trans_content}</p>
                                 </div>
                             </li>
                         </c:otherwise>
@@ -261,7 +298,8 @@
         <form id="messageForm" name="messageForm">
             <div class="form-group">
                 <div class="input-group clearfix">
-                    <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
+                    <input type="text" id="message" placeholder="Type a message..." autocomplete="off"
+                           class="form-control"/>
                     <button type="submit" class="primary">Send</button>
                 </div>
             </div>
@@ -277,17 +315,18 @@
     var messageInput = document.querySelector('#message');
     var messageArea = document.querySelector('#messageArea');
     var connectingElement = document.querySelector('.connecting');
+    const fromId = "${fromId}";
+    const otherId = "${otherId}";
+    const chatId = ${chatId};
     var username = "${userId}";
     var stompClient = null;
-    var colors = [
-        '#2196F3', '#32c787', '#00BCD4', '#ff5652',
-        '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
-    ];
+    const userProfileImage = "${profile_img}";
+    const otherUserProfileImage = "${other_profile_img}";
 
     function connect() {
         console.log("Connect");
         console.log("Username:", username);
-        if(username) {
+        if (username) {
             chatPage.classList.remove('hidden');
 
             var socket = new SockJS('/ws');
@@ -299,12 +338,7 @@
 
     function onConnected() {
         console.log("Connected to WebSocket");
-        stompClient.subscribe('/topic/public', onMessageReceived);
-        stompClient.send("/app/chat.addUser",
-            {},
-            JSON.stringify({sender: username, type: 'JOIN'})
-        )
-        connectingElement.classList.add('hidden');
+        stompClient.subscribe('/topic/public/${chatId}', onMessageReceived);
     }
 
     function onError(error) {
@@ -315,66 +349,131 @@
 
     function sendMessage(event) {
         var messageContent = messageInput.value.trim();
-        if(messageContent && stompClient) {
+        if (messageContent && stompClient) {
             var chatMessage = {
+                chat_id: chatId,
                 sender: username,
                 content: messageInput.value,
-                type: 'CHAT'
+                from_id: fromId,
+                other_id : otherId
             };
-            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+            stompClient.send('/app/chat.sendMessage/${chatId}', {}, JSON.stringify(chatMessage));
             messageInput.value = '';
         }
         event.preventDefault();
     }
 
-    function createAvatarElement(sender) {
-        const avatarElement = document.createElement('i');
-        const avatarText = document.createTextNode(sender[0]);
-        avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(sender);
-        return avatarElement;
-    }
-
     function onMessageReceived(payload) {
         const message = JSON.parse(payload.body);
         const messageElement = document.createElement('li');
-        const avatarElement = createAvatarElement(message.sender);
+        const avatarElement = document.createElement('img');
+        avatarElement.src = message.sender === username ? userProfileImage : otherUserProfileImage;
+        avatarElement.style.width = '42px';
+        avatarElement.style.height = '42px';
+        avatarElement.style.borderRadius = '50%';
+        avatarElement.style.objectFit = 'cover';
+        messageElement.classList.add('chat-message');
+        const messageActions = document.createElement('div');
+        messageActions.classList.add(message.sender === username ? 'message-actions':'message-actions-other');
 
-        if (message.type === 'JOIN' || message.type === 'LEAVE') {
-            messageElement.classList.add('event-message');
-            message.content = message.sender + (message.type === 'JOIN' ? ' joined!' : ' left!');
-        } else {
-            messageElement.classList.add('chat-message');
-            const textContainer = document.createElement('div');
-            textContainer.classList.add('text-container');
-            const usernameElement = document.createElement('span');
-            const usernameText = document.createTextNode(message.sender);
-            usernameElement.appendChild(usernameText);
-            messageElement.appendChild(usernameElement);
-            messageElement.classList.add(message.sender === username ? 'message-mine' : 'message-others');
-            messageElement.appendChild(avatarElement);
-        }
+        const reportButton = document.createElement('a');
+        reportButton.href = "#";
+        reportButton.classList.add(message.sender === username ? 'report-button' : 'report-button-other');
+        reportButton.textContent = "Report";
+        reportButton.dataset.messageId = message.msg_id;
+        reportButton.onclick = function(event) {
+            event.preventDefault();
+            reportMessage(this.dataset.messageId);
+        };
+
+        const saveButton = document.createElement('a');
+        saveButton.href = "#";
+        saveButton.classList.add(message.sender === username ? 'save-button' : 'save-button-other');
+        saveButton.textContent = "Save";
+        saveButton.dataset.messageId = message.msg_id; // Assuming msg_id is part of the payload
+        saveButton.onclick = function(event) {
+            event.preventDefault();
+            saveMessage(this.dataset.messageId);
+        };
+
+        messageActions.appendChild(reportButton);
+        messageActions.appendChild(saveButton);
+
+        messageElement.appendChild(messageActions);
+        const textContainer = document.createElement('div');
+        textContainer.classList.add('text-container');
+        const usernameElement = document.createElement('span');
+        const usernameText = document.createTextNode(message.sender);
+        usernameElement.appendChild(usernameText);
+        messageElement.appendChild(usernameElement);
+        messageElement.classList.add(message.sender === username ? 'message-mine' : 'message-others');
+        messageElement.appendChild(avatarElement);
 
         const textElement = document.createElement('p');
         const messageText = document.createTextNode(message.content);
         textElement.appendChild(messageText);
-
-
+        const transTextElement = document.createElement('p');
+        transTextElement.classList.add('translated-text');
+        const transMessageText = document.createTextNode(message.trans_content);
+        transTextElement.appendChild(transMessageText);
+        textElement.appendChild(transTextElement);
         messageElement.appendChild(textElement);
         messageArea.appendChild(messageElement);
         messageArea.scrollTop = messageArea.scrollHeight;
     }
 
-    function getAvatarColor(messageSender) {
-        var hash = 0;
-        for (var i = 0; i < messageSender.length; i++) {
-            hash = 31 * hash + messageSender.charCodeAt(i);
-        }
-        var index = Math.abs(hash % colors.length);
-        return colors[index];
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.report-button').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var messageId = this.getAttribute('data-message-id');
+                reportMessage(messageId);
+            });
+        });
+
+        document.querySelectorAll('.save-button').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var messageId = this.getAttribute('data-message-id');
+                // AJAX call to save message
+                saveMessage(messageId);
+            });
+        });
+    });
+
+    function reportMessage(messageId) {
+        console.log(messageId);
+        $.ajax({
+            url: '/chat/reportMessage',
+            method: 'POST',
+            data: { msg_id: messageId },
+            success: function() {
+                alert("Message reported successfully!");
+            },
+            error: function(error) {
+                alert("Error saving message: " + error);
+            }
+        });
     }
+
+    function saveMessage(messageId) {
+        console.log(messageId);
+        $.ajax({
+            url: '/chat/saveMessage',
+            method: 'POST',
+            data: { msg_id: messageId },
+            success: function() {
+                alert("Message saved successfully!");
+            },
+            error: function(error) {
+                alert("Error saving message: " + error);
+            }
+        });
+    }
+
     connect();
     messageForm.addEventListener('submit', sendMessage, true)
+    messageArea.scrollTop = messageArea.scrollHeight;
 </script>
 </body>
 </html>

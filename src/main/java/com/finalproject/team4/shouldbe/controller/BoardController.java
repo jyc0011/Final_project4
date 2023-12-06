@@ -6,12 +6,11 @@ import com.finalproject.team4.shouldbe.vo.BoardVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -63,27 +62,11 @@ public class BoardController {
 
     @GetMapping({"/board/free", "/board/notice", "/board/inquiries"})
     public ModelAndView board(HttpServletRequest request, PagingVO pVO) {
+        //System.out.println("before : "+ pVO);
         ModelAndView mav = new ModelAndView();
-        try {
-            String[] params = request.getRequestURI().split("/");
-            String boardType= params[2];
-            switch (boardType) {
-                case "notice":
-                    pVO.setBoard_cat("notice");
-                    break;
-                case "free":
-                    pVO.setBoard_cat("free");
-                    break;
-                case "inquiries":
-                    pVO.setBoard_cat("inquiries");
-                    break;
-                default:
-                    return null;
-            }
-        }catch(Exception e){
-            return null;
-        }
-
+        var boardCat = parseCategory(request.getRequestURI());
+        //board category setting
+        pVO.setBoard_cat(boardCat);
         //총레코드 수
         pVO.setTotalRecord(boardService.totalRecord(pVO));
         //DB선택(page, 검색)
@@ -97,43 +80,21 @@ public class BoardController {
     @GetMapping({"/board/free/write", "/board/notice/write", "/board/inquiries/write"})
     public ModelAndView write(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
-
-        try {
-            String[] params = request.getRequestURI().split("/");
-            String boardType= params[2];
-            mav.setViewName("board/board_write");
-            mav.addObject("category", boardType);
-            return mav;
-        } catch (Exception e) {
-            return null;
-        }
+        var boardCat = parseCategory(request.getRequestURI());
+        mav.setViewName("board/board_write");
+        mav.addObject("category", boardCat);
+        return mav;
     }
+
     @PostMapping({"/board/free/writeOk", "/board/notice/writeOk", "/board/inquiries/writeOk"})
-    public String writeOk(HttpServletRequest request, HttpSession session, BoardVO bVO){
-        try {
-            String[] params = request.getRequestURI().split("/");
-            String boardType= params[2];
-            switch (boardType) {
-                case "notice":
-                    bVO.setBoard_cat("notice");
-                    break;
-                case "free":
-                    bVO.setBoard_cat("free");
-                    break;
-                case "inquiries":
-                    bVO.setBoard_cat("inquiries");
-                    break;
-                default:
-                    return null;
-            }
-            bVO.setUser_id((String)session.getAttribute("logId"));
-            int result = boardService.boardInsert(bVO);
-            System.out.println("result : "+result);
-            return "redirect:/board/"+boardType;
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
+    public String writeOk(HttpServletRequest request, HttpSession session, BoardVO bVO) {
+        var boardCat = parseCategory(request.getRequestURI());
+        bVO.setBoard_cat(boardCat);
+        bVO.setUser_id((String) session.getAttribute("logId"));
+        int result = boardService.boardInsert(bVO);
+        System.out.println("result : " + result);
+        return "redirect:/board/" + boardCat;
+
     }
 
 
@@ -143,6 +104,7 @@ public class BoardController {
         boardService.viewCount(no);
         var vo = boardService.boardSelect(no);
         mav.addObject("vo", vo);
+        System.out.println(vo);
         //mav.addObject("pVO", pVO);
         mav.setViewName("board/board_view");
 
@@ -150,9 +112,20 @@ public class BoardController {
     }
 
 
-    @GetMapping("/board/edit")
-    public String edit() {
-        return "board/board_edit";
+    @GetMapping({"/board/free/edit", "/board/notice/edit", "/board/inquiries/edit"})
+    public ModelAndView edit(int no) {
+        ModelAndView mav = new ModelAndView();
+        var vo = boardService.boardSelect(no);
+        mav.addObject("vo", vo);
+        mav.setViewName("board/board_edit");
+        System.out.println();
+
+        return mav;
+    }
+
+    public String parseCategory(String requestUri) {
+        String[] params = requestUri.split("/");
+        return params[2];
     }
 
 

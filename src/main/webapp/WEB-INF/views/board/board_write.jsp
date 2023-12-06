@@ -43,7 +43,6 @@
     <c:if test="${category=='free'}">자유게시판</c:if>
     <c:if test="${category=='notice'}">공지사항</c:if>
     <c:if test="${category=='inquiries'}">문의게시판</c:if>
-    <c:if test="${category=='resources'}">자료게시판</c:if><br>
     <form method="post"
           action="${pageContext.servletContext.contextPath}/board/${category}/writeOk">
         <div class="mb-3">

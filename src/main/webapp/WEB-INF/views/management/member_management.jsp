@@ -161,7 +161,9 @@
                         <td class="time">${amVO.time}</td>
                         <td class="writing_count">${amVO.posts_count}/${amVO.comments_count}</td>
                         <td class="report_count">${amVO.count_report}</td>
-                        <td class="suspend_button"><a href="${pageContext.servletContext.contextPath}/suspend?user_id=${amVO.user_id}"><input type="button" value="계정정지" class="btn btn-dark"></a></td>
+                        <td class="suspend_button"><a
+                                href="${pageContext.servletContext.contextPath}/suspend?user_id=${amVO.user_id}"><input
+                                type="button" value="계정정지" class="btn btn-dark"></a></td>
                     </tr>
                 </c:forEach>
 

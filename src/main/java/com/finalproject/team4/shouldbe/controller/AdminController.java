@@ -16,19 +16,19 @@ public class AdminController {
     AdminService service;
 
     @GetMapping("/suspend")
-    public ModelAndView suspend(String user_id){
+    public ModelAndView suspend(String user_id) {
         ModelAndView mav = new ModelAndView();
         System.out.println(user_id);
-        int result=service.suspendInsert(user_id);
+        int result = service.suspendInsert(user_id);
         mav.setViewName("admin/admin_dashboard");
         return mav;
     }
 
     @GetMapping("/boardDelete")
-    public ModelAndView boardDelete(int post_id){
+    public ModelAndView boardDelete(int post_id) {
         ModelAndView mav = new ModelAndView();
         System.out.println(post_id);
-        int result=service.postsDelete(post_id);
+        int result = service.postsDelete(post_id);
         mav.setViewName("admin/admin_dashboard");
         return mav;
     }
@@ -128,9 +128,9 @@ public class AdminController {
     public ModelAndView GoQuiz_list() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("quiz_management/quiz_list");
-        List<QuizVO> quizlist1=service.quizlist(1);
-        List<QuizVO> quizlist2=service.quizlist(2);
-        List<QuizVO> quizlist3=service.quizlist(3);
+        List<QuizVO> quizlist1 = service.quizlist(1);
+        List<QuizVO> quizlist2 = service.quizlist(2);
+        List<QuizVO> quizlist3 = service.quizlist(3);
         //System.out.println(quizlist1.toString());
         mav.addObject("quizlist1", quizlist1);
         mav.addObject("quizlist2", quizlist2);
@@ -151,7 +151,7 @@ public class AdminController {
     @GetMapping("/admin/quiz_edit")
     public ModelAndView GoQuiz_edit(int quiz_id) {
         ModelAndView mav = new ModelAndView();
-        List<QuizVO> editlist=service.editlist(quiz_id);
+        List<QuizVO> editlist = service.editlist(quiz_id);
         System.out.println(editlist.toString());
         mav.addObject("editlist", editlist);
         mav.setViewName("quiz_management/quiz_edit");

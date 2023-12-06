@@ -72,8 +72,27 @@
                         isValid = false;
                     } else if (selectedLanguage === 'jp' && /[^ぁ-ゔゞァ-ヺー龰\s]/.test(value)) {
                         isValid = false;
+                    } else if (selectedLanguage === 'zh-CN' && /[^一-龥\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'zh-TW' && /[^一-龥\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'vi' && /[^a-zA-Zàảãáạăằẳẵắặâầẩẫấậđèẻẽéẹêềểễếệìỉĩíịòỏõóọôồổỗốộơờởỡớợùủũúụưừửữứựỳỷỹýỵ\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'th' && /[^ก-๙\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'id' && /[^a-zA-Z\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'fr' && /[^a-zA-Zàâçéèêëîïôûùüÿœ\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'es' && /[^a-zA-ZáéíñóúüÁÉÍÑÓÚÜ\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'ru' && /[^а-яА-ЯёЁ\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'de' && /[^a-zA-ZäöüßÄÖÜ\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'it' && /[^a-zA-Zàèéìîòóù\s]/.test(value)) {
+                        isValid = false;
                     }
-
                     if (!isValid) {
                         $('#warning-message').show();
                     } else {
@@ -82,6 +101,51 @@
                 });
             });
             $('#submitButton').prop('disabled', true);
+            function getLanguageType(value) {
+                if (/^[ㄱ-ㅎㅏ-ㅣ가-힣\s]+$/.test(value)) {
+                    return 'ko';
+                } else if (/^[a-zA-Z\s]+$/.test(value)) {
+                    return 'en';
+                } else if (/^[ぁ-ゔゞァ-ヺー龰\s]+$/.test(value)) {
+                    return 'jp';
+                } else if (/^[一-龥\s]+$/.test(value)) {
+                    return 'zh';
+                } else if (/^[a-zA-Zàảãáạăằẳẵắặâầẩẫấậđèẻẽéẹêềểễếệìỉĩíịòỏõóọôồổỗốộơờởỡớợùủũúụưừửữứựỳỷỹýỵ\s]+$/.test(value)) {
+                    return 'vi';
+                } else if (/^[ก-๙\s]+$/.test(value)) {
+                    return 'th';
+                } else if (/^[a-zA-Z\s]+$/.test(value)) {
+                    return 'id';
+                } else if (/^[a-zA-Zàâçéèêëîïôûùüÿœ\s]+$/.test(value)) {
+                    return 'fr';
+                } else if (/^[a-zA-ZáéíñóúüÁÉÍÑÓÚÜ\s]+$/.test(value)) {
+                    return 'es';
+                } else if (/^[а-яА-ЯёЁ\s]+$/.test(value)) {
+                    return 'ru';
+                } else if (/^[a-zA-ZäöüßÄÖÜ\s]+$/.test(value)) {
+                    return 'de';
+                } else if (/^[a-zA-Zàèéìîòóù\s]+$/.test(value)) {
+                    return 'it';
+                }
+                return 'other';
+            }
+
+            function validateLanguages() {
+                var quizContent = $('#quiz_content').val();
+                var answer = $('#answer').val();
+                var quizLangType = getLanguageType(quizContent);
+                var answerLangType = getLanguageType(answer);
+
+                if (quizLangType === answerLangType) {
+                    $('#warning-message').show();
+                } else {
+                    $('#warning-message').hide();
+                }
+            }
+
+            $('#quiz_content, #answer').on('input', function () {
+                validateLanguages();
+            });
 
             $('#answer, #quiz_content').on('input', function () {
                 var isAnswerFilled = $('#answer').val().trim() !== '';
@@ -132,6 +196,16 @@
                 <option value="ko">한국어</option>
                 <option value="en">영어</option>
                 <option value="jp">일본어</option>
+                <option value="zh-CN">중국어 간체</option>
+                <option value="zh-TW">중국어 번체</option>
+                <option value="vi">베트남어</option>
+                <option value="th">태국어</option>
+                <option value="id">인도네시아어</option>
+                <option value="fr">프랑스어</option>
+                <option value="es">스페인어</option>
+                <option value="ru">러시아어</option>
+                <option value="de">독일어</option>
+                <option value="it">이탈리아어</option>
             </select>
         </div>
 
