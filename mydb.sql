@@ -159,7 +159,6 @@ CREATE TABLE user_quiz
 (
     quiz_id INT         NOT NULL,
     user_id VARCHAR(45) NOT NULL,
-    correct INT         NOT NULL DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES users (user_id),
     FOREIGN KEY (quiz_id) REFERENCES quiz (quiz_id)
 );

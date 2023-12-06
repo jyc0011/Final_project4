@@ -71,6 +71,13 @@
             width: 100%;
         }
 
+        .truncated-content {
+            max-width: 450px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
         .unread-count {
             color: #784214;
             margin-left: 50px;
@@ -121,7 +128,7 @@
 
                     <div class="chat-details">
                         <div class="chat-last-content">
-                            <div>${chatRoom.last_content}</div>
+                            <div class="truncated-content">${chatRoom.last_content}</div>
                             <div class="unread-count"> ${chatRoom.not_read}</div>
                         </div>
                         <div class="last-message-time">Last message time: ${chatRoom.last_time}</div>
