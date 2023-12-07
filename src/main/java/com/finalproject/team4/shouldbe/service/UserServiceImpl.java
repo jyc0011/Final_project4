@@ -37,6 +37,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int userCheckEmail(String email) {
+        return mapper.userCheckEmail(email);
+    }
+
+    @Override
     public int userpwdUpdate(UserVO vo) {
         return mapper.userpwdUpdate(vo);
     }
