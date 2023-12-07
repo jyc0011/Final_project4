@@ -32,7 +32,7 @@
             border-radius: 5px;
         }
 
-        .quiz-lang , .quiz-content, .user-answer, .correct-answer, .result,{
+        .quiz-lang , .quiz-content, .user-answer, .correct-answer, .result{
             margin-bottom: 20px;
         }
 

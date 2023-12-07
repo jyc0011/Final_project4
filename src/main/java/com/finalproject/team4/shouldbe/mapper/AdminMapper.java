@@ -9,6 +9,10 @@ import java.util.List;
 @Mapper
 public interface AdminMapper {
     //대시보드=====================================================
+    List<DashboardVO> monthVisitor();
+    List<DashboardVO> countUsersByNation();
+    List<BoardVO> latestBoard();
+    List<BoardReplyVO> latestReply();
     //현재회원관리=====================================================
     int countMember();
     List<AdminMemberVO> adminMemberList(@Param("pvo") PagingVO pvo);

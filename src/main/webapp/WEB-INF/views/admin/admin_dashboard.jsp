@@ -49,7 +49,7 @@
         }
 
         main {
-            height: 1000px;
+            height: auto;
             margin: 50px auto;
         }
 
@@ -61,8 +61,10 @@
             margin-left: 20px;
         }
 
+        #boardList > a li,
+        #replyList > a li,
         #boardList > li,
-        #replyList > li {
+        #replyList > li  {
             float: left;
             height: 30px;
             line-height: 30px;
@@ -73,19 +75,28 @@
             text-overflow: ellipsis;
         }
 
-        #boardList > li:nth-child(3n+2) {
+        #boardList > a li:nth-child(3n+2),
+        #boardList > li:nth-child(3n+2){
             width: 200px;
         }
 
-        #replyList > li:nth-child(3n+1) {
+        #replyList > a li:nth-child(3n+1),
+        #replyList > li:nth-child(3n+1)
+        {
             width: 130px;
         }
 
-        #replyList > li:nth-child(3n+2) {
+        #replyList > a li:nth-child(3n+2),
+        #replyList > li:nth-child(3n+2)
+        {
             width: 175px;
         }
 
-        #boardList > li:nth-child(-n+3), #replyList > li:nth-child(-n+3) {
+        #boardList > a li:nth-child(-n+3),
+        #replyList > a li:nth-child(-n+3),
+        #boardList > li:nth-child(-n+3),
+        #replyList > li:nth-child(-n+3)
+        {
             font-weight: bold;
             font-size: 17px;
         }
@@ -134,22 +145,13 @@
                     <li>게시판</li>
                     <li>글제목</li>
                     <li>작성자</li>
-
-                    <li>자유게시판</li>
-                    <li>글제목입니다</li>
-                    <li>userid</li>
-                    <li>자유게시판</li>
-                    <li>글제목입니다</li>
-                    <li>userid</li>
-                    <li>자유게시판</li>
-                    <li>글제목입니다</li>
-                    <li>userid</li>
-                    <li>자유게시판</li>
-                    <li>글제목입니다</li>
-                    <li>userid</li>
-                    <li>자유게시판</li>
-                    <li>글제목입니다</li>
-                    <li>userid</li>
+                    <c:forEach var="board" items="${latestBoards}">
+                        <a href="/board/notice/view?no=${board.post_id}" style="color: black; text-decoration: none;">
+                            <li>${board.board_cat}</li>
+                            <li>${board.title}</li>
+                            <li>${board.user_id}</li>
+                        </a>
+                    </c:forEach>
                 </ul>
             </section>
             <section id="visitor">
@@ -164,37 +166,102 @@
                     <li>글제목</li>
                     <li>댓글내용</li>
                     <li>작성자</li>
-
-                    <li>글제목입니다</li>
-                    <li>댓글내용입니다</li>
-                    <li>userid</li>
-                    <li>글제목입니다</li>
-                    <li>댓글내용입니다</li>
-                    <li>userid</li>
-                    <li>글제목입니다</li>
-                    <li>댓글내용입니다</li>
-                    <li>userid</li>
-                    <li>글제목입니다</li>
-                    <li>댓글내용입니다</li>
-                    <li>userid</li>
-                    <li>글제목입니다</li>
-                    <li>댓글내용입니다</li>
-                    <li>userid</li>
+                    <c:forEach var="reply" items="${latestReplies}">
+                        <a href="/board/notice/view?no=${reply.post_id}" style="color: black; text-decoration: none;">
+                            <li>${reply.title}</li>
+                            <li>${reply.content}</li>
+                            <li>${reply.writer}</li>
+                        </a>
+                    </c:forEach>
                 </ul>
             </section>
         </div>
     </main>
 </div>
 <script>
+    var visitorStats = JSON.parse('${visitorStats}');
+
+    function getNationName(nationCode) {
+        switch (nationCode) {
+            case "ko":
+                return "한국";
+            case "en":
+                return "미국";
+            case "jp":
+                return "일본";
+            case "zh-CN":
+                return "중국";
+            case "vi":
+                return "베트남";
+            case "th":
+                return "태국";
+            case "id":
+                return "인도네시아";
+            case "fr":
+                return "프랑스";
+            case "es":
+                return "스페인";
+            case "ru":
+                return "러시아";
+            case "de":
+                return "독일";
+            case "it":
+                return "이탈리아";
+            default:
+                return nationCode;
+        }
+    }
+
+    var dataByNation = {};
+    visitorStats.forEach(function (stat) {
+        var nationName = getNationName(stat.nation);
+        if (!dataByNation[nationName]) {
+            dataByNation[nationName] = Array(12).fill(0);
+        }
+        dataByNation[nationName][stat.month - 1] = stat.visitCount;
+    });
+
+    var datasets = [];
+    for (var nation in dataByNation) {
+        var color = getRandomColor();
+        datasets.push({
+            label: nation,
+            data: dataByNation[nation],
+            borderColor: color,
+            fill: false
+        });
+    }
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    var nationStats = JSON.parse('${nationStats}');
+
+    var labels = [];
+    var data = [];
+    var backgroundColors = [];
+
+    nationStats.forEach(function (stat) {
+        labels.push(stat.nation);
+        data.push(stat.visitCount);
+        backgroundColors.push(getRandomColor());
+    });
+
     new Chart(document.getElementById("bar-chart-horizontal"), {
         type: 'horizontalBar',
         data: {
-            labels: ["Korean", "English", "Japanese"],
+            labels: labels,
             datasets: [
                 {
-                    label: "preferred language",
-                    backgroundColor: ["#3e95cd", "#8e5ea2", "#c45850"],
-                    data: [1278, 1607, 934]
+                    label: "User Count by Nation",
+                    backgroundColor: backgroundColors,
+                    data: data
                 }
             ]
         },
@@ -202,7 +269,7 @@
             legend: {display: false},
             title: {
                 display: false,
-                text: 'preferred language'
+                text: 'User Count by Nation'
             }
         }
     });
@@ -210,24 +277,8 @@
     new Chart(document.getElementById("line-chart"), {
         type: 'line',
         data: {
-            labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            datasets: [{
-                data: [186, 214, 406, 606, 907, 1111, 1133, 1221, 1333, 1878],
-                label: "Korean",
-                borderColor: "#3e95cd",
-                fill: false
-            }, {
-                data: [282, 350, 411, 502, 735, 1109, 1507, 1802, 2000, 2267],
-                label: "English",
-                borderColor: "#8e5ea2",
-                fill: false
-            }, {
-                data: [168, 170, 178, 190, 263, 376, 508, 647, 875, 1134],
-                label: "Japanese",
-                borderColor: "#c45850",
-                fill: false
-            }
-            ]
+            labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], // 월별 레이블
+            datasets: datasets
         },
         options: {
             title: {
@@ -236,6 +287,7 @@
             }
         }
     });
+
 </script>
 </body>
 

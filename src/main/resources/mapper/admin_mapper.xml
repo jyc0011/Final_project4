@@ -1,9 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalproject.team4.shouldbe.mapper.AdminMapper">
-    <!--
-    //대시보드=====================================================
 
+    <!--//대시보드=====================================================-->
+    <select id="monthVisitor" resultType="DashboardVO">
+        SELECT
+            EXTRACT(MONTH FROM u.log_date) AS month,
+        usr.nation,
+        COUNT(*) AS visitCount
+        FROM
+            user_login u
+            JOIN
+            users usr ON u.user_id = usr.user_id
+        WHERE
+            EXTRACT(YEAR FROM u.log_date) = EXTRACT(YEAR FROM CURRENT_DATE)
+        GROUP BY
+            EXTRACT(MONTH FROM u.log_date), usr.nation
+    </select>
+
+    <select id="countUsersByNation" resultType="DashboardVO">
+        SELECT
+            nation,
+            COUNT(*) visitCount
+        FROM
+            users
+        GROUP BY
+            nation
+    </select>
+
+    <select id="latestBoard" resultType="BoardVO">
+        SELECT post_id, title, user_id, board_cat
+        FROM
+            posts
+        order by post_id desc limit 5
+    </select>
+
+    <select id="latestReply" resultType="BoardReplyVO">
+        SELECT
+            p.post_id,
+            p.title,
+            c.content,
+            c.user_id as writer
+        FROM
+            posts p
+                JOIN comments c ON p.post_id = c.post_id
+        ORDER BY
+            c.comment_id DESC
+            LIMIT 5
+    </select>
+    <!--
     //게시글관리_보드삭제 버튼======================================================
     //댓글관리======================================================
     //퀴즈관리======================================================
@@ -34,7 +79,7 @@
     <!--//정지회원관리====================================================== -->
     <select id="countSuspendedMember" resultType="int">
         SELECT COUNT(*)
-        FROM users
+        FROM suspended_users
     </select>
     <select id="adminSuspendedList" resultType="AdminMemberVO">
         select suspended_id, user_id, suspended_time, suspended_period, reason
@@ -62,7 +107,7 @@
     <!--//탈퇴회원관리======================================================-->
     <select id="countWithdrawnMember" resultType="int">
         SELECT COUNT(*)
-        FROM users
+        FROM withdrawn_users
     </select>
     <select id="adminWithdrawnList" resultType="AdminMemberVO">
         select user_id, withdrawn_time

@@ -132,12 +132,16 @@ public class UserController {
     }
 
     @PostMapping("/loginOk")
-    public String loginOk(HttpSession session, @RequestParam("userid") String userid, @RequestParam("userpwd") String userpwd, RedirectAttributes redirect) {
+    public String loginOk(HttpSession session,
+                          @RequestParam("userid") String userid,
+                          @RequestParam("userpwd") String userpwd,
+                          RedirectAttributes redirect) {
         LoginVO vo = userService.userLoginCheck(userid);
         if (vo == null || vo.getWithdraw()==1) {//로그인 실패
             redirect.addFlashAttribute("result", "로그인 실패, 아이디를 확인해주세요!");
             return "redirect:/login";
         } else if (encrypt.encrypt(userpwd, vo.getSalt()).equals(vo.getPassword())) {
+            userService.logUser(userid);
             session.setAttribute("logStatus", "Y");
             session.setAttribute("logName", vo.getUser_name());
             session.setAttribute("logId", userid);

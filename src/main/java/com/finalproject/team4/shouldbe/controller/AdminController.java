@@ -1,5 +1,6 @@
 package com.finalproject.team4.shouldbe.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.finalproject.team4.shouldbe.service.AdminService;
 import com.finalproject.team4.shouldbe.vo.*;
 import oracle.jdbc.proxy.annotation.Post;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
@@ -19,8 +21,15 @@ public class AdminController {
 
     //대시보드======================================================
     @GetMapping("/admin")
-    public String admin() {
-        return "admin/admin_dashboard";
+    public ModelAndView admin() throws JsonProcessingException {
+        ModelAndView mav = new ModelAndView();
+        ObjectMapper objectMapper = new ObjectMapper();
+        mav.addObject("visitorStats", objectMapper.writeValueAsString(service.getMonthlyVisitorStats()));
+        mav.addObject("nationStats", objectMapper.writeValueAsString(service.countUsersByNation()));
+        mav.addObject("latestBoards", service.latestBoard());
+        mav.addObject("latestReplies", service.latestReply());
+        mav.setViewName("admin/admin_dashboard");
+        return mav;
     }
 
     //현재 회원 관리

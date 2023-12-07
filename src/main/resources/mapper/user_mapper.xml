@@ -38,4 +38,15 @@
             salt     = #{salt}
         where user_id = #{userid};
     </update>
+    <select id="getLastLogDate" resultType="Date">
+        SELECT log_date
+        FROM user_login
+        WHERE user_id = #{userid}
+        ORDER BY log_date DESC
+            LIMIT 1
+    </select>
+    <insert id="insertLog">
+        insert into user_login(user_id)
+        values (#{userid});
+    </insert>
 </mapper>

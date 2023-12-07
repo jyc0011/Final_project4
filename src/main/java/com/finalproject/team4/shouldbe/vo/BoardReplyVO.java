@@ -19,4 +19,5 @@ public class BoardReplyVO {
     private String email;
     private int isdelete;
     private String board_cat;
+    private String title;
 }
