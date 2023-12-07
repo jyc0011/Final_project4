@@ -71,4 +71,14 @@ public class MypageServiceImpl implements MypageService {
     public int withdraw_user(String user_id) {
         return mapper.withdraw_user(user_id);
     }
+
+    @Override
+    public int change_profileimg(MypageVO vo) {
+        return mapper.change_profileimg(vo);
+    }
+
+    @Override
+    public int change_basic_profileimg(MypageVO vo) {
+       return mapper.change_basic_profileimg(vo);
+    }
 }

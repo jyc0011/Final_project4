@@ -31,4 +31,8 @@ public interface MypageMapper {
     int withdraw_user(String user_id);
 
     List<SaveMessageVO> selectSaveMessages(@Param("pvo") PagingVO pvo, @Param("userid") String userid);
+
+    int change_profileimg(MypageVO vo);
+
+    int change_basic_profileimg(MypageVO vo);
 }
