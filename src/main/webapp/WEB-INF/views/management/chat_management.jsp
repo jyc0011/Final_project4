@@ -127,7 +127,7 @@
                 <tr class="management_list">
                     <th class="reported_id">신고받은 ID</th>
                     <th class="chat_content">채팅 내용</th>
-                    <th class="report_count">신고횟수</th>
+                    <th class="report_count">신고일</th>
                     <th class="suspend_button"></th>
                 </tr>
                 </thead>
@@ -138,11 +138,13 @@
                         <div class="origin">
                             sdf
                         </div>
-                        <div class="translation">
-                            asdfsadfsadfsaf
-                        </div>
+                        <!--
+                           <div class="translation">
+                                asdfsadfsadfsaf
+                            </div>
+                        -->
                     </td>
-                    <td class="report_count">신고횟수111</td>
+                    <td class="report_count">신고일</td>
                     <td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
                 </tr>
                 <c:forEach var="acVO" items="${aclist}">
@@ -150,14 +152,16 @@
                         <td class="reported_id">${acVO.user_id}</td>
                         <td class="chat_content">
                             <div class="origin">
-                                sdf
+                                    ${acVO.content}
                             </div>
-                            <div class="translation">
-                                asdfsadfsadfsaf
-                            </div>
+
                         </td>
-                        <td class="report_count">신고횟수111</td>
-                        <td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
+                        <td class="report_count">${acVO.report_time}</td>
+                        <td class="suspend_button">
+                            <a href="${pageContext.servletContext.contextPath}/suspend?user_id=${acVO.user_id}">
+                                <input type="button" value="계정정지" class="btn btn-dark">
+                            </a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

@@ -110,7 +110,6 @@
             font-weight: bold;
             font-size: 18px;
         }
-
     </style>
 </head>
 <body>
@@ -137,7 +136,7 @@
             <c:forEach var="eVO1" items="${editlist}" varStatus="status">
                 <div id="answer">
                     <div id="quiz_answer">${eVO1.answer}</div>
-                    <button id="quiz_delete"> -</button>
+                    <a href="${pageContext.servletContext.contextPath}/answerDelete?answer=${eVO1.answer}&quiz_id=${eVO1.quiz_id}"><button id="quiz_delete"> -</button></a>
                 </div>
             </c:forEach>
         </div>

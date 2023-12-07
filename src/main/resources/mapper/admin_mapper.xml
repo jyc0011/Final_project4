@@ -137,13 +137,22 @@
         where a.quiz_id = ${quiz_id}
     </select>
 
+    <!-- //퀴즈관리_등록된 퀴즈 삭제 버튼======================================================-->
+    <delete id="answerDelete">
+        delete from answer where answer=#{answer}
+    </delete>
 
     <!--//채팅관리======================================================-->
     <select id="countMessage" resultType="int">
         SELECT COUNT(*)
         FROM message
     </select>
-
+    <select id="adminChatList" resultType="com.finalproject.team4.shouldbe.vo.AdminChatVO">
+        select message_report_id, user_id, msg_id, report_time, content
+        from message_report
+        ORDER BY report_time
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
 
 
 

@@ -57,6 +57,8 @@ public interface AdminMapper {
     int selectQuizId(String quiz_content);
     int answerInsert(int quiz_id,String answer);
 
+    //퀴즈관리_등록된 퀴즈 삭제 버튼======================================================
+    int answerDelete(String answer);
 
     //퀴즈관리_유저퀴즈등록버튼======================================================
     //퀴즈관리_등록된 퀴즈 리스트======================================================

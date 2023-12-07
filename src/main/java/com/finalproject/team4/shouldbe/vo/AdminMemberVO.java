@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminMemberVO {
+    private int suspended_id;
     private String profile_img;
     private String user_name;
     private String user_id;

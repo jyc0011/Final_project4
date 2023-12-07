@@ -214,6 +214,15 @@ public class AdminController {
         mav.setViewName("quiz_management/quiz_edit");
         return mav;
     }
+    //퀴즈관리_등록된 퀴즈 삭제 버튼
+    @GetMapping("/answerDelete")
+    public ModelAndView answerDelete(String answer,int quiz_id) {
+        ModelAndView mav = new ModelAndView();
+        System.out.println(quiz_id);
+        int result = service.answerDelete(answer);
+        mav.setViewName("redirect:/admin/quiz_edit?quiz_id="+quiz_id);
+        return mav;
+    }
 
     //채팅관리======================================================
     @GetMapping("/admin/chat/management")
