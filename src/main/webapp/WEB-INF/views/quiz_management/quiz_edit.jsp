@@ -39,8 +39,8 @@
         }
 
         #member_management {
-            width: 100%;
-            height: 1000px;
+            width: 900px;
+            height: auto;
             margin: 50px auto;
 
         }
@@ -55,22 +55,21 @@
             width: 900px;
             height: 150px;
             line-height: 150px;
-            font-size: 4em;
+            font-size: 3em;
             text-align: center;
             margin: 0 auto;
-            border-bottom: 1px solid #ddd;
         }
 
         #answerlist {
             width: 900px;
             margin: 0 auto;
             padding-bottom: 30px;
-            border-bottom: 1px solid #ddd;
         }
 
         #answer {
-            margin: 0 auto;
-            height: 80px;
+            width: 900px;
+            margin: 10px auto;
+            height: 60px;
             display: flex;
             flex-direction: row;
             justify-content: space-around;
@@ -79,14 +78,14 @@
 
         #quiz_answer {
             width: 80%;
-            height: 80px;
+            height: 60px;
             font-size: 2em;
 
         }
 
         #quiz_delete {
-            width: 80px;
-            height: 80px;
+            width: 50px;
+            height: 50px;
             font-size: 2em;
         }
 
@@ -94,12 +93,6 @@
             padding-bottom: 20px;
         }
 
-        /*#quiz_grade{
-            display: flex;
-            flex-direction: column;
-              justify-content: space-around;
-              margin: 10px auto;
-        }*/
         #input-text {
             width: 280px;
             margin-top: 20px;
@@ -137,35 +130,26 @@
     </div>
     <div id="member_management">
         <h1 id="quiz_list_title">퀴즈 수정/삭제</h1>
+        <div id="quiz_content">
+            <p>${editlist[0].quiz_content}</p>
+        </div>
+        <div id="answerlist">
+            <c:forEach var="eVO1" items="${editlist}" varStatus="status">
+                <div id="answer">
+                    <div id="quiz_answer">${eVO1.answer}</div>
+                    <button id="quiz_delete"> -</button>
+                </div>
+            </c:forEach>
+        </div>
         <div id="editDelForm">
-            <div class="input-group mb-3" id="input-text">
-                <input type="text" class="form-control" placeholder="추가할 단어 작성">
+            <div class="input-group mb-3" id="input-text" style="width: 600px">
+                <input type="text" class="form-control" placeholder="추가할 뜻 작성">
                 <button class="btn btn-dark">추가</button>
             </div>
             <div>
                 <button class="btn btn-dark">단어 삭제</button>
             </div>
         </div>
-
-        <div id="quiz_content">
-            <p>${editlist[0].quiz_content}</p>
-        </div>
-        <div id="answerlist">
-            <div id="answer">
-                <div id="quiz_answer">단어</div>
-                <button id="quiz_delete"> -</button>
-            </div>
-
-            <c:forEach var="eVO1" items="${editlist}" varStatus="status">
-                <div id="answer">
-                    <div id="quiz_answer">${eVO1.answer}</div>
-                    <button id="quiz_delete"> -</button>
-                </div>
-
-            </c:forEach>
-
-        </div>
-
 
     </div>
 </div>

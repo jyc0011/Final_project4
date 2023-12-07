@@ -39,7 +39,7 @@
         }
 
         #member_management {
-            width: 100%;
+            width: 900px;
             height: 1000px;
             margin: 50px auto;
 
@@ -47,8 +47,7 @@
 
         #quiz_list_title {
             text-align: center;
-
-
+            margin-bottom: 30px;
         }
 
         /*#quiz_grade{
@@ -58,7 +57,7 @@
               margin: 10px auto;
         }*/
 
-        #quiz_list {
+        .quiz_list {
             display: flex;
             justify-content: space-around;
         }
@@ -68,13 +67,7 @@
             border-bottom: 4px solid #000;
         }
 
-        #reg_buttons {
-            margin: 20px 0;
-            text-align: right;
-        }
-
         .qqlist {
-
             width: 300px;
             height: 500px;
             border: 3px solid #000;
@@ -82,20 +75,18 @@
             overflow-y: scroll;
         }
 
-        /*단어리스트*/
-        #list_head {
+        .list_head {
             border-bottom: 3px solid #000;
             background-color: #ddd;
+            text-align: center;
         }
 
         .management_list {
             border-bottom: 1px solid #ddd;
+            text-align: center;
         }
 
-        .management_list td {
-        }
-
-        #list_content {
+        .list_content {
             border-bottom: 1px solid #ddd;
 
         }
@@ -137,109 +128,80 @@
     </div>
     <div id="member_management">
         <h1 id="quiz_list_title">퀴즈 관리</h1>
-
-        <div id="reg_buttons">
-            <input type="button" value="관리자 퀴즈 등록"
-                   onclick="location.href='${pageContext.servletContext.contextPath}/admin/quiz/reg_manager'"
-                   class="btn btn-dark">
-            <input type="button" value="유저 퀴즈 등록"
-                   onclick="location.href='${pageContext.servletContext.contextPath}/admin/quiz/reg_user'"
-                   class="btn btn-dark">
-        </div>
-
-        <div id="quiz_list">
-
+        <div class="quiz_list">
             <!-- 쉬움 -->
             <div class="qqlist" id="quiz_easy">
-                <table id="example" class="display" style="width:100%">
-                    <thead id="list_head">
+                <table class="display" style="width:100%">
+                    <thead class="list_head">
                     <tr class="management_list">
                         <th class="lise_number">NO</th>
                         <th class="quiz_content">단어</th>
                         <th class="edit_button">수정</th>
                     </tr>
                     </thead>
-                    <tbody id="list_content">
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
+                    <tbody class="list_content">
                     <c:forEach var="qVO1" items="${quizlist1}" varStatus="status">
-                    <tr class="management_list">
-                        <td class="lise_number">${status.count}</td>
-                        <td class="quiz_content">${qVO1.quiz_content}</td>
-                        <td class="edit_button">
-                            <a href="${pageContext.servletContext.contextPath}/admin/quiz_edit?quiz_id=${qVO1.quiz_id}">
-                                <input type="button" value="수정/삭제" class="btn btn-dark">
-                            </a>
-                        </td>
-                    </tr>
+                        <tr class="management_list">
+                            <td class="lise_number">${status.count}</td>
+                            <td class="quiz_content">${qVO1.quiz_content}</td>
+                            <td class="edit_button">
+                                <a href="${pageContext.servletContext.contextPath}/admin/quiz_edit?quiz_id=${qVO1.quiz_id}">
+                                    <input type="button" value="수정/삭제" class="btn btn-dark">
+                                </a>
+                            </td>
+                        </tr>
                     </c:forEach>
-
-
                     </tbody>
                 </table>
             </div>
 
             <!-- 중간 -->
-            <div class="qqlist" id="quiz_easy">
-                <table id="example" class="display" style="width:100%">
-                    <thead id="list_head">
+            <div class="qqlist" id="quiz_medium">
+                <table class="display" style="width:100%">
+                    <thead class="list_head">
                     <tr class="management_list">
                         <th class="lise_number">NO</th>
                         <th class="quiz_content">단어</th>
                         <th class="edit_button">수정</th>
                     </tr>
                     </thead>
-                    <tbody id="list_content">
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-
+                    <tbody class="list_content">
                     <c:forEach var="qVO2" items="${quizlist2}" varStatus="status">
-                        <td class="lise_number">${status.count}</td>
-                        <td class="quiz_content">${qVO2.quiz_content}</td>
-                        <td class="edit_button">
-                            <a href="${pageContext.servletContext.contextPath}/admin/quiz_edit?quiz_id=${qVO2.quiz_id}">
-                                <input type="button" value="수정/삭제" class="btn btn-dark">
-                            </a>
-                        </td>
+                        <tr class="management_list">
+                            <td class="lise_number">${status.count}</td>
+                            <td class="quiz_content">${qVO2.quiz_content}</td>
+                            <td class="edit_button">
+                                <a href="${pageContext.servletContext.contextPath}/admin/quiz_edit?quiz_id=${qVO2.quiz_id}">
+                                    <input type="button" value="수정/삭제" class="btn btn-dark">
+                                </a>
+                            </td>
+                        </tr>
                     </c:forEach>
                     </tbody>
                 </table>
             </div>
 
             <!-- 어려움 -->
-            <div class="qqlist" id="quiz_easy">
-                <table id="example" class="display" style="width:100%">
-                    <thead id="list_head">
+            <div class="qqlist" id="quiz_hard">
+                <table class="display" style="width:100%">
+                    <thead class="list_head">
                     <tr class="management_list">
                         <th class="lise_number">NO</th>
                         <th class="quiz_content">단어</th>
                         <th class="edit_button">수정</th>
                     </tr>
                     </thead>
-                    <tbody id="list_content">
-                    <tr class="management_list">
-                        <td class="lise_number">No.</td>
-                        <td class="quiz_content">단어</td>
-                        <td class="edit_button"><input type="button" value="수정/삭제" onclick="EditDelBtn()"
-                                                       class="btn btn-dark"></td>
-                    </tr>
-
+                    <tbody class="list_content">
                     <c:forEach var="qVO3" items="${quizlist3}" varStatus="status">
-                        <td class="lise_number">${status.count}</td>
-                        <td class="quiz_content">${qVO3.quiz_content}</td>
-                        <td class="edit_button">
-                            <a href="${pageContext.servletContext.contextPath}/admin/quiz_edit?quiz_id=${qVO3.quiz_id}">
-                                <input type="button" value="수정/삭제" class="btn btn-dark">
-                            </a>
-                        </td>
+                        <tr class="management_list">
+                            <td class="lise_number">${status.count}</td>
+                            <td class="quiz_content">${qVO3.quiz_content}</td>
+                            <td class="edit_button">
+                                <a href="${pageContext.servletContext.contextPath}/admin/quiz_edit?quiz_id=${qVO3.quiz_id}">
+                                    <input type="button" value="수정/삭제" class="btn btn-dark">
+                                </a>
+                            </td>
+                        </tr>
                     </c:forEach>
                     </tbody>
                 </table>

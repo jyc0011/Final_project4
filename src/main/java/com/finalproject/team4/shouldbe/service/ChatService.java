@@ -1,14 +1,11 @@
 package com.finalproject.team4.shouldbe.service;
 
-import com.finalproject.team4.shouldbe.mapper.ChatMapper;
-import com.finalproject.team4.shouldbe.util.EncryptUtil;
-import com.finalproject.team4.shouldbe.util.Translate;
-import com.finalproject.team4.shouldbe.vo.ChatRoomVO;
-import com.finalproject.team4.shouldbe.vo.MessageVO;
-import com.finalproject.team4.shouldbe.vo.PagingVO;
-import com.finalproject.team4.shouldbe.vo.UserVO;
+import com.finalproject.team4.shouldbe.mapper.*;
+import com.finalproject.team4.shouldbe.util.*;
+import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.KeyPair;
 import java.util.List;
@@ -103,6 +100,7 @@ public class ChatService {
         newChatRoom.setTo_id(otherUserId);
         chatMapper.createChatRoom(newChatRoom);
         int chat_id=newChatRoom.getChat_id();
+        chatMapper.createChatRoomState(chat_id);
         KeyPair keyPairMe = EncryptUtil.generateKeyPair();
         KeyPair keyPairOther = EncryptUtil.generateKeyPair();
         String sharedKey = EncryptUtil.generateSharedKey(keyPairMe.getPrivate(), keyPairOther.getPublic());
@@ -128,5 +126,32 @@ public class ChatService {
         String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), messageInfo.getSender());
         String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
         chatMapper.saveMessageToMypage(userId, msgId, content);
+    }
+
+    public void addFriend(String followingUserId, String followedUserId) {
+        int exists = chatMapper.countFriendRelationship(followingUserId, followedUserId);
+        if (exists == 0) {
+            chatMapper.insertFriend(followingUserId, followedUserId);
+        }
+    }
+
+    @Transactional
+    public void blockUserAndUpdateChat(BlockRequest blockRequest) {
+        System.out.println(blockRequest);
+        System.out.println(Integer.parseInt(blockRequest.getChatId()));
+        chatMapper.insertBlockList(blockRequest.getUserId(),blockRequest.getOtherId(),blockRequest.getReason());
+        System.out.println("1");
+        chatMapper.friendDelete(blockRequest.getUserId(),blockRequest.getOtherId());
+        System.out.println("2");
+        String currentState = chatMapper.getStateByChatId(Integer.parseInt(blockRequest.getChatId()));
+        System.out.println("3");
+        if ("0".equals(currentState)) {
+            chatMapper.updateState(Integer.parseInt(blockRequest.getChatId()),blockRequest.getUserId());
+            System.out.println("4");
+        } else {
+            chatMapper.deleteChatAndRelatedData(Integer.parseInt(blockRequest.getChatId()));
+            System.out.println("5");
+        }
+        System.out.println("6");
     }
 }

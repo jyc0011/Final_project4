@@ -9,13 +9,19 @@
     </select>
 
     <select id="getCurrentUserChatRooms" resultType="ChatRoomVO">
-        select *
-        from chat_list
-        where from_id = #{userId}
-           or to_id = #{userId}
+        SELECT *
+        FROM chat_list
+        WHERE (from_id = #{userId} OR to_id = #{userId})
+          AND NOT EXISTS (
+            SELECT 1
+            FROM chat_visible
+            WHERE chat_visible.chat_id = chat_list.chat_id
+              AND chat_visible.state = #{userId}
+        )
         ORDER BY last_time DESC
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
+
     <select id="countUnreadMessages" resultType="int">
         SELECT COUNT(*)
         FROM message
@@ -97,6 +103,11 @@
         VALUES (#{from_id}, #{to_id})
     </insert>
 
+    <insert id="createChatRoomState">
+        INSERT INTO chat_visible (chat_id)
+        VALUES (#{chatId})
+    </insert>
+
     <update id="updateLastContent">
         UPDATE chat_list
         SET last_content = #{last_content}
@@ -141,4 +152,39 @@
         FROM msg_trans
         WHERE msg_id = #{msgId}
     </select>
+    <select id="countFriendRelationship" resultType="int">
+        SELECT COUNT(*)
+        FROM friend
+        WHERE following_user_id = #{followingUserId}
+        AND followed_user_id = #{followedUserId}
+    </select>
+
+    <insert id="insertFriend">
+        INSERT INTO friend (following_user_id, followed_user_id)
+        VALUES (#{followingUserId}, #{followedUserId})
+    </insert>
+
+    <insert id="insertBlockList">
+        INSERT INTO block_list (block_id, user_id, block_reason)
+        VALUES (#{blockId}, #{userId}, #{reason})
+    </insert>
+
+    <delete id="friendDelete">
+        DELETE
+        FROM friend
+        WHERE followed_user_id = #{followed_user_id}
+         AND following_user_id = #{following_user_id}
+    </delete>
+
+    <select id="getStateByChatId" resultType="String">
+        SELECT state FROM chat_visible WHERE chat_id = #{chatId}
+    </select>
+
+    <update id="updateState">
+        UPDATE chat_visible SET state = #{userId} WHERE chat_id = #{chatId}
+    </update>
+
+    <delete id="deleteChatAndRelatedData">
+        DELETE FROM chat_list WHERE chat_id = #{chatId};
+    </delete>
 </mapper>

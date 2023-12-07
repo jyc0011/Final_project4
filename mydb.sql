@@ -235,3 +235,17 @@ CREATE TABLE msg_trans
     trans_content LONGTEXT NOT NULL,
     FOREIGN KEY (msg_id) REFERENCES message (msg_id)
 );
+
+create table comment_report
+(
+    comment_report_id int auto_increment,
+    user_id           varchar(45)                        not null,
+    comment_id        int                                not null,
+    report_time       DATETIME default CURRENT_TIMESTAMP not null,
+    constraint comment_report_pk
+        primary key (comment_report_id),
+    constraint comment_report_comments_comment_id_fk
+        foreign key (comment_id) references comments (comment_id),
+    constraint comment_report_users_user_id_fk
+        foreign key (user_id) references users (user_id)
+);

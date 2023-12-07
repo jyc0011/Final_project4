@@ -37,8 +37,8 @@
         }
 
         main {
-            width: 100%;
-            height: 1000px;
+            width: 900px;
+            height: auto;
             margin: 50px auto;
             display: flex;
             flex-direction: column;
@@ -54,7 +54,6 @@
         }
 
         .reply_list th {
-            width: 130px;
             height: 40px;
             line-height: 40px;
             text-align: center;
@@ -62,29 +61,33 @@
 
         .reply_list td {
             padding: 0 10px;
-            max-width: 120px;
-            width: 120px;
             height: 100px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             text-align: center;
         }
+        .reply_list th:nth-child(6n+1), .reply_list td:nth-child(6n+1) {
+            width: 100px;
+        }
 
-        .reply_list th:nth-child(7n+3), .reply_list td:nth-child(7n+3) {
-            max-width: 230px;
+        .reply_list th:nth-child(6n+2), .reply_list td:nth-child(6n+2) {
             width: 260px;
         }
 
-        .board_list th:nth-child(7n+4), .board_list td:nth-child(7n+4) {
+        .reply_list th:nth-child(6n+3), .reply_list td:nth-child(6n+3) {
+            width: 70px;
+        }
+
+        .board_list th:nth-child(6n+4), .board_list td:nth-child(6n+4) {
+            width: 80px;
+        }
+
+        .board_list th:nth-child(6n+5), .board_list td:nth-child(6n+5) {
             width: 100px;
         }
 
-        .board_list th:nth-child(7n+5), .board_list td:nth-child(7n+5) {
-            width: 100px;
-        }
-
-        .board_list th:nth-child(7n+6), .board_list td:nth-child(7n+6) {
+        .board_list th:nth-child(6n+6), .board_list td:nth-child(6n+6) {
             width: 140px;
         }
 
@@ -141,18 +144,16 @@
                 <thead id="list_head">
                 <tr class="reply_list">
                     <th class="board">게시판</th>
-                    <th class="board_title">글제목</th>
                     <th class="reply_content">댓글내용</th>
                     <th class="user_id">작성자</th>
                     <th class="report_count">신고횟수</th>
                     <th class="report_reason">신고사유</th>
-                    <th class="del_button"></th>
+                    <th class="del_button">삭제</th>
                 </tr>
                 </thead>
                 <tbody id="list_content">
                 <tr class="reply_list">
                     <td class="board_title">자유게시판</td>
-                    <td class="board_title">글제목입니다</td>
                     <td class="reply_content">댓글내용입니다</td>
                     <td class="user_id">userid</td>
                     <td class="report_count">1</td>
