@@ -62,7 +62,6 @@ public class UserController {
     @PostMapping("/create/verify")
     @ResponseBody
     public boolean createVerifyCode(@RequestParam("code") String code, HttpSession session) {
-        System.out.println("/create/verify");
         var time = (long) session.getAttribute("authTime");
         if (System.currentTimeMillis() > time + 1000 * 60 * 3) {
             //System.out.println("시간초과");

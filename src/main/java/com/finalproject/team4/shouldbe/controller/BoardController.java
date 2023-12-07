@@ -76,7 +76,6 @@ public class BoardController {
         mav.setViewName("board/board_list");
         return mav;
     }
-
     @GetMapping({"/board/free/write", "/board/notice/write", "/board/inquiries/write"})
     public ModelAndView write(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
