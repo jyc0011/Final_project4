@@ -48,6 +48,10 @@ public class AdminServiceImpl implements AdminService {
     public int suspendInsert(String user_id){return mapper.suspendInsert(user_id);}
 
 
+    //정지회원관리_정지해제버튼
+    @Override
+    public int suspendDelete(int suspended_id){return mapper.suspendDelete(suspended_id);}
+
     //탈퇴회원관리======================================================
     @Override
     public int totalWithdrawnMemberRecord() {

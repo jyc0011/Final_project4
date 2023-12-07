@@ -130,11 +130,11 @@
                 <c:forEach var="awVO" items="${awlist}">
                     <tr class="management_list">
                         <td class="user_name">${awVO.user_name}</td>
-                        <td class="user_id">아이디</td>
-                        <td class="time">가입일</td>
-                        <td class="withdrawn_date">탈퇴일</td>
-                        <td class="writing_count">작성글/댓글 수</td>
-                        <td class="report_count">신고횟수</td>
+                        <td class="user_id">${awVO.user_id}</td>
+                        <td class="time">${awVO.time}</td>
+                        <td class="withdrawn_date">${awVO.withdrawn_time}</td>
+                        <td class="writing_count">${awVO.posts_count}/${awVO.comments_count}</td>
+                        <td class="report_count">${awVO.count_report}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

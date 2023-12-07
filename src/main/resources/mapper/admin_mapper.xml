@@ -43,7 +43,8 @@
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
     <select id="getUserVO" resultType="com.finalproject.team4.shouldbe.vo.AdminSuspendedVO">
-        select profile_img,user_name,count_report from users where user_id=#{user_id}
+        select profile_img,user_name,count_report
+        from users where user_id=#{user_id}
     </select>
 
 
@@ -51,6 +52,12 @@
     <insert id="suspendInsert">
         insert into suspended_users(user_id,suspended_period,reason) values(#{user_id},7,'사유2');
     </insert>
+
+
+    <!--//정지회원관리_정지해제버튼====================================================== -->
+    <delete id="suspendDelete">
+        delete from suspended_users where suspended_id=${suspended_id}
+    </delete>
 
 
     <!--//탈퇴회원관리======================================================-->
@@ -65,8 +72,7 @@
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
     <select id="adminWithdrawnListUsers" resultType="com.finalproject.team4.shouldbe.vo.AdminWithdrawnVO">
-        select profile_img, user_name,count_report
-        from users
+        select profile_img, user_name,count_report,time from users
         where user_id=#{user_id}
     </select>
 

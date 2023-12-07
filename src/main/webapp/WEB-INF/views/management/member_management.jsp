@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>현재 회원 관리</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
@@ -108,7 +107,10 @@
             font-weight: bold;
             font-size: 18px;
         }
+
+
     </style>
+
 </head>
 <body>
 <div class="container">
@@ -156,6 +158,7 @@
                 </tbody>
             </table>
         </div>
+
         <div>
             <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
                 <div class="pagination" style="display: flex">
@@ -188,5 +191,7 @@
         </div>
     </div>
 </div>
+
+
 </body>
 </html>

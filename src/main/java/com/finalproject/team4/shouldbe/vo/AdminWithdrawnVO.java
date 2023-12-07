@@ -15,7 +15,8 @@ public class AdminWithdrawnVO {
     private int posts_count;//setPosts_count
     private int comments_count;//setComments_count
     private int count_report;//users
+    private String time;
 
     //밑에부터 삭제
-    //private String time;
+
 }
