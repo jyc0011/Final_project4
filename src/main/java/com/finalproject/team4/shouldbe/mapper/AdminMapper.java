@@ -17,8 +17,8 @@ public interface AdminMapper {
 
     //정지회원관리======================================================
     int countSuspendedMember();
-    List<AdminSuspendedVO> adminSuspendedList(@Param("pvo") PagingVO pvo);
-    AdminSuspendedVO getUserVO(String user_id);
+    List<AdminMemberVO> adminSuspendedList(@Param("pvo") PagingVO pvo);
+    AdminMemberVO getUserVO(String user_id);
 
 
     //정지회원관리_정지버튼======================================================
@@ -27,8 +27,8 @@ public interface AdminMapper {
 
     //탈퇴회원관리======================================================
     int countWithdrawnMember();
-    List<AdminWithdrawnVO> adminWithdrawnList(@Param("pvo") PagingVO pvo);
-    AdminWithdrawnVO adminWithdrawnListUsers(String user_id);
+    List<AdminMemberVO> adminWithdrawnList(@Param("pvo") PagingVO pvo);
+    AdminMemberVO adminWithdrawnListUsers(String user_id);
 
 
     //게시글관리======================================================

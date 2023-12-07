@@ -36,13 +36,13 @@
         SELECT COUNT(*)
         FROM users
     </select>
-    <select id="adminSuspendedList" resultType="com.finalproject.team4.shouldbe.vo.AdminSuspendedVO">
-        select suspended_id, user_id, suspended_time, suspended_period, reason
+    <select id="adminSuspendedList" resultType="AdminMemberVO">
+        select suspended_id, user_id, suspended_time AS time, suspended_period, reason
         from suspended_users
         ORDER BY user_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
-    <select id="getUserVO" resultType="com.finalproject.team4.shouldbe.vo.AdminSuspendedVO">
+    <select id="getUserVO" resultType="AdminMemberVO">
         select profile_img,user_name,count_report from users where user_id=#{user_id}
     </select>
 
@@ -58,13 +58,13 @@
         SELECT COUNT(*)
         FROM users
     </select>
-    <select id="adminWithdrawnList" resultType="com.finalproject.team4.shouldbe.vo.AdminWithdrawnVO">
-        select user_id, withdrawn_time
+    <select id="adminWithdrawnList" resultType="AdminMemberVO">
+        select user_id, withdrawn_time AS time
         from withdrawn_users
         ORDER BY user_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
-    <select id="adminWithdrawnListUsers" resultType="com.finalproject.team4.shouldbe.vo.AdminWithdrawnVO">
+    <select id="adminWithdrawnListUsers" resultType="AdminMemberVO">
         select profile_img, user_name,count_report
         from users
         where user_id=#{user_id}

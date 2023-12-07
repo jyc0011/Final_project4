@@ -15,4 +15,6 @@ public class AdminMemberVO {
     private int posts_count;
     private int comments_count;
     private int count_report;
+    private String reason;
+    private String suspended_period;
 }

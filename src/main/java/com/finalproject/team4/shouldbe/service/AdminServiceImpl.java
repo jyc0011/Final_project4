@@ -36,11 +36,11 @@ public class AdminServiceImpl implements AdminService {
         return mapper.countSuspendedMember();
     }
     @Override
-    public List<AdminSuspendedVO> adminSuspendedList(PagingVO pvo) {
+    public List<AdminMemberVO> adminSuspendedList(PagingVO pvo) {
         return mapper.adminSuspendedList(pvo);
     }
     @Override
-    public  AdminSuspendedVO getUserVO(String user_id){return mapper.getUserVO(user_id);}
+    public AdminMemberVO getUserVO(String user_id){return mapper.getUserVO(user_id);}
 
 
     //정지회원관리_정지버튼======================================================
@@ -54,10 +54,10 @@ public class AdminServiceImpl implements AdminService {
         return mapper.countWithdrawnMember();
     }
     @Override
-    public List<AdminWithdrawnVO> adminWithdrawnList(PagingVO pvo) {
+    public List<AdminMemberVO> adminWithdrawnList(PagingVO pvo) {
         return mapper.adminWithdrawnList(pvo);
     }
-    public AdminWithdrawnVO adminWithdrawnListUsers(String user_id){return mapper.adminWithdrawnListUsers(user_id);}
+    public AdminMemberVO adminWithdrawnListUsers(String user_id){return mapper.adminWithdrawnListUsers(user_id);}
 
 
     //게시글관리======================================================

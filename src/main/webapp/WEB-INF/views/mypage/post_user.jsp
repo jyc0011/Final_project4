@@ -93,7 +93,7 @@
             <c:forEach var="bVO" items="${list}">
                 <tr>
                     <td>${bVO.post_id}</td>
-                    <td><a href="#">${bVO.title}</a></td>
+                    <td><a href="${pageContext.servletContext.contextPath}/board/${bVO.board_cat}/view?no=${bVO.post_id}">${bVO.title}</a></td>
                     <td>${bVO.write_date}</td>
                 </tr>
             </c:forEach>

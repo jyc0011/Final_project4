@@ -53,10 +53,10 @@ public class AdminController {
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalSuspendedMemberRecord());
-        List<AdminSuspendedVO> aslist = service.adminSuspendedList(pvo);
+        List<AdminMemberVO> aslist = service.adminSuspendedList(pvo);
         for(int i=0;i<aslist.size();i++){
             String user_id=aslist.get(i).getUser_id();
-            AdminSuspendedVO userVO=service.getUserVO(user_id);
+            AdminMemberVO userVO=service.getUserVO(user_id);
             System.out.println("a "+userVO.getUser_name());
             aslist.get(i).setProfile_img(userVO.getProfile_img());
             aslist.get(i).setUser_name(userVO.getUser_name());
@@ -87,11 +87,11 @@ public class AdminController {
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalWithdrawnMemberRecord());
-        List<AdminWithdrawnVO> awlist = service.adminWithdrawnList(pvo);
+        List<AdminMemberVO> awlist = service.adminWithdrawnList(pvo);
 
         for(int i=0;i<awlist.size();i++){
             String user_id=awlist.get(i).getUser_id();
-            AdminWithdrawnVO userVO= service.adminWithdrawnListUsers(user_id);
+            AdminMemberVO userVO= service.adminWithdrawnListUsers(user_id);
             awlist.get(i).setProfile_img(userVO.getProfile_img());
             awlist.get(i).setUser_name(userVO.getUser_name());
             awlist.get(i).setCount_report(userVO.getCount_report());
