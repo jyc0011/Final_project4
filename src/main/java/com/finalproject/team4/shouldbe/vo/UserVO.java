@@ -15,8 +15,19 @@ public class UserVO {
     private String nation;
     private int sex;
     private String date;
-    private String lang;
+    private String[] langArr;
     private String salt;
     private String profile_img;
     private String profile_content;
+    private String lang;
+
+    public void setLangArr(String[] langArr) {
+        this.langArr = langArr;
+        this.lang = String.join("/", langArr);
+    }
+    public void setLang(String lang){
+        this.lang = lang;
+        this.langArr = lang.split("/");
+    }
+
 }
