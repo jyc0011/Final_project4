@@ -49,12 +49,13 @@
 
 <body>
 <main>
-    ${vo.title}
-
-    <h1>게시글 수정</h1>
+    <br>
+    <h2> 게시글 수정 :
     <c:if test="${vo.board_cat=='free'}">자유게시판</c:if>
     <c:if test="${vo.board_cat=='notice'}">공지사항</c:if>
     <c:if test="${vo.board_cat=='inquiries'}">문의게시판</c:if>
+    </h2>
+    <br>
     <div class="mb-3">
         <!-- todo: 제목에 ",'등 처리 하는법, 내용 엔터처리 -->
         <label for="exampleFormControlInput1" class="form-label">제목</label>

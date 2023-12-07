@@ -224,6 +224,7 @@
                 <li>${bVO.write_date}</li>
             </c:forEach>
         </ul>
+        <br>
         <div style="float:right">
             <c:if test="${'Y'.equals(logStatus)}">
                 <input type="button" value="글 작성" class="post-button" id="write-button"
@@ -292,7 +293,7 @@
                 </c:choose>
             </ul>
         </div>
-
+    <br>
         <!-- 검색박스 -->
         <div class="post-end-line">
             <div class="inboard-search-area">
@@ -313,27 +314,6 @@
                 </div>
             </div>
         </div>
-    </main>
-    <!-- 검색박스 -->
-    <div class="post-end-line">
-        <div class="inboard-search-area">
-            <div class="search flex-container"> <!-- Add a class to make this a flex container -->
-                <form method="get" action="${pageContext.servletContext.contextPath}/board/list"
-                      onsubmit="return searchCheck()">
-                    <select name="searchKey">
-                        <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>제목</option>
-                        <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>글내용
-                        </option>
-                        <option value="userid" ${pVO.searchKey=='userid' ? 'selected' : '' }>글쓴이
-                        </option>
-                    </select>
-                    <input type="search" name="searchWord" id="inboard-search" value="${pVO.searchWord}"
-                           class="inboard-search" placeholder="게시판 내 검색"/>
-                    <input type="submit" value="search" class="post-button" id="search-button"/>
-                </form>
-            </div>
-        </div>
-    </div>
     </main>
 </div>
 </body>
