@@ -104,7 +104,7 @@
         <c:forEach var="user" items="${partner}">
             <li class="user-item">
                 <div class="user-details">
-                    <img src="${user.profile_img}" alt="${user.username}" class="user-image" />
+                    <img src="${pageContext.servletContext.contextPath}/image/profile/${user.profile_img}" alt="${user.username}" class="user-image" />
                     <div class="user-info">
                         <h3>${user.userid}</h3>
                         <p>Email: ${user.email}</p>
@@ -142,7 +142,7 @@
                     <div class="paging">
                         <ul class="pagination justify-content-center d-flex">
                             <c:if test="${pVO.nowPage > 1}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage - 1}'"><
+                                <li class="page-item"><a class="page-link" href="?page=${pVO.nowPage - 1}"><
                                 </a></li>
                             </c:if>
                             <c:forEach var="i" begin="${pVO.startPage}"
@@ -160,7 +160,7 @@
                                 </c:if>
                             </c:forEach>
                             <c:if test="${pVO.nowPage < pVO.totalPage}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage + 1}'">>
+                                <li class="page-item"><a class="page-link" href="?page=${pVO.nowPage + 1}">>
                                 </a></li>
                             </c:if>
                         </ul>
