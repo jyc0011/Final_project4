@@ -103,6 +103,9 @@ public class AdminServiceImpl implements AdminService {
     public  int answerInsert(int quiz_id, String answer){return mapper.answerInsert(quiz_id,answer);}
 
 
+    //퀴즈관리_등록된 퀴즈 삭제 버튼
+    @Override
+    public int answerDelete(String answer){return mapper.answerDelete(answer);}
 
     //퀴즈관리_유저퀴즈등록버튼======================================================
     //퀴즈관리_등록된 퀴즈 리스트======================================================

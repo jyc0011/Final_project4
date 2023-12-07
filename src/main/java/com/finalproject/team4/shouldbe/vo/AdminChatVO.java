@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminChatVO {
-    private int msg_id;//chat_report
-    private String user_id;//chat_report
-    private String content;//message:content
-    private int count_report;//users
+    private int message_report_id;
+    private String user_id;
+    private int msg_id;
+    private String report_time;
+    private String content;
 
     /*chatreport
     private int chat_report_id;
