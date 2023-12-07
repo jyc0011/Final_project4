@@ -149,7 +149,18 @@
     <script>
         window.onload = function () {
             document.getElementById("toList").onclick = function () {
-                window.history.back();
+                location.href="${listUrl}";
+            }
+            document.getElementById("editPost").onclick = function() {
+                location.href="${pageContext.servletContext.contextPath}/board/${vo.board_cat}/edit?no=${vo.post_id}"
+            }
+            document.getElementById("deletePost").onclick = function() {
+                if (!confirm("정말 삭제하시겠습니까?")) {
+                    alert("취소 되었습니다.");
+                } else {
+                    location.href="/board/${vo.board_cat}/delete?no=${vo.post_id}";
+
+                }
             }
         }
 
@@ -167,14 +178,13 @@
     </div>
 
     <div class="util">
-        <c:url var="editUrl" value="${pageContext.servletContext.contextPath}/board/${vo.board_cat}/edit">
-            <c:param name="no" value="${vo.post_id}"/>
-        </c:url>
-        <!--todo: 버튼으로 변경-->
-        <a id="toList">목록</a>
+        <button id="toList">목록</button>
         <!-- 현재글쓴이와 로그인 아이디가 같을 때만 수정 삭제 가능 -->
-        <a href="${editUrl}">수정</a>
-        <a href="">삭제</a>
+        <button id="editPost">수정</button>
+
+        <c:if test="${logId==vo.user_id}">
+        <button id="deletePost">삭제</button>
+        </c:if>
     </div>
     <br>
     <!-- 댓글 -->
