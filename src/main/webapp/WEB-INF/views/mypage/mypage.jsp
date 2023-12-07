@@ -115,9 +115,7 @@
                     checkbox.checked = true;
                 }
             });
-
         });
-
     </script>
 </head>
 
@@ -126,7 +124,7 @@
     <div id="sidebar">
         <br/>
         <ul class="sidebar-menu">
-            <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user" class="active">회원정보 수정</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
@@ -137,33 +135,32 @@
 
         <div class="text-center mb-3">
             <img src="${pageContext.servletContext.contextPath}/image/profile/${myvo.profile_img}" id="profile_img" name="profile_img"
-                 class="rounded-circle" alt="Profile Image" style="width: 150px; height: 150px; object-fit: cover;"
-                 >
-        </div>
-
-        <div class="text-center">
-            <button type="button" class="btn btn-warning me-2" id="changeimg" onclick="change_image()">이미지 변경</button>
-            <button type="button" class="btn btn-secondary" id="basicimg">기본 이미지로 변경</button>
+                 class="rounded-circle" alt="Profile Image" style="width: 150px; height: 150px; object-fit: cover; border: gray 1px solid">
         </div>
 
         <form method="post" action="${pageContext.servletContext.contextPath}/mypage/editProfileOk" id="userEditForm">
             <div class="row mb-3 mt-3">
                 <label for="userid" class="col-sm-2 col-form-label">아이디</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="userid" name="user_id" value="${myvo.user_id}">
+                    <span class="form-control" id="userid" name="user_id">${myvo.user_id}</span>
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="pwd" class="col-sm-2 col-form-label">비밀번호</label>
+                <label for="username" class="col-sm-2 col-form-label">이름</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+                    <span class="form-control" id="username" name="username">${myvo.user_name}</span>
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="pwd-confirm" class="col-sm-2 col-form-label">비밀번호확인</label>
+                <label for="email" class="col-sm-2 col-form-label">이메일</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="pwd-confirm" placeholder="Confirm password"
-                           name="pwd-confirm">
+                    <span class="form-control" id="email" name="email">${myvo.email}</span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="nation" class="col-sm-2 col-form-label">국적</label>
+                <div class="col-sm-10">
+                    <span class="form-control" id="nation" name="nation">${myvo.nation}</span>
                 </div>
             </div>
             <div class="row mb-3">
@@ -214,12 +211,8 @@
             <div class="row mb-3">
                 <label for="intro" class="col-sm-2 col-form-label">자기소개</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="intro" placeholder="Write introduction"
-                           name="profile_content" value="${myvo.profile_content}">
+                    <span class="form-control" id="intro" name="profile_content">${myvo.profile_content}</span>
                 </div>
-            </div>
-            <div class="row">
-                <button type="submit" id="edit" class="btn btn-warning" style="width: auto">수정하기</button>
             </div>
         </form>
     </div>
