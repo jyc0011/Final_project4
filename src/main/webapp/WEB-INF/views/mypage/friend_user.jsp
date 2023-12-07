@@ -123,7 +123,7 @@
         <c:forEach var="flist" items="${flist}">
             <div class="friend-card"><!--ajax 처리-->
                 <div class="friend-avatar">
-                    <img src="${pageContext.servletContext.contextPath}/img/${flist.profile_img}}" alt="Friend's Avatar"
+                    <img src="${pageContext.servletContext.contextPath}/${flist.profile_img}}" alt="Friend's Avatar"
                          class="rounded-circle"
                          style="width: 50px; height: 50px;">
                 </div>

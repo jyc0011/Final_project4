@@ -53,7 +53,7 @@
     <h1>회원가입 성공</h1>
     <ul>
         <li style="margin-bottom: 10px">
-            <input type="button" value="메인으로" class="submitbtn" onclick="location.href='/'"/></li>
+            <input type="button" value="메인으로" class="submitbtn" onclick="location.href='../../..'"/></li>
         <li style="margin-bottom: 10px"><input type="button" value="로그인하기" onclick="location.href='/login'"
                                                class="submitbtn"/></li>
 

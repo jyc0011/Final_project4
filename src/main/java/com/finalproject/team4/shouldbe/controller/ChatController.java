@@ -1,26 +1,15 @@
 package com.finalproject.team4.shouldbe.controller;
 
-import com.finalproject.team4.shouldbe.service.ChatService;
-import com.finalproject.team4.shouldbe.service.MypageService;
-import com.finalproject.team4.shouldbe.vo.ChatRoomVO;
-import com.finalproject.team4.shouldbe.vo.MessageVO;
-import com.finalproject.team4.shouldbe.vo.PagingVO;
-import com.finalproject.team4.shouldbe.vo.UserVO;
+import com.finalproject.team4.shouldbe.service.*;
+import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.http.*;
+import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.util.List;
 
 @Controller
@@ -143,11 +132,38 @@ public class ChatController {
     @PostMapping("/chat/saveMessage")
     public ResponseEntity<?> saveMessageToMypage(@RequestParam("msg_id") int msgId, HttpSession session) {
         String userId = (String) session.getAttribute("logId");
+        System.out.println(7);
         try {
+            System.out.println(8);
             chatservice.saveMessageToMypage(userId, msgId);
+            System.out.println(9);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            System.out.println(10);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error reporting message");
+        }
+    }
+
+    @PostMapping("/follow")
+    public ResponseEntity<?> followUser(@RequestParam String userId, @RequestParam String otherId) {
+        try {
+            chatservice.addFriend(otherId, userId);
+            return ResponseEntity.ok("Followed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error following user");
+        }
+    }
+
+    @PostMapping("/block")
+    public ResponseEntity<?> blockUser(@RequestBody BlockRequest blockRequest) {
+        System.out.println(blockRequest);
+        try {
+            chatservice.blockUserAndUpdateChat(blockRequest);
+            System.out.println("7");
+            return ResponseEntity.ok("User blocked and chat updated successfully");
+        } catch (Exception e) {
+            System.out.println("8");
+            return ResponseEntity.badRequest().body("Error in blocking user or updating chat");
         }
     }
 }

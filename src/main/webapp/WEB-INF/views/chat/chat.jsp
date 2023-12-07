@@ -205,8 +205,22 @@
             text-align: center;
             padding: 15px;
             border-bottom: 1px solid #ececec;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .follow-btn, .report-leave-btn {
+            border: 1px solid black;
+            border-radius: 4px;
+            padding: 8px 15px;
+            margin: 0 10px;
+            cursor: pointer;
+            background-color: #ffffff;
         }
 
+        .follow-btn:hover, .report-leave-btn:hover {
+            background-color: #ffe3a0;
+        }
         .chat-header h2 {
             margin: 0;
             font-weight: 500;
@@ -244,14 +258,9 @@
 <div id="chat-page">
     <div class="chat-container">
         <div class="chat-header">
-            <c:choose>
-                <c:when test="${(message.is_from_id == 1 and userId == fromId) or (message.is_from_id == 0 and userId != fromId)}">
-                    <h2>${userId}님과의 채팅방</h2>
-                </c:when>
-                <c:otherwise>
-                    <h2>${otherId}님과의 채팅방</h2>
-                </c:otherwise>
-            </c:choose>
+            <button class="follow-btn">Follow ${otherId}</button>
+            <h2>${otherId}님과의 채팅방</h2>
+            <button class="report-leave-btn">Block/Leave Chat</button>
         </div>
         <ul id="messageArea">
             <div class="chat-messages">
@@ -261,8 +270,8 @@
                         or (message.is_from_id == 0 and userId != fromId)}">
                             <li class="message-mine chat-message">
                                 <div class="message-actions">
-                                    <a href="#" class="report-button-other" data-message-id="${message.msg_id}">Report</a>
-                                    <a href="#" class="save-button-other" data-message-id="${message.msg_id}">Save</a>
+                                    <a href="#" class="report-button" data-message-id="${message.msg_id}">Report</a>
+                                    <a href="#" class="save-button" data-message-id="${message.msg_id}">Save</a>
                                 </div>
                                 <div class="text-container">
                                     <span class="username">${userId}</span>
@@ -423,7 +432,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.report-button').forEach(function(button) {
+        document.querySelectorAll('.report-button, .report-button-other').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
                 var messageId = this.getAttribute('data-message-id');
@@ -431,7 +440,7 @@
             });
         });
 
-        document.querySelectorAll('.save-button').forEach(function(button) {
+        document.querySelectorAll('.save-button, .save-button-other').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
                 var messageId = this.getAttribute('data-message-id');
@@ -474,6 +483,47 @@
     connect();
     messageForm.addEventListener('submit', sendMessage, true)
     messageArea.scrollTop = messageArea.scrollHeight;
+
+    $('.follow-btn').click(function() {
+        $.ajax({
+            url: '/follow', // Replace with your server endpoint
+            type: 'POST',
+            data: {
+                userId: username,
+                otherId: otherId
+            },
+            success: function(response) {
+                alert('팔로우 했습니다!');
+            },
+            error: function() {
+                alert('오류가 발생했습니다.');
+            }
+        });
+    });
+    $('.report-leave-btn').click(function() {
+        var reportReason = prompt("차단하는 이유를 입력해주세요:");
+        if (reportReason) {
+            $.ajax({
+                url: '/block',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    chatId: chatId,
+                    userId: username,
+                    otherId: otherId,
+                    reason: reportReason
+                }),
+                success: function(response) {
+                    alert('차단되었습니다!');
+                    window.location.href = '/chat/list';
+                },
+                error: function() {
+                    alert('오류가 발생했습니다.');
+                }
+            });
+        }
+    });
+
 </script>
 </body>
 </html>

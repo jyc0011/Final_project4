@@ -36,4 +36,7 @@
         from posts
         where post_id = #{param1};
     </select>
+    <delete id="boardDelete">
+        delete from posts where post_id=#{param1}
+    </delete>
 </mapper>

@@ -1,14 +1,11 @@
 package com.finalproject.team4.shouldbe.service;
 
-import com.finalproject.team4.shouldbe.mapper.ChatMapper;
-import com.finalproject.team4.shouldbe.util.EncryptUtil;
-import com.finalproject.team4.shouldbe.util.Translate;
-import com.finalproject.team4.shouldbe.vo.ChatRoomVO;
-import com.finalproject.team4.shouldbe.vo.MessageVO;
-import com.finalproject.team4.shouldbe.vo.PagingVO;
-import com.finalproject.team4.shouldbe.vo.UserVO;
+import com.finalproject.team4.shouldbe.mapper.*;
+import com.finalproject.team4.shouldbe.util.*;
+import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.KeyPair;
 import java.util.List;
@@ -103,6 +100,7 @@ public class ChatService {
         newChatRoom.setTo_id(otherUserId);
         chatMapper.createChatRoom(newChatRoom);
         int chat_id=newChatRoom.getChat_id();
+        chatMapper.createChatRoomState(chat_id);
         KeyPair keyPairMe = EncryptUtil.generateKeyPair();
         KeyPair keyPairOther = EncryptUtil.generateKeyPair();
         String sharedKey = EncryptUtil.generateSharedKey(keyPairMe.getPrivate(), keyPairOther.getPublic());
@@ -116,17 +114,42 @@ public class ChatService {
     public void reportMessage(String userId, int msgId) throws Exception {
         MessageVO messageInfo = chatMapper.findMessageInfo(msgId);
         ChatRoomVO chatInfo=chatMapper.getChatByChatId(messageInfo.getChat_id());
-        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), messageInfo.getSender());
+        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), userId);
         String senderUserId = messageInfo.getIs_from_id() == 1 ? chatInfo.getFrom_id() : chatInfo.getTo_id();
-        String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
+        String content=EncryptUtil.decryptAES(messageInfo.getContent(), sharedKey);
         chatMapper.reportMessage(senderUserId, msgId, content);
     }
 
 
     public void saveMessageToMypage(String userId, int msgId) throws Exception {
+        System.out.println(1);
         MessageVO messageInfo = chatMapper.findMessageInfo(msgId);
-        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), messageInfo.getSender());
-        String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
+        System.out.println(2);
+        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), userId);
+        System.out.println(sharedKey);
+        String content=EncryptUtil.decryptAES(messageInfo.getContent(), sharedKey);
+        System.out.println(4);
         chatMapper.saveMessageToMypage(userId, msgId, content);
+        System.out.println(5);
+    }
+
+    public void addFriend(String followingUserId, String followedUserId) {
+        int exists = chatMapper.countFriendRelationship(followingUserId, followedUserId);
+        if (exists == 0) {
+            chatMapper.insertFriend(followingUserId, followedUserId);
+        }
+    }
+
+    @Transactional
+    public void blockUserAndUpdateChat(BlockRequest blockRequest) {
+        System.out.println(Integer.parseInt(blockRequest.getChatId()));
+        chatMapper.insertBlockList(blockRequest.getUserId(),blockRequest.getOtherId(),blockRequest.getReason());
+        chatMapper.friendDelete(blockRequest.getUserId(),blockRequest.getOtherId());
+        String currentState = chatMapper.getStateByChatId(Integer.parseInt(blockRequest.getChatId()));
+        if ("0".equals(currentState)) {
+            chatMapper.updateState(Integer.parseInt(blockRequest.getChatId()),blockRequest.getUserId());
+        } else {
+            chatMapper.deleteChatAndRelatedData(Integer.parseInt(blockRequest.getChatId()));
+        }
     }
 }

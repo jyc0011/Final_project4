@@ -41,7 +41,7 @@
         #member_management {
             height: auto;
             margin: 50px auto;
-            width: 100%;
+            width: 900px;
         }
 
         #quiz_list_title {
@@ -60,11 +60,13 @@
             width: 12.5%;
             height: 40px;
             line-height: 40px;
+            text-align:center;
         }
 
         .management_list td {
             width: 12.5%;
             height: 100px;
+            text-align:center;
         }
 
         #list_content {
@@ -115,39 +117,29 @@
             <table id="example" class="display" style="width:100%">
                 <thead id="list_head">
                 <tr class="management_list">
-                    <th class="profile_img"></th>
                     <th class="user_name">닉네임</th>
                     <th class="user_id">아이디</th>
                     <th class="time">정지일</th>
                     <th class="suspend_reason">정지사유</th>
                     <th class="writing_count">작성글/댓글 수</th>
                     <th class="report_count">신고횟수</th>
-                    <th class="suspend_button"></th>
+                    <th class="suspend_button">정지 해제</th>
                 </tr>
                 </thead>
                 <tbody id="list_content">
-                <tr class="management_list">
-                    <td class="user_name"></td>
-                    <td class="user_name">닉네임</td>
-                    <td class="user_id">아이디</td>
-                    <td class="time">정지일</td>
-                    <th class="suspend_reason">정지사유</th>
-                    <td class="writing_count">작성글/댓글 수</td>
-                    <td class="report_count">신고횟수</td>
-                    <td class="unsuspend_button"><input type="button" value="정지해제" class="btn btn-dark"></td>
-
-                </tr>
-
                 <c:forEach var="asVO" items="${aslist}">
                     <tr class="management_list">
-                        <td class="user_name">${asVO.profile_img}</td>
                         <td class="user_name">${asVO.user_name}</td>
                         <td class="user_id">${asVO.user_id}</td>
                         <td class="time">${asVO.suspended_time}</td>
                         <th class="suspend_reason">${asVO.reason}</th>
                         <td class="writing_count">${asVO.posts_count}/${asVO.comments_count}</td>
                         <td class="report_count">${asVO.count_report}</td>
-                        <td class="unsuspend_button"><input type="button" value="정지해제" class="btn btn-dark"></td>
+                        <td class="unsuspend_button">
+                            <a href="${pageContext.servletContext.contextPath}/suspendDelete?suspended_id=${asVO.suspended_id}">
+                                <input type="button" value="정지해제" class="btn btn-dark">
+                            </a>
+                        </td>
                     </tr>
                 </c:forEach>
 

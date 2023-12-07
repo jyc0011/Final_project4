@@ -53,10 +53,10 @@ public class AdminController {
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalSuspendedMemberRecord());
-        List<AdminSuspendedVO> aslist = service.adminSuspendedList(pvo);
+        List<AdminMemberVO> aslist = service.adminSuspendedList(pvo);
         for(int i=0;i<aslist.size();i++){
             String user_id=aslist.get(i).getUser_id();
-            AdminSuspendedVO userVO=service.getUserVO(user_id);
+            AdminMemberVO userVO=service.getUserVO(user_id);
             System.out.println("a "+userVO.getUser_name());
             aslist.get(i).setProfile_img(userVO.getProfile_img());
             aslist.get(i).setUser_name(userVO.getUser_name());
@@ -76,6 +76,16 @@ public class AdminController {
         System.out.println(user_id);
         int result = service.suspendInsert(user_id);
         mav.setViewName("admin/admin_dashboard");
+        mav.setViewName("redirect:/admin/member/management");
+        return mav;
+    }
+    //정지회원관리_정지해제버튼
+    @GetMapping("/suspendDelete")
+    public ModelAndView suspendDelete(int suspended_id) {
+        ModelAndView mav = new ModelAndView();
+        System.out.println(suspended_id);
+        int result = service.suspendDelete(suspended_id);
+        mav.setViewName("redirect:/admin/suspended/management");
         return mav;
     }
 
@@ -87,14 +97,15 @@ public class AdminController {
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalWithdrawnMemberRecord());
-        List<AdminWithdrawnVO> awlist = service.adminWithdrawnList(pvo);
+        List<AdminMemberVO> awlist = service.adminWithdrawnList(pvo);
 
         for(int i=0;i<awlist.size();i++){
             String user_id=awlist.get(i).getUser_id();
-            AdminWithdrawnVO userVO= service.adminWithdrawnListUsers(user_id);
+            AdminMemberVO userVO= service.adminWithdrawnListUsers(user_id);
             awlist.get(i).setProfile_img(userVO.getProfile_img());
             awlist.get(i).setUser_name(userVO.getUser_name());
             awlist.get(i).setCount_report(userVO.getCount_report());
+            awlist.get(i).setTime(userVO.getTime());
             awlist.get(i).setPosts_count(service.postsCount(user_id));
             awlist.get(i).setComments_count(service.commentsCount(user_id));
         }
@@ -201,6 +212,15 @@ public class AdminController {
         System.out.println(editlist.toString());
         mav.addObject("editlist", editlist);
         mav.setViewName("quiz_management/quiz_edit");
+        return mav;
+    }
+    //퀴즈관리_등록된 퀴즈 삭제 버튼
+    @GetMapping("/answerDelete")
+    public ModelAndView answerDelete(String answer,int quiz_id) {
+        ModelAndView mav = new ModelAndView();
+        System.out.println(quiz_id);
+        int result = service.answerDelete(answer);
+        mav.setViewName("redirect:/admin/quiz_edit?quiz_id="+quiz_id);
         return mav;
     }
 

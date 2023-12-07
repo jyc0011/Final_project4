@@ -41,7 +41,7 @@
         #member_management {
             height: auto;
             margin: 50px auto;
-            width: 100%;
+            width: 900px;
         }
 
         #quiz_list_title {
@@ -60,11 +60,13 @@
             width: 14%;
             height: 40px;
             line-height: 40px;
+            text-align:center;
         }
 
         .management_list td {
             width: 14%;
             height: 100px;
+            text-align:center;
         }
 
         #list_content {
@@ -129,33 +131,17 @@
             <table id="example" class="display" style="width:100%">
                 <thead id="list_head">
                 <tr class="management_list">
-                    <th class="user_profile"></th>
                     <th class="user_name">닉네임</th>
                     <th class="user_id">아이디</th>
                     <th class="time">가입일</th>
                     <th class="writing_count">작성글/댓글 수</th>
                     <th class="report_count">신고횟수</th>
-                    <th class="suspend_button"></th>
+                    <th class="suspend_button">계정 정지</th>
                 </tr>
                 </thead>
                 <tbody id="list_content">
-                <tr class="management_list">
-                    <td class="user_profile">
-                        <div class="user_profile_box">
-                            <img class="profile" src="/image/user.png">
-                        </div>
-
-                    </td>
-                    <td class="user_name">닉네임</td>
-                    <td class="user_id">아이디</td>
-                    <td class="time">가입일</td>
-                    <td class="writing_count">작성글/댓글 수</td>
-                    <td class="report_count">신고횟수</td>
-                    <td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
-                </tr>
                 <c:forEach var="amVO" items="${amlist}">
                     <tr class="management_list">
-                        <td class="user_profile"><img class="profile" src="${amVO.profile_img}"></td>
                         <td class="user_name">${amVO.user_name}</td>
                         <td class="user_id">${amVO.user_id}</td>
                         <td class="time">${amVO.time}</td>

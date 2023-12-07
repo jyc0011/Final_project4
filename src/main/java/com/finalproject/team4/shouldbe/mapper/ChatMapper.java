@@ -52,4 +52,19 @@ public interface ChatMapper {
     void insertTransMessage(int msgId, String s);
 
     String getTransMsg(int msgId);
+
+    int countFriendRelationship(String followingUserId, String followedUserId);
+    void insertFriend(String followingUserId, String followedUserId);
+
+    void insertBlockList(String userId, String blockId, String reason);
+
+    String getStateByChatId(int chatId);
+
+    void updateState(int chatId, String userId);
+
+    void deleteChatAndRelatedData(int chatId);
+
+    void friendDelete(String followed_user_id, String following_user_id);
+
+    void createChatRoomState(int chatId);
 }
