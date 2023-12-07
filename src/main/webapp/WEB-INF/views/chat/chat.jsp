@@ -270,8 +270,8 @@
                         or (message.is_from_id == 0 and userId != fromId)}">
                             <li class="message-mine chat-message">
                                 <div class="message-actions">
-                                    <a href="#" class="report-button-other" data-message-id="${message.msg_id}">Report</a>
-                                    <a href="#" class="save-button-other" data-message-id="${message.msg_id}">Save</a>
+                                    <a href="#" class="report-button" data-message-id="${message.msg_id}">Report</a>
+                                    <a href="#" class="save-button" data-message-id="${message.msg_id}">Save</a>
                                 </div>
                                 <div class="text-container">
                                     <span class="username">${userId}</span>
@@ -432,7 +432,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.report-button').forEach(function(button) {
+        document.querySelectorAll('.report-button, .report-button-other').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
                 var messageId = this.getAttribute('data-message-id');
@@ -440,7 +440,7 @@
             });
         });
 
-        document.querySelectorAll('.save-button').forEach(function(button) {
+        document.querySelectorAll('.save-button, .save-button-other').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
                 var messageId = this.getAttribute('data-message-id');
@@ -523,6 +523,7 @@
             });
         }
     });
+
 </script>
 </body>
 </html>

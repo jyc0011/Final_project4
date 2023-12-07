@@ -114,7 +114,7 @@ public class ChatService {
     public void reportMessage(String userId, int msgId) throws Exception {
         MessageVO messageInfo = chatMapper.findMessageInfo(msgId);
         ChatRoomVO chatInfo=chatMapper.getChatByChatId(messageInfo.getChat_id());
-        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), messageInfo.getSender());
+        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), userId);
         String senderUserId = messageInfo.getIs_from_id() == 1 ? chatInfo.getFrom_id() : chatInfo.getTo_id();
         String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
         chatMapper.reportMessage(senderUserId, msgId, content);
@@ -122,10 +122,15 @@ public class ChatService {
 
 
     public void saveMessageToMypage(String userId, int msgId) throws Exception {
+        System.out.println(1);
         MessageVO messageInfo = chatMapper.findMessageInfo(msgId);
-        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), messageInfo.getSender());
+        System.out.println(2);
+        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), userId);
+        System.out.println(sharedKey);
         String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
+        System.out.println(4);
         chatMapper.saveMessageToMypage(userId, msgId, content);
+        System.out.println(5);
     }
 
     public void addFriend(String followingUserId, String followedUserId) {

@@ -132,10 +132,14 @@ public class ChatController {
     @PostMapping("/chat/saveMessage")
     public ResponseEntity<?> saveMessageToMypage(@RequestParam("msg_id") int msgId, HttpSession session) {
         String userId = (String) session.getAttribute("logId");
+        System.out.println(7);
         try {
+            System.out.println(8);
             chatservice.saveMessageToMypage(userId, msgId);
+            System.out.println(9);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            System.out.println(10);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error reporting message");
         }
     }
