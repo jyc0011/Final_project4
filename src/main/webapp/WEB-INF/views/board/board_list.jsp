@@ -176,6 +176,22 @@
         #search-div {
             width: 400px;
         }
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .pagination .page-link {
+            color: black;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        /* Style for the active page link */
+        .pagination .page-link.active {
+            background-color: #ffe3a0;
+            color: black;
+        }
     </style>
     <script>
         window.onload = function () {
@@ -233,67 +249,75 @@
         </div>
         <!-- 페이지 박스-->
         <!-- todo: 페이지 인식해서 보이게 -->
-        <div class="page">
-            <ul>
-                <!-- prev 페이지 -->
-                <c:url var="prevUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}">
-                    <c:param name="nowPage" value="${pVO.nowPage-1}"/>
-                    <c:if test="${pVO.searchWord!=null}">
-                        <c:param name="searchKey" value="${pVO.searchKey}"/>
-                        <c:param name="searchWord" value="${pVO.searchWord}"/>
-                    </c:if>
-                </c:url>
-                <c:choose>
-                    <c:when test="${pVO.nowPage == 1}">
-                        <li style="color: #ddd">prev</li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="${prevUrl}">prev</a></li>
-                    </c:otherwise>
-                </c:choose>
-                <!-- 페이지 번호 -->
-                <c:forEach var="cnt" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
-                    <c:if test="${cnt<=pVO.totalPage}">
-                        <!-- 페이지번호가 마지막 페이지보다 작거나 같을때만 번호 출력 -->
-                        <c:if test="${cnt==pVO.nowPage }">
-                            <!-- 현재 보고있는 페이지 -->
-                            <li style="background-color: #ddd">${cnt}</li>
-                        </c:if>
-                        <!-- 현재 보고있는 페이지가 아닐경우 -->
-                        <c:if test="${cnt!=pVO.nowPage}">
-                            <c:url var="pageUrl"
-                                   value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/view">
-                                <c:param name="nowPage" value="${cnt}"/>
+        <div>
+            <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+                <div class="pagination" style="display: flex">
+                    <div class="paging">
+                        <ul class="pagination justify-content-center d-flex">
+                            <!-- prev 페이지 -->
+                            <c:url var="prevUrl"
+                                   value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}">
+                                <c:param name="nowPage" value="${pVO.nowPage-1}"/>
                                 <c:if test="${pVO.searchWord!=null}">
                                     <c:param name="searchKey" value="${pVO.searchKey}"/>
                                     <c:param name="searchWord" value="${pVO.searchWord}"/>
                                 </c:if>
                             </c:url>
-                            <li>
-                                <a href="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}?nowPage=${cnt}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${cnt}</a>
-                            </li>
-                        </c:if>
-                    </c:if>
-                </c:forEach>
-                <!-- next 페이지 -->
-                <c:url var="nextUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}">
-                    <c:param name="nowPage" value="${pVO.nowPage+1}"/>
-                    <c:if test="${pVO.searchWord!=null}">
-                        <c:param name="searchKey" value="${pVO.searchKey}"/>
-                        <c:param name="searchWord" value="${pVO.searchWord}"/>
-                    </c:if>
-                </c:url>
-                <c:choose>
-                    <c:when test="${pVO.nowPage == pVO.totalPage}">
-                        <li style="color:#ddd">next</li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="${nextUrl}">next</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
+                            <c:choose>
+                                <c:when test="${pVO.nowPage == 1}">
+                                    <li class="page-item"><a class="page-link"><</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item"><a class="page-link" href="${prevUrl}"><</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                            <!-- 페이지 번호 -->
+                            <c:forEach var="cnt" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
+                                <c:if test="${cnt<=pVO.totalPage}">
+                                    <!-- 페이지번호가 마지막 페이지보다 작거나 같을때만 번호 출력 -->
+                                    <c:if test="${cnt==pVO.nowPage }">
+                                        <!-- 현재 보고있는 페이지 -->
+                                        <li class="page-item"><a class="page-link active" href="">${cnt}</a></li>
+                                    </c:if>
+                                    <!-- 현재 보고있는 페이지가 아닐경우 -->
+                                    <c:if test="${cnt!=pVO.nowPage}">
+                                        <c:url var="pageUrl"
+                                               value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/view">
+                                            <c:param name="nowPage" value="${cnt}"/>
+                                            <c:if test="${pVO.searchWord!=null}">
+                                                <c:param name="searchKey" value="${pVO.searchKey}"/>
+                                                <c:param name="searchWord" value="${pVO.searchWord}"/>
+                                            </c:if>
+                                        </c:url>
+                                        <li class="page-item">
+                                            <a class="page-link" href="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}?nowPage=${cnt}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${cnt}</a>
+                                        </li>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
+                            <!-- next 페이지 -->
+                            <c:url var="nextUrl"
+                                   value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}">
+                                <c:param name="nowPage" value="${pVO.nowPage+1}"/>
+                                <c:if test="${pVO.searchWord!=null}">
+                                    <c:param name="searchKey" value="${pVO.searchKey}"/>
+                                    <c:param name="searchWord" value="${pVO.searchWord}"/>
+                                </c:if>
+                            </c:url>
+                            <c:choose>
+                                <c:when test="${pVO.nowPage == pVO.totalPage}">
+                                    <li class="page-item"><a class="page-link">></a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item"><a class="page-link" href="${nextUrl}">></a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-    <br>
+        <br>
         <!-- 검색박스 -->
         <div class="post-end-line">
             <div class="inboard-search-area">

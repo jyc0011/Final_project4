@@ -146,7 +146,7 @@
                     <div class="paging">
                         <ul class="pagination justify-content-center d-flex">
                             <c:if test="${pVO.nowPage > 1}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage - 1}'"><
+                                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/admin/withdrawn/management?page=${pVO.nowPage - 1}"><
                                 </a></li>
                             </c:if>
                             <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
@@ -162,7 +162,7 @@
                                 </c:if>
                             </c:forEach>
                             <c:if test="${pVO.nowPage < pVO.totalPage}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage + 1}'">>
+                                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/admin/withdrawn/management?page=${pVO.nowPage + 1}">>
                                 </a></li>
                             </c:if>
                         </ul>
