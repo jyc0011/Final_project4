@@ -7,8 +7,8 @@
         where user_id = #{param1};
     </select>
     <insert id="useridInsert">
-        insert into users(user_id, user_name, password, salt, email, nation, sex, lang)
-        values (#{userid}, #{username}, #{userpwd}, #{salt}, #{email}, #{nation}, #{sex}, #{lang})
+        insert into users(user_id, user_name, password, salt, email, nation, sex, lang, profile_img)
+        values (#{userid}, #{username}, #{userpwd}, #{salt}, #{email}, #{nation}, #{sex}, #{lang}, 'user.png')
     </insert>
     <select id="userLoginCheck" resultType="LoginVO">
         select password, salt, user_name
@@ -32,6 +32,5 @@
         set password = #{userpwd},
             salt     = #{salt}
         where user_id = #{userid};
-
     </update>
 </mapper>

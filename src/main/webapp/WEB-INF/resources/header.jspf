@@ -125,7 +125,7 @@
     <div class="login">
         <c:if test="${logStatus=='Y'}">
             <a href="${pageContext.servletContext.contextPath}/Mypage?id=${logId}"> <!-- 마이페이지 -->
-                <img src="${pageContext.servletContext.contextPath}/image/user.png" class="user-icon" id="user-icon" style="border-radius: 50%; width: 30px; height: auto;"/></a>
+                <img src="${pageContext.servletContext.contextPath}/image/profile/user.png" class="user-icon" id="user-icon" style="border-radius: 50%; width: 30px; height: auto;"/></a>
             <!--유저로고-->
             <a href="${pageContext.servletContext.contextPath}/logout" class="login-button">로그아웃</a>
         </c:if>

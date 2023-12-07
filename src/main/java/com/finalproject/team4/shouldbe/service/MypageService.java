@@ -28,4 +28,8 @@ public interface MypageService {
     int withdraw_user_date(String user_id);
 
     int withdraw_user(String user_id);
+
+    int change_profileimg(MypageVO vo);
+
+    int change_basic_profileimg(MypageVO vo);
 }

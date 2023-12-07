@@ -71,20 +71,39 @@
         }
     </style>
     <script>
-        function editCheck() {
-            if (document.getElementById("pwd").value == "") {
-                alert("비밀번호를 입력해주세요.");
-                return false;
-            }
-            if (document.getElementById("pwd").value != document.getElementById("pwd-confirm").value) {
-                alert("비밀번호가 일치하지 않습니다.");
-                return false;
-            }
+        function change_image(){
+            window.open("${pageContext.request.contextPath}/mypage/proflieimgChange", "w", "left= -1100px, top=390px,width=400px, height=300px");
         }
-
         $(function () {
-            $("#basicimg").on('click', function () {
-                $("#profile_img").attr("src", "${pageContext.servletContext.contextPath}/image/user.png");
+            $("#userEditForm").submit(function(){
+                if($("#pwd").val() == ""){
+                    alert("비밀번호를 입력해주세요.");
+                    return false;
+                }
+                if($("#pwd").val() != $("#pwd-confirm").val()){
+                    alert("비밀번호가 일치하지 않습니다.");
+                    return false;
+                }
+            });
+            var user_id = $("#userid").val();
+            $(document).on('click', '#basicimg',function () {
+                event.preventDefault();
+                $.ajax({
+                    url: "${pageContext.servletContext.contextPath}/mypage/basicimg",
+                    type: "post",
+                    data: {
+                        user_id: user_id
+                    },
+                    async: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(result){
+                        document.location.reload();
+                    },
+                    error : function(error){
+                        console.log(error.responseText);
+                    }
+                });
             });
         });
 
@@ -117,18 +136,17 @@
     <div id="content" class="col-10">
 
         <div class="text-center mb-3">
-            <img src="${myvo.profile_img}" id="profile_img" name="profile_img"
+            <img src="${pageContext.servletContext.contextPath}/image/profile/${myvo.profile_img}" id="profile_img" name="profile_img"
                  class="rounded-circle" alt="Profile Image" style="width: 150px; height: 150px; object-fit: cover;"
-                 onerror="this.onerror=null; this.src='${pageContext.servletContext.contextPath}/image/user.png';">
+                 >
         </div>
 
         <div class="text-center">
-            <button type="button" class="btn btn-warning me-2">이미지 변경</button>
+            <button type="button" class="btn btn-warning me-2" id="changeimg" onclick="change_image()">이미지 변경</button>
             <button type="button" class="btn btn-secondary" id="basicimg">기본 이미지로 변경</button>
         </div>
 
-        <form method="post" action="${pageContext.servletContext.contextPath}/mypage/editProfileOk"
-              onsubmit="editCheck()" id="userEditForm">
+        <form method="post" action="${pageContext.servletContext.contextPath}/mypage/editProfileOk" id="userEditForm">
             <div class="row mb-3 mt-3">
                 <label for="userid" class="col-sm-2 col-form-label">아이디</label>
                 <div class="col-sm-10">
