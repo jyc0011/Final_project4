@@ -101,7 +101,7 @@ public class UserController {
         //System.out.println(vo);
 
         int result = userService.useridInsert(vo);
-        return "login/create_success";
+        return "create_membership/create_success";
     }
 
     @PostMapping("/idcheck")
