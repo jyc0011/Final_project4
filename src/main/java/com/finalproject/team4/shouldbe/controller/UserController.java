@@ -5,6 +5,7 @@ import com.finalproject.team4.shouldbe.service.UserService;
 import com.finalproject.team4.shouldbe.util.EncryptUtil;
 import com.finalproject.team4.shouldbe.vo.LoginVO;
 import com.finalproject.team4.shouldbe.vo.UserVO;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,17 +47,29 @@ public class UserController {
 
     @PostMapping("/create/sendcode")
     @ResponseBody
-    public boolean createSendCode(@RequestParam("email") String email, HttpSession session) {
+    public String createSendCode(@RequestParam("email") String email, HttpSession session) {
+
+        int result = userService.userCheckEmail(email);
+        var json = new JSONObject();
+        if(result>1){
+            //중복이메일
+            json.append("result", false);
+            json.append("msg", "Duplicated email error");
+            return json.toString();
+        }
 
         //System.out.println(result);
         try {
             var authNum = emailService.sendAuthMail(email);
             session.setAttribute("authNum", authNum);
             session.setAttribute("authTime", System.currentTimeMillis());
-            return true;
+            json.append("result", true);
+            return json.toString();
         } catch (Exception e) {
         }
-        return false;
+        json.append("result", false);
+        json.append("msg", "Mail service error");
+        return json.toString();
     }
 
     @PostMapping("/create/verify")
@@ -121,7 +134,7 @@ public class UserController {
     @PostMapping("/loginOk")
     public String loginOk(HttpSession session, @RequestParam("userid") String userid, @RequestParam("userpwd") String userpwd, RedirectAttributes redirect) {
         LoginVO vo = userService.userLoginCheck(userid);
-        if (vo == null) {//로그인 실패
+        if (vo == null || vo.getWithdraw()==1) {//로그인 실패
             redirect.addFlashAttribute("result", "로그인 실패, 아이디를 확인해주세요!");
             return "redirect:/login";
         } else if (encrypt.encrypt(userpwd, vo.getSalt()).equals(vo.getPassword())) {

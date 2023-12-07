@@ -27,6 +27,11 @@
         where user_id = #{param1}
           and email = #{param2};
     </select>
+    <select id="userCheckEmail" resultType="int">
+        select count(user_id)
+        from users
+        where email = #{param1}
+    </select>
     <update id="userpwdUpdate" parameterType="UserVO">
         update users
         set password = #{userpwd},
