@@ -116,7 +116,7 @@ public class ChatService {
         ChatRoomVO chatInfo=chatMapper.getChatByChatId(messageInfo.getChat_id());
         String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), userId);
         String senderUserId = messageInfo.getIs_from_id() == 1 ? chatInfo.getFrom_id() : chatInfo.getTo_id();
-        String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
+        String content=EncryptUtil.decryptAES(messageInfo.getContent(), sharedKey);
         chatMapper.reportMessage(senderUserId, msgId, content);
     }
 
@@ -127,7 +127,7 @@ public class ChatService {
         System.out.println(2);
         String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), userId);
         System.out.println(sharedKey);
-        String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
+        String content=EncryptUtil.decryptAES(messageInfo.getContent(), sharedKey);
         System.out.println(4);
         chatMapper.saveMessageToMypage(userId, msgId, content);
         System.out.println(5);
