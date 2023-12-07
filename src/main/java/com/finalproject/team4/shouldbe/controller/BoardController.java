@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +77,7 @@ public class BoardController {
         mav.setViewName("board/board_list");
         return mav;
     }
+
     @GetMapping({"/board/free/write", "/board/notice/write", "/board/inquiries/write"})
     public ModelAndView write(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
@@ -91,19 +93,27 @@ public class BoardController {
         bVO.setBoard_cat(boardCat);
         bVO.setUser_id((String) session.getAttribute("logId"));
         int result = boardService.boardInsert(bVO);
-        System.out.println("result : " + result);
+        //System.out.println("result : " + result);
         return "redirect:/board/" + boardCat;
 
     }
 
 
     @GetMapping({"/board/free/view", "board/notice/view", "board/inquiries/view"})
-    public ModelAndView view(int no) {
+    public ModelAndView view(int no, String searchKey, String searchWord, HttpServletRequest request) {
+        var cat = parseCategory(request.getRequestURI());
+        String listUrl;
+        if (searchKey != null && !searchKey.isEmpty()) {
+            listUrl = "/board/" + cat + "?searchKey=" + searchKey + "&searchWord=" + searchWord;
+        } else {
+            listUrl = "/board/" + cat;
+        }
         ModelAndView mav = new ModelAndView();
         boardService.viewCount(no);
         var vo = boardService.boardSelect(no);
         mav.addObject("vo", vo);
-        System.out.println(vo);
+        mav.addObject("listUrl", listUrl);
+        //System.out.println(vo);
         //mav.addObject("pVO", pVO);
         mav.setViewName("board/board_view");
 
@@ -117,9 +127,29 @@ public class BoardController {
         var vo = boardService.boardSelect(no);
         mav.addObject("vo", vo);
         mav.setViewName("board/board_edit");
-        System.out.println();
+        //System.out.println();
 
         return mav;
+    }
+
+    @GetMapping({"/board/free/delete", "/board/notice/delete", "/board/inquiries/delete"})
+    @ResponseBody
+    public ModelAndView delete(HttpSession session, HttpServletRequest request, int no) {
+       var cat = parseCategory(request.getRequestURI());
+
+        var mav = new ModelAndView();
+        var id = (String) session.getAttribute("logId");
+
+        //작성자 일치하면
+        if(id.equals(boardService.boardSelect(no).getUser_id())){
+            //삭제성공
+            boardService.boardDelete(no);
+            mav.setViewName("redirect:/board/"+cat);
+            return mav;
+        }
+        //삭제실패
+        return null;
+
     }
 
     public String parseCategory(String requestUri) {
