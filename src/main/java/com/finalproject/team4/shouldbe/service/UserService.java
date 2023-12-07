@@ -14,5 +14,6 @@ public interface UserService {
 
     int userCheckId(String userid, String email);
 
+    int userCheckEmail(String email);
     int userpwdUpdate(UserVO vo);
 }
