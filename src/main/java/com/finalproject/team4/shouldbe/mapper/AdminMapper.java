@@ -23,6 +23,8 @@ public interface AdminMapper {
 
     //정지회원관리_정지버튼======================================================
     int suspendInsert(String user_id);
+    //정지회원관리_정지해제버튼
+    int suspendDelete(int suspended_id);
 
 
     //탈퇴회원관리======================================================

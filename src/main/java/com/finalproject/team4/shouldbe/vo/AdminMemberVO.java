@@ -17,4 +17,6 @@ public class AdminMemberVO {
     private int count_report;
     private String reason;
     private String suspended_period;
+    private String withdrawn_time;
+    private String suspended_time;
 }

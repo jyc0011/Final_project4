@@ -37,13 +37,14 @@
         FROM users
     </select>
     <select id="adminSuspendedList" resultType="AdminMemberVO">
-        select suspended_id, user_id, suspended_time AS time, suspended_period, reason
+        select suspended_id, user_id, suspended_time, suspended_period, reason
         from suspended_users
         ORDER BY user_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
     <select id="getUserVO" resultType="AdminMemberVO">
-        select profile_img,user_name,count_report from users where user_id=#{user_id}
+        select profile_img,user_name,count_report
+        from users where user_id=#{user_id}
     </select>
 
 
@@ -53,23 +54,27 @@
     </insert>
 
 
+    <!--//정지회원관리_정지해제버튼====================================================== -->
+    <delete id="suspendDelete">
+        delete from suspended_users where suspended_id=${suspended_id}
+    </delete>
+
     <!--//탈퇴회원관리======================================================-->
     <select id="countWithdrawnMember" resultType="int">
         SELECT COUNT(*)
         FROM users
     </select>
     <select id="adminWithdrawnList" resultType="AdminMemberVO">
-        select user_id, withdrawn_time AS time
+        select user_id, withdrawn_time
         from withdrawn_users
         ORDER BY user_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
     <select id="adminWithdrawnListUsers" resultType="AdminMemberVO">
-        select profile_img, user_name,count_report
+        select profile_img, user_name,count_report,time
         from users
         where user_id=#{user_id}
     </select>
-
 
     <!--//게시글관리====================================================== -->
     <select id="countBoard" resultType="int">

@@ -76,6 +76,16 @@ public class AdminController {
         System.out.println(user_id);
         int result = service.suspendInsert(user_id);
         mav.setViewName("admin/admin_dashboard");
+        mav.setViewName("redirect:/admin/member/management");
+        return mav;
+    }
+    //정지회원관리_정지해제버튼
+    @GetMapping("/suspendDelete")
+    public ModelAndView suspendDelete(int suspended_id) {
+        ModelAndView mav = new ModelAndView();
+        System.out.println(suspended_id);
+        int result = service.suspendDelete(suspended_id);
+        mav.setViewName("redirect:/admin/suspended/management");
         return mav;
     }
 
@@ -95,6 +105,7 @@ public class AdminController {
             awlist.get(i).setProfile_img(userVO.getProfile_img());
             awlist.get(i).setUser_name(userVO.getUser_name());
             awlist.get(i).setCount_report(userVO.getCount_report());
+            awlist.get(i).setTime(userVO.getTime());
             awlist.get(i).setPosts_count(service.postsCount(user_id));
             awlist.get(i).setComments_count(service.commentsCount(user_id));
         }

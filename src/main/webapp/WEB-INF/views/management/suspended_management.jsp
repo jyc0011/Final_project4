@@ -135,7 +135,11 @@
                         <th class="suspend_reason">${asVO.reason}</th>
                         <td class="writing_count">${asVO.posts_count}/${asVO.comments_count}</td>
                         <td class="report_count">${asVO.count_report}</td>
-                        <td class="unsuspend_button"><input type="button" value="정지해제" class="btn btn-dark"></td>
+                        <td class="unsuspend_button">
+                            <a href="${pageContext.servletContext.contextPath}/suspendDelete?suspended_id=${asVO.suspended_id}">
+                                <input type="button" value="정지해제" class="btn btn-dark">
+                            </a>
+                        </td>
                     </tr>
                 </c:forEach>
 
