@@ -95,7 +95,7 @@
                 <tr>
                     <td>${rVO.post_id}</td>
                     <td>${rVO.comment_id}</td>
-                    <td><a href="#">${rVO.content}</a></td>
+                    <td><a href="${pageContext.servletContext.contextPath}/board/${rVO.board_cat}/view?no=${rVO.post_id}">${rVO.content}</a></td>
                     <td>${rVO.write_date}</td>
                 </tr>
             </c:forEach>

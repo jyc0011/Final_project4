@@ -137,21 +137,14 @@ public class ChatService {
 
     @Transactional
     public void blockUserAndUpdateChat(BlockRequest blockRequest) {
-        System.out.println(blockRequest);
         System.out.println(Integer.parseInt(blockRequest.getChatId()));
         chatMapper.insertBlockList(blockRequest.getUserId(),blockRequest.getOtherId(),blockRequest.getReason());
-        System.out.println("1");
         chatMapper.friendDelete(blockRequest.getUserId(),blockRequest.getOtherId());
-        System.out.println("2");
         String currentState = chatMapper.getStateByChatId(Integer.parseInt(blockRequest.getChatId()));
-        System.out.println("3");
         if ("0".equals(currentState)) {
             chatMapper.updateState(Integer.parseInt(blockRequest.getChatId()),blockRequest.getUserId());
-            System.out.println("4");
         } else {
             chatMapper.deleteChatAndRelatedData(Integer.parseInt(blockRequest.getChatId()));
-            System.out.println("5");
         }
-        System.out.println("6");
     }
 }
