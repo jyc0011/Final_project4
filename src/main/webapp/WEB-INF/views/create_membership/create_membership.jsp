@@ -231,14 +231,13 @@
                     url: "/create/sendcode",
                     data: {email: email},
                     success: function (r) {
-                        var data = JSON.parse(r);
-                        if (data.result === true) {
+                        if (r.result == true) {
                             alert("이메일이 전송되었습니다.");
                             $("#emailCheckDiv").css('display', '');
                             // $("#authenticate").css('display', '');
                             // $("#checkcode").css('display', '');
                         } else {
-                            alert(data.msg);
+                            alert(r.msg);
                         }
                     },
                     error: function (e) {
