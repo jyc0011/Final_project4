@@ -56,4 +56,9 @@ public class UserServiceImpl implements UserService {
             mapper.insertLog(userid);
         }
     }
+
+    @Override
+    public boolean ismanager(String userid){
+        return mapper.ismanager(userid);
+    }
 }

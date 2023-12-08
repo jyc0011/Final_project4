@@ -24,4 +24,6 @@ public interface UserMapper {
     Date getLastLogDate(String userid);
 
     void insertLog(String userid);
+
+    boolean ismanager(String userid);
 }

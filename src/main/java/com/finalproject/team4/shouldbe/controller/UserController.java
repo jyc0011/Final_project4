@@ -145,9 +145,12 @@ public class UserController {
             session.setAttribute("logStatus", "Y");
             session.setAttribute("logName", vo.getUser_name());
             session.setAttribute("logId", userid);
-            return "redirect:/";
+            if(userService.ismanager(userid)){
+                return "redirect:/admin/";
+            }else{
+                return "redirect:/";
+            }
         }
-
         redirect.addFlashAttribute("result", "로그인 실패, 비밀번호를 확인해주세요!");
         return "redirect:/login";
 

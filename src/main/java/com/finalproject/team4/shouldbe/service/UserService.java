@@ -18,4 +18,6 @@ public interface UserService {
     int userpwdUpdate(UserVO vo);
 
     void logUser(String userid);
+
+    boolean ismanager(String userid);
 }

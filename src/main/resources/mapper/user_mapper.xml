@@ -49,4 +49,10 @@
         insert into user_login(user_id)
         values (#{userid});
     </insert>
+
+    <select id="ismanager" resultType="boolean">
+        SELECT manager
+        FROM users
+        WHERE user_id = #{userid}
+    </select>
 </mapper>
