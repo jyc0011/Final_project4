@@ -47,13 +47,47 @@
 
         #quiz_list_title {
             text-align: center;
-            border-bottom: 4px solid #000;
-            padding-bottom: 20px;
         }
 
+        .withdrawn {
+            float: right;
+        }
 
-        /*리스트 내용*/
+        .withdraw_button {
+            background-color: black;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 20px 0;
+        }
+
+        .withdraw_button:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .withdraw_btn:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .withdraw_btn {
+            background-color: black;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
         #list_head {
+            margin-top: 30px;
+            padding-bottom: 40px;
+            border-top: 4px solid #000;
             border-bottom: 4px solid #000;
         }
 
@@ -61,13 +95,13 @@
             width: 14%;
             height: 40px;
             line-height: 40px;
-            text-align:center;
+            text-align: center;
         }
 
         .management_list td {
             width: 14%;
             height: 100px;
-            text-align:center;
+            text-align: center;
         }
 
         #list_content {
@@ -113,6 +147,9 @@
     </div>
     <div id="member_management">
         <h1 id="quiz_list_title">탈퇴 회원 관리</h1>
+        <form class="withdrawn" action="/admin/withdrawn/all" method="get">
+            <button type="submit" class="withdraw_button">유예 기한 만료 회원 전부 탈퇴</button>
+        </form>
 
         <div class="col-sm-12">
             <table id="example" class="display" style="width:100%">
@@ -124,6 +161,7 @@
                     <th class="withdrawn_date">탈퇴일</th>
                     <th class="writing_count">작성글/댓글 수</th>
                     <th class="report_count">신고횟수</th>
+                    <th class="withdraw">탈퇴처리</th>
                 </tr>
                 </thead>
                 <tbody id="list_content">
@@ -135,6 +173,14 @@
                         <td class="withdrawn_date">${awVO.withdrawn_time}</td>
                         <td class="writing_count">${awVO.posts_count}/${awVO.comments_count}</td>
                         <td class="report_count">${awVO.count_report}</td>
+                        <td class="withdraw">
+                            <form action="/admin/withdrawn/personal" method="post">
+                                <input type="hidden" name="userId" value="${awVO.user_id}"/>
+                                <button type="submit" class="withdraw_btn">
+                                    바로 탈퇴
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -146,7 +192,8 @@
                     <div class="paging">
                         <ul class="pagination justify-content-center d-flex">
                             <c:if test="${pVO.nowPage > 1}">
-                                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/admin/withdrawn/management?page=${pVO.nowPage - 1}"><
+                                <li class="page-item"><a class="page-link"
+                                                         href="${pageContext.request.contextPath}/admin/withdrawn/management?page=${pVO.nowPage - 1}"><
                                 </a></li>
                             </c:if>
                             <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
@@ -162,7 +209,8 @@
                                 </c:if>
                             </c:forEach>
                             <c:if test="${pVO.nowPage < pVO.totalPage}">
-                                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/admin/withdrawn/management?page=${pVO.nowPage + 1}">>
+                                <li class="page-item"><a class="page-link"
+                                                         href="${pageContext.request.contextPath}/admin/withdrawn/management?page=${pVO.nowPage + 1}">>
                                 </a></li>
                             </c:if>
                         </ul>

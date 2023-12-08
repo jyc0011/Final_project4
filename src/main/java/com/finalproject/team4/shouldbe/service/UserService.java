@@ -20,4 +20,5 @@ public interface UserService {
     void logUser(String userid);
 
     boolean ismanager(String userid);
+
 }

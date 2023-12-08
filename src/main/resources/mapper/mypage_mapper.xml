@@ -70,7 +70,7 @@
 
     <update id="withdraw_user">
         update users
-        set withdraw='1'
+        set withdraw=current_timestamp()
         where user_id = #{user_id}
     </update>
 

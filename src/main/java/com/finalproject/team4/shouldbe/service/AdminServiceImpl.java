@@ -4,6 +4,7 @@ import com.finalproject.team4.shouldbe.mapper.AdminMapper;
 import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,22 +18,18 @@ public class AdminServiceImpl implements AdminService {
     //대시보드
     @Override
     public List<DashboardVO> getMonthlyVisitorStats() {
-        System.out.println(mapper.monthVisitor());
         return mapper.monthVisitor();
     }
     @Override
     public List<DashboardVO> countUsersByNation() {
-        System.out.println(mapper.countUsersByNation());
         return mapper.countUsersByNation();
     }
     @Override
     public List<BoardVO> latestBoard() {
-        System.out.println(mapper.latestBoard());
         return mapper.latestBoard();
     }
     @Override
     public List<BoardReplyVO> latestReply() {
-        System.out.println(mapper.latestReply());
         return mapper.latestReply();
     }
     //현재회원관리=====================================================
@@ -81,8 +78,16 @@ public class AdminServiceImpl implements AdminService {
         return mapper.adminWithdrawnList(pvo);
     }
     public AdminMemberVO adminWithdrawnListUsers(String user_id){return mapper.adminWithdrawnListUsers(user_id);}
-
-
+    @Override
+    @Transactional
+    public void withdrawExpiredUsers() {
+        mapper.withdrawExpiredUsers();
+    }
+    @Override
+    @Transactional
+    public void deleteUserById(String userId) {
+        mapper.deleteUserById(userId);
+    }
     //게시글관리======================================================
     @Override
     public int totalBoardRecord() {

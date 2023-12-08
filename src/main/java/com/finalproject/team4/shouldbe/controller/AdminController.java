@@ -6,6 +6,7 @@ import com.finalproject.team4.shouldbe.service.UserService;
 import com.finalproject.team4.shouldbe.vo.*;
 import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -148,6 +149,23 @@ public class AdminController {
         return mav;
     }
 
+    @GetMapping("/admin/withdrawn/all")
+    public ModelAndView withdrawAll() {
+        service.withdrawExpiredUsers();
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/admin");
+        return mav;
+    }
+
+    @PostMapping("/admin/withdrawn/personal")
+    public ModelAndView withdrawPersonal(@RequestParam("userId") String userId) {
+        service.deleteUserById(userId);
+        ModelAndView mav = new ModelAndView();
+        System.out.println(userId);
+        mav.setViewName("redirect:/admin");
+        return mav;
+    }
+
     //게시글관리======================================================
     @GetMapping("/admin/board")
     public ModelAndView admin_board(@RequestParam(required = false, defaultValue = "1") int page,
@@ -189,7 +207,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         System.out.println(post_id);
         int result = service.postsDelete(post_id);
-        mav.setViewName("admin/admin_dashboard");
+        mav.setViewName("redirect:/admin");
         return mav;
     }
 

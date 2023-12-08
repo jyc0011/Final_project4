@@ -30,7 +30,8 @@ public interface AdminService {
     int totalWithdrawnMemberRecord();
     List<AdminMemberVO> adminWithdrawnList(PagingVO pvo);
     AdminMemberVO adminWithdrawnListUsers(String user_id);
-
+    void withdrawExpiredUsers();
+    void deleteUserById(String userId);
     //게시글관리======================================================
     int totalBoardRecord();
     List<BoardReportVO> getBoardReportList(PagingVO pvo);

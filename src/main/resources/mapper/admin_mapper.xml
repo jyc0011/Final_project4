@@ -121,6 +121,17 @@
         where user_id=#{user_id}
     </select>
 
+    <update id="withdrawExpiredUsers">
+    <![CDATA[
+        DELETE FROM users
+        WHERE withdraw < NOW() - INTERVAL 30 DAY
+        ]]>
+    </update>
+
+    <delete id="deleteUserById" parameterType="String">
+        DELETE FROM users WHERE user_id = #{userId}
+    </delete>
+
     <!--//게시글관리====================================================== -->
     <select id="countBoard" resultType="int">
         SELECT COUNT(*)
