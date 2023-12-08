@@ -1,6 +1,7 @@
 package com.finalproject.team4.shouldbe.controller;
 
 import com.finalproject.team4.shouldbe.service.BoardService;
+import com.finalproject.team4.shouldbe.service.ReplyService;
 import com.finalproject.team4.shouldbe.util.UriUtil;
 import com.finalproject.team4.shouldbe.vo.BoardVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
@@ -19,6 +20,8 @@ import java.util.List;
 public class BoardController {
     @Autowired
     BoardService boardService;
+    @Autowired
+    ReplyService replyService;
 
 /*    @Autowired
     BoardService service;
@@ -109,11 +112,18 @@ public class BoardController {
             listUrl = "/board/" + cat;
         }
         ModelAndView mav = new ModelAndView();
+        //조회수 증가
         boardService.viewCount(no);
-        var vo = boardService.boardSelect(no);
-        mav.addObject("vo", vo);
+
+        //게시글 데이터
+        var bVO = boardService.boardSelect(no);
+        mav.addObject("bVO", bVO);
         mav.addObject("listUrl", listUrl);
-        //System.out.println(vo);
+
+        //댓글 데이터
+        var rVOList = replyService.replySelect(no);
+        /*todo: rVO 적용.. */
+        //System.out.println(bVO);
         //mav.addObject("pVO", pVO);
         mav.setViewName("board/board_view");
 
@@ -122,16 +132,31 @@ public class BoardController {
 
 
     @GetMapping({"/board/free/edit", "/board/notice/edit", "/board/inquiries/edit"})
-    public ModelAndView edit(int no) {
+    public ModelAndView edit(int no, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         var vo = boardService.boardSelect(no);
-        mav.addObject("vo", vo);
-        mav.setViewName("board/board_edit");
-        //System.out.println();
+        //작성자 맞는지 체크
+        if(vo.getUser_id().equals(session.getAttribute("logId"))){
+            mav.addObject("vo", vo);
+            mav.setViewName("board/board_edit");
+            //System.out.println();
+            return mav;
+        }
+        return null;
 
+    }
+    @PostMapping({"/board/free/editOk", "/board/notice/editOk", "/board/inquiries/editOk"})
+    public ModelAndView editOk(HttpServletRequest request, BoardVO bVO){
+        ModelAndView mav = new ModelAndView();
+        var cat = parseCategory(request.getRequestURI());
+
+        var result = boardService.boardUpdate(bVO);
+
+        if(result>0) {
+            mav.setViewName("redirect:/board/"+cat+"/view?no="+bVO.getPost_id());
+        }
         return mav;
     }
-
     @GetMapping({"/board/free/delete", "/board/notice/delete", "/board/inquiries/delete"})
     @ResponseBody
     public ModelAndView delete(HttpSession session, HttpServletRequest request, int no) {

@@ -152,28 +152,52 @@
                 location.href="${listUrl}";
             }
             document.getElementById("editPost").onclick = function() {
-                location.href="${pageContext.servletContext.contextPath}/board/${vo.board_cat}/edit?no=${vo.post_id}"
+                location.href="${pageContext.servletContext.contextPath}/board/${bVO.board_cat}/edit?no=${bVO.post_id}"
             }
             document.getElementById("deletePost").onclick = function() {
                 if (!confirm("정말 삭제하시겠습니까?")) {
                     alert("취소 되었습니다.");
                 } else {
-                    location.href="/board/${vo.board_cat}/delete?no=${vo.post_id}";
+                    location.href="/board/${bVO.board_cat}/delete?no=${bVO.post_id}";
 
                 }
             }
         }
+        $(function(){
+            $("#addReply").click(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "/create/sendcode",
+                    data: {email: email},
+                    success: function (r) {
+                        var data = JSON.parse(r);
+                        if (data.result === true) {
+                            alert("이메일이 전송되었습니다.");
+                            $("#emailCheckDiv").css('display', '');
+                            // $("#authenticate").css('display', '');
+                            // $("#checkcode").css('display', '');
+                        } else {
+                            alert(data.msg);
+                        }
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+            })
+        })
 
     </script>
 <body>
 <main>
     <div id="viewArea">
         <ul>
-            <li>번호 : ${vo.post_id}  &nbsp;  글쓴이 : ${vo.user_id}  &nbsp;  조회수 : ${vo.views}  &nbsp;  작성일 : ${vo.write_date}</li>
+            <li>번호 : ${bVO.post_id}  &nbsp;  글쓴이 : ${bVO.user_id}  &nbsp;  조회수 : ${bVO.views}  &nbsp;  작성일 : ${bVO.write_date}</li>
             <hr>
-            <li>제목 : ${vo.title}</li>
+            <li>제목 : ${bVO.title}</li>
             <hr>
-            <li>${vo.content}</li>
+            <li>${bVO.content}</li>
         </ul>
     </div>
 
@@ -182,7 +206,7 @@
         <!-- 현재글쓴이와 로그인 아이디가 같을 때만 수정 삭제 가능 -->
         <button id="editPost">수정</button>
 
-        <c:if test="${logId==vo.user_id}">
+        <c:if test="${logId==bVO.user_id}">
         <button id="deletePost">삭제</button>
         </c:if>
     </div>
@@ -192,10 +216,10 @@
         <!-- 로그인 상태일 때 댓글쓰기 -->
         <form method="post" id="replyForm">
             <!--  원글 글번호 -->
-            <input type="hidden" name="no" value="${vo.post_id}"/>
+            <input type="hidden" name="no" value="${bVO.post_id}"/>
             <textarea name="coment" id="coment"></textarea>
             <!-- button은 form안에있을경우 input type submit과 동일 -->
-            <button>댓글등록</button>
+            <button id="addReply">댓글등록</button>
         </form>
         <br>
         <div>댓글 목록</div>
