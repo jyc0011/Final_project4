@@ -185,16 +185,19 @@ public class AdminController {
         List<BoardReportVO> board = service.getBoardReportList(pvo);
         System.out.println(board);
 
-
         for(int i=0;i<board.size();i++){
             int post_id=board.get(i).getPost_id();
             BoardReportVO postsVO=service.getPostsVO(post_id);
-
-            board.get(i).setTitle(postsVO.getTitle());
-            board.get(i).setContent (postsVO.getContent());
-            board.get(i).setBoard_cat (postsVO.getBoard_cat());
-
-
+            if (postsVO != null) {
+                board.get(i).setTitle(postsVO.getTitle());
+                board.get(i).setContent(postsVO.getContent());
+                board.get(i).setBoard_cat(postsVO.getBoard_cat());
+            }
+            else{
+                board.get(i).setTitle("삭제된 게시글");
+                board.get(i).setContent("삭제된 게시글");
+                board.get(i).setBoard_cat("삭제된 게시글");
+            }
         }
         mav.addObject("board", board);
         mav.addObject("pVO", pvo);
