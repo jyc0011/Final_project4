@@ -57,6 +57,10 @@
             color: black;
             font-size: 20px;
         }
+        a{
+            text-decoration: none;
+            color: black;
+        }
     </style>
 </head>
 

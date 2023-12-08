@@ -5,19 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class BoardReplyVO {
+@AllArgsConstructor
+public class ReplyVO {
     private int comment_id;
-    private String writer;
     private int post_id;
+    private String user_id;
     private String content;
-    private int like;
-    private int target_parent;
     private String write_date;
+    private int parent_comment_id;
     private int depth;
-    private String email;
-    private int isdelete;
-    private String board_cat;
-    private String title;
+    private int is_deleted;
+
 }

@@ -15,6 +15,26 @@ public class AdminServiceImpl implements AdminService {
 
 
     //대시보드
+    @Override
+    public List<DashboardVO> getMonthlyVisitorStats() {
+        System.out.println(mapper.monthVisitor());
+        return mapper.monthVisitor();
+    }
+    @Override
+    public List<DashboardVO> countUsersByNation() {
+        System.out.println(mapper.countUsersByNation());
+        return mapper.countUsersByNation();
+    }
+    @Override
+    public List<BoardVO> latestBoard() {
+        System.out.println(mapper.latestBoard());
+        return mapper.latestBoard();
+    }
+    @Override
+    public List<BoardReplyVO> latestReply() {
+        System.out.println(mapper.latestReply());
+        return mapper.latestReply();
+    }
     //현재회원관리=====================================================
     @Override
     public int totalMemberRecord() {

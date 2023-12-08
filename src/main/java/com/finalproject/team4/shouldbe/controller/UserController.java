@@ -5,6 +5,7 @@ import com.finalproject.team4.shouldbe.service.UserService;
 import com.finalproject.team4.shouldbe.util.EncryptUtil;
 import com.finalproject.team4.shouldbe.vo.LoginVO;
 import com.finalproject.team4.shouldbe.vo.UserVO;
+import com.google.gson.JsonObject;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -47,15 +50,16 @@ public class UserController {
 
     @PostMapping("/create/sendcode")
     @ResponseBody
-    public String createSendCode(@RequestParam("email") String email, HttpSession session) {
+    public Map<String, Object> createSendCode(@RequestParam("email") String email, HttpSession session) {
 
         int result = userService.userCheckEmail(email);
-        var json = new JSONObject();
+        var map = new HashMap<String, Object>();
+
         if(result>1){
             //중복이메일
-            json.append("result", false);
-            json.append("msg", "Duplicated email error");
-            return json.toString();
+            map.put("result", false);
+            map.put("msg", "Duplicated email error");
+            return map;
         }
 
         //System.out.println(result);
@@ -63,13 +67,13 @@ public class UserController {
             var authNum = emailService.sendAuthMail(email);
             session.setAttribute("authNum", authNum);
             session.setAttribute("authTime", System.currentTimeMillis());
-            json.append("result", true);
-            return json.toString();
+            map.put("result", true);
+            return map;
         } catch (Exception e) {
         }
-        json.append("result", false);
-        json.append("msg", "Mail service error");
-        return json.toString();
+        map.put("result", false);
+        map.put("msg", "Mail service error");
+        return map;
     }
 
     @PostMapping("/create/verify")
@@ -132,18 +136,25 @@ public class UserController {
     }
 
     @PostMapping("/loginOk")
-    public String loginOk(HttpSession session, @RequestParam("userid") String userid, @RequestParam("userpwd") String userpwd, RedirectAttributes redirect) {
+    public String loginOk(HttpSession session,
+                          @RequestParam("userid") String userid,
+                          @RequestParam("userpwd") String userpwd,
+                          RedirectAttributes redirect) {
         LoginVO vo = userService.userLoginCheck(userid);
         if (vo == null || vo.getWithdraw()==1) {//로그인 실패
             redirect.addFlashAttribute("result", "로그인 실패, 아이디를 확인해주세요!");
             return "redirect:/login";
         } else if (encrypt.encrypt(userpwd, vo.getSalt()).equals(vo.getPassword())) {
+            userService.logUser(userid);
             session.setAttribute("logStatus", "Y");
             session.setAttribute("logName", vo.getUser_name());
             session.setAttribute("logId", userid);
-            return "redirect:/";
+            if(userService.ismanager(userid)){
+                return "redirect:/admin/";
+            }else{
+                return "redirect:/";
+            }
         }
-
         redirect.addFlashAttribute("result", "로그인 실패, 비밀번호를 확인해주세요!");
         return "redirect:/login";
 

@@ -276,7 +276,7 @@
                                 <div class="text-container">
                                     <span class="username">${userId}</span>
                                     <i style="position: absolute; width: 42px; height: 42px; right: 10px;">
-                                        <img src="${profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <img src="${pageContext.servletContext.contextPath}/image/profile/${profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
                                     </i>
                                     <p>${message.content}</p>
                                     <p>${message.trans_content}</p>
@@ -292,7 +292,7 @@
                                 <div class="text-container">
                                     <span class="username">${otherId}</span>
                                     <i style="position: absolute; width: 42px; height: 42px; left: 10px;">
-                                        <img src="${other_profile_img}"
+                                        <img src="${pageContext.servletContext.contextPath}/image/profile/${other_profile_img}"
                                              style="width: 100%; height: 100%; object-fit: cover;">
                                     </i>
                                     <p>${message.content}</p>
@@ -329,8 +329,8 @@
     const chatId = ${chatId};
     var username = "${userId}";
     var stompClient = null;
-    const userProfileImage = "${profile_img}";
-    const otherUserProfileImage = "${other_profile_img}";
+    const userProfileImage = "${pageContext.servletContext.contextPath}/image/profile/${profile_img}";
+    const otherUserProfileImage = "${pageContext.servletContext.contextPath}/image/profile/${other_profile_img}";
 
     function connect() {
         console.log("Connect");

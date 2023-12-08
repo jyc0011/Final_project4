@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface AdminService {
     //대시보드=====================================================
+    List<DashboardVO> getMonthlyVisitorStats();
+    List<DashboardVO> countUsersByNation();
+    List<BoardVO> latestBoard();
+    List<BoardReplyVO> latestReply();
     //현재회원관리=====================================================
     int totalMemberRecord();
     List<AdminMemberVO> adminMemberList(PagingVO pvo);
@@ -50,7 +54,6 @@ public interface AdminService {
     //채팅관리======================================================
     int totalMessageRecord();
     List<AdminChatVO> adminChatList(PagingVO pvo);
-
 
 
     //List<BoardVO> getBoardList_admin(PagingVO pvo);
