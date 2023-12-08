@@ -141,8 +141,12 @@ public class UserController {
                           @RequestParam("userpwd") String userpwd,
                           RedirectAttributes redirect) {
         LoginVO vo = userService.userLoginCheck(userid);
-        if (vo == null || vo.getWithdraw()==1) {//로그인 실패
+        System.out.println(vo);
+        if (vo == null) {//로그인 실패
             redirect.addFlashAttribute("result", "로그인 실패, 아이디를 확인해주세요!");
+            return "redirect:/login";
+        } else if (vo.getWithdraw()!= null) {
+            redirect.addFlashAttribute("result", "탈퇴 예정 회원입니다. 탈퇴를 취소하고 싶다면 문의해주세요.");
             return "redirect:/login";
         } else if (encrypt.encrypt(userpwd, vo.getSalt()).equals(vo.getPassword())) {
             userService.logUser(userid);
