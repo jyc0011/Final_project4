@@ -22,7 +22,7 @@ public interface AdminService {
     AdminMemberVO getUserVO(String user_id);
 
     //정지회원관리_정지버튼
-    int suspendInsert(String user_id);
+    int suspendInsert(String user_id,int time,String reason);
     //정지회원관리_정지해제버튼
     int suspendDelete(int suspended_id);
 
@@ -43,6 +43,7 @@ public interface AdminService {
     List<BoardReplyVO> getReplyList_admin(PagingVO pvo);
     //퀴즈관리======================================================
     List<QuizVO> quizlist(int level);
+    QuizVO quiz_table(int quiz_id);
     //퀴즈관리_퀴즈등록페이지버튼
     int quizInsert(String quiz_content,int level);
     int selectQuizId(String quiz_content);

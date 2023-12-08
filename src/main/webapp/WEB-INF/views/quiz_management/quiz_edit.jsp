@@ -130,7 +130,7 @@
     <div id="member_management">
         <h1 id="quiz_list_title">퀴즈 수정/삭제</h1>
         <div id="quiz_content">
-            <p>${editlist[0].quiz_content}</p>
+            <p>${qVO.quiz_content}</p>
         </div>
         <div id="answerlist">
             <c:forEach var="eVO1" items="${editlist}" varStatus="status">
@@ -141,10 +141,14 @@
             </c:forEach>
         </div>
         <div id="editDelForm">
-            <div class="input-group mb-3" id="input-text" style="width: 600px">
-                <input type="text" class="form-control" placeholder="추가할 뜻 작성">
-                <button class="btn btn-dark">추가</button>
-            </div>
+            <form method="post" action="${pageContext.servletContext.contextPath}/quiz/answer_insert">
+                <div class="input-group mb-3" id="input-text" style="width: 600px">
+                    <input type="text" name="answer" class="form-control" placeholder="추가할 뜻 작성">
+                    <input type="hidden" name="quiz_id" value="${qVO.quiz_id}">
+                    <button class="btn btn-dark">추가</button>
+                </div>
+            </form>
+
             <div>
                 <button class="btn btn-dark">단어 삭제</button>
             </div>

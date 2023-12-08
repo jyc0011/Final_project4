@@ -99,13 +99,13 @@ public class AdminController {
         return mav;
     }
     //정지회원관리_정지버튼
-    @GetMapping("/suspend")
-    public ModelAndView suspend(String user_id) {
+    @PostMapping("/suspend")
+    public ModelAndView suspend(String user_id,int time,String reason) {
         ModelAndView mav = new ModelAndView();
-        System.out.println(user_id);
-        int result = service.suspendInsert(user_id);
+        System.out.println(user_id+" "+time+" "+reason);
+        int result = service.suspendInsert(user_id,time,reason);
         mav.setViewName("admin/admin_dashboard");
-        mav.setViewName("redirect:/admin/member/management");
+        mav.setViewName("redirect:/admin/suspended/management");
         return mav;
     }
     //정지회원관리_정지해제버튼
@@ -276,10 +276,22 @@ public class AdminController {
     @GetMapping("/admin/quiz_edit")
     public ModelAndView GoQuiz_edit(int quiz_id) {
         ModelAndView mav = new ModelAndView();
+        QuizVO qVO=service.quiz_table(quiz_id);
         List<QuizVO> editlist=service.editlist(quiz_id);
         System.out.println(editlist.toString());
+        mav.addObject("qVO", qVO);
         mav.addObject("editlist", editlist);
         mav.setViewName("quiz_management/quiz_edit");
+        return mav;
+    }
+    @PostMapping("/quiz/answer_insert")
+    public ModelAndView AnswerInsert(String answer,int quiz_id){
+        ModelAndView mav= new ModelAndView();
+        //System.out.println(answer+quiz_id);
+        //int quizInsertResult=service.quizInsert(quiz_content,level);
+       // int quiz_id=service.selectQuizId(quiz_content);
+        int answerInsertResult=service.answerInsert(quiz_id,answer);
+        mav.setViewName("redirect:/admin/quiz_edit?quiz_id="+quiz_id);
         return mav;
     }
     //퀴즈관리_등록된 퀴즈 삭제 버튼

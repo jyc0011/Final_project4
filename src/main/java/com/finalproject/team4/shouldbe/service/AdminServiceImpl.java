@@ -62,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
 
     //정지회원관리_정지버튼======================================================
     @Override
-    public int suspendInsert(String user_id){return mapper.suspendInsert(user_id);}
+    public int suspendInsert(String user_id,int time,String reason){return mapper.suspendInsert(user_id,time,reason);}
     //정지회원관리_정지해제버튼
     @Override
     public int suspendDelete(int suspended_id){return mapper.suspendDelete(suspended_id);}
@@ -131,6 +131,8 @@ public class AdminServiceImpl implements AdminService {
     //퀴즈관리_등록된 퀴즈 삭제 버튼
     @Override
     public int answerDelete(String answer){return mapper.answerDelete(answer);}
+    @Override
+    public QuizVO quiz_table(int quiz_id){return mapper.quiz_table(quiz_id);}
 
     //퀴즈관리_유저퀴즈등록버튼======================================================
     //퀴즈관리_등록된 퀴즈 리스트======================================================
