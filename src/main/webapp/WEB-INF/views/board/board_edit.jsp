@@ -44,30 +44,40 @@
         }
     </style>
     <script>
-
+        window.onload = function () {
+            document.getElementById("cancelBtn").onclick = function () {
+                window.history.back();
+            }
+        }
     </script>
 
 <body>
 <main>
-    ${vo.title}
+    <br>
+    <h2> 게시글 수정 :
+        <c:if test="${vo.board_cat=='free'}">자유게시판</c:if>
+        <c:if test="${vo.board_cat=='notice'}">공지사항</c:if>
+        <c:if test="${vo.board_cat=='inquiries'}">문의게시판</c:if>
+    </h2>
+    <br>
+    <form method="post"
+          action="${pageContext.servletContext.contextPath}/board/${vo.board_cat}/editOk">
+        <div class="mb-3">
+            <!-- todo: 제목에 ",'등 처리 하는법, 내용 엔터처리 -->
+            <label for="exampleFormControlInput1" class="form-label">제목</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" name="title" value='${vo.title}'>
+            <input type="hidden" name="post_id" value="${vo.post_id}"/>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="content">${vo.content}</textarea>
+        </div>
+        <div id="writeButton">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
+            <button type="submit" class="btn btn-warning">작성</button>
+        </div>
+    </form>
 
-    <h1>게시글 수정</h1>
-    <c:if test="${vo.board_cat=='free'}">자유게시판</c:if>
-    <c:if test="${vo.board_cat=='notice'}">공지사항</c:if>
-    <c:if test="${vo.board_cat=='inquiries'}">문의게시판</c:if>
-    <div class="mb-3">
-        <!-- todo: 제목에 ",'등 처리 하는법, 내용 엔터처리 -->
-        <label for="exampleFormControlInput1" class="form-label">제목</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" value='${vo.title}'>
-    </div>
-    <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="10">${vo.content}</textarea>
-    </div>
-    <div id="writeButton">
-        <button type="button" class="btn btn-secondary">취소</button>
-        <button type="button" class="btn btn-warning">작성</button>
-    </div>
 
 </main>
 </body>

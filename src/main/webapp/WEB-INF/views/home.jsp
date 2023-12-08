@@ -473,10 +473,6 @@
 
 
 </main>
-<div class="temp-login">
-    <br/>
-    <p>현재 아이디 : ${logId} / 로그인 상태 : ${logStatus}</p>
-</div>
 </body>
 
 </html>

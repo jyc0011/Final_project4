@@ -1,15 +1,20 @@
 package com.finalproject.team4.shouldbe.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.finalproject.team4.shouldbe.service.AdminService;
+import com.finalproject.team4.shouldbe.service.UserService;
 import com.finalproject.team4.shouldbe.vo.*;
 import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -17,16 +22,35 @@ public class AdminController {
     @Autowired
     AdminService service;
 
+    @Autowired
+    UserService userService;
+
     //대시보드======================================================
     @GetMapping("/admin")
-    public String admin() {
-        return "admin/admin_dashboard";
+    public ModelAndView admin(HttpSession session) throws JsonProcessingException {
+        ModelAndView mav = new ModelAndView();
+        if(! userService.ismanager((String) session.getAttribute("logId"))){
+            mav.setViewName("/");
+            return mav;
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        mav.addObject("visitorStats", objectMapper.writeValueAsString(service.getMonthlyVisitorStats()));
+        mav.addObject("nationStats", objectMapper.writeValueAsString(service.countUsersByNation()));
+        mav.addObject("latestBoards", service.latestBoard());
+        mav.addObject("latestReplies", service.latestReply());
+        mav.setViewName("admin/admin_dashboard");
+        return mav;
     }
 
     //현재 회원 관리
     @GetMapping("/admin/member/management")
-    public ModelAndView GoMember_management(@RequestParam(required = false, defaultValue = "1") int page) {
+    public ModelAndView GoMember_management(@RequestParam(required = false, defaultValue = "1") int page,
+                                            HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        if(! userService.ismanager((String) session.getAttribute("logId"))){
+            mav.setViewName("/");
+            return mav;
+        }
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);
@@ -47,8 +71,13 @@ public class AdminController {
 
     //정지회원관리======================================================
     @GetMapping("/admin/suspended/management")
-    public ModelAndView GoSuspended_management(@RequestParam(required = false, defaultValue = "1") int page) {
+    public ModelAndView GoSuspended_management(@RequestParam(required = false, defaultValue = "1") int page,
+                                               HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        if(! userService.ismanager((String) session.getAttribute("logId"))){
+            mav.setViewName("/");
+            return mav;
+        }
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);
@@ -91,8 +120,13 @@ public class AdminController {
 
     //탈퇴회원관리======================================================
     @GetMapping("/admin/withdrawn/management")
-    public ModelAndView GoWithdrawn_management(@RequestParam(required = false, defaultValue = "1") int page) {
+    public ModelAndView GoWithdrawn_management(@RequestParam(required = false, defaultValue = "1") int page,
+                                               HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        if(! userService.ismanager((String) session.getAttribute("logId"))){
+            mav.setViewName("/");
+            return mav;
+        }
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);
@@ -115,10 +149,32 @@ public class AdminController {
         return mav;
     }
 
+    @GetMapping("/admin/withdrawn/all")
+    public ModelAndView withdrawAll() {
+        service.withdrawExpiredUsers();
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/admin");
+        return mav;
+    }
+
+    @PostMapping("/admin/withdrawn/personal")
+    public ModelAndView withdrawPersonal(@RequestParam("userId") String userId) {
+        service.deleteUserById(userId);
+        ModelAndView mav = new ModelAndView();
+        System.out.println(userId);
+        mav.setViewName("redirect:/admin");
+        return mav;
+    }
+
     //게시글관리======================================================
     @GetMapping("/admin/board")
-    public ModelAndView admin_board(@RequestParam(required = false, defaultValue = "1") int page) {
+    public ModelAndView admin_board(@RequestParam(required = false, defaultValue = "1") int page,
+                                    HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        if(! userService.ismanager((String) session.getAttribute("logId"))){
+            mav.setViewName("/");
+            return mav;
+        }
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);
@@ -129,16 +185,19 @@ public class AdminController {
         List<BoardReportVO> board = service.getBoardReportList(pvo);
         System.out.println(board);
 
-
         for(int i=0;i<board.size();i++){
             int post_id=board.get(i).getPost_id();
             BoardReportVO postsVO=service.getPostsVO(post_id);
-
-            board.get(i).setTitle(postsVO.getTitle());
-            board.get(i).setContent (postsVO.getContent());
-            board.get(i).setBoard_cat (postsVO.getBoard_cat());
-
-
+            if (postsVO != null) {
+                board.get(i).setTitle(postsVO.getTitle());
+                board.get(i).setContent(postsVO.getContent());
+                board.get(i).setBoard_cat(postsVO.getBoard_cat());
+            }
+            else{
+                board.get(i).setTitle("삭제된 게시글");
+                board.get(i).setContent("삭제된 게시글");
+                board.get(i).setBoard_cat("삭제된 게시글");
+            }
         }
         mav.addObject("board", board);
         mav.addObject("pVO", pvo);
@@ -151,14 +210,19 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         System.out.println(post_id);
         int result = service.postsDelete(post_id);
-        mav.setViewName("admin/admin_dashboard");
+        mav.setViewName("redirect:/admin");
         return mav;
     }
 
     //댓글관리======================================================
     @GetMapping("/admin/reply")
-    public ModelAndView admin_reply(@RequestParam(required = false, defaultValue = "1") int page) {
+    public ModelAndView admin_reply(@RequestParam(required = false, defaultValue = "1") int page,
+                                    HttpSession session) {
         ModelAndView mav = new ModelAndView("admin/admin_reply");
+        if(! userService.ismanager((String) session.getAttribute("logId"))){
+            mav.setViewName("/");
+            return mav;
+        }
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);
@@ -171,8 +235,12 @@ public class AdminController {
 
     //퀴즈관리======================================================
     @GetMapping("/admin/quiz/list")
-    public ModelAndView GoQuiz_list() {
+    public ModelAndView GoQuiz_list(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        if(! userService.ismanager((String) session.getAttribute("logId"))){
+            mav.setViewName("/");
+            return mav;
+        }
         mav.setViewName("quiz_management/quiz_list");
         List<QuizVO> quizlist1=service.quizlist(1);
         List<QuizVO> quizlist2=service.quizlist(2);
@@ -226,9 +294,13 @@ public class AdminController {
 
     //채팅관리======================================================
     @GetMapping("/admin/chat/management")
-    public ModelAndView GoChat_management(@RequestParam(required = false, defaultValue = "1") int page) {
+    public ModelAndView GoChat_management(@RequestParam(required = false, defaultValue = "1") int page,
+                                          HttpSession session) {
         ModelAndView mav = new ModelAndView();
-
+        if(! userService.ismanager((String) session.getAttribute("logId"))){
+            mav.setViewName("/");
+            return mav;
+        }
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);

@@ -125,7 +125,7 @@
         <c:forEach var="blist" items="${blist}">
             <div class="friend-card">
                 <div class="friend-avatar">
-                    <img src="${pageContext.servletContext.contextPath}/image/user.png" alt="Friend's Avatar"
+                    <img src="${pageContext.servletContext.contextPath}/image/profile/user.png" alt="Friend's Avatar"
                          class="rounded-circle" style="width: 50px; height: 50px;">
                 </div>
                 <div class="friend-info">

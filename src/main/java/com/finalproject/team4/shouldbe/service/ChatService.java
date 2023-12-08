@@ -114,18 +114,23 @@ public class ChatService {
     public void reportMessage(String userId, int msgId) throws Exception {
         MessageVO messageInfo = chatMapper.findMessageInfo(msgId);
         ChatRoomVO chatInfo=chatMapper.getChatByChatId(messageInfo.getChat_id());
-        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), messageInfo.getSender());
+        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), userId);
         String senderUserId = messageInfo.getIs_from_id() == 1 ? chatInfo.getFrom_id() : chatInfo.getTo_id();
-        String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
+        String content=EncryptUtil.decryptAES(messageInfo.getContent(), sharedKey);
         chatMapper.reportMessage(senderUserId, msgId, content);
     }
 
 
     public void saveMessageToMypage(String userId, int msgId) throws Exception {
+        System.out.println(1);
         MessageVO messageInfo = chatMapper.findMessageInfo(msgId);
-        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), messageInfo.getSender());
-        String content=EncryptUtil.encryptAES(messageInfo.getContent(), sharedKey);
+        System.out.println(2);
+        String sharedKey = chatMapper.getSharedKey(messageInfo.getChat_id(), userId);
+        System.out.println(sharedKey);
+        String content=EncryptUtil.decryptAES(messageInfo.getContent(), sharedKey);
+        System.out.println(4);
         chatMapper.saveMessageToMypage(userId, msgId, content);
+        System.out.println(5);
     }
 
     public void addFriend(String followingUserId, String followedUserId) {
@@ -137,14 +142,20 @@ public class ChatService {
 
     @Transactional
     public void blockUserAndUpdateChat(BlockRequest blockRequest) {
-        System.out.println(Integer.parseInt(blockRequest.getChatId()));
         chatMapper.insertBlockList(blockRequest.getUserId(),blockRequest.getOtherId(),blockRequest.getReason());
+        System.out.println("1");
         chatMapper.friendDelete(blockRequest.getUserId(),blockRequest.getOtherId());
+        System.out.println("2");
         String currentState = chatMapper.getStateByChatId(Integer.parseInt(blockRequest.getChatId()));
+        System.out.println("3");
+        System.out.println(currentState);
         if ("0".equals(currentState)) {
             chatMapper.updateState(Integer.parseInt(blockRequest.getChatId()),blockRequest.getUserId());
+            System.out.println("4");
         } else {
             chatMapper.deleteChatAndRelatedData(Integer.parseInt(blockRequest.getChatId()));
+            System.out.println("5");
         }
+        System.out.println("6");
     }
 }

@@ -40,7 +40,7 @@
 
         #member_management {
             height: auto;
-            width: 100%;
+            width: 900px;
             margin: 50px auto;
 
         }
@@ -128,25 +128,10 @@
                     <th class="reported_id">신고받은 ID</th>
                     <th class="chat_content">채팅 내용</th>
                     <th class="report_count">신고일</th>
-                    <th class="suspend_button"></th>
+                    <th class="suspend_button">계정 정지</th>
                 </tr>
                 </thead>
                 <tbody id="list_content">
-                <tr class="management_list">
-                    <td class="reported_id">신고받은 ID</td>
-                    <td class="chat_content">
-                        <div class="origin">
-                            sdf
-                        </div>
-                        <!--
-                           <div class="translation">
-                                asdfsadfsadfsaf
-                            </div>
-                        -->
-                    </td>
-                    <td class="report_count">신고일</td>
-                    <td class="suspend_button"><input type="button" value="계정정지" class="btn btn-dark"></td>
-                </tr>
                 <c:forEach var="acVO" items="${aclist}">
                     <tr class="tr_list">
                         <td class="reported_id">${acVO.user_id}</td>
@@ -173,7 +158,7 @@
                     <div class="paging">
                         <ul class="pagination justify-content-center d-flex">
                             <c:if test="${pVO.nowPage > 1}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage - 1}'"><
+                                <li class="page-item"><a class="page-link" href="?page=${pVO.nowPage - 1}"><
                                 </a></li>
                             </c:if>
                             <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
@@ -189,7 +174,7 @@
                                 </c:if>
                             </c:forEach>
                             <c:if test="${pVO.nowPage < pVO.totalPage}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage + 1}'">>
+                                <li class="page-item"><a class="page-link" href="?page=${pVO.nowPage + 1}">>
                                 </a></li>
                             </c:if>
                         </ul>

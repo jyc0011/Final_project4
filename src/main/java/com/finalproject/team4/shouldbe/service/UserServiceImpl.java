@@ -1,10 +1,13 @@
 package com.finalproject.team4.shouldbe.service;
 
 import com.finalproject.team4.shouldbe.mapper.UserMapper;
+import com.finalproject.team4.shouldbe.util.DayUtil;
 import com.finalproject.team4.shouldbe.vo.LoginVO;
 import com.finalproject.team4.shouldbe.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -37,9 +40,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int userCheckEmail(String email) {
+        return mapper.userCheckEmail(email);
+    }
+
+    @Override
     public int userpwdUpdate(UserVO vo) {
         return mapper.userpwdUpdate(vo);
     }
 
-
+    @Override // 오늘 로그인 했는지 안 했는지 하는거
+    public void logUser(String userid){
+        Date lastLog = mapper.getLastLogDate(userid);
+        if (lastLog == null || !DayUtil.isSameDay(lastLog, new Date())) {
+            mapper.insertLog(userid);
+        }
+    }
+    @Override
+    public boolean ismanager(String userid){
+        return mapper.ismanager(userid);
+    }
 }

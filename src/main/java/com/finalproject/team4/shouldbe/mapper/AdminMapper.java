@@ -9,6 +9,10 @@ import java.util.List;
 @Mapper
 public interface AdminMapper {
     //대시보드=====================================================
+    List<DashboardVO> monthVisitor();
+    List<DashboardVO> countUsersByNation();
+    List<BoardVO> latestBoard();
+    List<BoardReplyVO> latestReply();
     //현재회원관리=====================================================
     int countMember();
     List<AdminMemberVO> adminMemberList(@Param("pvo") PagingVO pvo);
@@ -31,7 +35,7 @@ public interface AdminMapper {
     int countWithdrawnMember();
     List<AdminMemberVO> adminWithdrawnList(@Param("pvo") PagingVO pvo);
     AdminMemberVO adminWithdrawnListUsers(String user_id);
-
+    void deleteUserById(String userId);
 
     //게시글관리======================================================
     int countBoard();
@@ -68,6 +72,8 @@ public interface AdminMapper {
     //채팅관리======================================================
     int countMessage();
     List<AdminChatVO> adminChatList(@Param("pvo") PagingVO pvo);
+
+    void withdrawExpiredUsers();
 
 
     /*

@@ -270,13 +270,13 @@
                         or (message.is_from_id == 0 and userId != fromId)}">
                             <li class="message-mine chat-message">
                                 <div class="message-actions">
-                                    <a href="#" class="report-button-other" data-message-id="${message.msg_id}">Report</a>
-                                    <a href="#" class="save-button-other" data-message-id="${message.msg_id}">Save</a>
+                                    <a href="#" class="report-button" data-message-id="${message.msg_id}">Report</a>
+                                    <a href="#" class="save-button" data-message-id="${message.msg_id}">Save</a>
                                 </div>
                                 <div class="text-container">
                                     <span class="username">${userId}</span>
                                     <i style="position: absolute; width: 42px; height: 42px; right: 10px;">
-                                        <img src="${profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <img src="${pageContext.servletContext.contextPath}/image/profile/${profile_img}" style="width: 100%; height: 100%; object-fit: cover;">
                                     </i>
                                     <p>${message.content}</p>
                                     <p>${message.trans_content}</p>
@@ -292,7 +292,7 @@
                                 <div class="text-container">
                                     <span class="username">${otherId}</span>
                                     <i style="position: absolute; width: 42px; height: 42px; left: 10px;">
-                                        <img src="${other_profile_img}"
+                                        <img src="${pageContext.servletContext.contextPath}/image/profile/${other_profile_img}"
                                              style="width: 100%; height: 100%; object-fit: cover;">
                                     </i>
                                     <p>${message.content}</p>
@@ -329,8 +329,8 @@
     const chatId = ${chatId};
     var username = "${userId}";
     var stompClient = null;
-    const userProfileImage = "${profile_img}";
-    const otherUserProfileImage = "${other_profile_img}";
+    const userProfileImage = "${pageContext.servletContext.contextPath}/image/profile/${profile_img}";
+    const otherUserProfileImage = "${pageContext.servletContext.contextPath}/image/profile/${other_profile_img}";
 
     function connect() {
         console.log("Connect");
@@ -432,7 +432,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.report-button').forEach(function(button) {
+        document.querySelectorAll('.report-button, .report-button-other').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
                 var messageId = this.getAttribute('data-message-id');
@@ -440,7 +440,7 @@
             });
         });
 
-        document.querySelectorAll('.save-button').forEach(function(button) {
+        document.querySelectorAll('.save-button, .save-button-other').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
                 var messageId = this.getAttribute('data-message-id');
@@ -523,6 +523,7 @@
             });
         }
     });
+
 </script>
 </body>
 </html>

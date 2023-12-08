@@ -4,6 +4,8 @@ import com.finalproject.team4.shouldbe.vo.LoginVO;
 import com.finalproject.team4.shouldbe.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Date;
+
 @Mapper
 public interface UserMapper {
     int useridCheck(String userid);
@@ -16,5 +18,12 @@ public interface UserMapper {
 
     int userCheckId(String userid, String email);
 
+    int userCheckEmail(String email);
     int userpwdUpdate(UserVO vo);
+
+    Date getLastLogDate(String userid);
+
+    void insertLog(String userid);
+
+    boolean ismanager(String userid);
 }

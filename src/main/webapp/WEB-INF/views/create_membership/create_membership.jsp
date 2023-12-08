@@ -71,10 +71,12 @@
         .lang {
             margin: 10px auto;
         }
-        .input-container{
-            position:relative;
-            margin-top:25px;
+
+        .input-container {
+            position: relative;
+            margin-top: 25px;
         }
+
         .input-container:nth-child(1) {
             margin-top: 0;
         }
@@ -100,8 +102,9 @@
             outline: none;
             border-bottom: 1px solid #e74c3c;
         }
-        .submitBtn{
-            color:#fff;
+
+        .submitBtn {
+            color: #fff;
             outline: none;
             border: 0;
             padding: 10px 20px;
@@ -150,14 +153,15 @@
             appearance: none;
             width: 130px;
             height: 38px;
-            background: url("../../../image/select.png")no-repeat center right;
+            background: url("../../../image/select.png") no-repeat center right;
             padding: 5px 30px 5px 20px;
             border-radius: 4px;
             outline: 0 none;
             border: 1px solid #6c757d;
             cursor: pointer;
         }
-        .select option{
+
+        .select option {
             background: #FFD954;
             padding: 3px 0;
         }
@@ -166,12 +170,13 @@
             margin-top: 30px;
         }
 
-        .col-sm-10{
+        .col-sm-10 {
             margin-left: 20px;
         }
-        .btn-outline-secondary{
+
+        .btn-outline-secondary {
             width: 130px;
-            margin:  5px 10px 0 0;
+            margin: 5px 10px 0 0;
         }
     </style>
     <script>
@@ -226,13 +231,13 @@
                     url: "/create/sendcode",
                     data: {email: email},
                     success: function (r) {
-                        if (r) {
+                        if (r.result == true) {
                             alert("이메일이 전송되었습니다.");
                             $("#emailCheckDiv").css('display', '');
                             // $("#authenticate").css('display', '');
                             // $("#checkcode").css('display', '');
                         } else {
-                            alert("이메일 발송 오류");
+                            alert(r.msg);
                         }
                     },
                     error: function (e) {
@@ -361,27 +366,56 @@
                     <label style="margin: 20px 0 5px 0">사용언어</label>
                 </div>
                 <div>
-                    <input type="checkbox" class="lang" name="lang" value="ko"/>
-                    <lebel>한국어</lebel>
+                    <input type="checkbox" class="lang" name="langArr" value="ko"/>
+                    <label>한국어</label>
+                    <input type="checkbox" class="lang" name="langArr" value="ja"/>
+                    <label>일본어</label>
+                    <input type="checkbox" class="lang" name="langArr" value="en"/>
+                    <label>영어</label>
+                    <input type="checkbox" class="lang" name="langArr" value="zh-CN"/>
+                    <label>중국어</label>
+                    <input type="checkbox" class="lang" name="langArr" value="vi"/>
+                    <label>베트남어</label>
+
+
                 </div>
                 <div>
-                    <input type="checkbox" class="lang" name="lang" value="jp"/>
-                    <lebel>일본어</lebel>
+                    <input type="checkbox" class="lang" name="langArr" value="th"/>
+                    <label>태국어</label>
+                    <input type="checkbox" class="lang" name="langArr" value="id"/>
+                    <label>인도네시아어</label>
+                    <input type="checkbox" class="lang" name="langArr" value="fr"/>
+                    <label>프랑스어</label>
+                    <input type="checkbox" class="lang" name="langArr" value="es"/>
+                    <label>스페인어</label>
                 </div>
                 <div>
-                    <input type="checkbox" class="lang" name="lang" value="en"/>
-                    <lebel>영어</lebel>
+                    <input type="checkbox" class="lang" name="langArr" value="ru"/>
+                    <label>러시아어</label>
+                    <input type="checkbox" class="lang" name="langArr" value="de"/>
+                    <label>독일어</label>
+                    <input type="checkbox" class="lang" name="langArr" value="it"/>
+                    <label>이탈리아어</label>
                 </div>
             </div>
             <div>
                 <div style="margin:17px 0 5px">
-                    <lebel>국적</lebel>
+                    <label>국적</label>
                 </div>
                 <select name="nation" id="nation" class="select" style="margin-left: 20px">
                     <option disabled selected>국적</option>
-                    <option value="kor">한국</option>
-                    <option value="us">미국</option>
-                    <option value="jpn">일본</option>
+                    <option value="ko">한국</option>
+                    <option value="en">미국</option>
+                    <option value="ja">일본</option>
+                    <option value="zh-CN">중국</option>
+                    <option value="vi">베트남</option>
+                    <option value="th">태국</option>
+                    <option value="id">인도네시아</option>
+                    <option value="fr">프랑스</option>
+                    <option value="es">스페인</option>
+                    <option value="ru">러시아</option>
+                    <option value="de">독일</option>
+                    <option value="it">이탈리아</option>
                 </select>
             </div>
             <div>
@@ -389,19 +423,23 @@
                     <label>성별</label>
                 </div>
                 <div class="col-sm-10">
-                    <input type="radio" class="btn-check sex" name="options-outlined sex" id="secondary-outlined-0" autocomplete="off" checked>
+                    <input type="radio" class="btn-check sex" name="options-outlined sex" id="secondary-outlined-0"
+                           autocomplete="off" checked>
                     <label class="btn btn-outline-secondary" for="secondary-outlined-0" value="0">남자</label>
 
-                    <input type="radio" class="btn-check sex" name="options-outlined sex" id="secondary-outlined-1" autocomplete="off">
+                    <input type="radio" class="btn-check sex" name="options-outlined sex" id="secondary-outlined-1"
+                           autocomplete="off">
                     <label class="btn btn-outline-secondary" for="secondary-outlined-1" value="1">여자</label>
                 </div>
             </div>
             <div id="termsCheck">
                 <div>
-                    <label style="cursor: pointer"><input type="checkbox" id="terms1" style="margin-right: 5px; cursor: pointer"/>이용약관 동의<strong>(필수)</strong></label>
+                    <label style="cursor: pointer"><input type="checkbox" id="terms1"
+                                                          style="margin-right: 5px; cursor: pointer"/>이용약관 동의<strong>(필수)</strong></label>
                 </div>
                 <div>
-                    <label style="cursor: pointer"><input type="checkbox" id="terms2" style="margin-right: 5px; cursor: pointer"/>개인정보 수집 동의<strong>(필수)</strong></label>
+                    <label style="cursor: pointer"><input type="checkbox" id="terms2"
+                                                          style="margin-right: 5px; cursor: pointer"/>개인정보 수집 동의<strong>(필수)</strong></label>
                 </div>
             </div>
             <ul>

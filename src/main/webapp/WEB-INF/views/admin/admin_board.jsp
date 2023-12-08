@@ -169,14 +169,6 @@
                 </tr>
                 </thead>
                 <tbody id="list_content">
-                <tr class="board_list">
-                    <td class="board">자유게시판</td>
-                    <td class="board_title">글제목입니다</td>
-                    <td class="user_id">userid</td>
-                    <td class="report_count">1</td>
-                    <td class="report_reason">부적절한 게시글</td>
-                    <td class="del_button"><input type="button" value="게시글삭제" class="btn btn-dark"></td>
-                </tr>
                 <c:forEach var="bVO" items="${board}">
                     <tr class="management_list">
                         <td class="board">
@@ -187,6 +179,9 @@
                                 <c:when test="${bVO.board_cat=='resources'}">
                                     자료 게시판
                                 </c:when>
+                                <c:otherwise>
+                                    자유 게시판
+                                </c:otherwise>
                             </c:choose>
                         </td>
                         <td class="board_title"><a href="/board/notice/view?no=${bVO.post_id}">${bVO.title}</a></td>
@@ -207,7 +202,7 @@
                     <div class="paging">
                         <ul class="pagination justify-content-center d-flex">
                             <c:if test="${pVO.nowPage > 1}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage - 1}'"><
+                                <li class="page-item"><a class="page-link" href="${pageContext.servletContext.contextPath}/admin/board?page=${pVO.nowPage - 1}"><
                                 </a></li>
                             </c:if>
                             <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
@@ -223,7 +218,7 @@
                                 </c:if>
                             </c:forEach>
                             <c:if test="${pVO.nowPage < pVO.totalPage}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.nowPage + 1}'">>
+                                <li class="page-item"><a class="page-link" href="${pageContext.servletContext.contextPath}/admin/board?page=${pVO.nowPage + 1}">>
                                 </a></li>
                             </c:if>
                         </ul>

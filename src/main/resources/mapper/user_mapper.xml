@@ -7,11 +7,11 @@
         where user_id = #{param1};
     </select>
     <insert id="useridInsert">
-        insert into users(user_id, user_name, password, salt, email, nation, sex, lang)
-        values (#{userid}, #{username}, #{userpwd}, #{salt}, #{email}, #{nation}, #{sex}, #{lang})
+        insert into users(user_id, user_name, password, salt, email, nation, sex, lang, profile_img)
+        values (#{userid}, #{username}, #{userpwd}, #{salt}, #{email}, #{nation}, #{sex}, #{lang}, 'user.png')
     </insert>
     <select id="userLoginCheck" resultType="LoginVO">
-        select password, salt, user_name
+        select password, salt, user_name,withdraw
         from users
         where user_id = #{param1};
     </select>
@@ -27,11 +27,32 @@
         where user_id = #{param1}
           and email = #{param2};
     </select>
+    <select id="userCheckEmail" resultType="int">
+        select count(user_id)
+        from users
+        where email = #{param1}
+    </select>
     <update id="userpwdUpdate" parameterType="UserVO">
         update users
         set password = #{userpwd},
             salt     = #{salt}
         where user_id = #{userid};
-
     </update>
+    <select id="getLastLogDate" resultType="Date">
+        SELECT log_date
+        FROM user_login
+        WHERE user_id = #{userid}
+        ORDER BY log_date DESC
+            LIMIT 1
+    </select>
+    <insert id="insertLog">
+        insert into user_login(user_id)
+        values (#{userid});
+    </insert>
+
+    <select id="ismanager" resultType="boolean">
+        SELECT manager
+        FROM users
+        WHERE user_id = #{userid}
+    </select>
 </mapper>

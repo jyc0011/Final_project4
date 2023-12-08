@@ -39,10 +39,13 @@
 
 <body>
 <main>
-    <h1>게시글 작성</h1>
+    <br>
+    <h2>게시글 작성 :
     <c:if test="${category=='free'}">자유게시판</c:if>
     <c:if test="${category=='notice'}">공지사항</c:if>
     <c:if test="${category=='inquiries'}">문의게시판</c:if>
+    </h2>
+    <br>
     <form method="post"
           action="${pageContext.servletContext.contextPath}/board/${category}/writeOk">
         <div class="mb-3">

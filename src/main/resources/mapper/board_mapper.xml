@@ -36,4 +36,10 @@
         from posts
         where post_id = #{param1};
     </select>
+    <delete id="boardDelete">
+        delete from posts where post_id=#{param1}
+    </delete>
+    <update id="boardUpdate">
+        update posts set title=#{title}, content=#{content} where post_id = ${post_id};
+    </update>
 </mapper>
