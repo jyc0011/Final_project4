@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>현재 회원 관리</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
     <style>
         .container {
             width: 1200px;
@@ -109,6 +110,8 @@
             font-size: 18px;
         }
     </style>
+
+
 </head>
 <body>
 <div class="container">
@@ -147,9 +150,12 @@
                         <td class="time">${amVO.time}</td>
                         <td class="writing_count">${amVO.posts_count}/${amVO.comments_count}</td>
                         <td class="report_count">${amVO.count_report}</td>
-                        <td class="suspend_button"><a
-                                href="${pageContext.servletContext.contextPath}/suspend?user_id=${amVO.user_id}"><input
-                                type="button" value="계정정지" class="btn btn-dark"></a></td>
+                        <td class="suspend_button"><!--${pageContext.servletContext.contextPath}/suspend?user_id=${amVO.user_id}-->
+                            <a href="#layer-popup" class="btn-open" title="">
+                                <input id="btn_userid" name="user_id" type="hidden" value="${amVO.user_id}">
+                                <input type="button" value="계정정지" class="btn btn-dark suspend_btn">
+                            </a>
+                        </td>
                     </tr>
                 </c:forEach>
 
@@ -189,5 +195,84 @@
         </div>
     </div>
 </div>
+String user_id,int time,String reason
+<a href="#layer-popup" class="btn-open">팝업 열기 </a>
+<div class="layer-popup" id="layer-popup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="${pageContext.servletContext.contextPath}/suspend">
+                <div class="mb-3 mt-3">
+                    <input type="hidden" id="form_userid" name="user_id" value="">
+                    <label class="form-label">정지 시간:</label>
+                    <!--<input type="text" value="" class="form-control" name="time" id="time" placeholder="Enter email">-->
+                    <select id="time" name="time">
+                        <option value="1">1일</option>
+                        <option value="3">3일</option>
+                        <option value="7">7일</option>
+                        <option value="15">15일</option>
+                        <option value="30">30일</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">정지 사유:</label>
+                    <input type="text" class="form-control"name="reason" id="form_reason" placeholder="사유를 입력해주세요" >
+                </div>
+                <button type="submit" class="btn btn-primary">정지</button>
+                <button type="button" class="btn btn-primary" onclick="dialogCancel()">취소</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("click", ".btn-open", function (e){
+        var target = $(this).attr("href");
+        var uid=$(this).children("#btn_userid").val();
+        $(target).addClass("show");
+        $("#form_userid").attr("value",uid);
+    });
+
+    // 외부영역 클릭 시 팝업 닫기
+    $(document).mouseup(function (e){
+        var LayerPopup = $(".layer-popup");
+        if(LayerPopup.has(e.target).length === 0){
+            LayerPopup.removeClass("show");
+        }
+    });
+
+    function dialogCancel(){
+        var LayerPopup = $(".layer-popup");
+        LayerPopup.removeClass("show");
+    }
+</script>
+<style>
+    .layer-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+    }
+
+    .layer-popup.show {
+        display: block;
+    }
+
+    .modal-dialog {
+        width: 500px;
+        margin: 40px auto;
+        background-color: #fff;
+    }
+
+    .modal-content {
+        padding:10px 15px;
+        text-align: center;
+    }
+
+</style>
+
 </body>
 </html>
