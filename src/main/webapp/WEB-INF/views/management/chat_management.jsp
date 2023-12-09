@@ -17,14 +17,11 @@
         }
 
         #side_menu {
-            padding: 98px 0 0 0;
+            padding: 98px 10px 0;
             width: 150px;
             height: 1000px;
-
-        }
-
-        #side_menu {
             list-style-type: none;
+            border-right: 1px solid #ddd;
         }
 
         #side_menu li a {
@@ -59,18 +56,19 @@
 
         /*리스트 내용*/
         #list_head {
+            border-top: 4px solid #000;
             border-bottom: 4px solid #000;
         }
 
         .management_list th {
             width: 150px;
-            height: 40px;
-            line-height: 40px;
+            height: 50px;
+            line-height: 50px;
         }
 
         .management_list td {
             width: 150px;
-            height: 100px;
+            height: 80px;
         }
 
         #list_content {
@@ -81,9 +79,9 @@
             width: 40%;
         }
 
-        #side_menu > li:nth-child(8) {
-            font-weight: bold;
-            font-size: 18px;
+        #side_menu li a.active{
+            background-color: #333333;
+            color: white;
         }
 
         .pagination {
@@ -115,7 +113,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/admin/chat/management">채팅관리</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/admin/chat/management" class="active">채팅관리</a></li>
 
         </ul>
     </div>

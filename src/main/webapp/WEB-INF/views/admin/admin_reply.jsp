@@ -19,10 +19,11 @@
         }
 
         #side_menu {
-            padding: 98px 0 0 0;
+            padding: 98px 10px 0;
             width: 150px;
             height: 1000px;
             list-style-type: none;
+            border-right: 1px solid #ddd;
         }
 
         #side_menu > li > a {
@@ -54,14 +55,14 @@
         }
 
         .reply_list th {
-            height: 40px;
-            line-height: 40px;
+            height: 50px;
+            line-height: 50px;
             text-align: center;
         }
 
         .reply_list td {
             padding: 0 10px;
-            height: 100px;
+            height: 75px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -111,9 +112,9 @@
             color: black;
         }
 
-        #side_menu > li:nth-child(6) {
-            font-weight: bold;
-            font-size: 18px;
+        #side_menu li a.active{
+            background-color: #333333;
+            color: white;
         }
     </style>
 </head>
@@ -127,7 +128,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/admin/suspended/management">정지회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/admin/reply" class="active">댓글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/chat/management">채팅관리</a></li>
         </ul>

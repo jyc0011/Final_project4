@@ -17,14 +17,11 @@
         }
 
         #side_menu {
-            padding: 98px 0 0 0;
+            padding: 98px 10px 0;
             width: 150px;
             height: 1000px;
-
-        }
-
-        #side_menu {
             list-style-type: none;
+            border-right: 1px solid #ddd;
         }
 
         #side_menu li a {
@@ -93,15 +90,15 @@
 
         .management_list th {
             width: 14%;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
+            height: 50px;
+            line-height: 50px;
+            text-align:center;
         }
 
         .management_list td {
             width: 14%;
-            height: 100px;
-            text-align: center;
+            height: 75px;
+            text-align:center;
         }
 
         #list_content {
@@ -118,9 +115,9 @@
             background-color: transparent;
         }
 
-        #side_menu > li:nth-child(4) {
-            font-weight: bold;
-            font-size: 18px;
+        #side_menu li a.active{
+            background-color: #333333;
+            color: white;
         }
 
         /* Style for the active page link */
@@ -137,7 +134,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/admin">대시보드</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/member/management">현재회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/suspended/management">정지회원관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management" class="active">탈퇴회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
