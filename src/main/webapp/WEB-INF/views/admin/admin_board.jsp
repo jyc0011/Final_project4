@@ -163,8 +163,8 @@
                     <th class="board">게시판</th>
                     <th class="board_title">글제목</th>
                     <th class="user_id">작성자</th>
-                    <th class="report_count">신고횟수</th>
-                    <th class="report_reason">신고사유</th>
+                    <th class="report_count">신고일</th>
+                    <th class="report_reason">계정정지</th>
                     <th class="del_button">삭제</th>
                 </tr>
                 </thead>
@@ -187,10 +187,18 @@
                         <td class="board_title"><a href="/board/notice/view?no=${bVO.post_id}">${bVO.title}</a></td>
                         <td class="user_id">${bVO.user_id}</td>
                         <td class="report_count">${bVO.report_time}</td>
-                        <td class="report_reason">${bVO.board_cat}</td>
-                        <td class="del_button"><a
-                                href="${pageContext.servletContext.contextPath}/boardDelete?post_id=${bVO.post_id}"><input
-                                type="button" value="게시글삭제" class="btn btn-dark"></a></td>
+                        <td class="suspend_button">
+                            <a href="#layer-popup" class="btn-open" title="">
+                                <input id="btn_userid" name="user_id" type="hidden" value="${bVO.user_id}">
+                                <input type="button" value="계정정지" class="btn btn-dark suspend_btn">
+                            </a>
+                        </td>
+                        <td class="del_button">
+                            <a href="${pageContext.servletContext.contextPath}/boardDelete?post_id=${bVO.post_id}">
+                                <!---->
+                                <input type="button" value="게시글삭제" class="btn btn-dark">
+                            </a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -227,6 +235,85 @@
             </div>
         </div>
     </main>
+
+
+    <div class="layer-popup" id="layer-popup">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="${pageContext.servletContext.contextPath}/suspend">
+                    <div class="mb-3 mt-3">
+                        <input type="hidden" id="form_userid" name="user_id" value="">
+                        <label class="form-label">정지 시간:</label>
+                        <!--<input type="text" value="" class="form-control" name="time" id="time" placeholder="Enter email">-->
+                        <select id="time" name="time">
+                            <option value="1">1일</option>
+                            <option value="3">3일</option>
+                            <option value="7">7일</option>
+                            <option value="15">15일</option>
+                            <option value="30">30일</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">정지 사유:</label>
+                        <input type="text" class="form-control"name="reason" id="form_reason" placeholder="사유를 입력해주세요" >
+                    </div>
+                    <button type="submit" class="btn btn-primary">정지</button>
+                    <button type="button" class="btn btn-primary" onclick="dialogCancel()">취소</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).on("click", ".btn-open", function (e){
+            var target = $(this).attr("href");
+            var uid=$(this).children("#btn_userid").val();
+            $(target).addClass("show");
+            $("#form_userid").attr("value",uid);
+        });
+
+        // 외부영역 클릭 시 팝업 닫기
+        $(document).mouseup(function (e){
+            var LayerPopup = $(".layer-popup");
+            if(LayerPopup.has(e.target).length === 0){
+                LayerPopup.removeClass("show");
+            }
+        });
+
+        function dialogCancel(){
+            var LayerPopup = $(".layer-popup");
+            LayerPopup.removeClass("show");
+        }
+    </script>
+    <style>
+        .layer-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+
+        .layer-popup.show {
+            display: block;
+        }
+
+        .modal-dialog {
+            width: 500px;
+            margin: 40px auto;
+            background-color: #fff;
+        }
+
+        .modal-content {
+            padding:10px 15px;
+            text-align: center;
+        }
+    </style>
+
+
 </div>
 </body>
 

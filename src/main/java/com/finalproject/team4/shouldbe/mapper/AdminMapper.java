@@ -49,8 +49,8 @@ public interface AdminMapper {
 
     //댓글관리======================================================
     int countBoardReply();
-    List<BoardReplyVO> selectBoardReply(@Param("pvo") PagingVO pvo);
-
+    List<AdminCommentReportVO> selectBoardReply(@Param("pvo") PagingVO pvo);
+    AdminCommentReportVO commentContent(int comment_id);
 
     //퀴즈관리======================================================
     List<QuizVO> quizlist(int level);
@@ -62,12 +62,15 @@ public interface AdminMapper {
     int selectQuizId(String quiz_content);
     int answerInsert(int quiz_id,String answer);
 
-    //퀴즈관리_등록된 퀴즈 삭제 버튼======================================================
+    //퀴즈관리_등록된 answer 삭제 버튼======================================================
     int answerDelete(String answer);
+    //퀴즈관리_등록된 quiz 삭제 버튼======================================================
+    int quizDelete(int quiz_id);
 
     //퀴즈관리_유저퀴즈등록버튼======================================================
     //퀴즈관리_등록된 퀴즈 리스트======================================================
     List<QuizVO> editlist(int quiz_id);
+
 
 
     //채팅관리======================================================

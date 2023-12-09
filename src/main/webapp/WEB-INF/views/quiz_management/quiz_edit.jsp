@@ -150,7 +150,7 @@
             </form>
 
             <div>
-                <button class="btn btn-dark">단어 삭제</button>
+                <a href="${pageContext.servletContext.contextPath}/quizDelete?quiz_id=${qVO.quiz_id}"> <button class="btn btn-dark">단어 삭제</button></a>
             </div>
         </div>
 
