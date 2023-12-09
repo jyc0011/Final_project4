@@ -147,7 +147,7 @@
             margin-top: 20px;
         }
 
-        #replyBtn{
+        .btn btn-warning{
             font-size: 13px;
         }
         #box{
@@ -226,9 +226,9 @@
 <main>
     <div id="viewArea">
         <ul>
-            <li>글번호 : ${vo.post_id}  &nbsp;  작성자 : ${vo.user_id}  &nbsp;  조회수 : ${vo.views}  &nbsp;  작성일 : ${vo.write_date}</li>
+            <li>글번호 : ${bVO.post_id}  &nbsp;  작성자 : ${bVO.user_id}  &nbsp;  조회수 : ${bVO.views}  &nbsp;  작성일 : ${bVO.write_date}</li>
             <hr>
-            <li><h4><b>제목 : ${vo.title}</b></h4></li>
+            <li><h4><b>제목 : ${bVO.title}</b></h4></li>
             <hr>
             <li>${bVO.content}</li>
         </ul>
@@ -236,11 +236,11 @@
 
     <div class="util">
         <button id="toList" class="btn btn-secondary">목록</button>
-        <c:if test="${logId==vo.user_id}">
+        <c:if test="${logId==bVO.user_id}">
             <button id="editPost" class="btn btn-warning">수정</button>
         </c:if>
 
-        <c:if test="${logId==vo.user_id}">
+        <c:if test="${logId==bvo.user_id}">
             <button id="deletePost" class="btn btn-warning">삭제</button>
         </c:if>
     </div>
@@ -250,7 +250,7 @@
         <c:if test="${'Y'.equals(logStatus)}">
             <form method="post" id="replyForm">
                 <!--  원글 글번호 -->
-                <input type="hidden" name="no" value="${vo.post_id}"/>
+                <input type="hidden" name="no" value="${bvo.post_id}"/>
                 <textarea name="coment" id="coment"></textarea>
                 <!-- button은 form안에있을경우 input type submit과 동일 -->
                 <div><button class="btn btn-warning">댓글등록</button></div>
@@ -270,8 +270,8 @@
                         <div id="replyDate">(2023-10-10 12:12:23)</div>
                     </div>
                     <div id="replyBtn-box">
-                        <input type="button" value="댓글수정" class="btn btn-warning" id="replyBtn"/>
-                        <input type="button" value="댓글삭제" class="btn btn-warning" id="replyBtn"/>
+                        <input type="button" value="댓글수정" class="btn btn-warning"/>
+                        <input type="button" value="댓글삭제" class="btn btn-warning"/>
                     </div>
                 </div>
             </li>

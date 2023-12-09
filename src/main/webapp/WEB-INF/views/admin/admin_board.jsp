@@ -166,7 +166,7 @@
                     <th class="user_id">작성자</th>
                     <th class="report_count">신고일</th>
                     <th class="report_reason">계정정지</th>
-                    <th class="del_button">삭제</th>
+                    <th class="del_button">신고 취소</th>
                 </tr>
                 </thead>
                 <tbody id="list_content">
@@ -190,14 +190,15 @@
                         <td class="report_count">${bVO.report_time}</td>
                         <td class="suspend_button">
                             <a href="#layer-popup" class="btn-open" title="">
+                                <input id="btn_postid" name="post_id" type="hidden" value="${bVO.post_id}">
                                 <input id="btn_userid" name="user_id" type="hidden" value="${bVO.user_id}">
                                 <input type="button" value="계정정지" class="btn btn-dark suspend_btn">
                             </a>
                         </td>
                         <td class="del_button">
-                            <a href="${pageContext.servletContext.contextPath}/boardDelete?post_id=${bVO.post_id}">
+                            <a href="${pageContext.servletContext.contextPath}/boardDelete?post_report_id=${bVO.post_report_id}">
                                 <!---->
-                                <input type="button" value="게시글삭제" class="btn btn-dark">
+                                <input type="button" value="신고 취소" class="btn btn-dark">
                             </a>
                         </td>
                     </tr>
@@ -241,8 +242,9 @@
     <div class="layer-popup" id="layer-popup">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" action="${pageContext.servletContext.contextPath}/suspend">
+                <form method="post" action="${pageContext.servletContext.contextPath}/suspend/board">
                     <div class="mb-3 mt-3">
+                        <input type="hidden" id="form_postid" name="post_id" value="">
                         <input type="hidden" id="form_userid" name="user_id" value="">
                         <label class="form-label">정지 시간:</label>
                         <!--<input type="text" value="" class="form-control" name="time" id="time" placeholder="Enter email">-->
@@ -268,9 +270,11 @@
     <script>
         $(document).on("click", ".btn-open", function (e){
             var target = $(this).attr("href");
+            var pid=$(this).children("#btn_postid").val();
             var uid=$(this).children("#btn_userid").val();
             $(target).addClass("show");
             $("#form_userid").attr("value",uid);
+            $("#form_postid").attr("value",pid);
         });
 
         // 외부영역 클릭 시 팝업 닫기

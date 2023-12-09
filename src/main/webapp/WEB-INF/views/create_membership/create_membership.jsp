@@ -369,33 +369,33 @@
                     <input type="checkbox" class="lang" name="langArr" value="ko"/>
                     <label>한국어</label>
                     <input type="checkbox" class="lang" name="langArr" value="ja"/>
-                    <label>일본어</label>
+                    <label>日本語</label>
                     <input type="checkbox" class="lang" name="langArr" value="en"/>
-                    <label>영어</label>
+                    <label>English</label>
                     <input type="checkbox" class="lang" name="langArr" value="zh-CN"/>
-                    <label>중국어</label>
+                    <label>中國語-简体</label>
+                    <input type="checkbox" class="lang" name="langArr" value="zh-TW"/>
+                    <label>中國語-繁体</label>
+                </div>
+                <div>
                     <input type="checkbox" class="lang" name="langArr" value="vi"/>
-                    <label>베트남어</label>
-
-
-                </div>
-                <div>
+                    <label>Tiếng Việt</label>
                     <input type="checkbox" class="lang" name="langArr" value="th"/>
-                    <label>태국어</label>
+                    <label>แบบไทย</label>
                     <input type="checkbox" class="lang" name="langArr" value="id"/>
-                    <label>인도네시아어</label>
+                    <label>Indonésia</label>
                     <input type="checkbox" class="lang" name="langArr" value="fr"/>
-                    <label>프랑스어</label>
-                    <input type="checkbox" class="lang" name="langArr" value="es"/>
-                    <label>스페인어</label>
+                    <label>Français</label>
                 </div>
                 <div>
+                    <input type="checkbox" class="lang" name="langArr" value="es"/>
+                    <label>Español</label>
                     <input type="checkbox" class="lang" name="langArr" value="ru"/>
-                    <label>러시아어</label>
+                    <label>Русский</label>
                     <input type="checkbox" class="lang" name="langArr" value="de"/>
-                    <label>독일어</label>
+                    <label>Deutsch</label>
                     <input type="checkbox" class="lang" name="langArr" value="it"/>
-                    <label>이탈리아어</label>
+                    <label>Italiano</label>
                 </div>
             </div>
             <div>

@@ -157,6 +157,7 @@
                 e.preventDefault();
                 var formData = {
                     quiz_lang: $('#quiz_lang').val(),
+                    answer_create_lang:$('#answer_lang').val(),
                     level: $('#level').val(),
                     answer: $('#answer').val(),
                     quiz_content: $('#quiz_content').val()
@@ -195,7 +196,7 @@
             <select id="quiz_lang">
                 <option value="ko">한국어</option>
                 <option value="en">영어</option>
-                <option value="jp">일본어</option>
+                <option value="ja">일본어</option>
                 <option value="zh-CN">중국어 간체</option>
                 <option value="zh-TW">중국어 번체</option>
                 <option value="vi">베트남어</option>
@@ -208,7 +209,24 @@
                 <option value="it">이탈리아어</option>
             </select>
         </div>
-
+        <div class="form-group">
+            <label for="answer_lang">정답의 언어:</label>
+            <select id="answer_lang">
+                <option value="ko">한국어</option>
+                <option value="en">영어</option>
+                <option value="ja">일본어</option>
+                <option value="zh-CN">중국어 간체</option>
+                <option value="zh-TW">중국어 번체</option>
+                <option value="vi">베트남어</option>
+                <option value="th">태국어</option>
+                <option value="id">인도네시아어</option>
+                <option value="fr">프랑스어</option>
+                <option value="es">스페인어</option>
+                <option value="ru">러시아어</option>
+                <option value="de">독일어</option>
+                <option value="it">이탈리아어</option>
+            </select>
+        </div>
         <div class="form-group">
             <label for="level">퀴즈 난이도:</label>
             <select id="level">

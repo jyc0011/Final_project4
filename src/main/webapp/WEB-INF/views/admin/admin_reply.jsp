@@ -148,17 +148,10 @@
                     <th class="reply_content">댓글내용</th>
                     <th class="report_reason">신고일</th>
                     <th class="report_count">계정정지</th>
-                    <th class="del_button">삭제</th>
+                    <th class="del_button">신고취소</th>
                 </tr>
                 </thead>
                 <tbody id="list_content">
-                    <tr class="reply_list">
-                        <td class="board_title">작성자</td>
-                        <td class="reply_content">댓글내용</td>
-                        <td class="user_id">신고일</td>
-                        <td class="report_count">계정정지</td>
-                        <td class="del_button"><input type="button" value="댓글삭제" class="btn btn-dark"></td>
-                    </tr>
                     <c:forEach var="arVO" items="${board}">
                         <tr class="reply_list">
                             <td class="board_title">${arVO.user_id}</td>
@@ -166,11 +159,14 @@
                             <td class="user_id">${arVO.report_time}</td>
                             <td class="suspend_button">
                                 <a href="#layer-popup" class="btn-open" title="">
+                                    <input id="btn_commentid" name="comment_id" type="hidden" value="${arVO.comment_id}">
                                     <input id="btn_userid" name="user_id" type="hidden" value="${arVO.user_id}">
                                     <input type="button" value="계정정지" class="btn btn-dark suspend_btn">
                                 </a>
                             </td>
-                            <td class="del_button"><input type="button" value="댓글삭제" class="btn btn-dark"></td>
+                            <a href="${pageContext.servletContext.contextPath}/commentDelete?comment_report_id=${arVO.comment_report_id}">
+                                <td class="del_button"><input type="button" value="신고 취소" class="btn btn-dark"></td>
+                            </a>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -212,8 +208,9 @@
 <div class="layer-popup" id="layer-popup">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="${pageContext.servletContext.contextPath}/suspend">
+            <form method="post" action="${pageContext.servletContext.contextPath}/suspend/reply">
                 <div class="mb-3 mt-3">
+                    <input type="hidden" id="form_commentid" name="comment_id" value="">
                     <input type="hidden" id="form_userid" name="user_id" value="">
                     <label class="form-label">정지 시간:</label>
                     <!--<input type="text" value="" class="form-control" name="time" id="time" placeholder="Enter email">-->
@@ -240,8 +237,10 @@
     $(document).on("click", ".btn-open", function (e){
         var target = $(this).attr("href");
         var uid=$(this).children("#btn_userid").val();
+        var cid=$(this).children("#btn_commentid").val();
         $(target).addClass("show");
         $("#form_userid").attr("value",uid);
+        $("#form_commentid").attr("value",cid);
     });
 
     // 외부영역 클릭 시 팝업 닫기

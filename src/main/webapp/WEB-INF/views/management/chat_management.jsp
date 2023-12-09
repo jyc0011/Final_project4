@@ -142,7 +142,8 @@
                         <td class="report_count">${acVO.report_time}</td>
                         <td class="suspend_button">
                             <a href="#layer-popup" class="btn-open" title="">
-                                <input id="btn_userid" name="user_id" type="hidden" value="${amVO.user_id}">
+                                <input id="msg_report_id" name="report_id" type="hidden" value="${acVO.message_report_id}">
+                                <input id="btn_userid" name="user_id" type="hidden" value="${acVO.user_id}">
                                 <input type="button" value="계정정지" class="btn btn-dark suspend_btn">
                             </a>
                         </td>
@@ -188,8 +189,9 @@
 <div class="layer-popup" id="layer-popup">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="${pageContext.servletContext.contextPath}/suspend">
+            <form method="post" action="${pageContext.servletContext.contextPath}/suspend/chat">
                 <div class="mb-3 mt-3">
+                    <input type="hidden" id="form_reportid" name="report_id" value="">
                     <input type="hidden" id="form_userid" name="user_id" value="">
                     <label class="form-label">정지 시간:</label>
                     <!--<input type="text" value="" class="form-control" name="time" id="time" placeholder="Enter email">-->
@@ -215,9 +217,11 @@
 <script>
     $(document).on("click", ".btn-open", function (e){
         var target = $(this).attr("href");
+        var rid=$(this).children("#msg_report_id").val();
         var uid=$(this).children("#btn_userid").val();
         $(target).addClass("show");
         $("#form_userid").attr("value",uid);
+        $("#form_reportid").attr("value",rid);
     });
 
     // 외부영역 클릭 시 팝업 닫기
