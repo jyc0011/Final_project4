@@ -4,6 +4,7 @@ import com.finalproject.team4.shouldbe.mapper.AdminMapper;
 import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,22 +18,18 @@ public class AdminServiceImpl implements AdminService {
     //대시보드
     @Override
     public List<DashboardVO> getMonthlyVisitorStats() {
-        System.out.println(mapper.monthVisitor());
         return mapper.monthVisitor();
     }
     @Override
     public List<DashboardVO> countUsersByNation() {
-        System.out.println(mapper.countUsersByNation());
         return mapper.countUsersByNation();
     }
     @Override
     public List<BoardVO> latestBoard() {
-        System.out.println(mapper.latestBoard());
         return mapper.latestBoard();
     }
     @Override
     public List<BoardReplyVO> latestReply() {
-        System.out.println(mapper.latestReply());
         return mapper.latestReply();
     }
     //현재회원관리=====================================================
@@ -65,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
 
     //정지회원관리_정지버튼======================================================
     @Override
-    public int suspendInsert(String user_id){return mapper.suspendInsert(user_id);}
+    public int suspendInsert(String user_id,int time,String reason){return mapper.suspendInsert(user_id,time,reason);}
     //정지회원관리_정지해제버튼
     @Override
     public int suspendDelete(int suspended_id){return mapper.suspendDelete(suspended_id);}
@@ -81,8 +78,16 @@ public class AdminServiceImpl implements AdminService {
         return mapper.adminWithdrawnList(pvo);
     }
     public AdminMemberVO adminWithdrawnListUsers(String user_id){return mapper.adminWithdrawnListUsers(user_id);}
-
-
+    @Override
+    @Transactional
+    public void withdrawExpiredUsers() {
+        mapper.withdrawExpiredUsers();
+    }
+    @Override
+    @Transactional
+    public void deleteUserById(String userId) {
+        mapper.deleteUserById(userId);
+    }
     //게시글관리======================================================
     @Override
     public int totalBoardRecord() {
@@ -126,6 +131,8 @@ public class AdminServiceImpl implements AdminService {
     //퀴즈관리_등록된 퀴즈 삭제 버튼
     @Override
     public int answerDelete(String answer){return mapper.answerDelete(answer);}
+    @Override
+    public QuizVO quiz_table(int quiz_id){return mapper.quiz_table(quiz_id);}
 
     //퀴즈관리_유저퀴즈등록버튼======================================================
     //퀴즈관리_등록된 퀴즈 리스트======================================================

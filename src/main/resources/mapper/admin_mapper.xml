@@ -84,7 +84,7 @@
     <select id="adminSuspendedList" resultType="AdminMemberVO">
         select suspended_id, user_id, suspended_time, suspended_period, reason
         from suspended_users
-        ORDER BY user_id
+        ORDER BY suspended_time
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
     <select id="getUserVO" resultType="AdminMemberVO">
@@ -95,8 +95,8 @@
 
     <!--//정지회원관리_정지버튼====================================================== -->
     <insert id="suspendInsert">
-        insert into suspended_users(user_id,suspended_period,reason) values(#{user_id},7,'사유2');
-    </insert>
+        insert into suspended_users(user_id,suspended_time,suspended_period,reason) values(#{user_id},DATE_ADD(NOW(), INTERVAL ${time} DAY ),${time},#{reason});
+</insert>
 
 
     <!--//정지회원관리_정지해제버튼====================================================== -->
@@ -120,6 +120,17 @@
         from users
         where user_id=#{user_id}
     </select>
+
+    <update id="withdrawExpiredUsers">
+    <![CDATA[
+        DELETE FROM users
+        WHERE withdraw < NOW() - INTERVAL 30 DAY
+        ]]>
+    </update>
+
+    <delete id="deleteUserById" parameterType="String">
+        DELETE FROM users WHERE user_id = #{userId}
+    </delete>
 
     <!--//게시글관리====================================================== -->
     <select id="countBoard" resultType="int">
@@ -145,7 +156,7 @@
     <!--댓글관리======================================================-->
     <select id="countBoardReply" resultType="int">
         SELECT COUNT(*)
-        FROM comments
+        FROM comment_report
     </select>
     <select id="selectBoardReply" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.BoardReplyVO">
         SELECT *
@@ -162,6 +173,11 @@
         where level = ${level}
     </select>
 
+    <select id="quiz_table" resultType="com.finalproject.team4.shouldbe.vo.QuizVO">
+        select quiz_id, level, quiz_lang, quiz_content
+        from quiz
+        where quiz_id = ${quiz_id}
+    </select>
     <!--퀴즈관리_퀴즈등록페이지버튼======================================================-->
     <insert id="quizInsert">
         insert into quiz(quiz_content,level,quiz_lang) values(#{quiz_content},${level},'eng');
@@ -190,7 +206,7 @@
     <!--//채팅관리======================================================-->
     <select id="countMessage" resultType="int">
         SELECT COUNT(*)
-        FROM message
+        FROM message_report
     </select>
     <select id="adminChatList" resultType="com.finalproject.team4.shouldbe.vo.AdminChatVO">
         select message_report_id, user_id, msg_id, report_time, content

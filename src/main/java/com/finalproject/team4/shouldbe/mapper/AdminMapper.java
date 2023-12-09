@@ -26,7 +26,7 @@ public interface AdminMapper {
 
 
     //정지회원관리_정지버튼======================================================
-    int suspendInsert(String user_id);
+    int suspendInsert(String user_id,int time,String reason);
     //정지회원관리_정지해제버튼
     int suspendDelete(int suspended_id);
 
@@ -35,7 +35,7 @@ public interface AdminMapper {
     int countWithdrawnMember();
     List<AdminMemberVO> adminWithdrawnList(@Param("pvo") PagingVO pvo);
     AdminMemberVO adminWithdrawnListUsers(String user_id);
-
+    void deleteUserById(String userId);
 
     //게시글관리======================================================
     int countBoard();
@@ -54,6 +54,7 @@ public interface AdminMapper {
 
     //퀴즈관리======================================================
     List<QuizVO> quizlist(int level);
+    QuizVO quiz_table(int quiz_id);
 
 
     //퀴즈관리_퀴즈등록페이지버튼======================================================
@@ -72,6 +73,8 @@ public interface AdminMapper {
     //채팅관리======================================================
     int countMessage();
     List<AdminChatVO> adminChatList(@Param("pvo") PagingVO pvo);
+
+    void withdrawExpiredUsers();
 
 
     /*

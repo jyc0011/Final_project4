@@ -6,6 +6,7 @@ import com.finalproject.team4.shouldbe.service.UserService;
 import com.finalproject.team4.shouldbe.vo.*;
 import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -98,13 +99,13 @@ public class AdminController {
         return mav;
     }
     //정지회원관리_정지버튼
-    @GetMapping("/suspend")
-    public ModelAndView suspend(String user_id) {
+    @PostMapping("/suspend")
+    public ModelAndView suspend(String user_id,int time,String reason) {
         ModelAndView mav = new ModelAndView();
-        System.out.println(user_id);
-        int result = service.suspendInsert(user_id);
+        System.out.println(user_id+" "+time+" "+reason);
+        int result = service.suspendInsert(user_id,time,reason);
         mav.setViewName("admin/admin_dashboard");
-        mav.setViewName("redirect:/admin/member/management");
+        mav.setViewName("redirect:/admin/suspended/management");
         return mav;
     }
     //정지회원관리_정지해제버튼
@@ -148,6 +149,23 @@ public class AdminController {
         return mav;
     }
 
+    @GetMapping("/admin/withdrawn/all")
+    public ModelAndView withdrawAll() {
+        service.withdrawExpiredUsers();
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/admin");
+        return mav;
+    }
+
+    @PostMapping("/admin/withdrawn/personal")
+    public ModelAndView withdrawPersonal(@RequestParam("userId") String userId) {
+        service.deleteUserById(userId);
+        ModelAndView mav = new ModelAndView();
+        System.out.println(userId);
+        mav.setViewName("redirect:/admin");
+        return mav;
+    }
+
     //게시글관리======================================================
     @GetMapping("/admin/board")
     public ModelAndView admin_board(@RequestParam(required = false, defaultValue = "1") int page,
@@ -167,16 +185,19 @@ public class AdminController {
         List<BoardReportVO> board = service.getBoardReportList(pvo);
         System.out.println(board);
 
-
         for(int i=0;i<board.size();i++){
             int post_id=board.get(i).getPost_id();
             BoardReportVO postsVO=service.getPostsVO(post_id);
-
-            board.get(i).setTitle(postsVO.getTitle());
-            board.get(i).setContent (postsVO.getContent());
-            board.get(i).setBoard_cat (postsVO.getBoard_cat());
-
-
+            if (postsVO != null) {
+                board.get(i).setTitle(postsVO.getTitle());
+                board.get(i).setContent(postsVO.getContent());
+                board.get(i).setBoard_cat(postsVO.getBoard_cat());
+            }
+            else{
+                board.get(i).setTitle("삭제된 게시글");
+                board.get(i).setContent("삭제된 게시글");
+                board.get(i).setBoard_cat("삭제된 게시글");
+            }
         }
         mav.addObject("board", board);
         mav.addObject("pVO", pvo);
@@ -189,7 +210,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         System.out.println(post_id);
         int result = service.postsDelete(post_id);
-        mav.setViewName("admin/admin_dashboard");
+        mav.setViewName("redirect:/admin");
         return mav;
     }
 
@@ -255,10 +276,22 @@ public class AdminController {
     @GetMapping("/admin/quiz_edit")
     public ModelAndView GoQuiz_edit(int quiz_id) {
         ModelAndView mav = new ModelAndView();
+        QuizVO qVO=service.quiz_table(quiz_id);
         List<QuizVO> editlist=service.editlist(quiz_id);
         System.out.println(editlist.toString());
+        mav.addObject("qVO", qVO);
         mav.addObject("editlist", editlist);
         mav.setViewName("quiz_management/quiz_edit");
+        return mav;
+    }
+    @PostMapping("/quiz/answer_insert")
+    public ModelAndView AnswerInsert(String answer,int quiz_id){
+        ModelAndView mav= new ModelAndView();
+        //System.out.println(answer+quiz_id);
+        //int quizInsertResult=service.quizInsert(quiz_content,level);
+       // int quiz_id=service.selectQuizId(quiz_content);
+        int answerInsertResult=service.answerInsert(quiz_id,answer);
+        mav.setViewName("redirect:/admin/quiz_edit?quiz_id="+quiz_id);
         return mav;
     }
     //퀴즈관리_등록된 퀴즈 삭제 버튼

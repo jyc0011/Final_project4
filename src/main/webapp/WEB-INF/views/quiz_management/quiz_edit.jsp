@@ -17,14 +17,11 @@
         }
 
         #side_menu {
-            padding: 98px 0 0 0;
+            padding: 98px 10px 0;
             width: 150px;
             height: 1000px;
-
-        }
-
-        #side_menu {
             list-style-type: none;
+            border-right: 1px solid #ddd;
         }
 
         #side_menu li a {
@@ -106,9 +103,9 @@
             line-height: 70px;
         }
 
-        #side_menu > li:nth-child(7) {
-            font-weight: bold;
-            font-size: 18px;
+        #side_menu li a.active{
+            background-color: #333333;
+            color: white;
         }
     </style>
 </head>
@@ -122,7 +119,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list" class="active">퀴즈관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/chat/management">채팅관리</a></li>
 
         </ul>
@@ -130,7 +127,7 @@
     <div id="member_management">
         <h1 id="quiz_list_title">퀴즈 수정/삭제</h1>
         <div id="quiz_content">
-            <p>${editlist[0].quiz_content}</p>
+            <p>${qVO.quiz_content}</p>
         </div>
         <div id="answerlist">
             <c:forEach var="eVO1" items="${editlist}" varStatus="status">
@@ -141,10 +138,14 @@
             </c:forEach>
         </div>
         <div id="editDelForm">
-            <div class="input-group mb-3" id="input-text" style="width: 600px">
-                <input type="text" class="form-control" placeholder="추가할 뜻 작성">
-                <button class="btn btn-dark">추가</button>
-            </div>
+            <form method="post" action="${pageContext.servletContext.contextPath}/quiz/answer_insert">
+                <div class="input-group mb-3" id="input-text" style="width: 600px">
+                    <input type="text" name="answer" class="form-control" placeholder="추가할 뜻 작성">
+                    <input type="hidden" name="quiz_id" value="${qVO.quiz_id}">
+                    <button class="btn btn-dark">추가</button>
+                </div>
+            </form>
+
             <div>
                 <button class="btn btn-dark">단어 삭제</button>
             </div>

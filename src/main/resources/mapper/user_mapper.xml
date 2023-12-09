@@ -11,7 +11,7 @@
         values (#{userid}, #{username}, #{userpwd}, #{salt}, #{email}, #{nation}, #{sex}, #{lang}, 'user.png')
     </insert>
     <select id="userLoginCheck" resultType="LoginVO">
-        select password, salt, user_name
+        select password, salt, user_name,withdraw
         from users
         where user_id = #{param1};
     </select>
