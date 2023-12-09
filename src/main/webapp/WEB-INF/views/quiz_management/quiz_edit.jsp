@@ -17,14 +17,11 @@
         }
 
         #side_menu {
-            padding: 98px 0 0 0;
+            padding: 98px 10px 0;
             width: 150px;
             height: 1000px;
-
-        }
-
-        #side_menu {
             list-style-type: none;
+            border-right: 1px solid #ddd;
         }
 
         #side_menu li a {
@@ -106,9 +103,9 @@
             line-height: 70px;
         }
 
-        #side_menu > li:nth-child(7) {
-            font-weight: bold;
-            font-size: 18px;
+        #side_menu li a.active{
+            background-color: #333333;
+            color: white;
         }
     </style>
 </head>
@@ -122,7 +119,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list" class="active">퀴즈관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/chat/management">채팅관리</a></li>
 
         </ul>
