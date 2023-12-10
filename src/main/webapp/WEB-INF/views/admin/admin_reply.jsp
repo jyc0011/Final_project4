@@ -144,23 +144,31 @@
             <table id="example" class="display" style="width:100%">
                 <thead id="list_head">
                 <tr class="reply_list">
-                    <th class="board">게시판</th>
+                    <th class="board">작성자</th>
                     <th class="reply_content">댓글내용</th>
-                    <th class="user_id">작성자</th>
-                    <th class="report_count">신고횟수</th>
-                    <th class="report_reason">신고사유</th>
-                    <th class="del_button">삭제</th>
+                    <th class="report_reason">신고일</th>
+                    <th class="report_count">계정정지</th>
+                    <th class="del_button">신고취소</th>
                 </tr>
                 </thead>
                 <tbody id="list_content">
-                <tr class="reply_list">
-                    <td class="board_title">자유게시판</td>
-                    <td class="reply_content">댓글내용입니다</td>
-                    <td class="user_id">userid</td>
-                    <td class="report_count">1</td>
-                    <td class="report_reason">댓글도배</td>
-                    <td class="del_button"><input type="button" value="댓글삭제" class="btn btn-dark"></td>
-                </tr>
+                    <c:forEach var="arVO" items="${board}">
+                        <tr class="reply_list">
+                            <td class="board_title">${arVO.user_id}</td>
+                            <td class="reply_content">${arVO.content}</td>
+                            <td class="user_id">${arVO.report_time}</td>
+                            <td class="suspend_button">
+                                <a href="#layer-popup" class="btn-open" title="">
+                                    <input id="btn_commentid" name="comment_id" type="hidden" value="${arVO.comment_id}">
+                                    <input id="btn_userid" name="user_id" type="hidden" value="${arVO.user_id}">
+                                    <input type="button" value="계정정지" class="btn btn-dark suspend_btn">
+                                </a>
+                            </td>
+                            <a href="${pageContext.servletContext.contextPath}/commentDelete?comment_report_id=${arVO.comment_report_id}">
+                                <td class="del_button"><input type="button" value="신고 취소" class="btn btn-dark"></td>
+                            </a>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -196,6 +204,86 @@
         </div>
     </main>
 </div>
+
+<div class="layer-popup" id="layer-popup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="${pageContext.servletContext.contextPath}/suspend/reply">
+                <div class="mb-3 mt-3">
+                    <input type="hidden" id="form_commentid" name="comment_id" value="">
+                    <input type="hidden" id="form_userid" name="user_id" value="">
+                    <label class="form-label">정지 시간:</label>
+                    <!--<input type="text" value="" class="form-control" name="time" id="time" placeholder="Enter email">-->
+                    <select id="time" name="time">
+                        <option value="1">1일</option>
+                        <option value="3">3일</option>
+                        <option value="7">7일</option>
+                        <option value="15">15일</option>
+                        <option value="30">30일</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">정지 사유:</label>
+                    <input type="text" class="form-control"name="reason" id="form_reason" placeholder="사유를 입력해주세요" >
+                </div>
+                <button type="submit" class="btn btn-primary">정지</button>
+                <button type="button" class="btn btn-primary" onclick="dialogCancel()">취소</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("click", ".btn-open", function (e){
+        var target = $(this).attr("href");
+        var uid=$(this).children("#btn_userid").val();
+        var cid=$(this).children("#btn_commentid").val();
+        $(target).addClass("show");
+        $("#form_userid").attr("value",uid);
+        $("#form_commentid").attr("value",cid);
+    });
+
+    // 외부영역 클릭 시 팝업 닫기
+    $(document).mouseup(function (e){
+        var LayerPopup = $(".layer-popup");
+        if(LayerPopup.has(e.target).length === 0){
+            LayerPopup.removeClass("show");
+        }
+    });
+
+    function dialogCancel(){
+        var LayerPopup = $(".layer-popup");
+        LayerPopup.removeClass("show");
+    }
+</script>
+<style>
+    .layer-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+    }
+
+    .layer-popup.show {
+        display: block;
+    }
+
+    .modal-dialog {
+        width: 500px;
+        margin: 40px auto;
+        background-color: #fff;
+    }
+
+    .modal-content {
+        padding:10px 15px;
+        text-align: center;
+    }
+</style>
+
 </body>
 
 </html>

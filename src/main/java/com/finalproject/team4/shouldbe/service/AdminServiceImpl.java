@@ -97,10 +97,10 @@ public class AdminServiceImpl implements AdminService {
     public List<BoardReportVO> getBoardReportList(PagingVO pvo){return mapper.getBoardReportList(pvo);}
     @Override
     public BoardReportVO getPostsVO( int post_id){return mapper.getPostsVO(post_id);}
-
-    //게시글관리_보드삭제 버튼
     @Override
-    public int postsDelete(int post_id){return mapper.postsDelete(post_id);}
+    public void boardReportDelete(int report_id){
+        mapper.boardReportDelete(report_id);
+    }
 
 
     //댓글관리======================================================
@@ -109,11 +109,19 @@ public class AdminServiceImpl implements AdminService {
         return mapper.countBoardReply();
     }
     @Override
-    public List<BoardReplyVO> getReplyList_admin(PagingVO pvo) {
+    public List<AdminCommentReportVO> getReplyList_admin(PagingVO pvo) {
         return mapper.selectBoardReply(pvo);
     }
-
-
+    @Override
+    public AdminCommentReportVO commentContent(int comment_id){return mapper.commentContent(comment_id);}
+    @Override
+    public void commentDelete(int comment_id){
+        mapper.commentDelete(comment_id);
+    }
+    @Override
+    public void commentReportDelete(int reportId){
+        mapper.commentReportDelete(reportId);
+    }
     //퀴즈관리======================================================
     @Override
     public List<QuizVO> quizlist(int level){return mapper.quizlist(level);}
@@ -131,6 +139,10 @@ public class AdminServiceImpl implements AdminService {
     //퀴즈관리_등록된 퀴즈 삭제 버튼
     @Override
     public int answerDelete(String answer){return mapper.answerDelete(answer);}
+
+    //퀴즈관리_등록된 quiz 삭제 버튼======================================================
+    @Override
+    public int quizDelete(int quiz_id){return mapper.quizDelete(quiz_id);}
     @Override
     public QuizVO quiz_table(int quiz_id){return mapper.quiz_table(quiz_id);}
 
@@ -149,8 +161,10 @@ public class AdminServiceImpl implements AdminService {
     public List<AdminChatVO> adminChatList(PagingVO pvo) {
         return mapper.adminChatList(pvo);
     }
-
-
+    @Override
+    public void messageReportDelete(int report_id){
+        mapper.messageReportDelete(report_id);
+    }
 
 
 

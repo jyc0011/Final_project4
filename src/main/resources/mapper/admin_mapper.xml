@@ -145,11 +145,8 @@
     <select id="getPostsVO" resultType="com.finalproject.team4.shouldbe.vo.BoardReportVO">
         select title,content,board_cat from posts where post_id=${post_id}
     </select>
-
-
-    <!--//게시글관리_보드삭제 버튼======================================================-->
-    <delete id="postsDelete">
-        delete from posts where post_id=${post_id}
+    <delete id="boardReportDelete">
+        delete from post_report where post_report_id=${report_id}
     </delete>
 
 
@@ -158,12 +155,23 @@
         SELECT COUNT(*)
         FROM comment_report
     </select>
-    <select id="selectBoardReply" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.BoardReplyVO">
+    <select id="selectBoardReply" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.AdminCommentReportVO">
         SELECT *
-        FROM comments
-        ORDER BY comment_id
+        FROM comment_report
+        ORDER BY report_time
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
+    <select id="commentContent" resultType="com.finalproject.team4.shouldbe.vo.AdminCommentReportVO">
+        select content
+        from comments
+        where comment_id=${comment_id}
+    </select>
+    <delete id="commentDelete">
+        delete from comment_report where comment_id=${comment_id}
+    </delete>
+    <delete id="commentReportDelete">
+        delete from comment_report where comment_report_id=${report_id}
+    </delete>
 
 
     <!--//퀴즈관리======================================================-->
@@ -172,6 +180,10 @@
         from quiz
         where level = ${level}
     </select>
+
+    <delete id="postsDelete">
+        delete from post_report where post_id=${post_id}
+    </delete>
 
     <select id="quiz_table" resultType="com.finalproject.team4.shouldbe.vo.QuizVO">
         select quiz_id, level, quiz_lang, quiz_content
@@ -198,9 +210,13 @@
         where a.quiz_id = ${quiz_id}
     </select>
 
-    <!-- //퀴즈관리_등록된 퀴즈 삭제 버튼======================================================-->
+    <!-- //퀴즈관리_등록된 answer 삭제 버튼======================================================-->
     <delete id="answerDelete">
         delete from answer where answer=#{answer}
+    </delete>
+    <!-- //퀴즈관리_등록된 quiz 삭제 버튼======================================================-->
+    <delete id="quizDelete">
+        delete from quiz where quiz_id=${quiz_id}
     </delete>
 
     <!--//채팅관리======================================================-->
@@ -214,6 +230,9 @@
         ORDER BY report_time
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
+    <delete id="messageReportDelete">
+        delete from message_report where message_report_id=${report_id}
+    </delete>
 
 
 

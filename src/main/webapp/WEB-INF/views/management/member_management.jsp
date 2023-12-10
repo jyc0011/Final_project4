@@ -148,7 +148,7 @@
                         <td class="time">${amVO.time}</td>
                         <td class="writing_count">${amVO.posts_count}/${amVO.comments_count}</td>
                         <td class="report_count">${amVO.count_report}</td>
-                        <td class="suspend_button"><!--${pageContext.servletContext.contextPath}/suspend?user_id=${amVO.user_id}-->
+                        <td class="suspend_button">
                             <a href="#layer-popup" class="btn-open" title="">
                                 <input id="btn_userid" name="user_id" type="hidden" value="${amVO.user_id}">
                                 <input type="button" value="계정정지" class="btn btn-dark suspend_btn">
@@ -193,8 +193,8 @@
         </div>
     </div>
 </div>
-String user_id,int time,String reason
-<a href="#layer-popup" class="btn-open">팝업 열기 </a>
+
+
 <div class="layer-popup" id="layer-popup">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -269,7 +269,6 @@ String user_id,int time,String reason
         padding:10px 15px;
         text-align: center;
     }
-
 </style>
 
 </body>

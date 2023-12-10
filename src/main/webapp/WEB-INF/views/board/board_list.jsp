@@ -202,12 +202,6 @@
             margin-top: 10px;
         }
     </style>
-    <script>
-        window.onload = function () {
-            var pVO = "${pVO}";
-            console.log(pVO);
-        }
-    </script>
 </head>
 
 <body>

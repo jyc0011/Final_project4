@@ -2,6 +2,7 @@ package com.finalproject.team4.shouldbe.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.finalproject.team4.shouldbe.service.AdminService;
+import com.finalproject.team4.shouldbe.service.BoardService;
 import com.finalproject.team4.shouldbe.service.UserService;
 import com.finalproject.team4.shouldbe.vo.*;
 import oracle.jdbc.proxy.annotation.Post;
@@ -21,6 +22,9 @@ import java.util.List;
 public class AdminController {
     @Autowired
     AdminService service;
+
+    @Autowired
+    BoardService boardService;
 
     @Autowired
     UserService userService;
@@ -204,13 +208,23 @@ public class AdminController {
         mav.setViewName("admin/admin_board");
         return mav;
     }
+    @PostMapping("/suspend/board")
+    public ModelAndView suspend_board(String user_id,int time,String reason,int post_id) {
+        ModelAndView mav = new ModelAndView();
+        System.out.println(user_id+" "+time+" "+reason);
+        service.suspendInsert(user_id,time,reason);
+        boardService.boardDelete(post_id);
+        mav.setViewName("admin/admin_dashboard");
+        mav.setViewName("redirect:/admin/suspended/management");
+        return mav;
+    }
     //게시글관리_보드삭제 버튼
     @GetMapping("/boardDelete")
-    public ModelAndView boardDelete(int post_id) {
+    public ModelAndView boardDelete(int post_report_id) {
         ModelAndView mav = new ModelAndView();
-        System.out.println(post_id);
-        int result = service.postsDelete(post_id);
-        mav.setViewName("redirect:/admin");
+        System.out.println(post_report_id);
+        service.boardReportDelete(post_report_id);
+        mav.setViewName("redirect:/admin/board");
         return mav;
     }
 
@@ -227,9 +241,38 @@ public class AdminController {
         pvo.setOnePageRecord(10);
         pvo.setNowPage(page);
         pvo.setTotalRecord(service.totalReplyRecord());
-        List<BoardReplyVO> board = service.getReplyList_admin(pvo);
+        List<AdminCommentReportVO> board = service.getReplyList_admin(pvo);
+        for(int i=0;i<board.size();i++){
+            AdminCommentReportVO brVO= service.commentContent(board.get(i).getComment_id());
+            if (brVO != null) {
+                board.get(i).setContent(brVO.getContent());
+            }
+            else{
+                board.get(i).setContent("삭제된 게시글");
+            }
+        }
         mav.addObject("board", board);
         mav.addObject("pVO", pvo);
+        return mav;
+    }
+    @PostMapping("/suspend/reply")
+    public ModelAndView suspend_reply(String user_id,int time,String reason, int comment_id) {
+        ModelAndView mav = new ModelAndView();
+        System.out.println(user_id+" "+time+" "+reason);
+        //boardService.commentReportDelete(comment_id);
+        service.commentDelete(comment_id);
+        int result = service.suspendInsert(user_id,time,reason);
+        mav.setViewName("admin/admin_dashboard");
+        mav.setViewName("redirect:/admin/suspended/management");
+        return mav;
+    }
+
+    //댓글삭제 버튼
+    @GetMapping("/commentDelete")
+    public ModelAndView commentDelete(int comment_report_id) {
+        ModelAndView mav = new ModelAndView();
+        service.commentReportDelete(comment_report_id);
+        mav.setViewName("redirect:/admin/board");
         return mav;
     }
 
@@ -294,7 +337,7 @@ public class AdminController {
         mav.setViewName("redirect:/admin/quiz_edit?quiz_id="+quiz_id);
         return mav;
     }
-    //퀴즈관리_등록된 퀴즈 삭제 버튼
+    //퀴즈관리_등록된 answer 삭제 버튼
     @GetMapping("/answerDelete")
     public ModelAndView answerDelete(String answer,int quiz_id) {
         ModelAndView mav = new ModelAndView();
@@ -303,7 +346,14 @@ public class AdminController {
         mav.setViewName("redirect:/admin/quiz_edit?quiz_id="+quiz_id);
         return mav;
     }
-
+    //퀴즈관리_등록된 quiz 삭제 버튼
+    @GetMapping("/quizDelete")
+    public ModelAndView quizDelete(int quiz_id) {
+        ModelAndView mav = new ModelAndView();
+        int result = service.quizDelete(quiz_id);
+        mav.setViewName("redirect:/admin/quiz/list");
+        return mav;
+    }
     //채팅관리======================================================
     @GetMapping("/admin/chat/management")
     public ModelAndView GoChat_management(@RequestParam(required = false, defaultValue = "1") int page,
@@ -323,7 +373,16 @@ public class AdminController {
         mav.setViewName("management/chat_management");
         return mav;
     }
-
+    @PostMapping("/suspend/chat")
+    public ModelAndView suspend_chat(String user_id,int time,String reason, int report_id) {
+        ModelAndView mav = new ModelAndView();
+        System.out.println(user_id+" "+time+" "+reason);
+        service.messageReportDelete(report_id);
+        int result = service.suspendInsert(user_id,time,reason);
+        mav.setViewName("admin/admin_dashboard");
+        mav.setViewName("redirect:/admin/suspended/management");
+        return mav;
+    }
 
 
 

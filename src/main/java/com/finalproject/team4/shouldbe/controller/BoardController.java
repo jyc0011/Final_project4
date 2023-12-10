@@ -1,7 +1,6 @@
 package com.finalproject.team4.shouldbe.controller;
 
 import com.finalproject.team4.shouldbe.service.BoardService;
-import com.finalproject.team4.shouldbe.service.ReplyService;
 import com.finalproject.team4.shouldbe.util.UriUtil;
 import com.finalproject.team4.shouldbe.vo.BoardVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
@@ -20,39 +19,6 @@ import java.util.List;
 public class BoardController {
     @Autowired
     BoardService boardService;
-    @Autowired
-    ReplyService replyService;
-
-/*    @Autowired
-    BoardService service;
-    @RequestMapping(value = "/board/free", method = RequestMethod.GET)
-    public String freeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) { */
-    //var temp = service.boardPageList();
-    //System.out.println(temp);
-        /*try {
-            // Fetch the records based on the parameters in pVO
-            pVO.setTotalRecord(service.totalRecordAuth(pVO));
-
-            List<BoardVO> communityItems = service.boardPageList(pVO);
-            model.addAttribute("list", communityItems);
-
-            // Add all the search and sort parameters to the model to be used in the frontend
-            model.addAttribute("page", pVO.getNowPage());
-            model.addAttribute("searchKey", pVO.getSearchKey());
-            model.addAttribute("searchWord", pVO.getSearchWord());
-            model.addAttribute("category", pVO.getCategory());
-            model.addAttribute("postSort", pVO.getPostSort());
-
-            // Add the generated URI for search and sort to the model
-            model.addAttribute("uri", getUri(pVO));
-            model.addAttribute("pVO", pVO);
-
-        } catch (Exception e) {
-            // Optionally: Log the exception or handle it accordingly
-            e.printStackTrace();
-        }*/
-        /*return "board/board_list";
-    }*/
 
     private String getUri(PagingVO pVO) {
         int page = pVO.getNowPage();
@@ -117,15 +83,9 @@ public class BoardController {
 
         //게시글 데이터
         var bVO = boardService.boardSelect(no);
+        mav.setViewName("/board/board_view");
         mav.addObject("bVO", bVO);
         mav.addObject("listUrl", listUrl);
-
-        //댓글 데이터
-        var rVOList = replyService.replySelect(no);
-        /*todo: rVO 적용.. */
-        //System.out.println(bVO);
-        //mav.addObject("pVO", pVO);
-        mav.setViewName("board/board_view");
 
         return mav;
     }
@@ -176,6 +136,7 @@ public class BoardController {
         return null;
 
     }
+
 
     public String parseCategory(String requestUri) {
         String[] params = requestUri.split("/");

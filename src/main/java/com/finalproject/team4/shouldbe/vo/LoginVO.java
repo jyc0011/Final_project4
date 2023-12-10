@@ -14,4 +14,6 @@ public class LoginVO {
     private String password;
     private String user_name;
     private Date withdraw;
+    private Date suspended_time;
+    private int suspended_period;
 }

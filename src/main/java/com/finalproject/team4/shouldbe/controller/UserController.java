@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -141,13 +144,27 @@ public class UserController {
                           @RequestParam("userpwd") String userpwd,
                           RedirectAttributes redirect) {
         LoginVO vo = userService.userLoginCheck(userid);
+        Date now = new Date();
         System.out.println(vo);
+
+        if (vo.getSuspended_time() != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(vo.getSuspended_time());
+            calendar.add(Calendar.DAY_OF_MONTH, vo.getSuspended_period());
+            vo.setSuspended_time(calendar.getTime());
+        }
+
         if (vo == null) {//로그인 실패
             redirect.addFlashAttribute("result", "로그인 실패, 아이디를 확인해주세요!");
             return "redirect:/login";
         } else if (vo.getWithdraw()!= null) {
             redirect.addFlashAttribute("result", "탈퇴 예정 회원입니다. 탈퇴를 취소하고 싶다면 문의해주세요.");
             return "redirect:/login";
+        } else if(vo.getSuspended_time().after(now)){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String d = dateFormat.format(vo.getSuspended_time());
+            redirect.addFlashAttribute("result", "정지 회원입니다. " + d + " 이후에 로그인이 가능합니다.");
+                return "redirect:/login";
         } else if (encrypt.encrypt(userpwd, vo.getSalt()).equals(vo.getPassword())) {
             userService.logUser(userid);
             session.setAttribute("logStatus", "Y");
