@@ -70,6 +70,11 @@
             padding: 0;
         }
 
+        #replyList > li {
+            border-bottom: 1px solid #ddd;
+
+        }
+
         .replyArea #replyList li {
             padding: 10px;
             border-bottom: 1px solid #ddd;
@@ -196,22 +201,64 @@
                 }
             }
         }
-        $(function(){
-            $("#addReply").click(function(){
+        $(function () {
+            //댓글목록 불러오기
+            function getReply() {
+                $.ajax({
+                    url: '${pageContext.servletContext.contextPath}/boardReply/list',
+                    data: {no: ${bVO.post_id}},
+                    type: 'GET',
+                    success: function (result) {
+                        //console.log(result);
+                        var tag = ""; //댓글목록 태그(수정, 삭제);
+
+                        $(result).each(function (i, rVO) {
+                            tag += "<li><div><b>" + rVO.user_id + "</b>(" + rVO.write_date + ")";
+                            //수정,삭제버튼은 로그인 아이디와 댓글쓴이의 아이디가 같을때만
+                            //userid == 'userid'
+                            //${logId}는 서버에서 실행되서 goguma라고 넘어옴 변수로 인식undefined 오류남
+                            if ('${logId}' == rVO.user_id) {
+                                //tag += "<input type='button' id='replyEdit' value='Edit'/>";
+                                tag += "<p>" + rVO.content + "</p></div>";
+                                tag += "<input type='button' id='replyDelete' value='Del'/>";
+                                tag += "<input type='hidden' name='comment_id' value='" + rVO.comment_id + "'/>";
+
+                                //수정폼 ->댓글글번호, 댓글내용이 폼에 있어야한다.
+
+                                tag += "<div style='display:none'><form>";
+
+                                tag += "<textarea name='content' style='width:400px; height:80px;'>" + rVO.content + "</textarea>";
+                                tag += "<input type='submit' value='댓글수정하기'/>";
+                                tag += "</form></div>";
+                            } else {
+                                tag += "<p>" + rVO.content + "</p></div>";
+                            }
+                            tag += "</li>";
+                        });
+                        //console.log(tag);
+
+                        $("#replyList").html(tag);
+
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+            }
+
+            $("#replyForm").submit(function () {
+                event.preventDefault();
+                var params = $(this).serialize();
                 $.ajax({
                     type: "POST",
-                    url: "/create/sendcode",
-                    data: {email: email},
+                    url: "/boardReply/add",
+                    data: params,
                     success: function (r) {
-                        var data = JSON.parse(r);
-                        if (data.result === true) {
-                            alert("이메일이 전송되었습니다.");
-                            $("#emailCheckDiv").css('display', '');
-                            // $("#authenticate").css('display', '');
-                            // $("#checkcode").css('display', '');
-                        } else {
-                            alert(data.msg);
-                        }
+                        //console.log(r);
+                        getReply();
+                        $("#coment").val("");
+
                     },
                     error: function (e) {
                         console.log(e.responseText);
@@ -219,6 +266,32 @@
 
                 })
             })
+            $(document).on('click', '#replyList input[value=Del]', function () {
+                if (!confirm("정말 삭제하시겠습니까?")) {
+                } else {
+
+                    var replyNo = $(this).siblings('input[type="hidden"]').val();
+                    var postNo = ${bVO.post_id};
+                    $.ajax({
+                        type: "POST",
+                        url: "/boardReply/delete",
+                        data: {replyNo: replyNo, postNo: postNo},
+                        success: function (r) {
+                            console.log(r);
+                            getReply();
+
+                        },
+                        error: function (e) {
+                            console.log(e.responseText);
+                        }
+
+                    })
+                }
+            });
+
+            getReply();
+
+
         })
 
     </script>
@@ -251,30 +324,16 @@
             <form method="post" id="replyForm">
                 <!--  원글 글번호 -->
                 <input type="hidden" name="no" value="${bvo.post_id}"/>
-                <textarea name="coment" id="coment"></textarea>
+                <textarea name="content" id="coment"></textarea>
                 <!-- button은 form안에있을경우 input type submit과 동일 -->
-                <div><button class="btn btn-warning">댓글등록</button></div>
+                <div><button class="btn btn-warning" id="addReply">댓글등록</button></div>
             </form>
         </c:if>
         <br>
         <div>댓글 목록</div>
         <br>
         <ul id="replyList">
-            <li>
-                <div id="box">
-                    <div id="userid-box">
-                        <b>gogumagogumagoguma</b>
-                    </div>
-                    <div id="reply-box">
-                        <div id="replyContent">댓글 공부중댓글 공부중댓글 공부중</div>
-                        <div id="replyDate">(2023-10-10 12:12:23)</div>
-                    </div>
-                    <div id="replyBtn-box">
-                        <input type="button" value="댓글수정" class="btn btn-warning"/>
-                        <input type="button" value="댓글삭제" class="btn btn-warning"/>
-                    </div>
-                </div>
-            </li>
+            <!-- 댓글 들어갈 위치 -->
         </ul>
     </div>
 </main>
