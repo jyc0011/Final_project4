@@ -7,7 +7,6 @@
                post_id,
                content,
                date_format(write_date, '%m-%d %H:%i') as write_date,
-               parent_comment_id,
                depth,
                is_deleted
         from comments
