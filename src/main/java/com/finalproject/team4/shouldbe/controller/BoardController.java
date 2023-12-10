@@ -43,6 +43,7 @@ public class BoardController {
         List<BoardVO> list = boardService.boardPageList(pVO);
         mav.addObject("list", list);
         mav.addObject("pVO", pVO);
+        mav.addObject("logId",request.getSession().getAttribute("userId"));
         mav.setViewName("board/board_list");
         return mav;
     }

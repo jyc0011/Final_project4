@@ -13,9 +13,7 @@ public class BoardReplyVO {
     private int post_id;
     private String content;
     private int like;
-    private int target_parent;
     private String write_date;
-    private int depth;
     private String email;
     private int isdelete;
     private String board_cat;
