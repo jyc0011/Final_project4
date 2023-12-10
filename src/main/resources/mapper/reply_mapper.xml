@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalproject.team4.shouldbe.mapper.ReplyMapper">
-    <select id="replySelect" resultType="ReplyVO">
+    <select id="replyList" resultType="ReplyVO">
         select comment_id,
                user_id,
                post_id,
@@ -13,4 +13,22 @@
         from comments
         where post_id = #{param1} order by write_date desc
     </select>
+    <insert id="addReply">
+        insert into comments(user_id, post_id, content, parent_comment_id, depth) values(#{user_id}, #{post_id}, #{content}, #{parent_comment_id}, #{depth})
+    </insert>
+    <select id="selectReply" resultType="ReplyVO">
+        select comment_id,
+               user_id,
+               post_id,
+               content,
+               date_format(write_date, '%m-%d %H:%i') as write_date,
+               parent_comment_id,
+               depth,
+               is_deleted
+        from comments
+        where post_id = #{param1} and comment_id = #{param2}
+    </select>
+    <delete id="deleteReply">
+        delete from comments where post_id=#{param1} and comment_id = #{param2}
+    </delete>
 </mapper>
