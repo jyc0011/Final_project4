@@ -69,10 +69,20 @@
             margin-left: 5px;
         }
 
+        .list-inline{
+            padding: 10px 0;
+        }
+
         .list-inline li a {
             text-decoration: none;
             color: black;
             font-size: 20px;
+        }
+
+        #now{
+            padding: 5px;
+            border-bottom: 3px solid #ffe3a0;
+            font-weight: bold;
         }
 
         .pagination {
@@ -130,12 +140,11 @@
     </div>
     <div id="content" class="col-10">
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구
+            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/friend_user" id="now">친구
                 목록</a></li>
             <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/blockList">차단 목록</a>
             </li>
         </ul>
-        <hr/>
         <c:forEach var="flist" items="${flist}">
             <div class="friend-card"><!--ajax 처리-->
                 <div class="friend-avatar">
@@ -150,7 +159,7 @@
                     <p>${flist.profile_content}</p>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary btn-action">채팅하기</button>
+                    <button type="button" class="btn btn-warning btn-action">채팅하기</button>
                     <button type="button" class="btn btn-outline-secondary btn-action" id="deletefriend"
                             title="${flist.followed_user_id}">친구삭제
                     </button>

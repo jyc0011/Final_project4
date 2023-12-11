@@ -198,7 +198,7 @@
         select quiz_id from quiz where quiz_content=#{quiz_content};
     </select>
     <insert id="answerInsert">
-        insert into answer(quiz_id,answer) values (${quiz_id},#{answer});
+        insert into answer(quiz_id,answer,answer_lang) values (${quiz_id},#{answer}, #{answer_lang});
     </insert>
 
 

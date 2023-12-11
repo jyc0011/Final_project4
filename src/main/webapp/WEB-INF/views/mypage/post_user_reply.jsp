@@ -52,10 +52,25 @@
             color: white;
         }
 
+        .list-inline{
+            padding: 10px 0;
+        }
+
         .list-inline li a {
             text-decoration: none;
             color: black;
             font-size: 20px;
+        }
+
+        #now{
+            padding: 5px;
+            border-bottom: 3px solid #ffe3a0;
+            font-weight: bold;
+        }
+
+        table a{
+            color: black;
+            text-decoration: none;
         }
 
         .pagination {
@@ -92,16 +107,16 @@
         <ul class="list-inline">
             <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성 글</a>
             </li>
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user/reply">작성
+            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user/reply" id="now">작성
                 댓글</a></li>
         </ul>
-        <hr/>
+
         <table class="table">
             <thead>
             <tr>
-                <th>댓글번호</th>
-                <th>댓글작성 글</th>
-                <th>댓글내용</th>
+                <th>댓글 번호</th>
+                <th>글 제목</th>
+                <th>댓글 내용</th>
                 <th>작성일</th>
             </tr>
             </thead>
@@ -109,8 +124,8 @@
             <!-- ajax로 세팅변경 -->
             <c:forEach var="rVO" items="${list}">
                 <tr>
-                    <td>${rVO.post_id}</td>
                     <td>${rVO.comment_id}</td>
+                    <td>${rVO.title}</td>
                     <td><a href="${pageContext.servletContext.contextPath}/board/${rVO.board_cat}/view?no=${rVO.post_id}">${rVO.content}</a></td>
                     <td>${rVO.write_date}</td>
                 </tr>

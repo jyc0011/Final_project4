@@ -69,12 +69,22 @@
             margin-left: 5px;
         }
 
+
+        .list-inline{
+            padding: 10px 0;
+        }
+
         .list-inline li a {
             text-decoration: none;
             color: black;
             font-size: 20px;
         }
 
+        #now{
+            padding: 5px;
+            border-bottom: 3px solid #ffe3a0;
+            font-weight: bold;
+        }
         .pagination {
             justify-content: center;
         }
@@ -134,10 +144,9 @@
                 <a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구 목록</a>
             </li>
             <li class="list-inline-item">
-                <a href="${pageContext.servletContext.contextPath}/mypage/blocklist">차단 목록</a>
+                <a href="${pageContext.servletContext.contextPath}/mypage/blocklist" id="now">차단 목록</a>
             </li>
         </ul>
-        <hr/>
         <c:forEach var="blist" items="${blist}">
             <div class="friend-card">
                 <div class="friend-avatar">

@@ -50,7 +50,7 @@ public interface AdminService {
     //퀴즈관리_퀴즈등록페이지버튼
     int quizInsert(String quiz_content,int level);
     int selectQuizId(String quiz_content);
-    int answerInsert(int quiz_id, String answer);
+    int answerInsert(int quiz_id, String answer, String answer_lang);
     //퀴즈관리_등록된 answer 삭제 버튼
     int answerDelete(String answer);
     //퀴즈관리_등록된 quiz 삭제 버튼======================================================
