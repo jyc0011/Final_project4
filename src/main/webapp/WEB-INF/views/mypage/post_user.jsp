@@ -61,6 +61,12 @@
             text-decoration: none;
             color: black;
         }
+        #now{
+            font-weight: bold;
+            text-decoration-line: underline;
+            text-decoration-color: #ffe3a0;
+            text-decoration-thickness: 3px;
+        }
     </style>
 </head>
 
@@ -78,7 +84,7 @@
     </div>
     <div id="content">
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성 글</a>
+            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user" id="now">작성 글</a>
             </li>
             <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user/reply">작성
                 댓글</a></li>

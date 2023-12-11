@@ -74,6 +74,12 @@
             color: black;
             font-size: 20px;
         }
+        #now{
+            font-weight: bold;
+            text-decoration-line: underline;
+            text-decoration-color: #ffe3a0;
+            text-decoration-thickness: 3px;
+        }
     </style>
     <script>
         $(function () {
@@ -114,7 +120,7 @@
     </div>
     <div id="content" class="col-10">
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구
+            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/friend_user" id="now">친구
                 목록</a></li>
             <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/blockList">차단 목록</a>
             </li>
@@ -134,7 +140,7 @@
                     <p>${flist.profile_content}</p>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary btn-action">채팅하기</button>
+                    <button type="button" class="btn btn-warning btn-action">채팅하기</button>
                     <button type="button" class="btn btn-outline-secondary btn-action" id="deletefriend"
                             title="${flist.followed_user_id}">친구삭제
                     </button>
