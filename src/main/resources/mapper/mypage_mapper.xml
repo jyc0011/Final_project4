@@ -12,14 +12,24 @@
         where user_id = #{user_id};
     </update>
     <select id="mypage_post_board" resultType="BoardVO">
-        select post_id, user_id, title, date_format(write_date, '%y-%m-%d') write_date
+        select post_id, user_id, title, board_cat,date_format(write_date, '%y-%m-%d') write_date
         from posts
         where user_id = #{user_id};
     </select>
     <select id="mypage_post_board_reply" resultType="BoardReplyVO">
-        select comment_id, post_id, user_id, content, date_format(write_date, '%y-%m-%d') write_date
-        from comments
-        where user_id = #{user_id};
+        select
+            c.comment_id,
+            c.post_id,
+            c.user_id as comment_user_id,
+            c.content,
+            date_format(c.write_date, '%y-%m-%d') as comment_write_date,
+            p.board_cat
+        from
+            comments c
+                inner join
+            posts p on c.post_id = p.post_id
+        where
+            c.user_id = #{user_id} and c.isdelete = 0;
     </select>
     <select id="countSaveMessages" parameterType="String" resultType="int">
         SELECT COUNT(*)

@@ -129,7 +129,7 @@ public class MypageController {
 
         String user_id = (String) session.getAttribute("logId");
         List<BoardVO> list = service.mypage_post_board(user_id);
-
+        System.out.println(list);
         mav.addObject("list", list);
         mav.setViewName("mypage/post_user");
         return mav;

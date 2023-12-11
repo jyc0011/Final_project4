@@ -50,8 +50,18 @@ public class BoardServiceImpl implements BoardService {
         return Mapper.boardDelete(post_id);
     }
 
-    /*@Override
-    public void increaseLike(int post_id){
-        Mapper.increaseLike(post_id);
-    }*/
+    @Override
+    public int increaseLike(int post_id, String user_id) {
+       return Mapper.increaseLike(post_id, user_id);
+    }
+
+    @Override
+    public int getLikeStatus(int post_id, String user_id) {
+        return Mapper.getLikeStatus(post_id, user_id);
+    }
+
+    @Override
+    public int getLike(int post_id) {
+        return Mapper.getLike(post_id);
+    }
 }

@@ -38,6 +38,7 @@ public class AdminController {
             return mav;
         }
         ObjectMapper objectMapper = new ObjectMapper();
+        mav.addObject("profile_img", session.getAttribute("profile_img"));
         mav.addObject("visitorStats", objectMapper.writeValueAsString(service.getMonthlyVisitorStats()));
         mav.addObject("nationStats", objectMapper.writeValueAsString(service.countUsersByNation()));
         mav.addObject("latestBoards", service.latestBoard());
@@ -203,8 +204,9 @@ public class AdminController {
                 board.get(i).setBoard_cat("삭제된 게시글");
             }
         }
-        mav.addObject("board", board);
         mav.addObject("pVO", pvo);
+        mav.addObject("board", board);
+        mav.addObject("profile_img", session.getAttribute("profile_img"));
         mav.setViewName("admin/admin_board");
         return mav;
     }

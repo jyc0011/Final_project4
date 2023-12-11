@@ -2,7 +2,7 @@ package com.finalproject.team4.shouldbe.controller;
 
 
 import com.finalproject.team4.shouldbe.service.ReplyService;
-import com.finalproject.team4.shouldbe.vo.ReplyVO;
+import com.finalproject.team4.shouldbe.vo.BoardReplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class BoardReplyController {
 
     @GetMapping("/boardReply/list")
     @ResponseBody
-    public List<ReplyVO> replyList(int no){
+    public List<BoardReplyVO> replyList(int no){
         //댓글 데이터
         var rVOList = replyService.replyList(no);
 
@@ -30,12 +30,13 @@ public class BoardReplyController {
     }
     @PostMapping("/boardReply/add")
     @ResponseBody
-    public Map<String, Object> addReply(HttpSession session, ReplyVO rVO){
-
+    public Map<String, Object> addReply(HttpSession session, BoardReplyVO rVO){
+        System.out.println(rVO);
         var map = new HashMap<String, Object>();
         if("Y".equals((String)session.getAttribute("logStatus"))){
             var id = (String)session.getAttribute("logId");
-            rVO.setUser_id(id);
+            rVO.setWriter(id);
+            System.out.println(rVO);
             int result = replyService.addReply(rVO);
             if(result>0) {
 
@@ -45,7 +46,6 @@ public class BoardReplyController {
 
 
         }
-
         map.put("result", false);
         return map;
     }
@@ -55,9 +55,8 @@ public class BoardReplyController {
 
         var map = new HashMap<String, Object>();
         var reply = replyService.selectReply(postNo, replyNo);
-        if(reply.getUser_id().equals((String)session.getAttribute("logId"))){
+        if(reply.getWriter().equals((String)session.getAttribute("logId"))){
             int result = replyService.deleteReply(postNo, replyNo);
-
             if(result>0) {
                 map.put("result", true);
                 return map;

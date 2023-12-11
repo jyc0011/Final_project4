@@ -22,5 +22,7 @@ public interface BoardMapper {
 
     public int boardDelete(int post_id);
 
-    public void increaseLike(int post_id);
+    public int increaseLike(int post_id, String user_id);
+    public int getLikeStatus(int post_id, String user_id);
+    public int getLike(int post_id);
 }

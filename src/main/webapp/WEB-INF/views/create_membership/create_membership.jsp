@@ -26,6 +26,7 @@
         .box {
             display: flex;
             margin-top: 20px;
+
         }
 
         h1 {
@@ -52,7 +53,7 @@
         }
 
         #create_Form {
-            margin-left: 100px;
+            margin-left: 50px;
         }
 
         #join {
@@ -64,9 +65,6 @@
             width: 90px;
         }
 
-        #nationselcet {
-            margin: 20px auto;
-        }
 
         .lang {
             margin: 10px auto;
@@ -177,6 +175,15 @@
         .btn-outline-secondary {
             width: 130px;
             margin: 5px 10px 0 0;
+        }
+        .terms-content {
+            width: 520px;
+            height: 200px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
         }
     </style>
     <script>
@@ -374,20 +381,20 @@
                     <label>English</label>
                     <input type="checkbox" class="lang" name="langArr" value="zh-CN"/>
                     <label>中國語-简体</label>
-                    <input type="checkbox" class="lang" name="langArr" value="zh-TW"/>
-                    <label>中國語-繁体</label>
                 </div>
                 <div>
+                    <input type="checkbox" class="lang" name="langArr" value="zh-TW"/>
+                    <label>中國語-繁体</label>
                     <input type="checkbox" class="lang" name="langArr" value="vi"/>
                     <label>Tiếng Việt</label>
                     <input type="checkbox" class="lang" name="langArr" value="th"/>
                     <label>แบบไทย</label>
                     <input type="checkbox" class="lang" name="langArr" value="id"/>
                     <label>Indonésia</label>
-                    <input type="checkbox" class="lang" name="langArr" value="fr"/>
-                    <label>Français</label>
                 </div>
                 <div>
+                    <input type="checkbox" class="lang" name="langArr" value="fr"/>
+                    <label>Français</label>
                     <input type="checkbox" class="lang" name="langArr" value="es"/>
                     <label>Español</label>
                     <input type="checkbox" class="lang" name="langArr" value="ru"/>
@@ -433,6 +440,25 @@
                 </div>
             </div>
             <div id="termsCheck">
+                <div> <br> 이용약관: </div>
+                <div class="terms-content">
+                    <h1>회원가입 이용약관</h1>
+
+                    <h2>제 1 조 (목적)</h2>
+                    <p>이 약관은 [회사명] (이하 "회사" 또는 "서비스 제공자")가 제공하는 온라인 서비스 이용과 관련한 회원의 권리, 의무 및 책임사항을 규정하는 것을 목적으로 합니다.</p>
+
+                    <h2>제 2 조 (정의)</h2>
+                    <ol>
+                        <li>"서비스"라 함은 회사가 제공하는 모든 온라인 서비스를 의미합니다.</li>
+                        <li>"회원"이라 함은 회사에 개인정보를 제공하고 이 약관에 따라 회사와 이용계약을 체결한 자를 의미합니다.</li>
+                    </ol>
+
+                    <h2>제 3 조 (이용약관의 효력과 변경)</h2>
+                    <ol>
+                        <li>본 약관은 회원가입 시 동의함으로써 효력이 발생합니다.</li>
+                        <li>회사는 본 약관을 변경할 권리를 갖으며, 변경된 약관은 서비스 내 또는 이메일을 통해 공지함으로써 효력이 발생합니다. 회원은 변경된 약관에 동의하지 않을 경우 서비스 이용을 중단할 수 있습니다.</li>
+                    </ol>
+                </div>
                 <div>
                     <label style="cursor: pointer"><input type="checkbox" id="terms1"
                                                           style="margin-right: 5px; cursor: pointer"/>이용약관 동의<strong>(필수)</strong></label>
