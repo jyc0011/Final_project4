@@ -99,6 +99,9 @@
             background-color: #ffe3a0;
             color: black;
         }
+        .tr_list>td{
+            border-bottom: 1px solid #ddd;
+        }
 
     </style>
 </head>

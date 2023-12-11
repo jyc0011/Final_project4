@@ -124,6 +124,10 @@
             background-color: #333333;
             color: white;
         }
+
+        .reply_list>td{
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 </head>
 
