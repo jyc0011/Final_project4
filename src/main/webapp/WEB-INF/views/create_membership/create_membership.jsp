@@ -372,37 +372,45 @@
                 <div>
                     <label style="margin: 20px 0 5px 0">사용언어</label>
                 </div>
-                <div>
-                    <input type="checkbox" class="lang" name="langArr" value="ko"/>
-                    <label>한국어</label>
-                    <input type="checkbox" class="lang" name="langArr" value="ja"/>
-                    <label>日本語</label>
-                    <input type="checkbox" class="lang" name="langArr" value="en"/>
-                    <label>English</label>
-                    <input type="checkbox" class="lang" name="langArr" value="zh-CN"/>
-                    <label>中國語-简体</label>
-                </div>
-                <div>
-                    <input type="checkbox" class="lang" name="langArr" value="zh-TW"/>
-                    <label>中國語-繁体</label>
-                    <input type="checkbox" class="lang" name="langArr" value="vi"/>
-                    <label>Tiếng Việt</label>
-                    <input type="checkbox" class="lang" name="langArr" value="th"/>
-                    <label>แบบไทย</label>
-                    <input type="checkbox" class="lang" name="langArr" value="id"/>
-                    <label>Indonésia</label>
-                </div>
-                <div>
-                    <input type="checkbox" class="lang" name="langArr" value="fr"/>
-                    <label>Français</label>
-                    <input type="checkbox" class="lang" name="langArr" value="es"/>
-                    <label>Español</label>
-                    <input type="checkbox" class="lang" name="langArr" value="ru"/>
-                    <label>Русский</label>
-                    <input type="checkbox" class="lang" name="langArr" value="de"/>
-                    <label>Deutsch</label>
-                    <input type="checkbox" class="lang" name="langArr" value="it"/>
-                    <label>Italiano</label>
+                <div style="display: flex; width: 500px; flex-wrap: wrap; margin-left: 20px;">
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-ko" value="ko" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-ko">한국어</label>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-en" value="en" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-en">English</label>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-ja" value="ja" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-ja">日本語</label><br>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-zn-CN" value="zn-CN" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-zn-CN">中國語-简体</label>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-zn-TW" value="zn-TW" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-zn-TW">中國語-繁体</label>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-vi" value="vi" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-vi">Tiếng Việt</label><br>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-th" value="th" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-th">แบบไทย</label>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-id" value="id" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-id">Indonésia</label>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-fr" value="fr" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-fr">Français</label><br>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-es" value="es" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-es">Español</label>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-ru" value="ru" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-ru">Русский</label>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-de" value="de" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-de">Deutsch</label><br>
+
+                    <input type="checkbox" class="btn-check lang" name="langArr" id="lang-it" value="it" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="lang-it">Italiano</label>
                 </div>
             </div>
             <div>
