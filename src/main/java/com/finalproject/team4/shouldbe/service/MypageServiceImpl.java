@@ -23,13 +23,13 @@ public class MypageServiceImpl implements MypageService {
     }
 
     @Override
-    public List<BoardVO> mypage_post_board(String userid) {
-        return mapper.mypage_post_board(userid);
+    public List<BoardVO> mypage_post_board(PagingVO pvo, String userid) {
+        return mapper.mypage_post_board(pvo, userid);
     }
 
     @Override
-    public List<BoardReplyVO> mypage_post_board_reply(String userid) {
-        return mapper.mypage_post_board_reply(userid);
+    public List<BoardReplyVO> mypage_post_board_reply(PagingVO pvo, String userid) {
+        return mapper.mypage_post_board_reply(pvo, userid);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class MypageServiceImpl implements MypageService {
     }
 
     @Override
-    public List<FriendVO> friendList(String followed_user_id) {
-        return mapper.friendList(followed_user_id);
+    public List<FriendVO> friendList(PagingVO pvo, String followed_user_id) {
+        return mapper.friendList(pvo, followed_user_id);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class MypageServiceImpl implements MypageService {
     }
 
     @Override
-    public List<BlockVO> blockList(String user_id) {
-        return mapper.blockList(user_id);
+    public List<BlockVO> blockList(PagingVO pvo, String user_id) {
+        return mapper.blockList(pvo, user_id);
     }
 
     @Override
@@ -81,4 +81,35 @@ public class MypageServiceImpl implements MypageService {
     public int change_basic_profileimg(MypageVO vo) {
        return mapper.change_basic_profileimg(vo);
     }
+
+    @Override
+    public List<SaveQuizVO> selectSaveQuiz(PagingVO pvo, String userid) {
+        return mapper.selectSaveQuiz(pvo, userid);
+    }
+
+    @Override
+    public int countSaveQuiz(String userid) {
+        return mapper.countSaveQuiz(userid);
+    }
+
+    @Override
+    public int countBoard(String user_id) {
+        return mapper.countBoard(user_id);
+    }
+
+    @Override
+    public int countReply(String user_id) {
+        return mapper.countReply(user_id);
+    }
+
+    @Override
+    public int countfriendList(String user_id) {
+        return mapper.countfriendList(user_id);
+    }
+
+    @Override
+    public int countblockList(String user_id) {
+        return mapper.countblockList(user_id);
+    }
+
 }

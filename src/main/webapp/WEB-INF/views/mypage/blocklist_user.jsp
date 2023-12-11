@@ -74,11 +74,21 @@
             color: black;
             font-size: 20px;
         }
-        #now{
-            font-weight: bold;
-            text-decoration-line: underline;
-            text-decoration-color: #ffe3a0;
-            text-decoration-thickness: 3px;
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .pagination .page-link {
+            color: black;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        /* Style for the active page link */
+        .pagination .page-link.active {
+            background-color: #ffe3a0;
+            color: black;
         }
     </style>
     <script>
@@ -114,7 +124,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user" class="active">친구관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_chat">저장소</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a></li>
         </ul>
     </div>
@@ -124,14 +134,14 @@
                 <a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구 목록</a>
             </li>
             <li class="list-inline-item">
-                <a href="${pageContext.servletContext.contextPath}/mypage/blocklist" id="now">차단 목록</a>
+                <a href="${pageContext.servletContext.contextPath}/mypage/blocklist">차단 목록</a>
             </li>
         </ul>
         <hr/>
         <c:forEach var="blist" items="${blist}">
             <div class="friend-card">
                 <div class="friend-avatar">
-                    <img src="${pageContext.servletContext.contextPath}/image/profile/user.png" alt="Friend's Avatar"
+                    <img src="${pageContext.servletContext.contextPath}/image/profile/${blist.profile_img}" alt="Friend's Avatar"
                          class="rounded-circle" style="width: 50px; height: 50px;">
                 </div>
                 <div class="friend-info">
@@ -146,6 +156,40 @@
                 </div>
             </div>
         </c:forEach>
+        <div>
+            <div>
+                <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+                    <div class="pagination" style="display: flex">
+                        <div class="paging">
+                            <ul class="pagination justify-content-center d-flex">
+                                <c:if test="${pVO.nowPage > 1}">
+                                    <li class="page-item"><a class="page-link" href="?page=${pVO.nowPage - 1}"><
+                                    </a></li>
+                                </c:if>
+                                <c:forEach var="i" begin="${pVO.startPage}"
+                                           end="${pVO.startPage + pVO.onePageCount - 1}">
+                                    <c:if test="${i <= pVO.totalPage}">
+                                        <c:choose>
+                                            <c:when test="${i != pVO.nowPage}">
+                                                <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item"><a class="page-link active" href="">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${pVO.nowPage < pVO.totalPage}">
+                                    <li class="page-item"><a class="page-link" href="?page=${pVO.nowPage + 1}">>
+                                    </a></li>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
