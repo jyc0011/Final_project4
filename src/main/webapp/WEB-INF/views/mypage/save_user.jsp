@@ -113,25 +113,27 @@
             <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user" class="active">저장소</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_chat" class="active">저장소</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a></li>
         </ul>
     </div>
     <div id="content">
         <div>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_user">채팅
+                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_chat">채팅
                     저장소</a>
                 </li>
-                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save/quiz">퀴즈
+                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_quiz">퀴즈
                     저장소</a>
                 </li>
             </ul>
             <div class="col-md-4">
+                <c:forEach var="saveMessages" items="${saveMessages}">
                 <div class="post-card">
-                    <strong>I want to learn Korean happily!</strong>
-                    <p>즐겁게 한국어를 배우고 싶어요!</p>
-                </div>
+                        <strong>${saveMessages.content}</strong>
+                        <p>즐겁게 한국어를 배우고 싶어요!</p>
+                    </div>
+                </c:forEach>
             </div>
         </div>
         <div>
@@ -140,15 +142,15 @@
                     <div class="pagination" style="display: flex">
                         <div class="paging">
                             <ul class="pagination justify-content-center d-flex">
-                                <c:if test="${pVO.page > 1}">
-                                    <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'"><
+                                <c:if test="${pVO.nowPage > 1}">
+                                    <li class="page-item"><a class="page-link" href="?page=${pVO.nowPage - 1}"><
                                     </a></li>
                                 </c:if>
                                 <c:forEach var="i" begin="${pVO.startPage}"
                                            end="${pVO.startPage + pVO.onePageCount - 1}">
                                     <c:if test="${i <= pVO.totalPage}">
                                         <c:choose>
-                                            <c:when test="${i != pVO.page}">
+                                            <c:when test="${i != pVO.nowPage}">
                                                 <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a>
                                                 </li>
                                             </c:when>
@@ -158,8 +160,8 @@
                                         </c:choose>
                                     </c:if>
                                 </c:forEach>
-                                <c:if test="${pVO.page < pVO.totalPage}">
-                                    <li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'">>
+                                <c:if test="${pVO.nowPage < pVO.totalPage}">
+                                    <li class="page-item"><a class="page-link" href="?page=${pVO.nowPage + 1}">>
                                     </a></li>
                                 </c:if>
                             </ul>

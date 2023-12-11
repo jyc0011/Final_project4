@@ -6,16 +6,27 @@
         from users
         where user_id = #{param1};
     </select>
+
     <update id="mypage_edit">
         update users
         set profile_content=#{profile_content}, lang=#{lang}
         where user_id = #{user_id};
     </update>
+
     <select id="mypage_post_board" resultType="BoardVO">
         select post_id, user_id, title, board_cat,date_format(write_date, '%y-%m-%d') write_date
         from posts
-        where user_id = #{user_id};
+        where user_id = #{user_id}
+        ORDER BY post_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
+
+    <select id="countBoard" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM posts
+        WHERE user_id = #{user_id}
+    </select>
+
     <select id="mypage_post_board_reply" resultType="BoardReplyVO">
         select
             c.comment_id,
@@ -29,8 +40,15 @@
                 inner join
             posts p on c.post_id = p.post_id
         where
-            c.user_id = #{user_id} and c.isdelete = 0;
+            c.user_id = #{user_id} and c.is_deleted = 0
     </select>
+
+    <select id="countReply" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM comments
+        WHERE user_id = #{user_id}
+    </select>
+
     <select id="countSaveMessages" parameterType="String" resultType="int">
         SELECT COUNT(*)
         FROM save_message
@@ -38,11 +56,17 @@
     </select>
 
     <select id="selectSaveMessages" parameterType="map" resultType="SaveMessageVO">
-        SELECT msg_id, save_user_id
+        SELECT msg_id, save_user_id, content
         FROM save_message
         WHERE save_user_id = #{userid}
         ORDER BY msg_id
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
+
+    <select id="countfriendList" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM friend
+        WHERE followed_user_id = #{user_id}
     </select>
 
     <select id="friendList" resultType="FriendVO">
@@ -50,6 +74,8 @@
         from users as u
                  join friend as f on u.user_id = f.following_user_id
         where followed_user_id = #{followed_user_id}
+        ORDER BY followed_user_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
 
     <delete id="friendDelete">
@@ -59,11 +85,19 @@
           and following_user_id = #{param2}
     </delete>
 
+    <select id="countblockList" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM block_list
+        WHERE user_id = #{user+id}
+    </select>
+
     <select id="blockList" resultType="BlockVO">
-        select block_id, b.user_id, block_reason, user_name
+        select block_id, b.user_id, block_reason, user_name, profile_img
         from users as u
                  join block_list as b on u.user_id = b.block_id
         where b.user_id = #{user_id}
+        ORDER BY block_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
 
     <delete id="block_id_unlock">
@@ -95,4 +129,19 @@
         set profile_img=#{profile_img}
         where user_id=#{user_id}
     </update>
+
+    <select id="countSaveQuiz" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM save_quiz
+        WHERE user_id = #{userid}
+    </select>
+
+    <select id="selectSaveQuiz" resultType="SaveQuizVO">
+        select s.quiz_id, q.quiz_content, a.answer, q.level
+        from save_quiz as s join quiz as q join answer as a 
+        on q.quiz_id = s.quiz_id and a.quiz_id = s.quiz_id
+        where s.user_id = #{userid}
+        ORDER BY s.quiz_id
+            LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
+    </select>
 </mapper>

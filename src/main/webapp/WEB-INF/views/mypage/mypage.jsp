@@ -69,9 +69,6 @@
             width: 130px;
             margin-right: 10px;
         }
-        .btn-outline-secondary{
-            margin-bottom: 10px;
-        }
     </style>
     <script>
         function change_image(){
@@ -130,7 +127,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_chat">저장소</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a></li>
         </ul>
     </div>
@@ -179,10 +176,10 @@
                     <label class="btn btn-outline-secondary" for="lang-ja">日本語</label>
 
                     <input type="checkbox" class="btn-check" name="lang" id="lang-zn-CN" value="zn-CN" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="lang-zn-CN">中國語-简体</label>
+                    <label class="btn btn-outline-secondary" for="lang-zn-CN">中國語-简体(간체)</label>
 
                     <input type="checkbox" class="btn-check" name="lang" id="lang-zn-TW" value="zn-TW" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="lang-zn-TW">中國語-繁体</label>
+                    <label class="btn btn-outline-secondary" for="lang-zn-TW">中國語-繁体(번체)</label>
 
                     <input type="checkbox" class="btn-check" name="lang" id="lang-vi" value="vi" autocomplete="off">
                     <label class="btn btn-outline-secondary" for="lang-vi">Tiếng Việt</label>
