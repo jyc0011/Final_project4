@@ -74,6 +74,12 @@
             color: black;
             font-size: 20px;
         }
+        #now{
+            font-weight: bold;
+            text-decoration-line: underline;
+            text-decoration-color: #ffe3a0;
+            text-decoration-thickness: 3px;
+        }
     </style>
     <script>
         $(function () {
@@ -118,7 +124,7 @@
                 <a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구 목록</a>
             </li>
             <li class="list-inline-item">
-                <a href="${pageContext.servletContext.contextPath}/mypage/blocklist">차단 목록</a>
+                <a href="${pageContext.servletContext.contextPath}/mypage/blocklist" id="now">차단 목록</a>
             </li>
         </ul>
         <hr/>
