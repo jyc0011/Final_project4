@@ -210,6 +210,14 @@ public class MypageController {
         return mav;
     }
 
+    @PostMapping("/mypage/save_chat/delete")
+    public String deleteSavedChat(@RequestParam("msg_id") int msgId, HttpSession session, RedirectAttributes redirectAttributes) {
+        String userId = (String) session.getAttribute("logId");
+        boolean success = service.deleteSavedMsg(msgId, userId);
+        redirectAttributes.addFlashAttribute("deleteSuccess", success);
+        return "redirect:/mypage/save_chat";
+    }
+
     @GetMapping("/mypage/save_quiz")
     public ModelAndView saveQuiz(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView("mypage/save_quiz");
@@ -225,6 +233,14 @@ public class MypageController {
         mav.addObject("pVO", pvo);
 
         return mav;
+    }
+
+    @PostMapping("/mypage/save_quiz/delete")
+    public String deleteSavedQuiz(@RequestParam("quiz_id") int quizId, HttpSession session, RedirectAttributes redirectAttributes) {
+        String userId = (String) session.getAttribute("logId");
+        boolean success = service.deleteSavedQuiz(quizId, userId);
+        redirectAttributes.addFlashAttribute("deleteSuccess", success);
+        return "redirect:/mypage/save_quiz";
     }
 
     // 프로필이미지

@@ -67,4 +67,6 @@ public interface ChatMapper {
     void friendDelete(String followed_user_id, String following_user_id);
 
     void createChatRoomState(int chatId);
+
+    int saveMessageToMypageCheck(String userId, int msgId);
 }

@@ -152,11 +152,7 @@
     </nav>
     <main>
         <h1 id="boardListTitle">게시글 관리</h1>
-        <div class="input-group mb-3" id="searchNickname" style="width: 250px;">
-            <input type="text" class="form-control" placeholder="닉네임 검색">
-            <button class="btn btn-dark" type="submit">검색</button>
-        </div>
-
+        <br>
         <div class="col-sm-12" id="boardList">
             <table id="example" class="display" style="width:100%">
                 <thead id="list_head">
@@ -185,7 +181,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                        <td class="board_title"><a href="/board/notice/view?no=${bVO.post_id}">${bVO.title}</a></td>
+                        <td class="board_title"><a href="${pageContext.servletContext.contextPath}/board/notice/view?no=${bVO.post_id}">${bVO.title}</a></td>
                         <td class="user_id">${bVO.user_id}</td>
                         <td class="report_count">${bVO.report_time}</td>
                         <td class="suspend_button">

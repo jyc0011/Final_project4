@@ -156,9 +156,10 @@
         FROM comment_report
     </select>
     <select id="selectBoardReply" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.AdminCommentReportVO">
-        SELECT *
-        FROM comment_report
-        ORDER BY report_time
+        SELECT cr.*, c.post_id
+        FROM comment_report cr
+                 INNER JOIN comments c ON cr.comment_id = c.comment_id
+        ORDER BY cr.report_time
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
     <select id="commentContent" resultType="com.finalproject.team4.shouldbe.vo.AdminCommentReportVO">

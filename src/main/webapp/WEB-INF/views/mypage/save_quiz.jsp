@@ -150,7 +150,7 @@
                         <div class="post-card">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <strong>${saveQuiz.quiz_content}</strong>
-                                <form action="/mypage/save_chat/delete" method="post" style="display: inline;">
+                                <form action="/mypage/save_quiz/delete" method="post" style="display: inline;">
                                     <input type="hidden" name="quiz_id" value="${saveQuiz.quiz_id}" />
                                     <button type="submit" class="delete-btn">X</button>
                                 </form>
