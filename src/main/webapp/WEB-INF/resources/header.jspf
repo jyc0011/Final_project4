@@ -145,7 +145,7 @@
                             <a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a>
                             <a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한 글</a>
                             <a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a>
-                            <a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a>
+                            <a href="${pageContext.servletContext.contextPath}/mypage/save_chat">저장소</a>
                             <a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a>
                         </div>
                     </c:if>

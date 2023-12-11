@@ -12,4 +12,5 @@ public class BlockVO {
     private String user_name;
     private String user_id;
     private String block_reason;
+    private String profile_img;
 }

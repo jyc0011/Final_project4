@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaveMessageVO {
-    private int msg_id;
-    private String save_user_id;
-    private String content;
+public class SaveQuizVO {
+    private int quiz_id;
+    private int level;
+    private String user_id;
+    private String quiz_content;
+    private String answer;
 }

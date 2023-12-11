@@ -131,14 +131,6 @@
             flex-direction: column;
             margin-top: 170px;
         }
-        #content {
-            padding: 20px;
-            margin-top: 20px;
-            width: 80%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
     </style>
     <script>
         function confirmDeletion() {
@@ -165,32 +157,29 @@
 <body>
 <div id="wrapper" class="container-fluid">
     <div id="sidebar">
-        <br>
         <ul class="sidebar-menu">
             <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_chat">저장소</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user" class="active">탈퇴하기</a></li>
         </ul>
     </div>
-    <div id="content">
-        <div class="withdraw-box">
-            <form method="get" action="${pageContext.servletContext.contextPath}/mypage/withdrawOk">
-                <input type="hidden" name="user_id" id="user_id" value="${logId}"/>
-                <div class="box">
-                    <div class="input-container">
-                        <input type="password" name="password" id="password" required=""/>
-                        <label for="password" class="form-label">비밀번호</label>
-                    </div>
-                    <div class="input-container">
-                        <input type="password" name="password-confirm" id="password-confirm" required=""/>
-                        <label for="password" class="form-label">비밀번호 확인</label>
-                    </div>
-                    <button type="submit" class="btn btn-warning submitBtn" onclick="confirmDeletion()">탈퇴하기</button>
+    <div class="withdraw-box">
+        <form method="get" action="${pageContext.servletContext.contextPath}/mypage/withdrawOk">
+            <input type="hidden" name="user_id" id="user_id" value="${logId}"/>
+            <div class="box">
+                <div class="input-container">
+                    <input type="password" name="password" id="password" required=""/>
+                    <label for="password" class="form-label">비밀번호</label>
                 </div>
-            </form>
-        </div>
+                <div class="input-container">
+                    <input type="password" name="password-confirm" id="password-confirm" required=""/>
+                    <label for="password" class="form-label">비밀번호 확인</label>
+                </div>
+                <button type="submit" class="btn btn-warning submitBtn" onclick="confirmDeletion()">탈퇴하기</button>
+            </div>
+        </form>
     </div>
 </div>
 </body>
