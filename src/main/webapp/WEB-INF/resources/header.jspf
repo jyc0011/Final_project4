@@ -10,6 +10,10 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+        body {
+            font-family: 'Nanum Gothic', serif;
+        }
         .banner {
             width: 1200px;
             margin: 0 auto;
@@ -76,9 +80,9 @@
             display: block;
         }
 
-                .dropdown-content a:hover {
-                    background-color: #f1f1f1;
-                }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
 
         .dropdown:hover .dropdown-content {
             display: block;

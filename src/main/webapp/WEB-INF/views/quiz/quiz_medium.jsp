@@ -15,7 +15,6 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif; /* 폰트 설정 */
         }
 
         main {
@@ -35,7 +34,6 @@
             width: 900px;
             height: 400px;
             line-height: 400px;
-            font-family: cursive;
             font-size: 7em;
             border:5px solid #000000;
             margin: 0 auto;

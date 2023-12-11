@@ -35,7 +35,6 @@
             height: 200px;
             margin: 10px;
             font-size: 4em;
-            font-family: fantasy;
             border: 3px solid #000000;
             border-radius: 10px;
         }

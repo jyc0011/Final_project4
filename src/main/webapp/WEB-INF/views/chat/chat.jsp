@@ -22,7 +22,6 @@
             margin: 0;
             padding: 0;
             font-weight: 400;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-size: 1rem;
             height: 100%;
         }
