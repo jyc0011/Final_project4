@@ -102,6 +102,7 @@
             height: 40px;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
         }
 
         hr {
@@ -137,7 +138,7 @@
 
         .util {
             text-align: center;
-            margin-top: 20px;
+            margin: 20px;
         }
 
         .btn btn-warning {
@@ -168,6 +169,16 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+        }
+
+        #likeButton:hover {
+            background-color:#c8c8c8;
+        }
+
+        #liked {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 16px;
         }
 
         #replyEdit:hover, #replyDelete:hover {
@@ -339,7 +350,8 @@
         <button id="likeButton">추천</button>
         <div id="liked"> </div>
     </div>
-
+    <br>
+    <hr style="width: 1000px;">
     <div class="util">
         <button id="toList" class="btn btn-secondary">목록</button>
         <c:if test="${logId==bVO.user_id}">
@@ -350,7 +362,7 @@
             <button id="deletePost" class="btn btn-warning">삭제</button>
         </c:if>
     </div>
-    <br>
+    <hr style="width: 1000px;">
     <!-- 댓글 -->
     <div class="replyArea">
         <h5>댓글 목록</h5>
