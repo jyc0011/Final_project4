@@ -27,33 +27,75 @@
 
         }
 
-        .form-group {
+        #quiz_reg_content{
+            width: 1000px;
+            height: 600px;
+            padding: 40px;
+            margin: 20px auto;
+            border: 5px solid #69491a;
+        }
+        #select_box{
+            width: 100%;
+            margin: 0 auto;
+        }
+        #quiz_lang{
+            margin-right: 30px;
+        }
+        .form-group{
+
+        }
+        .form-group-box {
+            width: 430px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: row;
+            justify-content: flex-start;
             align-content: space-around;
-            margin-bottom: 15px;
-            width: 50%;
+
+            margin: 0 auto;
         }
 
-        .form-group input[type="text"],
-        .form-group input[type="submit"] {
-            flex: 1;
-            margin-right: 10px;
-        }
 
-        .form-group input[type="submit"] {
-            flex: 0 0 100px;
-            margin-right: 0;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
+        #quiz_submit:hover {
+            background-color:#69491a;
+            color: #fff;
         }
 
         select, input[type="text"] {
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+        .submit-group{
+            display: block;
+            width: 71%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #quiz_content{
+            width: 70%;
+            height: 90px;
+            margin: 20px auto;
+            font-size: 60px;
+        }
+        #answer{
+            width: 70%;
+            height: 90px;
+            margin: 0 auto;
+            font-size: 60px;
+        }
+        #quiz_submit_box{
+            margin: 20px auto 0;
+            border-radius: 4px;
+
+        }
+        #quiz_submit{
+            width: 300px;
+            height: 100px;
+            margin: 0 auto;
+            font-size: 60px;
+            border-radius: 4px;
+            background-color: #FFD954;
+        }
+
     </style>
     <script>
         $(document).ready(function () {
@@ -190,58 +232,66 @@
 <body>
 <main>
     <h1>퀴즈 등록하기</h1>
-    <form method="post" action="/quiz_createOk" id="quiz_createForm">
-        <div class="form-group">
-            <label for="quiz_lang">문제의 언어:</label>
-            <select id="quiz_lang">
-                <option value="ko">한국어</option>
-                <option value="en">영어</option>
-                <option value="ja">일본어</option>
-                <option value="zh-CN">중국어 간체</option>
-                <option value="zh-TW">중국어 번체</option>
-                <option value="vi">베트남어</option>
-                <option value="th">태국어</option>
-                <option value="id">인도네시아어</option>
-                <option value="fr">프랑스어</option>
-                <option value="es">스페인어</option>
-                <option value="ru">러시아어</option>
-                <option value="de">독일어</option>
-                <option value="it">이탈리아어</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="answer_lang">정답의 언어:</label>
-            <select id="answer_lang">
-                <option value="ko">한국어</option>
-                <option value="en">영어</option>
-                <option value="ja">일본어</option>
-                <option value="zh-CN">중국어 간체</option>
-                <option value="zh-TW">중국어 번체</option>
-                <option value="vi">베트남어</option>
-                <option value="th">태국어</option>
-                <option value="id">인도네시아어</option>
-                <option value="fr">프랑스어</option>
-                <option value="es">스페인어</option>
-                <option value="ru">러시아어</option>
-                <option value="de">독일어</option>
-                <option value="it">이탈리아어</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="level">퀴즈 난이도:</label>
-            <select id="level">
-                <option value="1">쉬움</option>
-                <option value="2">중간</option>
-                <option value="3">어려움</option>
-            </select>
-        </div>
-        <div id="warning-message" style="display: none; color: red;">잘못된 입력입니다. 언어에 맞는 문자를 입력해주세요.</div>
-        <div class="form-group">
-            <input type="text" id="quiz_content" placeholder="문제"/>
-            <input type="text" id="answer" placeholder="정답"/>
-            <input type="submit" value="제출"/>
-        </div>
-    </form>
+
+    <div id="quiz_reg_content">
+        <form method="post" action="/quiz_createOk" id="quiz_createForm">
+            <div id="select_box">
+                <div class="form-group-box">
+                    <div class="form-group">
+                        <label for="quiz_lang">문제의 언어:</label>
+                        <select id="quiz_lang">
+                            <option value="ko">한국어</option>
+                            <option value="en">영어</option>
+                            <option value="jp">일본어</option>
+                            <option value="zh-CN">중국어 간체</option>
+                            <option value="zh-TW">중국어 번체</option>
+                            <option value="vi">베트남어</option>
+                            <option value="th">태국어</option>
+                            <option value="id">인도네시아어</option>
+                            <option value="fr">프랑스어</option>
+                            <option value="es">스페인어</option>
+                            <option value="ru">러시아어</option>
+                            <option value="de">독일어</option>
+                            <option value="it">이탈리아어</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="answer_lang">정답의 언어:</label>
+                        <select id="answer_lang">
+                            <option value="ko">한국어</option>
+                            <option value="en">영어</option>
+                            <option value="ja">일본어</option>
+                            <option value="zh-CN">중국어 간체</option>
+                            <option value="zh-TW">중국어 번체</option>
+                            <option value="vi">베트남어</option>
+                            <option value="th">태국어</option>
+                            <option value="id">인도네시아어</option>
+                            <option value="fr">프랑스어</option>
+                            <option value="es">스페인어</option>
+                            <option value="ru">러시아어</option>
+                            <option value="de">독일어</option>
+                            <option value="it">이탈리아어</option>
+                        </select>
+                    </div>       
+                    <div class="form-group">
+                        <label for="level">퀴즈 난이도:</label>
+                        <select id="level">
+                            <option value="1">쉬움</option>
+                            <option value="2">중간</option>
+                            <option value="3">어려움</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div id="warning-message" style="display: none; color: red;">잘못된 입력입니다. 언어에 맞는 문자를 입력해주세요.</div>
+            <div class="submit-group">
+                <input type="text" id="quiz_content" placeholder="문제"/>
+                <input type="text" id="answer" placeholder="정답"/>
+                <div id="quiz_submit_box"><input id="quiz_submit" type="submit" value="제출"/></div>
+            </div>
+        </form>
+    </div>
+
 </main>
 </body>
 
