@@ -90,6 +90,10 @@
             background-color: #333333;
             color: white;
         }
+
+        .management_list>td{
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
@@ -129,7 +133,7 @@
                         <td class="user_name">${asVO.user_name}</td>
                         <td class="user_id">${asVO.user_id}</td>
                         <td class="time">${asVO.suspended_time}</td>
-                        <th class="suspend_reason">${asVO.reason}</th>
+                        <td class="suspend_reason">${asVO.reason}</td>
                         <td class="writing_count">${asVO.posts_count}/${asVO.comments_count}</td>
                         <td class="report_count">${asVO.count_report}</td>
                         <td class="unsuspend_button">

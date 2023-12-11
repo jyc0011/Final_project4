@@ -133,6 +133,10 @@
             display: block;
             padding: 10px;
         }
+
+        .management_list>td{
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 </head>
 

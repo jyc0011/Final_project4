@@ -125,6 +125,10 @@
             background-color: #ffe3a0;
             color: black;
         }
+
+        .management_list>td{
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>

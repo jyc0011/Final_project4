@@ -31,9 +31,13 @@
 
         .difficulty {
             float: left;
-            width: 250px;
-            height: 250px;
-            margin: 50px;
+            width: 330px;
+            height: 200px;
+            margin: 10px;
+            font-size: 4em;
+            font-family: fantasy;
+            border: 3px solid #000000;
+            border-radius: 10px;
         }
 
         #quiz_easy {
@@ -46,6 +50,18 @@
 
         #quiz_hard {
             background-color: #FFB300;
+        }
+
+        #quiz_exp_box{
+            width: 1100px;
+            margin: 0 auto;
+            border: 1px solid #000000;
+            background-color: #f1f3f5;
+        }
+        #quiz_exp{
+            margin: 20px;
+            font-size: 2em;
+
         }
     </style>
     <script>
@@ -65,18 +81,17 @@
 <body>
 <main>
     <h1>퀴즈</h1>
-    <hr/>
     <div id="difficulty">
         <ul>
             <li>
-                <button type="button" id="quiz_easy" class="difficulty">쉬움</button>
-                <button type="button" id="quiz_medium" class="difficulty">중간</button>
-                <button type="button" id="quiz_hard" class="difficulty">어려움</button>
+                <button type="button" id="quiz_easy" class="difficulty">EASY</button>
+                    <button type="button" id="quiz_medium" class="difficulty">MEDIUM</button>
+                <button type="button" id="quiz_hard" class="difficulty">HARD</button>
             </li>
         </ul>
     </div>
-    <div>
-        <ol>
+    <div id="quiz_exp_box">
+        <ol id="quiz_exp">
             <li><span>난이도를 선택하세요.</span></li>
             <li><span>단어를 보고 정답을 입력해 주세요.</span></li>
             <li><span>틀린 단어를 저장소에 저장해 보세요.</span></li>
