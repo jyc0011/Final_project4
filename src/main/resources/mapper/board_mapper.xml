@@ -42,4 +42,13 @@
     <update id="boardUpdate">
         update posts set title=#{title}, content=#{content} where post_id = ${post_id};
     </update>
+    <insert id="increaseLike">
+        insert into post_like(post_id, user_id) values(#{param1}, #{param2})
+    </insert>
+    <select id="getLikeStatus" resultType="int">
+        select count(user_id) from post_like where post_id=#{param1} and user_id=#{param2}
+    </select>
+    <select id="getLike" resultType="int">
+        select count(user_id) from post_like where post_id=#{param1}
+    </select>
 </mapper>

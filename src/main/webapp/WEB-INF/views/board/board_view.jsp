@@ -23,7 +23,7 @@
         }
 
         #viewArea {
-            width:1000px;
+            width: 1000px;
             height: auto;
             display: flex;
             flex-direction: column;
@@ -85,14 +85,14 @@
             margin-bottom: 0;
         }
 
-        #replyForm{
+        #replyForm {
             width: 970px;
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        #replyForm>div{
+        #replyForm > div {
             display: flex;
             justify-content: flex-end;
         }
@@ -140,7 +140,7 @@
             margin-top: 20px;
         }
 
-        .btn btn-warning{
+        .btn btn-warning {
             font-size: 13px;
         }
 
@@ -159,7 +159,7 @@
             display: flex;
         }
 
-        #replyEdit{
+        #replyEdit {
             margin-right: 20px;
             padding-left: 5px;
             padding-right: 5px;
@@ -170,11 +170,11 @@
             cursor: pointer;
         }
 
-        #replyEdit:hover,#replyDelete:hover {
+        #replyEdit:hover, #replyDelete:hover {
             color: #555555;
         }
 
-        #replyDelete{
+        #replyDelete {
             padding-left: 5px;
             padding-right: 5px;
             background-color: white;
@@ -185,23 +185,22 @@
         }
     </style>
     <script>
-        window.onload = function () {
-            document.getElementById("toList").onclick = function () {
-                location.href="${listUrl}";
-            }
-            document.getElementById("editPost").onclick = function() {
-                location.href="${pageContext.servletContext.contextPath}/board/${bVO.board_cat}/edit?no=${bVO.post_id}"
-            }
-            document.getElementById("deletePost").onclick = function() {
+
+        $(function () {
+            $("#toList").click(function(){
+                location.href = "${listUrl}";
+            })
+            $("#editPost").on('click', function(){
+                location.href = "${pageContext.servletContext.contextPath}/board/${bVO.board_cat}/edit?no=${bVO.post_id}"
+            })
+            $("#deletePost").on('click', function(){
                 if (!confirm("정말 삭제하시겠습니까?")) {
                     alert("취소 되었습니다.");
                 } else {
-                    location.href="/board/${bVO.board_cat}/delete?no=${bVO.post_id}";
+                    location.href = "/board/${bVO.board_cat}/delete?no=${bVO.post_id}";
 
                 }
-            }
-        }
-        $(function () {
+            })
             //댓글목록 불러오기
             function getReply() {
                 $.ajax({
@@ -230,6 +229,21 @@
 
                         $("#replyList").html(tag);
 
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+            }
+
+            function getLike() {
+                $.ajax({
+                    url: '${pageContext.servletContext.contextPath}/like/get',
+                    data: {no: ${bVO.post_id}},
+                    type: 'GET',
+                    success: function (result) {
+                        $("#liked").html(result);
                     },
                     error: function (e) {
                         console.log(e.responseText);
@@ -268,7 +282,7 @@
                         url: "/boardReply/delete",
                         data: {replyNo: replyNo, postNo: postNo},
                         success: function (r) {
-                            console.log(r);
+                            //console.log(r);
                             getReply();
 
                         },
@@ -280,7 +294,30 @@
                 }
             });
 
+            $("#likeButton").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.servletContext.contextPath}/like/increase",
+                    data: {no: ${bVO.post_id}, user_id: '${logId}'},
+                    success: function (r) {
+                        console.log(r);
+                        if(r.result==true){
+                            console.log("success")
+                        }else{
+                            alert(r.msg);
+                        }
+                        getLike();
+
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+            });
+
             getReply();
+            getLike();
 
 
         })
@@ -290,12 +327,17 @@
 <main>
     <div id="viewArea">
         <ul>
-            <li>글번호 : ${bVO.post_id}  &nbsp;  작성자 : ${bVO.user_id}  &nbsp;  조회수 : ${bVO.views}  &nbsp;  작성일 : ${bVO.write_date}</li>
+            <li>글번호 : ${bVO.post_id} &nbsp; 작성자 : ${bVO.user_id} &nbsp; 조회수 : ${bVO.views} &nbsp; 작성일
+                : ${bVO.write_date}</li>
             <hr>
             <li><h4><b>제목 : ${bVO.title}</b></h4></li>
             <hr>
             <li>${bVO.content}</li>
         </ul>
+    </div>
+    <div>
+        <button id="likeButton">추천</button>
+        <div id="liked"> </div>
     </div>
 
     <div class="util">
@@ -324,7 +366,9 @@
                 <input type="hidden" name="post_id" value="${bVO.post_id}"/>
                 <textarea name="content" id="content"></textarea>
                 <!-- button은 form안에있을경우 input type submit과 동일 -->
-                <div><button class="btn btn-warning" id="addReply">댓글등록</button></div>
+                <div>
+                    <button class="btn btn-warning" id="addReply">댓글등록</button>
+                </div>
             </form>
         </c:if>
 
