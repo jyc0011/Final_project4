@@ -20,19 +20,24 @@
         }
 
         #side_menu {
-            padding: 98px 0 0 0;
+            padding: 98px 10px 0;
             width: 150px;
             height: 1000px;
             list-style-type: none;
+            border-right: 1px solid #ddd;
         }
 
-        #side_menu > li > a {
+        #side_menu li a {
             text-decoration: none;
             color: black;
             display: block;
             padding: 10px;
         }
 
+        #side_menu li a.active{
+            background-color: #333333;
+            color: white;
+        }
         #side_menu li a:hover {
             background-color: #ddd;
         }
@@ -92,8 +97,7 @@
             width: 175px;
         }
 
-        #boardList > a li:nth-child(-n+3),
-        #replyList > a li:nth-child(-n+3),
+
         #boardList > li:nth-child(-n+3),
         #replyList > li:nth-child(-n+3)
         {
@@ -109,10 +113,6 @@
             margin-bottom: 50px;
         }
 
-        #side_menu > li:nth-child(1) {
-            font-weight: bold;
-            font-size: 18px;
-        }
     </style>
 </head>
 
@@ -120,7 +120,7 @@
 <div class="container">
     <nav>
         <ul id="side_menu">
-            <li><a href="${pageContext.servletContext.contextPath}/admin">대시보드</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/admin" class="active">대시보드</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/member/management">현재회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/suspended/management">정지회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>

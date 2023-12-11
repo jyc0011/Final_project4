@@ -20,7 +20,9 @@ public class QuizService{
         if (quizzes.isEmpty()) {
             return null;
         }
-        return quizzes.get(new Random().nextInt(quizzes.size()));
+        QuizVO newQuizVO = quizzes.get(new Random().nextInt(quizzes.size()));
+        newQuizVO.setAnswer_lang(QuizMapper.findLangByQuizId(newQuizVO.getQuiz_id()));
+        return newQuizVO;
     }
 
     public boolean saveQuiz(int quizId, String userId) {

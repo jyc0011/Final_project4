@@ -52,14 +52,40 @@
             color: white;
         }
 
+        .list-inline{
+            padding: 10px 0;
+        }
+
         .list-inline li a {
             text-decoration: none;
             color: black;
             font-size: 20px;
         }
 
-        a{
+        #now{
+            padding: 5px;
+            border-bottom: 3px solid #ffe3a0;
+            font-weight: bold;
+        }
+
+        table a{
+            color: black;
             text-decoration: none;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .pagination .page-link {
+            color: black;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        /* Style for the active page link */
+        .pagination .page-link.active {
+            background-color: #ffe3a0;
             color: black;
         }
     </style>
@@ -73,7 +99,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user" class="active">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_chat">저장소</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a></li>
         </ul>
     </div>
@@ -81,16 +107,16 @@
         <ul class="list-inline">
             <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성 글</a>
             </li>
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user/reply">작성
+            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user/reply" id="now">작성
                 댓글</a></li>
         </ul>
-        <hr/>
+
         <table class="table">
             <thead>
             <tr>
-                <th>댓글번호</th>
-                <th>댓글작성 글</th>
-                <th>댓글내용</th>
+                <th>댓글 번호</th>
+                <th>글 제목</th>
+                <th>댓글 내용</th>
                 <th>작성일</th>
             </tr>
             </thead>
@@ -98,14 +124,48 @@
             <!-- ajax로 세팅변경 -->
             <c:forEach var="rVO" items="${list}">
                 <tr>
-                    <td>${rVO.post_id}</td>
                     <td>${rVO.comment_id}</td>
+                    <td>${rVO.title}</td>
                     <td><a href="${pageContext.servletContext.contextPath}/board/${rVO.board_cat}/view?no=${rVO.post_id}">${rVO.content}</a></td>
                     <td>${rVO.write_date}</td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
+        <div>
+            <div>
+                <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+                    <div class="pagination" style="display: flex">
+                        <div class="paging">
+                            <ul class="pagination justify-content-center d-flex">
+                                <c:if test="${pVO.nowPage > 1}">
+                                    <li class="page-item"><a class="page-link" href="?page=${pVO.nowPage - 1}"><
+                                    </a></li>
+                                </c:if>
+                                <c:forEach var="i" begin="${pVO.startPage}"
+                                           end="${pVO.startPage + pVO.onePageCount - 1}">
+                                    <c:if test="${i <= pVO.totalPage}">
+                                        <c:choose>
+                                            <c:when test="${i != pVO.nowPage}">
+                                                <li class="page-item"><a class="page-link" href='?page=${i}'>${i}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item"><a class="page-link active" href="">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${pVO.nowPage < pVO.totalPage}">
+                                    <li class="page-item"><a class="page-link" href="?page=${pVO.nowPage + 1}">>
+                                    </a></li>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

@@ -97,10 +97,10 @@ public class AdminServiceImpl implements AdminService {
     public List<BoardReportVO> getBoardReportList(PagingVO pvo){return mapper.getBoardReportList(pvo);}
     @Override
     public BoardReportVO getPostsVO( int post_id){return mapper.getPostsVO(post_id);}
-
-    //게시글관리_보드삭제 버튼
     @Override
-    public int postsDelete(int post_id){return mapper.postsDelete(post_id);}
+    public void boardReportDelete(int report_id){
+        mapper.boardReportDelete(report_id);
+    }
 
 
     //댓글관리======================================================
@@ -114,7 +114,14 @@ public class AdminServiceImpl implements AdminService {
     }
     @Override
     public AdminCommentReportVO commentContent(int comment_id){return mapper.commentContent(comment_id);}
-
+    @Override
+    public void commentDelete(int comment_id){
+        mapper.commentDelete(comment_id);
+    }
+    @Override
+    public void commentReportDelete(int reportId){
+        mapper.commentReportDelete(reportId);
+    }
     //퀴즈관리======================================================
     @Override
     public List<QuizVO> quizlist(int level){return mapper.quizlist(level);}
@@ -126,7 +133,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int selectQuizId(String quiz_content){return mapper.selectQuizId(quiz_content);}
     @Override
-    public  int answerInsert(int quiz_id, String answer){return mapper.answerInsert(quiz_id,answer);}
+    public  int answerInsert(int quiz_id, String answer, String answer_lang){return mapper.answerInsert(quiz_id,answer, answer_lang);}
 
 
     //퀴즈관리_등록된 퀴즈 삭제 버튼
@@ -154,8 +161,10 @@ public class AdminServiceImpl implements AdminService {
     public List<AdminChatVO> adminChatList(PagingVO pvo) {
         return mapper.adminChatList(pvo);
     }
-
-
+    @Override
+    public void messageReportDelete(int report_id){
+        mapper.messageReportDelete(report_id);
+    }
 
 
 

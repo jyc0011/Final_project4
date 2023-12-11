@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,16 +16,6 @@ public class QuizVO {
     private String quiz_content;
     private String answer;
     private String user_answer;
-
-    @Override
-    public String toString() {
-        return "QuizVO{" +
-                "quiz_id=" + quiz_id +
-                ", level=" + level +
-                ", quiz_lang='" + quiz_lang + '\'' +
-                ", quiz_content='" + quiz_content + '\'' +
-                ", answer='" + answer + '\'' +
-                '}';
-    }
-
+    private List<String> answer_lang;
+    private String answer_create_lang;
 }

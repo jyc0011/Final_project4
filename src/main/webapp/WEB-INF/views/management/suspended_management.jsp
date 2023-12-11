@@ -17,16 +17,13 @@
         }
 
         #side_menu {
-            padding: 98px 0 0 0;
+            padding: 98px 10px 0;
             width: 150px;
             height: 1000px;
-
-        }
-
-        #side_menu {
             list-style-type: none;
-        }
+            border-right: 1px solid #ddd;
 
+        }
         #side_menu li a {
             text-decoration: none;
             color: black;
@@ -46,26 +43,26 @@
 
         #quiz_list_title {
             text-align: center;
-            border-bottom: 4px solid #000;
             padding-bottom: 20px;
         }
 
 
         /*리스트 내용*/
         #list_head {
+            border-top: 4px solid #000;
             border-bottom: 4px solid #000;
         }
 
         .management_list th {
             width: 12.5%;
-            height: 40px;
-            line-height: 40px;
+            height: 50px;
+            line-height: 50px;
             text-align:center;
         }
 
         .management_list td {
             width: 12.5%;
-            height: 100px;
+            height: 75px;
             text-align:center;
         }
 
@@ -89,9 +86,9 @@
             color: black;
         }
 
-        #side_menu > li:nth-child(3) {
-            font-weight: bold;
-            font-size: 18px;
+        #side_menu li a.active{
+            background-color: #333333;
+            color: white;
         }
     </style>
 </head>
@@ -101,7 +98,7 @@
         <ul id="side_menu">
             <li><a href="${pageContext.servletContext.contextPath}/admin">대시보드</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/member/management">현재회원관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/admin/suspended/management">정지회원관리</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/admin/suspended/management" class="active">정지회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>

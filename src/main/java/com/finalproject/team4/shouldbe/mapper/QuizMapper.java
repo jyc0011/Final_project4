@@ -15,5 +15,5 @@ public interface QuizMapper {
     void insertQuiz(QuizVO quizVO);
     void insertUserAnswerInfo(int quizId, String userId);
     void insertAnswer(QuizVO quizVO);
-
+    List<String> findLangByQuizId(int quizId);
 }

@@ -19,10 +19,11 @@
         }
 
         #side_menu {
-            padding: 98px 0 0 0;
+            padding: 98px 10px 0;
             width: 150px;
             height: 1000px;
             list-style-type: none;
+            border-right: 1px solid #ddd;
         }
 
         #side_menu > li > a {
@@ -58,14 +59,14 @@
         }
 
         .board_list th {
-            height: 40px;
-            line-height: 40px;
+            height: 50px;
+            line-height: 50px;
             text-align: center;
         }
 
         .board_list td {
             padding: 0 10px;
-            height: 100px;
+            height: 75px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -97,9 +98,9 @@
             border-bottom: 1px solid #ddd;
         }
 
-        #side_menu > li:nth-child(5) {
-            font-weight: bold;
-            font-size: 18px;
+        #side_menu li a.active{
+            background-color: #333333;
+            color: white;
         }
 
         .pagination {
@@ -143,7 +144,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/admin/member/management">현재회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/suspended/management">정지회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/admin/board" class="active">게시글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/chat/management">채팅관리</a></li>
@@ -151,11 +152,7 @@
     </nav>
     <main>
         <h1 id="boardListTitle">게시글 관리</h1>
-        <div class="input-group mb-3" id="searchNickname" style="width: 250px;">
-            <input type="text" class="form-control" placeholder="닉네임 검색">
-            <button class="btn btn-dark" type="submit">검색</button>
-        </div>
-
+        <br>
         <div class="col-sm-12" id="boardList">
             <table id="example" class="display" style="width:100%">
                 <thead id="list_head">
@@ -165,7 +162,7 @@
                     <th class="user_id">작성자</th>
                     <th class="report_count">신고일</th>
                     <th class="report_reason">계정정지</th>
-                    <th class="del_button">삭제</th>
+                    <th class="del_button">신고 취소</th>
                 </tr>
                 </thead>
                 <tbody id="list_content">
@@ -184,19 +181,20 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                        <td class="board_title"><a href="/board/notice/view?no=${bVO.post_id}">${bVO.title}</a></td>
+                        <td class="board_title"><a href="${pageContext.servletContext.contextPath}/board/notice/view?no=${bVO.post_id}">${bVO.title}</a></td>
                         <td class="user_id">${bVO.user_id}</td>
                         <td class="report_count">${bVO.report_time}</td>
                         <td class="suspend_button">
                             <a href="#layer-popup" class="btn-open" title="">
+                                <input id="btn_postid" name="post_id" type="hidden" value="${bVO.post_id}">
                                 <input id="btn_userid" name="user_id" type="hidden" value="${bVO.user_id}">
                                 <input type="button" value="계정정지" class="btn btn-dark suspend_btn">
                             </a>
                         </td>
                         <td class="del_button">
-                            <a href="${pageContext.servletContext.contextPath}/boardDelete?post_id=${bVO.post_id}">
+                            <a href="${pageContext.servletContext.contextPath}/boardDelete?post_report_id=${bVO.post_report_id}">
                                 <!---->
-                                <input type="button" value="게시글삭제" class="btn btn-dark">
+                                <input type="button" value="신고 취소" class="btn btn-dark">
                             </a>
                         </td>
                     </tr>
@@ -240,8 +238,9 @@
     <div class="layer-popup" id="layer-popup">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" action="${pageContext.servletContext.contextPath}/suspend">
+                <form method="post" action="${pageContext.servletContext.contextPath}/suspend/board">
                     <div class="mb-3 mt-3">
+                        <input type="hidden" id="form_postid" name="post_id" value="">
                         <input type="hidden" id="form_userid" name="user_id" value="">
                         <label class="form-label">정지 시간:</label>
                         <!--<input type="text" value="" class="form-control" name="time" id="time" placeholder="Enter email">-->
@@ -267,9 +266,11 @@
     <script>
         $(document).on("click", ".btn-open", function (e){
             var target = $(this).attr("href");
+            var pid=$(this).children("#btn_postid").val();
             var uid=$(this).children("#btn_userid").val();
             $(target).addClass("show");
             $("#form_userid").attr("value",uid);
+            $("#form_postid").attr("value",pid);
         });
 
         // 외부영역 클릭 시 팝업 닫기

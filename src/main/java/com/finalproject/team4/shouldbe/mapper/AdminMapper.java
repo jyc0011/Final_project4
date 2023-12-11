@@ -36,21 +36,22 @@ public interface AdminMapper {
     List<AdminMemberVO> adminWithdrawnList(@Param("pvo") PagingVO pvo);
     AdminMemberVO adminWithdrawnListUsers(String user_id);
     void deleteUserById(String userId);
+    void withdrawExpiredUsers();
 
     //게시글관리======================================================
     int countBoard();
     List<BoardReportVO> getBoardReportList(@Param("pvo") PagingVO pvo);
-    BoardReportVO getPostsVO( int post_id);
-
+    BoardReportVO getPostsVO(int post_id);
 
     //게시글관리_보드삭제 버튼======================================================
-    int postsDelete(int post_id);
-
+    void boardReportDelete(int report_id);
 
     //댓글관리======================================================
     int countBoardReply();
     List<AdminCommentReportVO> selectBoardReply(@Param("pvo") PagingVO pvo);
     AdminCommentReportVO commentContent(int comment_id);
+    void commentDelete(int comment_id);
+    void commentReportDelete(int report_id);
 
     //퀴즈관리======================================================
     List<QuizVO> quizlist(int level);
@@ -60,7 +61,7 @@ public interface AdminMapper {
     //퀴즈관리_퀴즈등록페이지버튼======================================================
     int quizInsert(String quiz_content,int level);
     int selectQuizId(String quiz_content);
-    int answerInsert(int quiz_id,String answer);
+    int answerInsert(int quiz_id,String answer,String answer_lang);
 
     //퀴즈관리_등록된 answer 삭제 버튼======================================================
     int answerDelete(String answer);
@@ -76,8 +77,9 @@ public interface AdminMapper {
     //채팅관리======================================================
     int countMessage();
     List<AdminChatVO> adminChatList(@Param("pvo") PagingVO pvo);
+    void messageReportDelete(int report_id);
 
-    void withdrawExpiredUsers();
+
 
 
     /*

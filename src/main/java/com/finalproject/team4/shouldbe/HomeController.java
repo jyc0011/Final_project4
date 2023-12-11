@@ -11,9 +11,4 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/header")
-    public String admin() {
-        return "header";
-    }
-
 }

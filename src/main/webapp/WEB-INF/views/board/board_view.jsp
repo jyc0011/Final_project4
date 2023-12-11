@@ -23,7 +23,7 @@
         }
 
         #viewArea {
-            width:1000px;
+            width: 1000px;
             height: auto;
             display: flex;
             flex-direction: column;
@@ -57,6 +57,7 @@
         }
 
         .replyArea {
+            width: 1000px;
             margin: 20px 0;
             padding: 15px;
             border-radius: 5px;
@@ -74,12 +75,6 @@
             margin-bottom: 10px;
         }
 
-        .replyArea #replyList li div {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
         .replyArea #replyList b {
             font-weight: bold;
             text-align: left;
@@ -87,19 +82,19 @@
 
         .replyArea #replyList p {
             text-align: left;
+            margin-bottom: 0;
         }
 
         #replyForm {
-            width: 1000px;
+            width: 970px;
             display: flex;
-            align-items: flex-end;
+            flex-direction: column;
             gap: 10px;
         }
 
-        #coment {
-            flex-grow: 1;
-            height: 100px;
-            border-radius: 4px;
+        #replyForm > div {
+            display: flex;
+            justify-content: flex-end;
         }
 
         button {
@@ -107,6 +102,7 @@
             height: 40px;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
         }
 
         hr {
@@ -142,43 +138,143 @@
 
         .util {
             text-align: center;
-            margin-top: 20px;
+            margin: 20px;
         }
 
+        .btn btn-warning {
+            font-size: 13px;
+        }
+
+        .comment-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-and-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .button-container {
+            display: flex;
+        }
+
+        #replyEdit {
+            margin-right: 20px;
+            padding-left: 5px;
+            padding-right: 5px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #likeButton:hover {
+            background-color:#c8c8c8;
+        }
+
+        #liked {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        #replyEdit:hover, #replyDelete:hover {
+            color: #555555;
+        }
+
+        #replyDelete {
+            padding-left: 5px;
+            padding-right: 5px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
     </style>
     <script>
-        window.onload = function () {
-            document.getElementById("toList").onclick = function () {
-                location.href="${listUrl}";
-            }
-            document.getElementById("editPost").onclick = function() {
-                location.href="${pageContext.servletContext.contextPath}/board/${bVO.board_cat}/edit?no=${bVO.post_id}"
-            }
-            document.getElementById("deletePost").onclick = function() {
+
+        $(function () {
+            $("#toList").click(function(){
+                location.href = "${listUrl}";
+            })
+            $("#editPost").on('click', function(){
+                location.href = "${pageContext.servletContext.contextPath}/board/${bVO.board_cat}/edit?no=${bVO.post_id}"
+            })
+            $("#deletePost").on('click', function(){
                 if (!confirm("정말 삭제하시겠습니까?")) {
                     alert("취소 되었습니다.");
                 } else {
-                    location.href="/board/${bVO.board_cat}/delete?no=${bVO.post_id}";
+                    location.href = "/board/${bVO.board_cat}/delete?no=${bVO.post_id}";
 
                 }
+            })
+            //댓글목록 불러오기
+            function getReply() {
+                $.ajax({
+                    url: '${pageContext.servletContext.contextPath}/boardReply/list',
+                    data: {no: ${bVO.post_id}},
+                    type: 'GET',
+                    success: function (result) {
+                        //console.log(result);
+                        var tag = ""; //댓글목록 태그(수정, 삭제);
+                        $(result).each(function (i, rVO) {
+                            tag += "<li><div class='comment-section'>";
+                            tag += "<div><b>" + rVO.writer + "</b>(" + rVO.write_date + ")</div>";
+                            tag += "<div class='content-and-buttons'>";
+                            tag += "<p class='comment-content'>" + rVO.content + "</p>";
+
+                            if ('${logId}' == rVO.writer) {
+                                tag += "<div class='button-container'>";
+                                tag += "<input type='button' class='reply-button' id='replyEdit' value='Edit'/>";
+                                tag += "<input type='button' class='reply-button' id='replyDelete' value='Del'/>";
+                                tag += "</div>";
+                            }
+                            tag += "</div>";
+                            tag += "</li>";
+                        });
+
+
+                        $("#replyList").html(tag);
+
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
             }
-        }
-        $(function(){
-            $("#addReply").click(function(){
+
+            function getLike() {
+                $.ajax({
+                    url: '${pageContext.servletContext.contextPath}/like/get',
+                    data: {no: ${bVO.post_id}},
+                    type: 'GET',
+                    success: function (result) {
+                        $("#liked").html(result);
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+            }
+
+            $("#replyForm").submit(function () {
+                event.preventDefault();
+                var params = $(this).serialize();
                 $.ajax({
                     type: "POST",
-                    url: "/create/sendcode",
-                    data: {email: email},
+                    url: "/boardReply/add",
+                    data: params,
                     success: function (r) {
-                        var data = JSON.parse(r);
-                        if (data.result === true) {
-                            alert("이메일이 전송되었습니다.");
-                            $("#emailCheckDiv").css('display', '');
-                            // $("#authenticate").css('display', '');
-                            // $("#checkcode").css('display', '');
-                        } else {
-                            alert(data.msg);
-                        }
+                        //console.log(r);
+                        getReply();
+                        $("#coment").val("");
+
                     },
                     error: function (e) {
                         console.log(e.responseText);
@@ -186,6 +282,55 @@
 
                 })
             })
+            $(document).on('click', '#replyList input[value=Del]', function () {
+                if (!confirm("정말 삭제하시겠습니까?")) {
+                } else {
+
+                    var replyNo = $(this).siblings('input[type="hidden"]').val();
+                    var postNo = ${bVO.post_id};
+                    $.ajax({
+                        type: "POST",
+                        url: "/boardReply/delete",
+                        data: {replyNo: replyNo, postNo: postNo},
+                        success: function (r) {
+                            //console.log(r);
+                            getReply();
+
+                        },
+                        error: function (e) {
+                            console.log(e.responseText);
+                        }
+
+                    })
+                }
+            });
+
+            $("#likeButton").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.servletContext.contextPath}/like/increase",
+                    data: {no: ${bVO.post_id}, user_id: '${logId}'},
+                    success: function (r) {
+                        console.log(r);
+                        if(r.result==true){
+                            console.log("success")
+                        }else{
+                            alert(r.msg);
+                        }
+                        getLike();
+
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+            });
+
+            getReply();
+            getLike();
+
+
         })
 
     </script>
@@ -193,64 +338,52 @@
 <main>
     <div id="viewArea">
         <ul>
-            <li>번호 : ${bVO.post_id}  &nbsp;  글쓴이 : ${bVO.user_id}  &nbsp;  조회수 : ${bVO.views}  &nbsp;  작성일 : ${bVO.write_date}</li>
+            <li>글번호 : ${bVO.post_id} &nbsp; 작성자 : ${bVO.user_id} &nbsp; 조회수 : ${bVO.views} &nbsp; 작성일
+                : ${bVO.write_date}</li>
             <hr>
-            <li>제목 : ${bVO.title}</li>
+            <li><h4><b>제목 : ${bVO.title}</b></h4></li>
             <hr>
             <li>${bVO.content}</li>
         </ul>
     </div>
-
-    <div class="util">
-        <button id="toList">목록</button>
-        <!-- 현재글쓴이와 로그인 아이디가 같을 때만 수정 삭제 가능 -->
-        <button id="editPost">수정</button>
-
-        <c:if test="${logId==bVO.user_id}">
-        <button id="deletePost">삭제</button>
-        </c:if>
+    <div>
+        <button id="likeButton">추천</button>
+        <div id="liked"> </div>
     </div>
     <br>
+    <hr style="width: 1000px;">
+    <div class="util">
+        <button id="toList" class="btn btn-secondary">목록</button>
+        <c:if test="${logId==bVO.user_id}">
+            <button id="editPost" class="btn btn-warning">수정</button>
+        </c:if>
+
+        <c:if test="${logId==bVO.user_id}">
+            <button id="deletePost" class="btn btn-warning">삭제</button>
+        </c:if>
+    </div>
+    <hr style="width: 1000px;">
     <!-- 댓글 -->
     <div class="replyArea">
-        <!-- 로그인 상태일 때 댓글쓰기 -->
-        <form method="post" id="replyForm">
-            <!--  원글 글번호 -->
-            <input type="hidden" name="no" value="${bVO.post_id}"/>
-            <textarea name="coment" id="coment"></textarea>
-            <!-- button은 form안에있을경우 input type submit과 동일 -->
-            <button id="addReply">댓글등록</button>
-        </form>
-        <br>
-        <div>댓글 목록</div>
+        <h5>댓글 목록</h5>
         <br>
         <ul id="replyList">
-            <li>
-                <div>
-                    <b>goguma</b>
-                    <p>댓글 공부중</p>
-                    (2023-10-10 12:12:23)
-                    <input type="button" value="Edit"/>
-                    <input type="button" value="Del"/>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <b>goguma</b>
-                    <p>댓글 공부중..33333..</p>
-                    (2023-10-10 12:12:23)
-                </div>
-            </li>
-            <li>
-                <div>
-                    <b>goguma</b>
-                    <p>댓글 공부중55555.5.5</p>
-                    (2023-10-10 12:12:23)
-                    <input type="button" value="Edit"/>
-                    <input type="button" value="Del"/>
-                </div>
-            </li>
         </ul>
+        <br>
+        <c:if test="${'Y'.equals(logStatus)}">
+            <h5>댓글 작성</h5>
+            <br>
+            <form method="post" id="replyForm">
+                <!--  원글 글번호 -->
+                <input type="hidden" name="post_id" value="${bVO.post_id}"/>
+                <textarea name="content" id="content"></textarea>
+                <!-- button은 form안에있을경우 input type submit과 동일 -->
+                <div>
+                    <button class="btn btn-warning" id="addReply">댓글등록</button>
+                </div>
+            </form>
+        </c:if>
+
     </div>
 </main>
 </body>

@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlockVO {
-    private String block_id;
-    private String user_name;
+public class SaveQuizVO {
+    private int quiz_id;
+    private int level;
     private String user_id;
-    private String block_reason;
-    private String profile_img;
+    private String quiz_content;
+    private String answer;
 }

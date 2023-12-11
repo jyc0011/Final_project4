@@ -17,14 +17,11 @@
         }
 
         #side_menu {
-            padding: 98px 0 0 0;
+            padding: 98px 10px 0;
             width: 150px;
             height: 1000px;
-
-        }
-
-        #side_menu {
             list-style-type: none;
+            border-right: 1px solid #ddd;
         }
 
         #side_menu li a {
@@ -59,18 +56,19 @@
 
         /*리스트 내용*/
         #list_head {
+            border-top: 4px solid #000;
             border-bottom: 4px solid #000;
         }
 
         .management_list th {
             width: 150px;
-            height: 40px;
-            line-height: 40px;
+            height: 50px;
+            line-height: 50px;
         }
 
         .management_list td {
             width: 150px;
-            height: 100px;
+            height: 80px;
         }
 
         #list_content {
@@ -81,9 +79,9 @@
             width: 40%;
         }
 
-        #side_menu > li:nth-child(8) {
-            font-weight: bold;
-            font-size: 18px;
+        #side_menu li a.active{
+            background-color: #333333;
+            color: white;
         }
 
         .pagination {
@@ -115,7 +113,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/admin/chat/management">채팅관리</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/admin/chat/management" class="active">채팅관리</a></li>
 
         </ul>
     </div>
@@ -144,7 +142,8 @@
                         <td class="report_count">${acVO.report_time}</td>
                         <td class="suspend_button">
                             <a href="#layer-popup" class="btn-open" title="">
-                                <input id="btn_userid" name="user_id" type="hidden" value="${amVO.user_id}">
+                                <input id="msg_report_id" name="report_id" type="hidden" value="${acVO.message_report_id}">
+                                <input id="btn_userid" name="user_id" type="hidden" value="${acVO.user_id}">
                                 <input type="button" value="계정정지" class="btn btn-dark suspend_btn">
                             </a>
                         </td>
@@ -190,8 +189,9 @@
 <div class="layer-popup" id="layer-popup">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="${pageContext.servletContext.contextPath}/suspend">
+            <form method="post" action="${pageContext.servletContext.contextPath}/suspend/chat">
                 <div class="mb-3 mt-3">
+                    <input type="hidden" id="form_reportid" name="report_id" value="">
                     <input type="hidden" id="form_userid" name="user_id" value="">
                     <label class="form-label">정지 시간:</label>
                     <!--<input type="text" value="" class="form-control" name="time" id="time" placeholder="Enter email">-->
@@ -217,9 +217,11 @@
 <script>
     $(document).on("click", ".btn-open", function (e){
         var target = $(this).attr("href");
+        var rid=$(this).children("#msg_report_id").val();
         var uid=$(this).children("#btn_userid").val();
         $(target).addClass("show");
         $("#form_userid").attr("value",uid);
+        $("#form_reportid").attr("value",rid);
     });
 
     // 외부영역 클릭 시 팝업 닫기

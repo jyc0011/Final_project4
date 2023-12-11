@@ -19,10 +19,11 @@
         }
 
         #side_menu {
-            padding: 98px 0 0 0;
+            padding: 98px 10px 0;
             width: 150px;
             height: 1000px;
             list-style-type: none;
+            border-right: 1px solid #ddd;
         }
 
         #side_menu > li > a {
@@ -53,15 +54,23 @@
             border-bottom: 4px solid #000;
         }
 
+        a:link,
+        a:visited,
+        a:hover,
+        a:active {
+            color: black;
+            text-decoration: none;
+        }
+
         .reply_list th {
-            height: 40px;
-            line-height: 40px;
+            height: 50px;
+            line-height: 50px;
             text-align: center;
         }
 
         .reply_list td {
             padding: 0 10px;
-            height: 100px;
+            height: 75px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -111,9 +120,9 @@
             color: black;
         }
 
-        #side_menu > li:nth-child(6) {
-            font-weight: bold;
-            font-size: 18px;
+        #side_menu li a.active{
+            background-color: #333333;
+            color: white;
         }
     </style>
 </head>
@@ -127,18 +136,14 @@
             <li><a href="${pageContext.servletContext.contextPath}/admin/suspended/management">정지회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">탈퇴회원관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/board">게시글관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/admin/reply">댓글관리</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/admin/reply" class="active">댓글관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/quiz/list">퀴즈관리</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/admin/chat/management">채팅관리</a></li>
         </ul>
     </nav>
     <main>
         <h1 id="ReplyListTitle">댓글 관리</h1>
-        <div class="input-group mb-3" id="searchNickname" style="width: 250px;">
-            <input type="text" class="form-control" placeholder="닉네임 검색">
-            <button class="btn btn-dark" type="submit">검색</button>
-        </div>
-
+        <br>
         <div class="col-sm-12" id="boardList">
             <table id="example" class="display" style="width:100%">
                 <thead id="list_head">
@@ -147,29 +152,27 @@
                     <th class="reply_content">댓글내용</th>
                     <th class="report_reason">신고일</th>
                     <th class="report_count">계정정지</th>
-                    <th class="del_button">삭제</th>
+                    <th class="del_button">신고취소</th>
                 </tr>
                 </thead>
                 <tbody id="list_content">
-                    <tr class="reply_list">
-                        <td class="board_title">작성자</td>
-                        <td class="reply_content">댓글내용</td>
-                        <td class="user_id">신고일</td>
-                        <td class="report_count">계정정지</td>
-                        <td class="del_button"><input type="button" value="댓글삭제" class="btn btn-dark"></td>
-                    </tr>
                     <c:forEach var="arVO" items="${board}">
                         <tr class="reply_list">
                             <td class="board_title">${arVO.user_id}</td>
-                            <td class="reply_content">${arVO.content}</td>
+                            <td class="reply_content">
+                                <a href="${pageContext.servletContext.contextPath}/board/notice/view?no=${arVO.post_id}">${arVO.content}</a>
+                            </td>
                             <td class="user_id">${arVO.report_time}</td>
                             <td class="suspend_button">
                                 <a href="#layer-popup" class="btn-open" title="">
+                                    <input id="btn_commentid" name="comment_id" type="hidden" value="${arVO.comment_id}">
                                     <input id="btn_userid" name="user_id" type="hidden" value="${arVO.user_id}">
                                     <input type="button" value="계정정지" class="btn btn-dark suspend_btn">
                                 </a>
                             </td>
-                            <td class="del_button"><input type="button" value="댓글삭제" class="btn btn-dark"></td>
+                            <a href="${pageContext.servletContext.contextPath}/commentDelete?comment_report_id=${arVO.comment_report_id}">
+                                <td class="del_button"><input type="button" value="신고 취소" class="btn btn-dark"></td>
+                            </a>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -211,8 +214,9 @@
 <div class="layer-popup" id="layer-popup">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="${pageContext.servletContext.contextPath}/suspend">
+            <form method="post" action="${pageContext.servletContext.contextPath}/suspend/reply">
                 <div class="mb-3 mt-3">
+                    <input type="hidden" id="form_commentid" name="comment_id" value="">
                     <input type="hidden" id="form_userid" name="user_id" value="">
                     <label class="form-label">정지 시간:</label>
                     <!--<input type="text" value="" class="form-control" name="time" id="time" placeholder="Enter email">-->
@@ -239,8 +243,10 @@
     $(document).on("click", ".btn-open", function (e){
         var target = $(this).attr("href");
         var uid=$(this).children("#btn_userid").val();
+        var cid=$(this).children("#btn_commentid").val();
         $(target).addClass("show");
         $("#form_userid").attr("value",uid);
+        $("#form_commentid").attr("value",cid);
     });
 
     // 외부영역 클릭 시 팝업 닫기

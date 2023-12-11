@@ -53,6 +53,7 @@
             background-color: #ffe3a0;
             color: white;
         }
+
         .list-inline{
             padding: 10px 0;
         }
@@ -75,7 +76,7 @@
         }
 
         .post-card {
-            flex: 0 0 48%; /* 각 요소의 너비를 조정 (간격을 고려하여 50%보다 약간 작게 설정) */
+            flex: 0 0 48%;
             margin: 1%;
             background-color: #fff8dc;
             border: 1px solid #ccc;
@@ -137,34 +138,26 @@
     <div id="content">
         <div>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_chat" id="now">채팅
+                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_chat">채팅
                     저장소</a>
                 </li>
-                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_quiz">퀴즈
+                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_quiz" id="now">퀴즈
                     저장소</a>
                 </li>
             </ul>
             <div id="postsContainer">
-                <c:forEach var="saveMessages" items="${saveMessages}">
-                    <div class="post-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <c:choose>
-                            <c:when test="${logId == saveMessages.from_id}">
-                                <strong>${saveMessages.to_id}와의 채팅</strong>
-                            </c:when>
-                            <c:otherwise>
-                                <strong>${saveMessages.from_id}와의 채팅</strong>
-                            </c:otherwise>
-                        </c:choose>
-                            <form action="/mypage/save_chat/delete" method="post" style="display: inline;">
-                                <input type="hidden" name="msg_id" value="${saveMessages.msg_id}" />
-                                <button type="submit" class="delete-btn">X</button>
-                            </form>
+                    <c:forEach var="saveQuiz" items="${saveQuiz}">
+                        <div class="post-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <strong>${saveQuiz.quiz_content}</strong>
+                                <form action="/mypage/save_quiz/delete" method="post" style="display: inline;">
+                                    <input type="hidden" name="quiz_id" value="${saveQuiz.quiz_id}" />
+                                    <button type="submit" class="delete-btn">X</button>
+                                </form>
+                            </div>
+                            <p>${saveQuiz.answer}</p>
                         </div>
-                        <p>${saveMessages.content}</p>
-                    </div>
-
-                </c:forEach>
+                    </c:forEach>
             </div>
         </div>
         <div>

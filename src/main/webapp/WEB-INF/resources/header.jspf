@@ -124,8 +124,8 @@
     </div>
     <div class="login">
         <c:if test="${logStatus=='Y'}">
-            <a href="${pageContext.servletContext.contextPath}/mypage"> <!-- 마이페이지 -->
-                <img src="${pageContext.servletContext.contextPath}/image/profile/user.png" class="user-icon" id="user-icon" style="border-radius: 50%; width: 30px; height: auto;"/></a>
+            <a href="${pageContext.servletContext.contextPath}/mypage/change_user"> <!-- 마이페이지 -->
+                <img src="${pageContext.servletContext.contextPath}/image/profile/user1.jpg" class="user-icon" id="user-icon" style="border-radius: 50%; width: 50px; height: auto;"/></a>
             <!--유저로고-->
             <a href="${pageContext.servletContext.contextPath}/logout" class="login-button">로그아웃</a>
         </c:if>
@@ -145,7 +145,7 @@
                             <a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a>
                             <a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한 글</a>
                             <a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a>
-                            <a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a>
+                            <a href="${pageContext.servletContext.contextPath}/mypage/save_chat">저장소</a>
                             <a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a>
                         </div>
                     </c:if>

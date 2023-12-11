@@ -68,9 +68,11 @@
         .btn-outline-secondary{
             width: 130px;
             margin-right: 10px;
-            margin-bottom: 10px;
         }
 
+        .btn-outline-secondary{
+            margin-bottom: 10px;
+        }
     </style>
     <script>
         function change_image(){
@@ -131,7 +133,7 @@
             <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user" class="active">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_user">저장소</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/save_chat">저장소</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">탈퇴하기</a></li>
         </ul>
     </div>
@@ -210,8 +212,9 @@
                     <input type="checkbox" class="btn-check" name="lang" id="lang-it" value="it" autocomplete="off">
                     <label class="btn btn-outline-secondary" for="lang-it">Italiano</label>
                 </div>
-            </div>
 
+
+            </div>
             <div class="row mb-3">
                 <label for="intro" class="col-sm-2 col-form-label">자기소개</label>
                 <div class="col-sm-10">

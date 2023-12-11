@@ -19,4 +19,7 @@ public interface BoardService {
     public int boardUpdate(BoardVO vo);
 
     public int boardDelete(int post_id);
+    public int increaseLike(int post_id, String user_id);
+    public int getLikeStatus(int post_id, String user_id);
+    public int getLike(int post_id);
 }

@@ -145,11 +145,8 @@
     <select id="getPostsVO" resultType="com.finalproject.team4.shouldbe.vo.BoardReportVO">
         select title,content,board_cat from posts where post_id=${post_id}
     </select>
-
-
-    <!--//게시글관리_보드삭제 버튼======================================================-->
-    <delete id="postsDelete">
-        delete from post_report where post_id=${post_id}
+    <delete id="boardReportDelete">
+        delete from post_report where post_report_id=${report_id}
     </delete>
 
 
@@ -159,9 +156,10 @@
         FROM comment_report
     </select>
     <select id="selectBoardReply" parameterType="map" resultType="com.finalproject.team4.shouldbe.vo.AdminCommentReportVO">
-        SELECT *
-        FROM comment_report
-        ORDER BY report_time
+        SELECT cr.*, c.post_id
+        FROM comment_report cr
+                 INNER JOIN comments c ON cr.comment_id = c.comment_id
+        ORDER BY cr.report_time
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
     <select id="commentContent" resultType="com.finalproject.team4.shouldbe.vo.AdminCommentReportVO">
@@ -169,6 +167,12 @@
         from comments
         where comment_id=${comment_id}
     </select>
+    <delete id="commentDelete">
+        delete from comment_report where comment_id=${comment_id}
+    </delete>
+    <delete id="commentReportDelete">
+        delete from comment_report where comment_report_id=${report_id}
+    </delete>
 
 
     <!--//퀴즈관리======================================================-->
@@ -177,6 +181,10 @@
         from quiz
         where level = ${level}
     </select>
+
+    <delete id="postsDelete">
+        delete from post_report where post_id=${post_id}
+    </delete>
 
     <select id="quiz_table" resultType="com.finalproject.team4.shouldbe.vo.QuizVO">
         select quiz_id, level, quiz_lang, quiz_content
@@ -191,7 +199,7 @@
         select quiz_id from quiz where quiz_content=#{quiz_content};
     </select>
     <insert id="answerInsert">
-        insert into answer(quiz_id,answer) values (${quiz_id},#{answer});
+        insert into answer(quiz_id,answer,answer_lang) values (${quiz_id},#{answer}, #{answer_lang});
     </insert>
 
 
@@ -223,6 +231,9 @@
         ORDER BY report_time
             LIMIT #{pvo.offsetPoint}, #{pvo.onePageRecord}
     </select>
+    <delete id="messageReportDelete">
+        delete from message_report where message_report_id=${report_id}
+    </delete>
 
 
 

@@ -1,7 +1,6 @@
 package com.finalproject.team4.shouldbe.controller;
 
 import com.finalproject.team4.shouldbe.service.BoardService;
-import com.finalproject.team4.shouldbe.service.ReplyService;
 import com.finalproject.team4.shouldbe.util.UriUtil;
 import com.finalproject.team4.shouldbe.vo.BoardVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
@@ -11,48 +10,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BoardController {
     @Autowired
     BoardService boardService;
-    @Autowired
-    ReplyService replyService;
-
-/*    @Autowired
-    BoardService service;
-    @RequestMapping(value = "/board/free", method = RequestMethod.GET)
-    public String freeBoard(Model model, @ModelAttribute("pVO") PagingVO pVO) { */
-    //var temp = service.boardPageList();
-    //System.out.println(temp);
-        /*try {
-            // Fetch the records based on the parameters in pVO
-            pVO.setTotalRecord(service.totalRecordAuth(pVO));
-
-            List<BoardVO> communityItems = service.boardPageList(pVO);
-            model.addAttribute("list", communityItems);
-
-            // Add all the search and sort parameters to the model to be used in the frontend
-            model.addAttribute("page", pVO.getNowPage());
-            model.addAttribute("searchKey", pVO.getSearchKey());
-            model.addAttribute("searchWord", pVO.getSearchWord());
-            model.addAttribute("category", pVO.getCategory());
-            model.addAttribute("postSort", pVO.getPostSort());
-
-            // Add the generated URI for search and sort to the model
-            model.addAttribute("uri", getUri(pVO));
-            model.addAttribute("pVO", pVO);
-
-        } catch (Exception e) {
-            // Optionally: Log the exception or handle it accordingly
-            e.printStackTrace();
-        }*/
-        /*return "board/board_list";
-    }*/
 
     private String getUri(PagingVO pVO) {
         int page = pVO.getNowPage();
@@ -94,6 +63,11 @@ public class BoardController {
     public String writeOk(HttpServletRequest request, HttpSession session, BoardVO bVO) {
         var boardCat = parseCategory(request.getRequestURI());
         bVO.setBoard_cat(boardCat);
+        //특수문자 처리용 escape
+        String content = bVO.getContent();
+        var replaced = content.replace("\n", "<br>");
+        bVO.setTitle(HtmlUtils.htmlEscape(bVO.getTitle()));
+        bVO.setContent(HtmlUtils.htmlEscape(replaced));
         bVO.setUser_id((String) session.getAttribute("logId"));
         int result = boardService.boardInsert(bVO);
         //System.out.println("result : " + result);
@@ -117,15 +91,11 @@ public class BoardController {
 
         //게시글 데이터
         var bVO = boardService.boardSelect(no);
+        bVO.setTitle(HtmlUtils.htmlUnescape(bVO.getTitle()));
+        bVO.setContent(HtmlUtils.htmlUnescape(bVO.getContent()));
+        mav.setViewName("/board/board_view");
         mav.addObject("bVO", bVO);
         mav.addObject("listUrl", listUrl);
-
-        //댓글 데이터
-        var rVOList = replyService.replySelect(no);
-        /*todo: rVO 적용.. */
-        //System.out.println(bVO);
-        //mav.addObject("pVO", pVO);
-        mav.setViewName("board/board_view");
 
         return mav;
     }
@@ -137,6 +107,8 @@ public class BoardController {
         var vo = boardService.boardSelect(no);
         //작성자 맞는지 체크
         if(vo.getUser_id().equals(session.getAttribute("logId"))){
+            vo.setTitle(HtmlUtils.htmlUnescape(vo.getTitle()));
+            vo.setContent(HtmlUtils.htmlUnescape(vo.getContent()));
             mav.addObject("vo", vo);
             mav.setViewName("board/board_edit");
             //System.out.println();
@@ -176,6 +148,39 @@ public class BoardController {
         return null;
 
     }
+    @GetMapping("/like/get")
+    @ResponseBody
+    public int getLike(int no){
+        return boardService.getLike(no);
+    }
+    @PostMapping("/like/increase")
+    @ResponseBody
+    public Map<String, Object> increaseLike(int no, String user_id){
+        var map = new HashMap<String, Object>();
+        int result = boardService.getLikeStatus(no, user_id);
+        if(result > 0){
+            map.put("result", false);
+            map.put("msg", "이미 추천한 글입니다.");
+            return map;
+        }
+        try {
+            result = boardService.increaseLike(no, user_id);
+            if (result > 0) {
+                map.put("result", true);
+                return map;
+            }
+            map.put("result", false);
+            map.put("msg", "db 오류");
+            return map;
+        }catch(Exception e){
+            map.put("result", false);
+            map.put("msg", "로그인 이후에 이용해주세요!");
+            return map;
+        }
+
+
+    }
+
 
     public String parseCategory(String requestUri) {
         String[] params = requestUri.split("/");
