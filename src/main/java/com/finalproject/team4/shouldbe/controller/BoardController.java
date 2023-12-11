@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -62,6 +63,11 @@ public class BoardController {
     public String writeOk(HttpServletRequest request, HttpSession session, BoardVO bVO) {
         var boardCat = parseCategory(request.getRequestURI());
         bVO.setBoard_cat(boardCat);
+        //특수문자 처리용 escape
+        String content = bVO.getContent();
+        var replaced = content.replace("\n", "<br>");
+        bVO.setTitle(HtmlUtils.htmlEscape(bVO.getTitle()));
+        bVO.setContent(HtmlUtils.htmlEscape(replaced));
         bVO.setUser_id((String) session.getAttribute("logId"));
         int result = boardService.boardInsert(bVO);
         //System.out.println("result : " + result);
@@ -85,6 +91,8 @@ public class BoardController {
 
         //게시글 데이터
         var bVO = boardService.boardSelect(no);
+        bVO.setTitle(HtmlUtils.htmlUnescape(bVO.getTitle()));
+        bVO.setContent(HtmlUtils.htmlUnescape(bVO.getContent()));
         mav.setViewName("/board/board_view");
         mav.addObject("bVO", bVO);
         mav.addObject("listUrl", listUrl);
@@ -99,6 +107,8 @@ public class BoardController {
         var vo = boardService.boardSelect(no);
         //작성자 맞는지 체크
         if(vo.getUser_id().equals(session.getAttribute("logId"))){
+            vo.setTitle(HtmlUtils.htmlUnescape(vo.getTitle()));
+            vo.setContent(HtmlUtils.htmlUnescape(vo.getContent()));
             mav.addObject("vo", vo);
             mav.setViewName("board/board_edit");
             //System.out.println();
