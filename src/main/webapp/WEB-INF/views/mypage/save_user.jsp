@@ -53,16 +53,19 @@
             background-color: #ffe3a0;
             color: white;
         }
-
-        .list-inline {
-            background-color: #ffe3a0;
-            padding: 10px;
+        .list-inline{
+            padding: 10px 0;
         }
 
         .list-inline li a {
             text-decoration: none;
             color: black;
             font-size: 20px;
+        }
+
+        #now{
+            padding: 5px;
+            border-bottom: 3px solid #ffe3a0;
             font-weight: bold;
         }
 
@@ -120,7 +123,7 @@
     <div id="content">
         <div>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_chat">채팅
+                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_chat" id="now">채팅
                     저장소</a>
                 </li>
                 <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_quiz">퀴즈

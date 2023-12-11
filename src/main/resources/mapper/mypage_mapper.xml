@@ -33,8 +33,9 @@
             c.post_id,
             c.user_id as comment_user_id,
             c.content,
-            date_format(c.write_date, '%y-%m-%d') as comment_write_date,
-            p.board_cat
+            date_format(c.write_date, '%y-%m-%d') as write_date,
+            p.board_cat,
+            p.title
         from
             comments c
                 inner join
@@ -138,7 +139,7 @@
 
     <select id="selectSaveQuiz" resultType="SaveQuizVO">
         select s.quiz_id, q.quiz_content, a.answer, q.level
-        from save_quiz as s join quiz as q join answer as a 
+        from save_quiz as s join quiz as q join answer as a
         on q.quiz_id = s.quiz_id and a.quiz_id = s.quiz_id
         where s.user_id = #{userid}
         ORDER BY s.quiz_id

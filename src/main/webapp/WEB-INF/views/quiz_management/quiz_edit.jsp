@@ -90,17 +90,37 @@
             padding-bottom: 20px;
         }
 
-        #input-text {
-            width: 280px;
-            margin-top: 20px;
+        #editDelForm {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-between;
+            width: 95%;
+            margin: 0;
         }
 
-        #editDelForm {
-            width: 900px;
-            margin: 0;
+        form {
             display: flex;
-            justify-content: space-around;
-            line-height: 70px;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        #input-text {
+            margin-top: 20px;
+            width: 450px;
+            display: flex;
+            align-items: center;
+        }
+
+        label{
+            margin-right: 5px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
         }
 
         #side_menu li a.active{
@@ -139,18 +159,36 @@
         </div>
         <div id="editDelForm">
             <form method="post" action="${pageContext.servletContext.contextPath}/quiz/answer_insert">
-                <div class="input-group mb-3" id="input-text" style="width: 600px">
+                <div class="form-group">
+                    <label for="answer_lang">정답 언어:</label>
+                    <select id="answer_lang" name="answer_lang">
+                        <option value="ko">한국어</option>
+                        <option value="en">영어</option>
+                        <option value="ja">일본어</option>
+                        <option value="zh-CN">중국어 간체</option>
+                        <option value="zh-TW">중국어 번체</option>
+                        <option value="vi">베트남어</option>
+                        <option value="th">태국어</option>
+                        <option value="id">인도네시아어</option>
+                        <option value="fr">프랑스어</option>
+                        <option value="es">스페인어</option>
+                        <option value="ru">러시아어</option>
+                        <option value="de">독일어</option>
+                        <option value="it">이탈리아어</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3" id="input-text">
                     <input type="text" name="answer" class="form-control" placeholder="추가할 뜻 작성">
                     <input type="hidden" name="quiz_id" value="${qVO.quiz_id}">
                     <button class="btn btn-dark">추가</button>
                 </div>
             </form>
-
             <div>
-                <a href="${pageContext.servletContext.contextPath}/quizDelete?quiz_id=${qVO.quiz_id}"> <button class="btn btn-dark">단어 삭제</button></a>
+                <a href="${pageContext.servletContext.contextPath}/quizDelete?quiz_id=${qVO.quiz_id}">
+                    <button class="btn btn-dark">단어 삭제</button>
+                </a>
             </div>
         </div>
-
     </div>
 </div>
 </body>

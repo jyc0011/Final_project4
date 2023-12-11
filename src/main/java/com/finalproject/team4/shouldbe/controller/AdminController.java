@@ -303,11 +303,11 @@ public class AdminController {
     }
     //퀴즈관리_퀴즈등록버튼
     @PostMapping("/quiz/reg")
-    public ModelAndView QuizReg(String quiz_content, String answer, int level){
+    public ModelAndView QuizReg(String quiz_content, String answer, int level,String answer_lang){
         ModelAndView mav= new ModelAndView();
         int quizInsertResult=service.quizInsert(quiz_content,level);
         int quiz_id=service.selectQuizId(quiz_content);
-        int answerInsertResult=service.answerInsert(quiz_id,answer);
+        int answerInsertResult=service.answerInsert(quiz_id,answer, answer_lang);
         // System.out.println(quiz_content+" "+level);
         mav.setViewName("quiz_management/quiz_list");
         return mav;
@@ -330,12 +330,13 @@ public class AdminController {
         return mav;
     }
     @PostMapping("/quiz/answer_insert")
-    public ModelAndView AnswerInsert(String answer,int quiz_id){
+    public ModelAndView AnswerInsert(String answer,int quiz_id, String answer_lang){
         ModelAndView mav= new ModelAndView();
+        System.out.println(answer + answer_lang + quiz_id);
         //System.out.println(answer+quiz_id);
         //int quizInsertResult=service.quizInsert(quiz_content,level);
        // int quiz_id=service.selectQuizId(quiz_content);
-        int answerInsertResult=service.answerInsert(quiz_id,answer);
+        int answerInsertResult=service.answerInsert(quiz_id,answer,answer_lang);
         mav.setViewName("redirect:/admin/quiz_edit?quiz_id="+quiz_id);
         return mav;
     }

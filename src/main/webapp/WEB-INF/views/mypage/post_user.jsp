@@ -52,10 +52,25 @@
             color: white;
         }
 
+        .list-inline{
+            padding: 10px 0;
+        }
+
         .list-inline li a {
             text-decoration: none;
             color: black;
             font-size: 20px;
+        }
+
+        #now{
+            padding: 5px;
+            border-bottom: 3px solid #ffe3a0;
+            font-weight: bold;
+        }
+
+        table a{
+            color: black;
+            text-decoration: none;
         }
 
         .pagination {
@@ -90,17 +105,16 @@
     </div>
     <div id="content">
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성 글</a>
+            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user" id="now">작성 글</a>
             </li>
             <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/post_user/reply">작성
                 댓글</a></li>
         </ul>
-        <hr/>
         <table class="table">
             <thead>
             <tr>
                 <th>글번호</th>
-                <th>제목</th>
+                <th>글 제목</th>
                 <th>작성일</th>
             </tr>
             </thead>

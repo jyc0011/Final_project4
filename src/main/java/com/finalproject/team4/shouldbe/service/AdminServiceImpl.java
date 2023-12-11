@@ -133,7 +133,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int selectQuizId(String quiz_content){return mapper.selectQuizId(quiz_content);}
     @Override
-    public  int answerInsert(int quiz_id, String answer){return mapper.answerInsert(quiz_id,answer);}
+    public  int answerInsert(int quiz_id, String answer, String answer_lang){return mapper.answerInsert(quiz_id,answer, answer_lang);}
 
 
     //퀴즈관리_등록된 퀴즈 삭제 버튼

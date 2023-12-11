@@ -54,11 +54,6 @@
             color: white;
         }
 
-        .list-inline {
-            background-color: #ffe3a0;
-            padding: 10px;
-        }
-
         .list-inline li a {
             text-decoration: none;
             color: black;
@@ -72,6 +67,14 @@
             padding: 15px;
             margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+        }
+
+        #now{
+            font-weight: bold;
+            text-decoration-line: underline;
+            text-decoration-color: #ffe3a0;
+            text-decoration-thickness: 3px;
+            padding-top: 2px;
         }
 
         .pagination {
@@ -123,7 +126,7 @@
                 <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_chat">채팅
                     저장소</a>
                 </li>
-                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_quiz">퀴즈
+                <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/save_quiz" id="now">퀴즈
                     저장소</a>
                 </li>
             </ul>
