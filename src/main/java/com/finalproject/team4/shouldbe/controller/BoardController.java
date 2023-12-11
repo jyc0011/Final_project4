@@ -13,7 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BoardController {
@@ -43,7 +45,6 @@ public class BoardController {
         List<BoardVO> list = boardService.boardPageList(pVO);
         mav.addObject("list", list);
         mav.addObject("pVO", pVO);
-        mav.addObject("logId",request.getSession().getAttribute("userId"));
         mav.setViewName("board/board_list");
         return mav;
     }
@@ -135,6 +136,38 @@ public class BoardController {
         }
         //삭제실패
         return null;
+
+    }
+    @GetMapping("/like/get")
+    @ResponseBody
+    public int getLike(int no){
+        return boardService.getLike(no);
+    }
+    @PostMapping("/like/increase")
+    @ResponseBody
+    public Map<String, Object> increaseLike(int no, String user_id){
+        var map = new HashMap<String, Object>();
+        int result = boardService.getLikeStatus(no, user_id);
+        if(result > 0){
+            map.put("result", false);
+            map.put("msg", "이미 추천한 글입니다.");
+            return map;
+        }
+        try {
+            result = boardService.increaseLike(no, user_id);
+            if (result > 0) {
+                map.put("result", true);
+                return map;
+            }
+            map.put("result", false);
+            map.put("msg", "db 오류");
+            return map;
+        }catch(Exception e){
+            map.put("result", false);
+            map.put("msg", "로그인 이후에 이용해주세요!");
+            return map;
+        }
+
 
     }
 
