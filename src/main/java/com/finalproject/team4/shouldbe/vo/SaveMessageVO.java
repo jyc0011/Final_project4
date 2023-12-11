@@ -11,4 +11,7 @@ public class SaveMessageVO {
     private int msg_id;
     private String save_user_id;
     private String content;
+    private int chat_id;
+    private String from_id;
+    private String to_id;
 }

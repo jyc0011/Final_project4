@@ -27,7 +27,7 @@
 
         #content {
             padding: 20px;
-            width: 80%;
+            width: 70%;
             display: flex;
             flex-direction: column;
         }
@@ -69,12 +69,26 @@
             font-weight: bold;
         }
 
+        #postsContainer {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
         .post-card {
+            flex: 0 0 48%; /* 각 요소의 너비를 조정 (간격을 고려하여 50%보다 약간 작게 설정) */
+            margin: 1%;
             background-color: #fff8dc;
             border: 1px solid #ccc;
             padding: 15px;
             margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+        }
+
+        .delete-btn {
+            background-color: #fff8dc;
+            color: black;
+            border: none;
+            cursor: pointer;
         }
 
         .pagination {
@@ -130,12 +144,26 @@
                     저장소</a>
                 </li>
             </ul>
-            <div class="col-md-4">
+            <div id="postsContainer">
                 <c:forEach var="saveMessages" items="${saveMessages}">
-                <div class="post-card">
-                        <strong>${saveMessages.content}</strong>
-                        <p>즐겁게 한국어를 배우고 싶어요!</p>
+                    <div class="post-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <c:choose>
+                            <c:when test="${logId == saveMessages.from_id}">
+                                <strong>${saveMessages.to_id}와의 채팅</strong>
+                            </c:when>
+                            <c:otherwise>
+                                <strong>${saveMessages.from_id}와의 채팅</strong>
+                            </c:otherwise>
+                        </c:choose>
+                            <form action="/mypage/save_chat/delete" method="post" style="display: inline;">
+                                <input type="hidden" name="msg_id" value="${saveMessages.msg_id}" />
+                                <button type="submit" class="delete-btn">X</button>
+                            </form>
+                        </div>
+                        <p>${saveMessages.content}</p>
                     </div>
+
                 </c:forEach>
             </div>
         </div>
