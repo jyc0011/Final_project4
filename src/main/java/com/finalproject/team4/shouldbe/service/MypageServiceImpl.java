@@ -13,6 +13,8 @@ public class MypageServiceImpl implements MypageService {
     MypageMapper mapper;
 
     @Override
+    public FriendVO selectChatId(String followed_userid, String following_user_id){return mapper.selectChatId(followed_userid,following_user_id);}
+    @Override
     public MypageVO mypage_info(String Userid) {
         return mapper.mypage_info(Userid);
     }

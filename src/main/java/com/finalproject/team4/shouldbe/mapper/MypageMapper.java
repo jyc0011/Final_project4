@@ -8,6 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface MypageMapper {
+    FriendVO selectChatId(String followed_userid, String following_user_id);
     MypageVO mypage_info(String userid);
 
     int mypage_edit(MypageVO vo);

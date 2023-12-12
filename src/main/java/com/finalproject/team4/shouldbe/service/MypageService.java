@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface MypageService {
+    FriendVO selectChatId(String followed_userid, String following_user_id);
     MypageVO mypage_info(String userid);
 
     int mypage_edit(MypageVO vo);
