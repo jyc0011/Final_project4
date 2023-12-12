@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/js/no-cache.js"></script>
     <link rel="shortcut icon" href="https://ibsintelligence.com/wp-content/uploads/2023/05/Smoothpay.jpg">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Titillium+Web&family=ZCOOL+XiaoWei&display=swap');

@@ -60,7 +60,14 @@ public class MypageController {
 
     // 프로필 수정
     @PostMapping("/mypage/editProfileOk")
-    public String mypageEidt(MypageVO vo, @RequestParam("user_id") String user_id, @RequestParam("password") String password, RedirectAttributes redirect) {
+    public String mypageEdit(MypageVO vo,
+                             @RequestParam("user_id") String user_id,
+                             @RequestParam("password") String password,
+                             RedirectAttributes redirect,
+                             HttpSession session) {
+        if(session.getAttribute("logStatus") != "Y"){
+            return "redirect:/login";
+        }
         MypageVO mVo = service.mypage_info(user_id);
         System.out.println("password"+password);
         System.out.println("mvo" + mVo.toString());
@@ -79,6 +86,10 @@ public class MypageController {
     @GetMapping("/mypage/friend_user")
     public ModelAndView mypage_friend_user(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String followed_user_id = (String) session.getAttribute("logId");
 
         PagingVO pvo = new PagingVO();
@@ -105,6 +116,10 @@ public class MypageController {
     @GetMapping("/mypage/blockList")
     public ModelAndView mypage_blocklist(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String user_id = (String) session.getAttribute("logId");
 
         PagingVO pvo = new PagingVO();
@@ -132,7 +147,10 @@ public class MypageController {
     @GetMapping("/mypage/post_user")
     public ModelAndView mypage_post_user(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
-
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String user_id = (String) session.getAttribute("logId");
 
         PagingVO pvo = new PagingVO();
@@ -152,6 +170,10 @@ public class MypageController {
     @GetMapping("/mypage/post_user/reply")
     public ModelAndView mypage_post_user_reply(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String user_id = (String) session.getAttribute("logId");
         
         PagingVO pvo = new PagingVO();
@@ -169,7 +191,10 @@ public class MypageController {
 
     // 회원탈퇴
     @GetMapping("/mypage/withdraw_user")
-    public String mypage_withdraw_user() {
+    public String mypage_withdraw_user(HttpSession session) {
+        if(session.getAttribute("logStatus") != "Y"){
+            return "redirect:/login";
+        }
         return "mypage/withdraw_user";
     }
 
@@ -196,7 +221,10 @@ public class MypageController {
     @GetMapping("/mypage/save_chat")
     public ModelAndView saveChat(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView("mypage/save_user");
-
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String userId = (String) session.getAttribute("logId");
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
@@ -221,6 +249,10 @@ public class MypageController {
     @GetMapping("/mypage/save_quiz")
     public ModelAndView saveQuiz(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView("mypage/save_quiz");
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String userId = (String) session.getAttribute("logId");
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
