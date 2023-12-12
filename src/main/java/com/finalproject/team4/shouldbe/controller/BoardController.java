@@ -99,7 +99,7 @@ public class BoardController {
             return mav;
         }
         catch (NullPointerException ex) {
-            mav.setViewName("redirect:/board/admin");
+            mav.setViewName("redirect:/board/notice");
             return mav;
         }
     }

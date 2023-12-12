@@ -1,11 +1,15 @@
 package com.finalproject.team4.shouldbe.controller;
 
+import com.finalproject.team4.shouldbe.service.ChatService;
 import com.finalproject.team4.shouldbe.service.MypageService;
 import com.finalproject.team4.shouldbe.util.EncryptUtil;
 import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -18,7 +22,8 @@ import java.util.List;
 public class MypageController {
     @Autowired
     MypageService service;
-
+    @Autowired
+    ChatService chatservice;
     EncryptUtil encrypt = new EncryptUtil();
 
     @GetMapping("/mypage")
@@ -57,26 +62,25 @@ public class MypageController {
 
     // 프로필 수정
     @PostMapping("/mypage/editProfileOk")
-    public String mypageEdit(MypageVO vo,
-                             @RequestParam("user_id") String user_id,
-                             @RequestParam("password") String password,
-                             RedirectAttributes redirect,
-                             HttpSession session) {
-        if(session.getAttribute("logStatus") != "Y"){
-            return "redirect:/login";
-        }
+    public String mypageEdit(MypageVO vo, @RequestParam("user_id") String user_id, @RequestParam("password") String password, @RequestParam("now_password") String now_password, RedirectAttributes redirect) {
         MypageVO mVo = service.mypage_info(user_id);
-        System.out.println("password"+password);
-        System.out.println("mvo" + mVo.toString());
-        System.out.println(vo.toString());
         if (mVo == null) {
             return "redirect:/mypage/change_user";
-        } else if (encrypt.encrypt(password, mVo.getSalt()).equals(mVo.getPassword())) {
-            int result = service.mypage_edit(vo);
-            return "redirect:/mypage/change_user";
         }
-        redirect.addFlashAttribute("result", "회원수정 실패, 비밀번호를 확인해주세요!");
-        return "mypage/mypage_editResult";
+        if (! encrypt.encrypt(now_password, mVo.getSalt()).equals(mVo.getPassword())) {
+            System.out.println("1");
+            redirect.addFlashAttribute("result", "회원수정 실패, 비밀번호를 확인해주세요!");
+            return "mypage/mypage_editResult";
+        } else if (encrypt.encrypt(password, mVo.getSalt()).equals(mVo.getPassword())) {
+            System.out.println("2");
+            redirect.addFlashAttribute("result", "회원수정 실패, 기존 비밀번호와 동일합니다!");
+            return "mypage/mypage_editResult";
+        }
+        System.out.println("3");
+        vo.setPassword(encrypt.encrypt(password,mVo.getSalt()));
+        service.mypage_edit(vo);
+        redirect.addFlashAttribute("result", "회원수정가 수정되었습니다!");
+        return "redirect:/mypage/change_user";
     }
 
     // 친구목록

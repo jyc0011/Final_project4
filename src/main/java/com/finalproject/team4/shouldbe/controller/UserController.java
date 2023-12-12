@@ -171,6 +171,7 @@ public class UserController {
                 session.setAttribute("logName", vo.getUser_name());
                 session.setAttribute("logId", userid);
                 if(userService.ismanager(userid)){
+                    session.setAttribute("manager","Y");
                     return "redirect:/admin/";
                 }else{
                     return "redirect:/";
@@ -184,6 +185,7 @@ public class UserController {
             session.setAttribute("logName", vo.getUser_name());
             session.setAttribute("logId", userid);
             if(userService.ismanager(userid)){
+                session.setAttribute("manager","Y");
                 return "redirect:/admin/";
             }else{
                 return "redirect:/";

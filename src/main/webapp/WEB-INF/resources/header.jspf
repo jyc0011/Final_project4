@@ -151,7 +151,7 @@
     <div class="category">
         <!-- 마이페이지 Dropdown -->
         <div class="dropdown">
-            <a href="${pageContext.servletContext.contextPath}/mypage" class="dropbtn">MY PAGE</a>
+            <a href="${pageContext.servletContext.contextPath}/mypage/change_user" class="dropbtn">MY PAGE</a>
             <c:if test="${logStatus=='Y'}">
                 <div class="dropdown-content">
                     <a href="${pageContext.servletContext.contextPath}/mypage/change_user">INFO EDIT</a>
@@ -190,6 +190,21 @@
                 <a href="${pageContext.servletContext.contextPath}/chat/partners">NEW PARTNER</a>
             </div>
         </div>
+        <c:if test="${manager=='Y'}">
+            <div class="dropdown">
+                <a href="${pageContext.servletContext.contextPath}/admin" class="dropbtn">ADMIN</a>
+                <div class="dropdown-content">
+                    <a href="${pageContext.servletContext.contextPath}/admin">DASH BOARD</a>
+                    <a href="${pageContext.servletContext.contextPath}/admin/member/management">NOW USER</a>
+                    <a href="${pageContext.servletContext.contextPath}/admin/suspended/management">SUSPENDED</a>
+                    <a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">WITHDRAWN</a>
+                    <a href="${pageContext.servletContext.contextPath}/admin/board">POST</a>
+                    <a href="${pageContext.servletContext.contextPath}/admin/reply">COMMENT</a>
+                    <a href="${pageContext.servletContext.contextPath}/admin/quiz/list">QUIZ</a>
+                    <a href="${pageContext.servletContext.contextPath}/admin/chat/management">CHAT</a>
+                </div>
+            </div>
+        </c:if>
     </div>
 </div>
 <hr style="margin-bottom: 0;">
