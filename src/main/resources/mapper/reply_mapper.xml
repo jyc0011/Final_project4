@@ -16,7 +16,7 @@
         order by write_date;
     </select>
     <insert id="addReply">
-        insert into comments(user_id, post_id, content, depth, is_deleted) values(#{writer}, #{post_id}, #{content}, #{depth}, 0)
+        insert into comments(user_id, post_id, content) values(#{writer}, #{post_id}, #{content})
     </insert>
     <select id="selectReply" resultType="BoardReplyVO">
         select comment_id,
@@ -32,10 +32,27 @@
         delete from comments where post_id=#{param1} and comment_id = #{param2}
     </delete>
     <insert id="report">
-        insert into comment_report(comment_id, user_id) values(#{param1}, #{param2});
+        INSERT INTO comment_report(comment_id, user_id)
+        SELECT #{param1}, #{param2}
+            WHERE NOT EXISTS (
+        SELECT 1 FROM comment_report
+        WHERE comment_id = #{param1} AND user_id = #{param2}
+                );
     </insert>
     <insert id="like">
-        insert into comments_like(comment_id, user_id) values(#{param1}, #{param2});
+        insert into comment_like(comment_id, user_id)
+        SELECT #{param1}, #{param2}
+            WHERE NOT EXISTS (
+        SELECT 1 FROM comment_like
+        WHERE comment_id = #{param1} AND user_id = #{param2}
+                );
     </insert>
+    <update id="updateComment">
+        UPDATE comments
+        SET content = #{content}
+        WHERE post_id = #{postId}
+          AND comment_id = #{commentId}
+          AND user_id = #{userId}
+    </update>
 </mapper>
 

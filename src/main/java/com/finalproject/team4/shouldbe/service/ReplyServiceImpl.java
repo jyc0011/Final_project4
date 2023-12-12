@@ -12,8 +12,6 @@ public class ReplyServiceImpl implements ReplyService {
     @Autowired
     ReplyMapper mapper;
 
-
-
     @Override
     public List<BoardReplyVO> replyList(int post_id) {
         return mapper.replyList(post_id);
@@ -42,5 +40,15 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public int like(int comment_id, String user_id) {
         return mapper.like(comment_id, user_id);
+    }
+
+    @Override
+    public boolean updateComment(int postId, int commentId, String userId, String content) {
+        try {
+            mapper.updateComment(postId, commentId, userId, content);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

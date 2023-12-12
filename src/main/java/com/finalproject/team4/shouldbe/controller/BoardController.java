@@ -189,7 +189,7 @@ public class BoardController {
         try {
             if (boardService.getReport(no, user_id) != 0) {
                 map.put("result", false);
-                map.put("msg", "이미 추천한 글입니다.");
+                map.put("msg", "이미 신고되었습니다!");
                 return map;
             }
             int result = boardService.report(no, user_id);
