@@ -33,7 +33,7 @@ public class AdminController {
     @GetMapping("/admin")
     public ModelAndView admin(HttpSession session) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
-        if(! userService.ismanager((String) session.getAttribute("logId"))){
+        if(! userService.ismanager((String) session.getAttribute("logId"))||session.getAttribute("logStatus") != "Y"){
             mav.setViewName("/");
             return mav;
         }
@@ -52,7 +52,7 @@ public class AdminController {
     public ModelAndView GoMember_management(@RequestParam(required = false, defaultValue = "1") int page,
                                             HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        if(! userService.ismanager((String) session.getAttribute("logId"))){
+        if(! userService.ismanager((String) session.getAttribute("logId"))||session.getAttribute("logStatus") != "Y"){
             mav.setViewName("/");
             return mav;
         }
@@ -79,7 +79,7 @@ public class AdminController {
     public ModelAndView GoSuspended_management(@RequestParam(required = false, defaultValue = "1") int page,
                                                HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        if(! userService.ismanager((String) session.getAttribute("logId"))){
+        if(! userService.ismanager((String) session.getAttribute("logId"))|| session.getAttribute("logStatus") != "Y"){
             mav.setViewName("/");
             return mav;
         }
@@ -128,7 +128,7 @@ public class AdminController {
     public ModelAndView GoWithdrawn_management(@RequestParam(required = false, defaultValue = "1") int page,
                                                HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        if(! userService.ismanager((String) session.getAttribute("logId"))){
+        if(! userService.ismanager((String) session.getAttribute("logId")) || session.getAttribute("logStatus") != "Y"){
             mav.setViewName("/");
             return mav;
         }
@@ -176,7 +176,7 @@ public class AdminController {
     public ModelAndView admin_board(@RequestParam(required = false, defaultValue = "1") int page,
                                     HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        if(! userService.ismanager((String) session.getAttribute("logId"))){
+        if(! userService.ismanager((String) session.getAttribute("logId")) || session.getAttribute("logStatus") != "Y"){
             mav.setViewName("/");
             return mav;
         }
@@ -235,7 +235,7 @@ public class AdminController {
     public ModelAndView admin_reply(@RequestParam(required = false, defaultValue = "1") int page,
                                     HttpSession session) {
         ModelAndView mav = new ModelAndView("admin/admin_reply");
-        if(! userService.ismanager((String) session.getAttribute("logId"))){
+        if(! userService.ismanager((String) session.getAttribute("logId")) || session.getAttribute("logStatus") != "Y"){
             mav.setViewName("/");
             return mav;
         }
@@ -282,7 +282,7 @@ public class AdminController {
     @GetMapping("/admin/quiz/list")
     public ModelAndView GoQuiz_list(HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        if(! userService.ismanager((String) session.getAttribute("logId"))){
+        if(! userService.ismanager((String) session.getAttribute("logId")) || session.getAttribute("logStatus") != "Y"){
             mav.setViewName("/");
             return mav;
         }
@@ -319,8 +319,12 @@ public class AdminController {
     }
     //퀴즈관리_등록된 퀴즈 리스트
     @GetMapping("/admin/quiz_edit")
-    public ModelAndView GoQuiz_edit(int quiz_id) {
+    public ModelAndView GoQuiz_edit(int quiz_id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+        if(! userService.ismanager((String) session.getAttribute("logId")) || session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("/");
+            return mav;
+        }
         QuizVO qVO=service.quiz_table(quiz_id);
         List<QuizVO> editlist=service.editlist(quiz_id);
         System.out.println(editlist.toString());

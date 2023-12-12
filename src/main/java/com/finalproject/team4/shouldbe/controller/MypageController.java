@@ -1,15 +1,11 @@
 package com.finalproject.team4.shouldbe.controller;
 
-import com.finalproject.team4.shouldbe.service.ChatService;
 import com.finalproject.team4.shouldbe.service.MypageService;
 import com.finalproject.team4.shouldbe.util.EncryptUtil;
 import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,8 +18,7 @@ import java.util.List;
 public class MypageController {
     @Autowired
     MypageService service;
-    @Autowired
-    ChatService chatservice;
+
     EncryptUtil encrypt = new EncryptUtil();
 
     @GetMapping("/mypage")
@@ -102,13 +97,10 @@ public class MypageController {
         List<FriendVO> flist = service.friendList(pvo, followed_user_id);
         System.out.println(flist);
         for(int i=0;i< flist.size();i++){
-
             FriendVO fvo= service.selectChatId(followed_user_id,flist.get(i).getFollowing_user_id());
             flist.get(i).setChat_id(fvo.getChat_id());
             flist.get(i).setFrom_id(fvo.getFrom_id());
             flist.get(i).setTo_id(fvo.getTo_id());
-
-
         }
         System.out.println(flist);
         mav.addObject("myId", followed_user_id);
