@@ -27,7 +27,7 @@
 
         #content {
             padding: 20px;
-            width: 80%;
+            width: 70%;
             display: flex;
             flex-direction: column;
         }
@@ -54,14 +54,30 @@
             color: white;
         }
 
+        .list-inline{
+            padding: 10px 0;
+        }
+
         .list-inline li a {
             text-decoration: none;
             color: black;
             font-size: 20px;
+        }
+
+        #now{
+            padding: 5px;
+            border-bottom: 3px solid #ffe3a0;
             font-weight: bold;
         }
 
+        #postsContainer {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
         .post-card {
+            flex: 0 0 48%;
+            margin: 1%;
             background-color: #fff8dc;
             border: 1px solid #ccc;
             padding: 15px;
@@ -69,12 +85,11 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
         }
 
-        #now{
-            font-weight: bold;
-            text-decoration-line: underline;
-            text-decoration-color: #ffe3a0;
-            text-decoration-thickness: 3px;
-            padding-top: 2px;
+        .delete-btn {
+            background-color: #fff8dc;
+            color: black;
+            border: none;
+            cursor: pointer;
         }
 
         .pagination {
@@ -130,13 +145,19 @@
                     저장소</a>
                 </li>
             </ul>
-            <div class="col-md-4">
-                <c:forEach var="saveQuiz" items="${saveQuiz}">
-                <div class="post-card">
-                        <strong>${saveQuiz.quiz_content}</strong>
-                        <p>${saveQuiz.answer}</p>
-                    </div>
-                </c:forEach>
+            <div id="postsContainer">
+                    <c:forEach var="saveQuiz" items="${saveQuiz}">
+                        <div class="post-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <strong>${saveQuiz.quiz_content}</strong>
+                                <form action="/mypage/save_quiz/delete" method="post" style="display: inline;">
+                                    <input type="hidden" name="quiz_id" value="${saveQuiz.quiz_id}" />
+                                    <button type="submit" class="delete-btn">X</button>
+                                </form>
+                            </div>
+                            <p>${saveQuiz.answer}</p>
+                        </div>
+                    </c:forEach>
             </div>
         </div>
         <div>

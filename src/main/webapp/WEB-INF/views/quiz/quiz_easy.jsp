@@ -8,52 +8,54 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif; /* 폰트 설정 */
         }
 
         main {
-            width: 80%;
-            max-width: 1200px;
-            margin: 50px auto;
-            display: flex;
-            flex-direction: column;
+            width: 1200px;
+            margin: 100px auto;
+            display: block;
+            justify-content: space-around;
             align-items: center;
         }
 
-        .form {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
+        .language_box{
+            width: 900px;
+            margin: 5px auto;
+            font-size: 1.5em;
+        }
+        #quiz_content{
+            width: 900px;
+            height: 400px;
+            line-height: 400px;
+            font-size: 7em;
+            border:5px solid #000000;
+            margin: 0 auto;
+            text-align: center;
+            border-radius: 10px;
         }
 
-        .form input[type="text"] {
-            width: 60%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
+        #input_form{
+            width: 900px;
+            margin: 50px auto 20px;
+            height: 90px;
 
-        .form input[type="submit"] {
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
         }
-
-        .form input[type="submit"]:hover {
-            background-color: #ffe3a0;
+        .form-control{
+            width: 700px;
+            font-size: 60px;
         }
-
-        #answer_lang {
-            word-wrap: break-word;
-            max-width: 100%;
-            margin-top: 10px;
+        .input-group-text{
+            width: 200px;
+            font-size: 60px;
+            margin: 0 auto;
+            background-color: #FFD954;
             text-align: center;
         }
+
     </style>
 
     <script>
@@ -155,20 +157,17 @@
 </head>
 <body>
 <main>
-    <h1>쉬움 : <span id="language"></span></h1>
-    <h3>정답 언어 : <span id="answer_lang"></span></h3>
-    <hr/>
-    <div class="form">
-        <b id="quiz_content">${quiz.quiz_content}</b>
-        <form method="post" action="/quiz/checkAnswer">
-            <input type="text" name="user_answer" placeholder="정답 입력"/>
-            <input type="hidden" name="quiz_id" value="${quiz.quiz_id}"/>
-            <input type="hidden" name="quiz_content" value="${quiz.quiz_content}"/>
-            <input type="hidden" name="level" value="${quiz.level}"/>
-            <input type="hidden" name="quiz_lang" value="${quiz.quiz_lang}"/>
-            <input type="submit" value="제출"/>
-        </form>
-    </div>
+    <div class="language_box">쉬움 : <span id="language"></span></div>
+    <div class="language_box">정답 언어 : <span id="answer_lang"></span></div>
+    <div id="quiz_content">${quiz.quiz_content}</div>
+    <form method="post" id="input_form" class="input-group mb-3" action="/quiz/checkAnswer">
+        <input type="text" name="user_answer" class="form-control" placeholder="정답 입력"/>
+        <input type="hidden" name="quiz_id" value="${quiz.quiz_id}"/>
+        <input type="hidden" name="quiz_content" value="${quiz.quiz_content}"/>
+        <input type="hidden" name="level" value="${quiz.level}"/>
+        <input type="hidden" name="quiz_lang" value="${quiz.quiz_lang}"/>
+        <input type="submit"  class="input-group-text" value="제출"/>
+    </form>
 </main>
 </body>
 </html>

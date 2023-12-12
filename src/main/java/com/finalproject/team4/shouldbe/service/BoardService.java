@@ -22,4 +22,7 @@ public interface BoardService {
     public int increaseLike(int post_id, String user_id);
     public int getLikeStatus(int post_id, String user_id);
     public int getLike(int post_id);
+
+    public int report(int no, String userId);
+    public int getReport(int no, String userId);
 }

@@ -120,7 +120,6 @@ public class ChatService {
         chatMapper.reportMessage(senderUserId, msgId, content);
     }
 
-
     public void saveMessageToMypage(String userId, int msgId) throws Exception {
         System.out.println(1);
         MessageVO messageInfo = chatMapper.findMessageInfo(msgId);
@@ -129,8 +128,11 @@ public class ChatService {
         System.out.println(sharedKey);
         String content=EncryptUtil.decryptAES(messageInfo.getContent(), sharedKey);
         System.out.println(4);
-        chatMapper.saveMessageToMypage(userId, msgId, content);
-        System.out.println(5);
+        int a=chatMapper.saveMessageToMypageCheck(userId,msgId);
+        if (a == 0) {
+            chatMapper.saveMessageToMypage(userId, msgId, content);
+            System.out.println(5);
+        }
     }
 
     public void addFriend(String followingUserId, String followedUserId) {

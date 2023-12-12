@@ -16,7 +16,7 @@
 
         main {
             width: 1200px;
-            margin: 70px auto 30px;
+            margin: 30px auto;
             display: flex;
             justify-content: space-evenly;
             align-items: center;
@@ -24,9 +24,12 @@
         }
 
         .box {
+            width: 700px;
             display: flex;
-            margin-top: 20px;
-
+            flex-direction: column;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         h1 {
@@ -34,19 +37,13 @@
             margin-bottom: 30px;
         }
 
-        #create_Form > ul > li {
-            list-style-type: none;
-        }
-
-
         #username, #userid, #userpwd, #userpwdCheck, #email, #authenticate {
-            width: 400px;
+            width: 470px;
             height: 40px;
             margin: 5px auto;
         }
 
         #join, #cancel {
-            float: left;
             width: 100px;
             height: 40px;
             margin: 40px auto;
@@ -56,13 +53,9 @@
             margin-left: 50px;
         }
 
-        #join {
-            margin-right: 200px;
-        }
-
         #checkcode, #idcheck, #sendcode {
             margin: 0 20px;
-            width: 90px;
+            width: 100px;
         }
 
 
@@ -90,7 +83,7 @@
 
         .input-container input {
             border: 0;
-            border-bottom: 1px solid #555;
+            border-bottom: 1px solid #332913;
             padding: 8px 0 5px 0;
             font-size: 16px;
         }
@@ -101,27 +94,6 @@
             border-bottom: 1px solid #e74c3c;
         }
 
-        .submitBtn {
-            color: #fff;
-            outline: none;
-            border: 0;
-            padding: 10px 20px;
-            text-transform: uppercase;
-            margin-top: 20px;
-            border-radius: 2px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        /*.btn:after{
-            content:"";
-            position:absolute;
-            background:rgba(0,0,0,0.50);
-            top:0;
-            right:0;
-            width:100%;
-            height:100%;
-        }*/
         .input-container input:focus ~ label,
         .input-container input:valid ~ label {
             top: -12px;
@@ -130,9 +102,17 @@
         }
 
         .submitBtn {
-            background-color: #FFB300;
+            background-color: #ffe3a0;
             border: none;
-            color: white;
+            color: black;
+            outline: none;
+            border: 0;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
         }
 
         input[type=checkbox], input[type=radio] {
@@ -155,12 +135,12 @@
             padding: 5px 30px 5px 20px;
             border-radius: 4px;
             outline: 0 none;
-            border: 1px solid #6c757d;
+            border: 2px solid #332913;
             cursor: pointer;
         }
 
         .select option {
-            background: #FFD954;
+            background: white;
             padding: 3px 0;
         }
 
@@ -175,9 +155,18 @@
         .btn-outline-secondary {
             width: 130px;
             margin: 5px 10px 0 0;
+            color: black;
+            background-color: white;
+            border-width: 2px;
+            border-color: #332913;
+        }
+
+        .btn-check:checked + .btn-outline-secondary {
+            color: black;
+            background-color: #FFE3A1;
         }
         .terms-content {
-            width: 520px;
+            width: 600px;
             height: 200px;
             overflow-y: scroll;
             margin-bottom: 10px;
@@ -198,11 +187,11 @@
         function checkpwd() {
             if (document.getElementById("userpwd").value != "" && document.getElementById("userpwdCheck").value != "") {
                 if (document.getElementById("userpwd").value == document.getElementById("userpwdCheck").value) {
-                    document.getElementById("passwordCheckOk").innerHTML = "비밀번호가 일치합니다.";
+                    document.getElementById("passwordCheckOk").innerHTML = "The passwords match.";
                     document.getElementById("passwordCheckOk").style.color = "blue";
                     return true;
                 } else {
-                    document.getElementById("passwordCheckOk").innerHTML = "비밀번호가 일치하지 않습니다.";
+                    document.getElementById("passwordCheckOk").innerHTML = "Passwords do not match!";
                     document.getElementById("passwordCheckOk").style.color = "red";
                     return false;
                 }
@@ -239,7 +228,7 @@
                     data: {email: email},
                     success: function (r) {
                         if (r.result == true) {
-                            alert("이메일이 전송되었습니다.");
+                            alert("Email send!");
                             $("#emailCheckDiv").css('display', '');
                             // $("#authenticate").css('display', '');
                             // $("#checkcode").css('display', '');
@@ -261,13 +250,13 @@
                     data: {code: code},
                     success: function (r) {
                         if (r) {
-                            alert("인증되었습니다!");
+                            alert("Your Email is Verified!");
                             emailAuth = true;
 
                             //$("#authenticate").css('', '');
                             //$("#checkcode").css('display', '');
                         } else {
-                            alert("인증코드가 일치하지 않습니다!");
+                            alert("The authentication code does not match!");
                         }
                     },
                     error: function (e) {
@@ -280,7 +269,7 @@
             $("#idcheck").click(function () {
                 var userid = $("#userid").val();
                 if (userid == "") {
-                    alert("아이디를 입력해주세요")
+                    alert("Please enter your ID!")
                     return;
                 }
                 $.ajax({
@@ -289,10 +278,10 @@
                     data: {userid: userid},
                     success: function (r) {
                         if (r) {
-                            alert("사용 가능한 아이디입니다.");
+                            alert("This Username is available.");
                             $("#isIdChecked").val("Y");
                         } else {
-                            alert("사용 불가능한 아이디입니다.");
+                            alert("This username is not vailable!");
                             $("#isIdChecked").val("N");
                         }
                     },
@@ -305,26 +294,24 @@
 
             $("#create_Form").submit(function () {
                 if (!isCheckedId()) {
-                    alert("아이디 중복 검사를 해주세요");
+                    alert("Please run ID duplication check!");
                     return false;
                 }
                 if (!checkpwd()) {//여러가지 체크들
-                    alert("비밀번호가 일치하지 않습니다.");
+                    alert("Passwords do not match!");
                     return false;
                 }
                 if (!isCheckedEmail()) {
-                    alert("이메일 인증을 진행해주세요!");
+                    alert("Please proceed with email verification!");
                     return false;
                 }
 
                 var terms1Checked = document.getElementById('terms1').checked;
                 var terms2Checked = document.getElementById('terms2').checked;
                 if (!terms1Checked || !terms2Checked) {
-                    alert("약관에 동의하세요.");
+                    alert("Agree to the Terms of Use!");
                     return false;
                 }
-                //todo : 나머지 폼 검사(이름, 이메일, 국적, 성별, 언어 최소요구사항)
-
                 return true;
 
             })
@@ -335,44 +322,47 @@
 <body>
 <main>
     <div class="box">
+        <h2 style="text-align: center; padding: 30px 0;">
+            REGISTER
+        </h2>
         <form method="post" action="/createOk" id="create_Form">
             <div class="input-container">
                 <input type="text" name="username" id="username" required=""/>
-                <label>이름</label>
+                <label>NAME</label>
             </div>
             <div class="input-container">
                 <input type="text" name="userid" id="userid" required=""/>
-                <label>아이디</label>
+                <label>ID</label>
                 <input type="hidden" id="isIdChecked" value="N">
-                <input type="button" value="아이디체크" id="idcheck" class="btn btn-warning submitBtn"
+                <input type="button" value="ID CHECK" id="idcheck" class="btn btn-warning submitBtn"
                        style="border-bottom: none"/>
             </div>
             <div class="input-container">
                 <input type="password" name="userpwd" id="userpwd" onchange="checkpwd()" required=""/>
-                <label>비밀번호</label>
+                <label>PASSWORD</label>
             </div>
             <div class="input-container">
                 <input type="password" name="userpwdCheck" id="userpwdCheck" onchange="checkpwd()" required=""/>
-                <label>비밀번호 확인</label>
+                <label>CHECK PASSWORD</label>
             </div>
             <div><span id="passwordCheckOk"></span></div>
             <div class="input-container">
                 <input type="text" name="email" id="email" required=""/>
-                <label>이메일</label>
-                <input type="button" value="인증발송" id="sendcode" class="btn btn-warning submitBtn"
+                <label>USER EMAIL</label>
+                <input type="button" value="SEND" id="sendcode" class="btn btn-warning submitBtn"
                        style="border-bottom: none"/>
             </div>
             <div class="input-container" id="emailCheckDiv" style="display: none;">
                 <input type="text" id="authenticate" name="authenticate" required=""/>
-                <label>인증번호</label>
-                <input type="button" value="인증하기" id="checkcode" class="btn btn-warning submitBtn"
+                <label>AUTHENTICATION CODE</label>
+                <input type="button" value="CHECK" id="checkcode" class="btn btn-warning submitBtn"
                        style="border-bottom: none"/>
             </div>
             <div id="checkbox-div">
                 <div>
-                    <label style="margin: 20px 0 5px 0">사용언어</label>
+                    <label style="margin: 20px 0 5px 0">AVAILABLE LANGUAGES</label>
                 </div>
-                <div style="display: flex; width: 500px; flex-wrap: wrap; margin-left: 20px;">
+                <div style="display: flex; width: 600px; flex-wrap: wrap; margin-left: 20px;">
                     <input type="checkbox" class="btn-check lang" name="langArr" id="lang-ko" value="ko" autocomplete="off">
                     <label class="btn btn-outline-secondary" for="lang-ko">한국어</label>
 
@@ -448,23 +438,23 @@
                 </div>
             </div>
             <div id="termsCheck">
-                <div> <br> 이용약관: </div>
+                <div> <br> Terms of Use: </div>
                 <div class="terms-content">
-                    <h1>회원가입 이용약관</h1>
-
-                    <h2>제 1 조 (목적)</h2>
-                    <p>이 약관은 [회사명] (이하 "회사" 또는 "서비스 제공자")가 제공하는 온라인 서비스 이용과 관련한 회원의 권리, 의무 및 책임사항을 규정하는 것을 목적으로 합니다.</p>
-
-                    <h2>제 2 조 (정의)</h2>
+                    <h2>Membership Terms and Conditions</h2>
+                    <br>
+                    <h3>Article 1 (Purpose)</h3>
+                    <p>The purpose of these terms and conditions is to regulate members’ rights, obligations and responsibilities in relation to the use of online services provided by [Company Name] (hereinafter “Company” or “Service Provider”).</p>
+                    <br>
+                    <h3>Article 2 (Definitions)</h3>
                     <ol>
-                        <li>"서비스"라 함은 회사가 제공하는 모든 온라인 서비스를 의미합니다.</li>
-                        <li>"회원"이라 함은 회사에 개인정보를 제공하고 이 약관에 따라 회사와 이용계약을 체결한 자를 의미합니다.</li>
+                        <li>“Service” means all online services provided by the Company.</li>
+                        <li>“Member” means a person who has provided personal information to the Company and entered into a service agreement with the Company in accordance with these Terms and Conditions.</li>
                     </ol>
-
-                    <h2>제 3 조 (이용약관의 효력과 변경)</h2>
+                    <br>
+                    <h3>Article 3 (Effectiveness and Change of Terms of Use)</h3>
                     <ol>
-                        <li>본 약관은 회원가입 시 동의함으로써 효력이 발생합니다.</li>
-                        <li>회사는 본 약관을 변경할 권리를 갖으며, 변경된 약관은 서비스 내 또는 이메일을 통해 공지함으로써 효력이 발생합니다. 회원은 변경된 약관에 동의하지 않을 경우 서비스 이용을 중단할 수 있습니다.</li>
+                        <li>These terms and conditions take effect when you agree to them when registering as a member.</li>
+                        <li>The company reserves the right to change these terms and conditions, and the changed terms and conditions will become effective upon notification within the service or via email. If members do not agree to the changed terms and conditions, they may stop using the service.</li>
                     </ol>
                 </div>
                 <div>
@@ -476,10 +466,10 @@
                                                           style="margin-right: 5px; cursor: pointer"/>개인정보 수집 동의<strong>(필수)</strong></label>
                 </div>
             </div>
-            <ul>
-                <li><input type="submit" value="가입하기" id="join" class="btn btn-warning submitBtn"/></li>
-                <li><input type="button" value="취소" id="cancel" class="btn btn-warning submitBtn"/></li>
-            </ul>
+            <div style="display: flex; align-items: center;">
+                <input type="submit" value="가입하기" id="join" class="btn btn-warning submitBtn"/>
+                <input type="button" value="취소" id="cancel" class="btn btn-warning submitBtn"/>
+            </div>
         </form>
     </div>
 </main>

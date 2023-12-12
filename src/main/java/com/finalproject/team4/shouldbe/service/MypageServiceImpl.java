@@ -111,5 +111,12 @@ public class MypageServiceImpl implements MypageService {
     public int countblockList(String user_id) {
         return mapper.countblockList(user_id);
     }
-
+    @Override
+    public boolean deleteSavedQuiz(int quizId, String userId) {
+        return mapper.deleteQuiz(quizId, userId) > 0;
+    }
+    @Override
+    public boolean deleteSavedMsg(int msgId, String userId) {
+        return mapper.deleteMsg(msgId, userId) > 0;
+    }
 }

@@ -107,6 +107,10 @@
             background-color: #333333;
             color: white;
         }
+
+        .management_list>td{
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 
 

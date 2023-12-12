@@ -142,6 +142,18 @@
         WHERE chat_id = #{chatId}
     </select>
 
+    <select id="saveMessageToMypageCheck" resultType="int">
+        SELECT
+            CASE
+                WHEN EXISTS (
+                    SELECT 1 FROM save_message
+                    WHERE msg_id = #{msgId} AND save_user_id = #{userId}
+                )
+                    THEN 1
+                ELSE 0
+                END
+    </select>
+
     <insert id="saveMessageToMypage">
         INSERT INTO save_message (msg_id, save_user_id, content)
         VALUES (#{msgId},#{userId}, #{content})

@@ -47,4 +47,8 @@ public interface MypageMapper {
     List<SaveQuizVO> selectSaveQuiz(@Param("pvo") PagingVO pvo, @Param("userid") String userid);
 
     int countSaveQuiz(String userid);
+
+    int deleteQuiz(int quizId, String userId);
+
+    int deleteMsg(int msgId, String userId);
 }

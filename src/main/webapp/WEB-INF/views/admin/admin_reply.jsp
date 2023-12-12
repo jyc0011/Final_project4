@@ -54,6 +54,14 @@
             border-bottom: 4px solid #000;
         }
 
+        a:link,
+        a:visited,
+        a:hover,
+        a:active {
+            color: black;
+            text-decoration: none;
+        }
+
         .reply_list th {
             height: 50px;
             line-height: 50px;
@@ -116,6 +124,10 @@
             background-color: #333333;
             color: white;
         }
+
+        .reply_list>td{
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 </head>
 
@@ -135,11 +147,7 @@
     </nav>
     <main>
         <h1 id="ReplyListTitle">댓글 관리</h1>
-        <div class="input-group mb-3" id="searchNickname" style="width: 250px;">
-            <input type="text" class="form-control" placeholder="닉네임 검색">
-            <button class="btn btn-dark" type="submit">검색</button>
-        </div>
-
+        <br>
         <div class="col-sm-12" id="boardList">
             <table id="example" class="display" style="width:100%">
                 <thead id="list_head">
@@ -155,7 +163,9 @@
                     <c:forEach var="arVO" items="${board}">
                         <tr class="reply_list">
                             <td class="board_title">${arVO.user_id}</td>
-                            <td class="reply_content">${arVO.content}</td>
+                            <td class="reply_content">
+                                <a href="${pageContext.servletContext.contextPath}/board/notice/view?no=${arVO.post_id}">${arVO.content}</a>
+                            </td>
                             <td class="user_id">${arVO.report_time}</td>
                             <td class="suspend_button">
                                 <a href="#layer-popup" class="btn-open" title="">

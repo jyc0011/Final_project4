@@ -47,4 +47,9 @@ public interface MypageService {
     List<SaveQuizVO> selectSaveQuiz(PagingVO pvo, String userid);
 
     int countSaveQuiz(String userid);
+
+
+    boolean deleteSavedQuiz(int quizId, String userId);
+
+    boolean deleteSavedMsg(int msgId, String userId);
 }
