@@ -17,61 +17,61 @@
         }
 
         main {
-            width: 1200px;
-            margin: 0 auto;
-            padding: 100px 0;
             display: flex;
-            justify-content: center;
-            justify-items: center;
-            flex-direction: column;
+            height: auto;
             align-items: center;
+            justify-content: center;
+            padding: 50px;
+            box-sizing: border-box;
+            margin-top: 50px;
         }
 
-        #find_id_form > h1 {
-            text-align: center;
+        .box {
+            display: flex;
+            width: 1000px;
+            height: 564px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        #find_id_form > ul > li {
-            list-style-type: none;
-            margin-top: 5px;
-            margin-bottom: 5px;
+        .box img {
+            width: 50%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+
+        .form-container {
+            flex-grow: 1;
+            background: #fff;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+        }
+
+        .submitBtn:hover {
+            background-color: #F29727;
+        }
+
+        .input-container input:focus ~ label,
+        .input-container input:valid ~ label {
+            top: -20px;
+            left: 0;
+            font-size: 12px;
         }
 
         .submitBtn {
-            background-color: #FFB300;
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
             border: none;
-            color: white;
-            margin-top: 30px;
-            margin-bottom: 10px;
-        }
-
-        #find {
-            width: 400px;
-        }
-
-        #username,
-        #email {
-            width: 400px;
-            height: 40px;
-            line-height: 40px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        #finded {
-            width: 600px;
-            height: 50px;
-            display: none;
-        }
-
-        #finded > p {
-            text-align: center;
-        }
-
-        #back,
-        #find_pwd {
-            float: right;
-            margin: 20px 10px;
+            background-color: #ffe3a0;
+            color: black;
+            cursor: pointer;
+            margin-bottom: 20px;
         }
 
         .input-container {
@@ -103,32 +103,26 @@
             border-bottom: 1px solid #e74c3c;
         }
 
-        .btn {
-            color: #fff;
-            outline: none;
-            border: 0;
-            padding: 10px 20px;
-            text-transform: uppercase;
-            margin-top: 30px;
-            border-radius: 2px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        /*.btn:after{
-            content:"";
-            position:absolute;
-            background:rgba(0,0,0,0.50);
-            top:0;
-            right:0;
-            width:100%;
-            height:100%;
-        }*/
         .input-container input:focus ~ label,
         .input-container input:valid ~ label {
             top: -12px;
             font-size: 12px;
 
+        }
+
+        #finded {
+            width: 100%;
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #finded > p {
+            margin-bottom: 20px;
+        }
+
+        #result {
+            font-weight: bold;
         }
     </style>
     <script>
@@ -152,11 +146,11 @@
                         if (r == "") {
                             $("#finded").css('display', 'block');
                             $("#find_pwd").css('display', 'none');
-                            $("#result").text("아이디를 찾을 수 없습니다.");
+                            $("#result").text("ID not found.");
                         } else {
                             $("#finded").css('display', 'block');
                             $("#find_pwd").css('display', 'block');
-                            $("#result").text("아이디는 " + r + " 입니다.");
+                            $("#result").text("Your ID is " + r + " .");
 
                         }
 
@@ -177,22 +171,31 @@
 
 <body>
 <main>
-    <form method="post" id="find_id_form">
-        <div class="input-container">
-            <input type="text" name="username" id="username" required=""/>
-            <label>이름</label>
+    <div class="box">
+        <img src="${pageContext.servletContext.contextPath}/image/img_main_3.jpg" alt="Login Image">
+        <div class="form-container">
+            <h2 style="text-align: center">
+                FIND ID
+            </h2>
+            <br>
+            <form method="post" id="find_id_form">
+                <div class="input-container">
+                    <input type="text" name="username" id="username" required=""/>
+                    <label>USER NAME</label>
+                </div>
+                <div class="input-container">
+                    <input type="text" name="email" id="email" required=""/>
+                    <label>USER EMAIL</label>
+                </div>
+                <button type="submit" name="find" id="find" class="submitBtn">FIND ID</button>
+            </form>
+            <div id="finded">
+                <hr/>
+                <p id="result"></p>
+                <input type="button" value="GO TO LOGIN PAGE" class="submitBtn" id="back"/>
+                <input type="button" value="FIND PASSWORD" class="submitBtn" id="find_pwd"/>
+            </div>
         </div>
-        <div class="input-container">
-            <input type="text" name="email" id="email" required=""/>
-            <label>이메일</label>
-        </div>
-        <button type="submit" name="find" id="find" class="btn btn-warning submitBtn">아이디 찾기</button>
-    </form>
-    <div id="finded">
-        <hr/>
-        <p id="result"></p>
-        <input type="button" value="뒤로가기" class="submitBtn" id="back"/>
-        <input type="button" value="비밀번호찾기" class="submitBtn" id="find_pwd"/>
     </div>
 </main>
 </body>

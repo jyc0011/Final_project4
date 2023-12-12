@@ -64,4 +64,15 @@ public class BoardServiceImpl implements BoardService {
     public int getLike(int post_id) {
         return Mapper.getLike(post_id);
     }
+
+    @Override
+    public int report(int post_id, String userId) {
+        return Mapper.report(post_id, userId);
+    }
+
+    @Override
+    public int getReport(int no, String userId) {
+        return Mapper.getReport(no, userId);
+
+    }
 }

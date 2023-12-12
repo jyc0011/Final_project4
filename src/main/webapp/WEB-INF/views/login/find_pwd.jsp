@@ -16,12 +16,97 @@
         }
 
         main {
-            width: 1200px;
-            margin: 0 auto;
             display: flex;
-            padding: 100px 0;
+            height: auto;
             align-items: center;
+            justify-content: center;
+            padding: 50px;
+            box-sizing: border-box;
+            margin-top: 50px;
+        }
+
+        .box {
+            display: flex;
+            width: 1000px;
+            height: 564px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .box img {
+            width: 50%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+
+        .form-container {
+            flex-grow: 1;
+            background: #fff;
+            padding: 40px;
+            display: flex;
             flex-direction: column;
+            justify-content: center;
+
+        }
+
+        .submitBtn:hover {
+            background-color: #F29727;
+        }
+
+        .input-container input:focus ~ label,
+        .input-container input:valid ~ label {
+            top: -20px;
+            left: 0;
+            font-size: 12px;
+        }
+
+        .submitBtn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            background-color: #ffe3a0;
+            color: black;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-container label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 16px;
+            pointer-event: none;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .input-container input {
+            border: 0;
+            border-bottom: 1px solid #555;
+            background: transparent;
+            width: 100%;
+            padding: 8px 0 5px 0;
+            font-size: 16px;
+        }
+
+        .input-container input:focus {
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #e74c3c;
+        }
+
+        .input-container input:focus ~ label,
+        .input-container input:valid ~ label {
+            top: -12px;
+            font-size: 12px;
+
         }
 
         #find_pwd_form > h1 {
@@ -35,10 +120,14 @@
         }
 
         .submitBtn {
-            background-color: #FFB300;
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
             border: none;
-            color: white;
-            width: 400px;
+            background-color: #ffe3a0;
+            color: black;
+            cursor: pointer;
+            margin-bottom: 20px;
         }
 
         .inputs {
@@ -89,15 +178,6 @@
             position: relative;
         }
 
-        /*.btn:after{
-            content:"";
-            position:absolute;
-            background:rgba(0,0,0,0.50);
-            top:0;
-            right:0;
-            width:100%;
-            height:100%;
-        }*/
         .input-container input:focus ~ label,
         .input-container input:valid ~ label {
             top: -12px;
@@ -120,11 +200,11 @@
                         console.log(r);
                         if (r == true) {
                             $("#verification").show();
-                            $("#result").text("이메일이 발송되었습니다,");
+                            $("#result").text("Your email has been sent.");
 
                         } else {
                             $("#verification").hide();
-                            $("#result").text("존재하지 않는 아이디 혹은 이메일입니다.");
+                            $("#result").text("This ID or email does not exist!");
 
                         }
                     },
@@ -149,10 +229,10 @@
                         console.log(r);
                         if (r == true) {
 
-                            alert("변경된 비밀번호가 이메일로 발송되었습니다");
+                            alert("Your changed password has been sent to your email.");
                             location.href = '/';
                         } else {
-                            alert("오류!")
+                            alert("An error occurred!")
                         }
 
 
@@ -170,26 +250,35 @@
 </head>
 <body>
 <main>
-    <form method="post" id=find_pwd_form>
-        <div class="input-container">
-            <input type="text" name="userid" id="userid" class="inputs" required=""/>
-            <label>아이디</label>
-        </div>
-        <div class="input-container">
-            <input type="text" name="email" id="email" class="inputs" required=""/>
-            <label>이메일</label>
-        </div>
-        <button type="submit" name="find" id="find" class="btn btn-warning submitBtn">인증번호 보내기</button>
+    <div class="box">
+        <img src="${pageContext.servletContext.contextPath}/image/img_main_3.jpg" alt="Login Image">
+        <div class="form-container">
+            <h2 style="text-align: center">
+                FIND PASSWORD
+            </h2>
+            <br>
+            <form method="post" id=find_pwd_form>
+                <div class="input-container">
+                    <input type="text" name="userid" id="userid" class="inputs" required=""/>
+                    <label>USER ID</label>
+                </div>
+                <div class="input-container">
+                    <input type="text" name="email" id="email" class="inputs" required=""/>
+                    <label>USER EMAIL</label>
+                </div>
+                <button type="submit" name="find" id="find" class="submitBtn">SEND AUTHENTICATION CODE</button>
 
-        <div id="result" style="text-align: center; color: darkred; margin-top: 5px"></div>
-        <div id="verification" style="display: none; margin-top: 20px">
-            <div class="input-container">
-                <input type="text" name="code" id="code" class="inputs" required=""/>
-                <label>인증번호 입력</label>
-            </div>
-            <input type="submit" id="verifybtn" class="btn btn-warning submitBtn"/>
+                <div id="result" style="text-align: center; color: #332913; margin-top: 5px"></div>
+                <div id="verification" style="display: none; margin-top: 30px">
+                    <div class="input-container">
+                        <input type="text" name="code" id="code" class="inputs" required=""/>
+                        <label>ENTER AUTHENTICATION CODE</label>
+                    </div>
+                    <input type="submit" id="verifybtn" class="submitBtn"/>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </main>
 </body>
 </html>

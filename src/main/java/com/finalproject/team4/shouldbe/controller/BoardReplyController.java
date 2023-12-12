@@ -4,9 +4,12 @@ package com.finalproject.team4.shouldbe.controller;
 import com.finalproject.team4.shouldbe.service.ReplyService;
 import com.finalproject.team4.shouldbe.vo.BoardReplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -64,5 +67,63 @@ public class BoardReplyController {
         }
         map.put("result", false);
         return map;
+    }
+    @PostMapping("/boardReply/report")
+    @ResponseBody
+    public Map<String, Object> report(HttpSession session, String id,int no){
+        var map = new HashMap<String, Object>();
+        if("Y".equals(session.getAttribute("logStatus"))){
+            System.out.println(id+" "+no);
+            int result = replyService.report(no, id);
+            if(result>0){
+                map.put("result", true);
+                return map;
+            }
+            map.put("result", false);
+            map.put("msg", "이미 신고되었습니다!");
+
+        }
+        map.put("result", false);
+        map.put("message", "로그인해주세요.");
+        return map;
+    }
+
+    @PostMapping("/boardReply/like")
+    @ResponseBody
+    public Map<String, Object> like(HttpSession session, int no){
+        var map = new HashMap<String, Object>();
+        if("Y".equals(session.getAttribute("logStatus"))){
+            var id = (String)session.getAttribute("logId");
+
+            int result = replyService.like(no, id);
+            if(result>0){
+                map.put("result", true);
+                return map;
+            }
+            map.put("result", false);
+            map.put("msg", "이미 좋아요를 눌렀습니다!");
+
+        }
+        map.put("result", false);
+        map.put("message", "로그인해주세요.");
+        return map;
+    }
+
+    @PostMapping("/boardReply/edit")
+    public ResponseEntity<?> editComment(@RequestParam("post_id") int post_id,
+                                         @RequestParam("comment_id") int comment_id,
+                                         @RequestParam("content") String content,
+                                         HttpSession session) {
+        // Retrieve the user ID from the session
+        String userId = (String)session.getAttribute("logId");
+        System.out.println(post_id+" "+comment_id+" "+content);
+        // Call the service method to update the comment
+        boolean updateStatus = replyService.updateComment(post_id, comment_id, userId, content);
+
+        if(updateStatus) {
+            return ResponseEntity.ok("Comment updated successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating comment");
+        }
     }
 }

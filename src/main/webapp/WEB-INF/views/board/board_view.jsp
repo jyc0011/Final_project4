@@ -85,14 +85,14 @@
             margin-bottom: 0;
         }
 
-        #replyForm {
+        #replyForm, #replyFormEdit {
             width: 970px;
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        #replyForm > div {
+        #replyForm > div, #replyFormEdit>div {
             display: flex;
             justify-content: flex-end;
         }
@@ -160,7 +160,7 @@
             display: flex;
         }
 
-        #replyEdit {
+        #replyReport, #replyEdit {
             margin-right: 20px;
             padding-left: 5px;
             padding-right: 5px;
@@ -172,7 +172,7 @@
         }
 
         #likeButton:hover {
-            background-color:#c8c8c8;
+            background-color: #c8c8c8;
         }
 
         #liked {
@@ -181,11 +181,11 @@
             font-size: 16px;
         }
 
-        #replyEdit:hover, #replyDelete:hover {
+        #replyReport:hover, #replyLike:hover, #replyEdit:hover, #replyDelete:hover {
             color: #555555;
         }
 
-        #replyDelete {
+        #replyLike, #replyDelete {
             padding-left: 5px;
             padding-right: 5px;
             background-color: white;
@@ -194,17 +194,19 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
+        #reply
     </style>
     <script>
-
+        var currentCommentId = null;
         $(function () {
-            $("#toList").click(function(){
+            $("#toList").click(function () {
                 location.href = "${listUrl}";
             })
-            $("#editPost").on('click', function(){
+            $("#editPost").on('click', function () {
                 location.href = "${pageContext.servletContext.contextPath}/board/${bVO.board_cat}/edit?no=${bVO.post_id}"
             })
-            $("#deletePost").on('click', function(){
+            $("#deletePost").on('click', function () {
                 if (!confirm("정말 삭제하시겠습니까?")) {
                     alert("취소 되었습니다.");
                 } else {
@@ -212,6 +214,7 @@
 
                 }
             })
+
             //댓글목록 불러오기
             function getReply() {
                 $.ajax({
@@ -229,14 +232,21 @@
 
                             if ('${logId}' == rVO.writer) {
                                 tag += "<div class='button-container'>";
-                                tag += "<input type='button' class='reply-button' id='replyEdit' value='Edit'/>";
+                                tag += "<input type='hidden' class='comment-id' value='" + rVO.comment_id + "'/>";
+                                tag += "<input type='button' class='reply-button replyEdit' id='replyEdit' value='Edit'/>";
                                 tag += "<input type='button' class='reply-button' id='replyDelete' value='Del'/>";
-                                tag += "</div>";
+                            }else{
+                                tag += "<div class='button-container'>";
+                                tag += "<input type='hidden' class='reply-button reply-comment-id' value='" + rVO.comment_id + "'/>";
+                                tag += "<input type='hidden' class='reply-button reply-writer' value='" + rVO.writer + "'/>";
+                                tag += "<input type='button' class='reply-button' id='replyReport' value='Report'/>";
+                                tag += "<input type='button' class='reply-button' id='replyLike' value='Like'/>";
                             }
+                            tag += "<div>&nbsp추천수: " + rVO.like + "</div>"
+                            tag += "</div>";
                             tag += "</div>";
                             tag += "</li>";
                         });
-
 
                         $("#replyList").html(tag);
 
@@ -250,7 +260,7 @@
 
             function getLike() {
                 $.ajax({
-                    url: '${pageContext.servletContext.contextPath}/like/get',
+                    url: '${pageContext.servletContext.contextPath}/board/like/get',
                     data: {no: ${bVO.post_id}},
                     type: 'GET',
                     success: function (result) {
@@ -263,8 +273,45 @@
                 })
             }
 
-            $("#replyForm").submit(function () {
-                event.preventDefault();
+            $(document).on('click', '.replyEdit', function() {
+                var currentContent = $(this).closest('.comment-section').find('.comment-content').text();
+                var commentId = $(this).siblings('.comment-id').val();
+                console.log("Comment ID:", commentId);
+                currentCommentId=commentId;
+                $('#content_Edit').val(currentContent);
+                $('#replyFormEdit').show();
+                $('#replyForm').hide();
+            });
+
+            $('#EditReply').click(function(e) {
+                e.preventDefault();
+                var postId = $('input[name="post_id_Edit"]').val();
+                var updatedContent = $('#content_Edit').val();
+                var commentId=currentCommentId;
+                console.log(postId, updatedContent, commentId);
+                $.ajax({
+                    url: '/boardReply/edit',
+                    type: 'POST',
+                    data: {
+                        post_id: postId,
+                        comment_id:commentId,
+                        content: updatedContent
+                    },
+                    success: function(response) {
+                        alert('Comment updated successfully.');
+                        getReply();
+                        $('#replyFormEdit').hide();
+                        $('#replyForm').show();
+                    },
+                    error: function(err) {
+                        alert('Error updating comment.');
+                        console.log(err);
+                    }
+                });
+            });
+
+            $("#replyForm").submit(function (e) {
+                e.preventDefault();
                 var params = $(this).serialize();
                 $.ajax({
                     type: "POST",
@@ -273,7 +320,7 @@
                     success: function (r) {
                         //console.log(r);
                         getReply();
-                        $("#coment").val("");
+                        $("#content").val("");
 
                     },
                     error: function (e) {
@@ -284,37 +331,91 @@
             })
             $(document).on('click', '#replyList input[value=Del]', function () {
                 if (!confirm("정말 삭제하시겠습니까?")) {
-                } else {
-
-                    var replyNo = $(this).siblings('input[type="hidden"]').val();
-                    var postNo = ${bVO.post_id};
-                    $.ajax({
-                        type: "POST",
-                        url: "/boardReply/delete",
-                        data: {replyNo: replyNo, postNo: postNo},
-                        success: function (r) {
-                            //console.log(r);
-                            getReply();
-
-                        },
-                        error: function (e) {
-                            console.log(e.responseText);
-                        }
-
-                    })
+                    return;
                 }
+                var replyNo = $(this).siblings('input[type="hidden"]').val();
+                var postNo = ${bVO.post_id};
+                $.ajax({
+                    type: "POST",
+                    url: "/boardReply/delete",
+                    data: {replyNo: replyNo, postNo: postNo},
+                    success: function (r) {
+                        //console.log(r);
+                        getReply();
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+
             });
+            $(document).on('click', '#replyList input[value=Report]', function () {
+                if (!confirm("정말 신고하시겠습니까?")) {
+                    return;
+                }
+                var replyNo = $(this).siblings('.reply-comment-id').val();
+                var commentUserId = $(this).siblings('.reply-writer').val();
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.servletContext.contextPath}/boardReply/report",
+                    data: {
+                        id: commentUserId,
+                        no: replyNo},
+                    success: function (r) {
+                        console.log(r);
+                        if (r.result == true) {
+                            console.log("success")
+                        } else {
+                            alert(r.msg);
+                        }
+                        getLike();
+
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+
+            })
+            $(document).on('click', '#replyList input[value=Like]', function () {
+                var replyNo = $(this).siblings('.reply-comment-id').val();
+                console.log(replyNo);
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.servletContext.contextPath}/boardReply/like",
+                    data: {
+                        no: replyNo},
+                    success: function (r) {
+                        console.log(r);
+                        if (r.result == true) {
+                            console.log("success")
+                            getReply();
+                        } else {
+                            alert(r.msg);
+                        }
+                        getLike();
+
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+
+            })
 
             $("#likeButton").click(function () {
                 $.ajax({
                     type: "POST",
-                    url: "${pageContext.servletContext.contextPath}/like/increase",
+                    url: "${pageContext.servletContext.contextPath}/board/like/increase",
                     data: {no: ${bVO.post_id}, user_id: '${logId}'},
                     success: function (r) {
                         console.log(r);
-                        if(r.result==true){
+                        if (r.result == true) {
                             console.log("success")
-                        }else{
+                        } else {
                             alert(r.msg);
                         }
                         getLike();
@@ -326,11 +427,26 @@
 
                 })
             });
+            $("#report").click(function () {
+                if (!confirm("신고하시겠습니까?")) {
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.servletContext.contextPath}/board/report",
+                    data: {no: ${bVO.post_id}, user_id: '${bVO.user_id}'},
+                    success: function (r) {
+                        if (r.result == true) {
+                            alert("신고했습니다.")
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                })
 
+            });
             getReply();
             getLike();
-
-
         })
 
     </script>
@@ -348,7 +464,8 @@
     </div>
     <div>
         <button id="likeButton">추천</button>
-        <div id="liked"> </div>
+        <div id="liked"></div>
+        <button id="report">신고하기</button>
     </div>
     <br>
     <hr style="width: 1000px;">
@@ -384,6 +501,13 @@
             </form>
         </c:if>
 
+        <form method="post" id="replyFormEdit" style="display: none">
+            <input type="hidden" name="post_id_Edit" value="${bVO.post_id}"/>
+            <textarea name="content" id="content_Edit"></textarea>
+            <div>
+                <button class="btn btn-warning" id="EditReply">댓글등록</button>
+            </div>
+        </form>
     </div>
 </main>
 </body>

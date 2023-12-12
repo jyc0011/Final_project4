@@ -12,9 +12,48 @@
 
 
     <style>
-        .container {
+        .banner{
+            display: none;
+        }
+
+        .nav{
+            display: none;
+        }
+        hr{
+            display: none;
+        }
+
+        .banner_2 {
             width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            height: 200px;
+        }
+
+        .nav_2 {
             display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        body{
+            background-image:url("/image/admin_back_2.jpg") !important;
+            background-size: 100% 100% !important;
+            background-position: center center !important;
+            background-attachment: fixed !important;
+        }
+
+        .container {
+            margin-top:50px;
+            width: 1200px;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            background-color: rgba(255, 255, 255, 0);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0);
         }
 
         #side_menu {
@@ -104,7 +143,7 @@
         }
 
         #side_menu li a.active{
-            background-color: #333333;
+            background-color: #000000;
             color: white;
         }
 
@@ -116,6 +155,87 @@
 
 </head>
 <body>
+<div class="banner_2">
+    <div class="logo-area">
+        <a href="${pageContext.servletContext.contextPath}/"><img
+                src="${pageContext.servletContext.contextPath}/image/logo_admin.png" class="logo" height="110px"></a>
+        <!-- 로고 이미지 -->
+    </div>
+    <div class="login">
+        <c:if test="${logStatus=='Y'}">
+            <a href="${pageContext.servletContext.contextPath}/mypage/change_user"> <!-- 마이페이지 -->
+                <img src="${pageContext.servletContext.contextPath}/image/profile/user1.jpg" class="user-icon"
+                     id="user-icon" style="border-radius: 50%; width: 50px; height: auto;"/></a>
+            <!--유저로고-->
+            <a href="${pageContext.servletContext.contextPath}/logout" class="login-button">&nbsp&nbspLOGOUT</a>
+        </c:if>
+        <c:if test="${logStatus!='Y'}">
+            <a href="${pageContext.servletContext.contextPath}/login" class="login-button">LOGIN&nbsp</a> | <a
+                href="${pageContext.servletContext.contextPath}/create" class="login-button">&nbspREGISTER</a>
+        </c:if>
+    </div>
+</div>
+
+<div class="nav_2">
+    <div class="category">
+        <!-- 마이페이지 Dropdown -->
+        <div class="dropdown">
+            <a href="${pageContext.servletContext.contextPath}/mypage" class="dropbtn">MY PAGE</a>
+            <c:if test="${logStatus=='Y'}">
+                <div class="dropdown-content">
+                    <a href="${pageContext.servletContext.contextPath}/mypage/change_user">INFO EDIT</a>
+                    <a href="${pageContext.servletContext.contextPath}/mypage/post_user">POST LIST</a>
+                    <a href="${pageContext.servletContext.contextPath}/mypage/friend_user">FRIENDS</a>
+                    <a href="${pageContext.servletContext.contextPath}/mypage/save_chat">STORE</a>
+                    <a href="${pageContext.servletContext.contextPath}/mypage/withdraw_user">WITHDRAW</a>
+                </div>
+            </c:if>
+        </div>
+
+        <!-- 게시판 Dropdown -->
+        <div class="dropdown">
+            <a href="${pageContext.servletContext.contextPath}/board/notice" class="dropbtn">BOARD</a>
+            <div class="dropdown-content">
+                <a href="${pageContext.servletContext.contextPath}/board/notice">NOTICE</a>
+                <a href="${pageContext.servletContext.contextPath}/board/free">FREE</a>
+                <a href="${pageContext.servletContext.contextPath}/board/inquiries">INQUIRE</a>
+            </div>
+        </div>
+
+        <!-- 퀴즈 Dropdown -->
+        <div class="dropdown">
+            <a href="${pageContext.servletContext.contextPath}/quiz/main" class="dropbtn">QUIZ</a>
+            <div class="dropdown-content">
+                <a href="${pageContext.servletContext.contextPath}/quiz/main">SOLVE QUIZ</a>
+                <a href="${pageContext.servletContext.contextPath}/quiz/create">CREATE QUIZ</a>
+            </div>
+        </div>
+
+        <!-- 채팅 Dropdown -->
+        <div class="dropdown">
+            <a href="${pageContext.servletContext.contextPath}/chat/list" class="dropbtn">CHAT</a>
+            <div class="dropdown-content">
+                <a href="${pageContext.servletContext.contextPath}/chat/list">MY CHAT LIST</a>
+                <a href="${pageContext.servletContext.contextPath}/chat/partners">NEW PARTNER</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="${pageContext.servletContext.contextPath}/admin" class="dropbtn">ADMIN</a>
+            <div class="dropdown-content">
+                <a href="${pageContext.servletContext.contextPath}/admin">DASH BOARD</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/member/management">NOW USER</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/suspended/management">SUSPENDED</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">WITHDRAWN</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/board">POST</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/reply">COMMENT</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/quiz/list">QUIZ</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/chat/management">CHAT</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr style="margin-bottom: 0;">
 <div class="container">
     <div id="side_bar">
         <ul id="side_menu">

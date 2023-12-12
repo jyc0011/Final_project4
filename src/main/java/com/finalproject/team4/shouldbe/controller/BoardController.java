@@ -6,9 +6,7 @@ import com.finalproject.team4.shouldbe.vo.BoardVO;
 import com.finalproject.team4.shouldbe.vo.PagingVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.HtmlUtils;
 
@@ -106,7 +104,7 @@ public class BoardController {
         ModelAndView mav = new ModelAndView();
         var vo = boardService.boardSelect(no);
         //작성자 맞는지 체크
-        if(vo.getUser_id().equals(session.getAttribute("logId"))){
+        if (vo.getUser_id().equals(session.getAttribute("logId"))) {
             vo.setTitle(HtmlUtils.htmlUnescape(vo.getTitle()));
             vo.setContent(HtmlUtils.htmlUnescape(vo.getContent()));
             mav.addObject("vo", vo);
@@ -117,48 +115,52 @@ public class BoardController {
         return null;
 
     }
+
     @PostMapping({"/board/free/editOk", "/board/notice/editOk", "/board/inquiries/editOk"})
-    public ModelAndView editOk(HttpServletRequest request, BoardVO bVO){
+    public ModelAndView editOk(HttpServletRequest request, BoardVO bVO) {
         ModelAndView mav = new ModelAndView();
         var cat = parseCategory(request.getRequestURI());
 
         var result = boardService.boardUpdate(bVO);
 
-        if(result>0) {
-            mav.setViewName("redirect:/board/"+cat+"/view?no="+bVO.getPost_id());
+        if (result > 0) {
+            mav.setViewName("redirect:/board/" + cat + "/view?no=" + bVO.getPost_id());
         }
         return mav;
     }
+
     @GetMapping({"/board/free/delete", "/board/notice/delete", "/board/inquiries/delete"})
     @ResponseBody
     public ModelAndView delete(HttpSession session, HttpServletRequest request, int no) {
-       var cat = parseCategory(request.getRequestURI());
+        var cat = parseCategory(request.getRequestURI());
 
         var mav = new ModelAndView();
         var id = (String) session.getAttribute("logId");
 
         //작성자 일치하면
-        if(id.equals(boardService.boardSelect(no).getUser_id())){
+        if (id.equals(boardService.boardSelect(no).getUser_id())) {
             //삭제성공
             boardService.boardDelete(no);
-            mav.setViewName("redirect:/board/"+cat);
+            mav.setViewName("redirect:/board/" + cat);
             return mav;
         }
         //삭제실패
         return null;
 
     }
-    @GetMapping("/like/get")
+
+    @GetMapping("/board/like/get")
     @ResponseBody
-    public int getLike(int no){
+    public int getLike(int no) {
         return boardService.getLike(no);
     }
-    @PostMapping("/like/increase")
+
+    @PostMapping("/board/like/increase")
     @ResponseBody
-    public Map<String, Object> increaseLike(int no, String user_id){
+    public Map<String, Object> increaseLike(int no, String user_id) {
         var map = new HashMap<String, Object>();
         int result = boardService.getLikeStatus(no, user_id);
-        if(result > 0){
+        if (result > 0) {
             map.put("result", false);
             map.put("msg", "이미 추천한 글입니다.");
             return map;
@@ -172,7 +174,7 @@ public class BoardController {
             map.put("result", false);
             map.put("msg", "db 오류");
             return map;
-        }catch(Exception e){
+        } catch (Exception e) {
             map.put("result", false);
             map.put("msg", "로그인 이후에 이용해주세요!");
             return map;
@@ -180,12 +182,40 @@ public class BoardController {
 
 
     }
+    @PostMapping("/board/report")
+    @ResponseBody
+    public Map<String, Object> report(@RequestParam("no") int no, @RequestParam("user_id") String user_id) {
+        var map = new HashMap<String, Object>();
+        try {
+            if (boardService.getReport(no, user_id) != 0) {
+                map.put("result", false);
+                map.put("msg", "이미 신고되었습니다!");
+                return map;
+            }
+            int result = boardService.report(no, user_id);
+            if (result > 0) {
+                map.put("result", true);
+                map.put("msg", "신고하였습니다.");
+                return map;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            map.put("result", false);
+            map.put("msg", "로그인 이후에 이용해주세요!");
+            return map;
+        }
+        map.put("result", false);
+        map.put("msg", "오류");
+        return map;
+    }
 
 
     public String parseCategory(String requestUri) {
         String[] params = requestUri.split("/");
         return params[2];
     }
+
+
 
 
 }
