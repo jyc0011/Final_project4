@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalproject.team4.shouldbe.mapper.MypageMapper">
+    <select id="selectChatId" resultType="FriendVO">
+        SELECT chat_id,from_id,to_id
+        FROM chat_list
+        WHERE (from_id =#{followed_userid} and to_id = #{following_user_id}) or (from_id =#{following_user_id} and to_id = #{followed_userid});
+    </select>
+
     <select id="mypage_info" resultType="MypageVO">
         select user_id, password, lang, profile_content, salt, profile_img, nation, user_name, email
         from users
