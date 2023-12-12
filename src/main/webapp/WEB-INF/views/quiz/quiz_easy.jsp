@@ -8,14 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif; /* 폰트 설정 */
         }
 
         main {
-
             width: 1200px;
             margin: 100px auto;
             display: block;
@@ -32,7 +31,6 @@
             width: 900px;
             height: 400px;
             line-height: 400px;
-            font-family: cursive;
             font-size: 7em;
             border:5px solid #000000;
             margin: 0 auto;
@@ -41,7 +39,6 @@
         }
 
         #input_form{
-
             width: 900px;
             margin: 50px auto 20px;
             height: 90px;
@@ -56,6 +53,7 @@
             font-size: 60px;
             margin: 0 auto;
             background-color: #FFD954;
+            text-align: center;
         }
 
     </style>

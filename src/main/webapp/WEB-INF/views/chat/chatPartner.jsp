@@ -17,7 +17,6 @@
             margin: 0 auto;
             padding: 20px;
             border-radius: 10px;
-            font-family: 'Arial', sans-serif;
         }
 
         .container h2 {
