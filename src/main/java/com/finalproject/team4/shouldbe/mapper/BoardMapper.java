@@ -25,4 +25,6 @@ public interface BoardMapper {
     public int increaseLike(int post_id, String user_id);
     public int getLikeStatus(int post_id, String user_id);
     public int getLike(int post_id);
+    public int report(int post_id, String user_id);
+    public int getReport(int post_id, String user_id);
 }

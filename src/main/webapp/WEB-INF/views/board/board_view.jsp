@@ -172,7 +172,7 @@
         }
 
         #likeButton:hover {
-            background-color:#c8c8c8;
+            background-color: #c8c8c8;
         }
 
         #liked {
@@ -198,13 +198,13 @@
     <script>
 
         $(function () {
-            $("#toList").click(function(){
+            $("#toList").click(function () {
                 location.href = "${listUrl}";
             })
-            $("#editPost").on('click', function(){
+            $("#editPost").on('click', function () {
                 location.href = "${pageContext.servletContext.contextPath}/board/${bVO.board_cat}/edit?no=${bVO.post_id}"
             })
-            $("#deletePost").on('click', function(){
+            $("#deletePost").on('click', function () {
                 if (!confirm("정말 삭제하시겠습니까?")) {
                     alert("취소 되었습니다.");
                 } else {
@@ -212,6 +212,7 @@
 
                 }
             })
+
             //댓글목록 불러오기
             function getReply() {
                 $.ajax({
@@ -229,10 +230,15 @@
 
                             if ('${logId}' == rVO.writer) {
                                 tag += "<div class='button-container'>";
+                                tag += "<input type='hidden' class='reply-button' value='" + rVO.comment_id + "'/>"
                                 tag += "<input type='button' class='reply-button' id='replyEdit' value='Edit'/>";
                                 tag += "<input type='button' class='reply-button' id='replyDelete' value='Del'/>";
-                                tag += "</div>";
+                                tag += "<input type='button' class='reply-button' id='replyReport' value='Report'/>";
+                                tag += "<input type='button' class='reply-button' id='replyReport' value='Like'/>";
+
                             }
+                            tag += "<div>추천수: " + rVO.like + "</div>"
+                            tag += "</div>";
                             tag += "</div>";
                             tag += "</li>";
                         });
@@ -250,7 +256,7 @@
 
             function getLike() {
                 $.ajax({
-                    url: '${pageContext.servletContext.contextPath}/like/get',
+                    url: '${pageContext.servletContext.contextPath}/board/like/get',
                     data: {no: ${bVO.post_id}},
                     type: 'GET',
                     success: function (result) {
@@ -273,7 +279,7 @@
                     success: function (r) {
                         //console.log(r);
                         getReply();
-                        $("#coment").val("");
+                        $("#content").val("");
 
                     },
                     error: function (e) {
@@ -284,37 +290,40 @@
             })
             $(document).on('click', '#replyList input[value=Del]', function () {
                 if (!confirm("정말 삭제하시겠습니까?")) {
-                } else {
-
-                    var replyNo = $(this).siblings('input[type="hidden"]').val();
-                    var postNo = ${bVO.post_id};
-                    $.ajax({
-                        type: "POST",
-                        url: "/boardReply/delete",
-                        data: {replyNo: replyNo, postNo: postNo},
-                        success: function (r) {
-                            //console.log(r);
-                            getReply();
-
-                        },
-                        error: function (e) {
-                            console.log(e.responseText);
-                        }
-
-                    })
+                    return;
                 }
-            });
-
-            $("#likeButton").click(function () {
+                var replyNo = $(this).siblings('input[type="hidden"]').val();
+                var postNo = ${bVO.post_id};
                 $.ajax({
                     type: "POST",
-                    url: "${pageContext.servletContext.contextPath}/like/increase",
-                    data: {no: ${bVO.post_id}, user_id: '${logId}'},
+                    url: "/boardReply/delete",
+                    data: {replyNo: replyNo, postNo: postNo},
+                    success: function (r) {
+                        //console.log(r);
+                        getReply();
+
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+
+            });
+            $(document).on('click', '#replyList input[value=Report]', function () {
+                if (!confirm("정말 신고하시겟습니까?")) {
+                    return;
+                }
+                var replyNo = $(this).siblings('input[type="hidden"]').val();
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.servletContext.contextPath}/boardReply/report",
+                    data: {no: replyNo},
                     success: function (r) {
                         console.log(r);
-                        if(r.result==true){
+                        if (r.result == true) {
                             console.log("success")
-                        }else{
+                        } else {
                             alert(r.msg);
                         }
                         getLike();
@@ -325,6 +334,70 @@
                     }
 
                 })
+
+            })
+            $(document).on('click', '#replyList input[value=Like]', function () {
+                var replyNo = $(this).siblings('input[type="hidden"]').val();
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.servletContext.contextPath}/boardReply/like",
+                    data: {no: replyNo},
+                    success: function (r) {
+                        console.log(r);
+                        if (r.result == true) {
+                            console.log("success")
+                        } else {
+                            alert(r.msg);
+                        }
+                        getLike();
+
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+
+            })
+
+            $("#likeButton").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.servletContext.contextPath}/board/like/increase",
+                    data: {no: ${bVO.post_id}, user_id: '${logId}'},
+                    success: function (r) {
+                        console.log(r);
+                        if (r.result == true) {
+                            console.log("success")
+                        } else {
+                            alert(r.msg);
+                        }
+                        getLike();
+
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+
+                })
+            });
+            $("#report").click(function () {
+                if (!confirm("신고하시겠습니까?")) {
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.servletContext.contextPath}/board/report",
+                    data: {no: ${bVO.post_id}, user_id: '${logId}'},
+                    success: function (r) {
+                        if (r.result == true) {
+                            alert("신고했습니다.")
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                })
+
             });
 
             getReply();
@@ -348,7 +421,8 @@
     </div>
     <div>
         <button id="likeButton">추천</button>
-        <div id="liked"> </div>
+        <div id="liked"></div>
+        <button id="report">신고하기</button>
     </div>
     <br>
     <hr style="width: 1000px;">

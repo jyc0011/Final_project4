@@ -37,6 +37,7 @@ public class BoardReplyController {
             var id = (String)session.getAttribute("logId");
             rVO.setWriter(id);
             System.out.println(rVO);
+            rVO.setDepth(0);
             int result = replyService.addReply(rVO);
             if(result>0) {
 
@@ -63,6 +64,47 @@ public class BoardReplyController {
             }
         }
         map.put("result", false);
+        return map;
+    }
+    @PostMapping("/boardReply/report")
+    @ResponseBody
+    public Map<String, Object> report(HttpSession session, int no){
+        var map = new HashMap<String, Object>();
+        if("Y".equals((String)session.getAttribute("logStatus"))){
+            var id = (String)session.getAttribute("logId");
+
+            int result = replyService.report(no, id);
+            if(result>0){
+                map.put("result", true);
+                return map;
+            }
+            map.put("result", false);
+            map.put("msg", "db오류");
+
+        }
+        map.put("result", false);
+        map.put("message", "로그인해주세요.");
+        return map;
+    }
+
+    @PostMapping("/boardReply/like")
+    @ResponseBody
+    public Map<String, Object> like(HttpSession session, int no){
+        var map = new HashMap<String, Object>();
+        if("Y".equals((String)session.getAttribute("logStatus"))){
+            var id = (String)session.getAttribute("logId");
+
+            int result = replyService.like(no, id);
+            if(result>0){
+                map.put("result", true);
+                return map;
+            }
+            map.put("result", false);
+            map.put("msg", "db오류");
+
+        }
+        map.put("result", false);
+        map.put("message", "로그인해주세요.");
         return map;
     }
 }

@@ -51,4 +51,11 @@
     <select id="getLike" resultType="int">
         select count(user_id) from post_like where post_id=#{param1}
     </select>
+    <insert id="report">
+        insert into post_report(post_id, user_id) values(#{param1}, #{param2});
+    </insert>
+    <select id="getReport" resultType="int">
+        select count(post_report_id) from post_report where post_id=#{param1} and user_id=#{param2}
+
+    </select>
 </mapper>
