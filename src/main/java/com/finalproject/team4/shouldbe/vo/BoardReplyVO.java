@@ -18,6 +18,7 @@ public class BoardReplyVO {
     private int isdelete;
     private String board_cat;
     private String title;
+    private int depth;
 
     /*
     private int comment_report_id;

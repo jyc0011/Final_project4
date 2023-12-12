@@ -12,4 +12,6 @@ public interface ReplyMapper {
     public int addReply(BoardReplyVO rVO);
     public BoardReplyVO selectReply(int post_id, int comment_id);
     public int deleteReply(int post_id, int comment_id);
+    public int report(int comment_id, String user_id);
+    public int like(int comment_id, String user_id);
 }
