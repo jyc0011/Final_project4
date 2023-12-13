@@ -75,42 +75,6 @@
         }
     </style>
     <script>
-        function change_image(){
-            window.open("${pageContext.request.contextPath}/mypage/proflieimgChange", "w", "left= -1100px, top=390px,width=400px, height=300px");
-        }
-        $(function () {
-            $("#userEditForm").submit(function(){
-                if($("#pwd").val() == ""){
-                    alert("비밀번호를 입력해주세요.");
-                    return false;
-                }
-                if($("#pwd").val() != $("#pwd-confirm").val()){
-                    alert("비밀번호가 일치하지 않습니다.");
-                    return false;
-                }
-            });
-            var user_id = $("#userid").val();
-            $(document).on('click', '#basicimg',function () {
-                event.preventDefault();
-                $.ajax({
-                    url: "${pageContext.servletContext.contextPath}/mypage/basicimg",
-                    type: "post",
-                    data: {
-                        user_id: user_id
-                    },
-                    async: false,
-                    processData: false,
-                    contentType: false,
-                    success: function(result){
-                        document.location.reload();
-                    },
-                    error : function(error){
-                        console.log(error.responseText);
-                    }
-                });
-            });
-        });
-
         document.addEventListener('DOMContentLoaded', function() {
             var selectedLanguages = '${myvo.lang}'.split('/');
             selectedLanguages.forEach(function(lang) {

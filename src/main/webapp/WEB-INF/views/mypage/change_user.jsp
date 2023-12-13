@@ -76,7 +76,7 @@
     </style>
     <script>
         function change_image(){
-            window.open("${pageContext.request.contextPath}/mypage/proflieimgChange", "w", "left= -1100px, top=390px,width=400px, height=300px");
+            window.open("${pageContext.request.contextPath}/mypage/proflieimgChange", "w", "left= 700px, top=390px,width=400px, height=300px");
         }
         $(function () {
             $("#userEditForm").submit(function(){
