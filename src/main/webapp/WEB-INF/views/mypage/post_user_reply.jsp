@@ -44,7 +44,7 @@
         }
 
         .sidebar-menu li a:hover {
-            background-color: #ddd;
+            background-color: rgba(255, 227, 160, 0.3);
         }
 
         .active {

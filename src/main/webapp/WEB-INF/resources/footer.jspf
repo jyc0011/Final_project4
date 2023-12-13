@@ -7,7 +7,6 @@
         background-color: #332913;
         height: 350px;
         margin: 0;
-        margin-top: 60px;
     }
 
     .footer-first-area,

@@ -46,13 +46,14 @@
         }
 
         .container {
-            margin-top:50px;
+            margin-top:30px;
             width: 1200px;
             height: auto;
             display: flex;
             flex-direction: row;
-            background-color: rgba(255, 255, 255, 0);
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0);
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            backdrop-filter: blur(30px);
         }
 
         #side_menu {
@@ -235,18 +236,18 @@
                 <a href="${pageContext.servletContext.contextPath}/chat/partners">NEW PARTNER</a>
             </div>
         </div>
-    </div>
-    <div class="dropdown">
-        <a href="${pageContext.servletContext.contextPath}/admin" class="dropbtn">ADMIN</a>
-        <div class="dropdown-content">
-            <a href="${pageContext.servletContext.contextPath}/admin">DASH BOARD</a>
-            <a href="${pageContext.servletContext.contextPath}/admin/member/management">NOW USER</a>
-            <a href="${pageContext.servletContext.contextPath}/admin/suspended/management">SUSPENDED</a>
-            <a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">WITHDRAWN</a>
-            <a href="${pageContext.servletContext.contextPath}/admin/board">POST</a>
-            <a href="${pageContext.servletContext.contextPath}/admin/reply">COMMENT</a>
-            <a href="${pageContext.servletContext.contextPath}/admin/quiz/list">QUIZ</a>
-            <a href="${pageContext.servletContext.contextPath}/admin/chat/management">CHAT</a>
+        <div class="dropdown">
+            <a href="${pageContext.servletContext.contextPath}/admin" class="dropbtn">ADMIN</a>
+            <div class="dropdown-content">
+                <a href="${pageContext.servletContext.contextPath}/admin">DASH BOARD</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/member/management">NOW USER</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/suspended/management">SUSPENDED</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/withdrawn/management">WITHDRAWN</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/board">POST</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/reply">COMMENT</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/quiz/list">QUIZ</a>
+                <a href="${pageContext.servletContext.contextPath}/admin/chat/management">CHAT</a>
+            </div>
         </div>
     </div>
 </div>
