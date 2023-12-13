@@ -75,9 +75,33 @@
         }
     </style>
     <script>
-        function change_image(){
-            window.open("${pageContext.request.contextPath}/mypage/proflieimgChange", "w", "left= 700px, top=390px,width=400px, height=300px");
-        }
+        $(document).ready(function() {
+            $("#changeimg").click(function() {
+                $("#imgUpload").click();
+            });
+            $("#imgUpload").change(function() {
+                var formData = new FormData();
+                formData.append('filename', this.files[0]);
+
+                $.ajax({
+                    url: "${pageContext.servletContext.contextPath}/mypage/profileimgChangeOk",
+                    type: "post",
+                    data: formData,
+                    async: false,
+                    processData: false, // 필수 옵션
+                    contentType: false, // 필수 옵션
+                    success: function(result) {
+                        console.log(result);
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseText);
+                        document.location.reload();
+                    }
+                });
+            });
+        });
+
         $(function () {
             $("#userEditForm").submit(function(){
                 if($("#pwd").val() == ""){
@@ -89,6 +113,8 @@
                     return false;
                 }
             });
+
+
             var user_id = $("#userid").val();
             $(document).on('click', '#basicimg',function () {
                 event.preventDefault();
@@ -147,7 +173,8 @@
         </div>
 
         <div class="text-center">
-            <button type="button" class="btn btn-warning me-2" id="changeimg" onclick="change_image()">이미지 변경</button>
+            <button type="button" class="btn btn-warning me-2" id="changeimg" onclick="changeImg()">이미지 변경</button>
+            <input type="file" id="imgUpload" style="display: none">
             <button type="button" class="btn btn-secondary" id="basicimg">기본 이미지로 변경</button>
         </div>
 
