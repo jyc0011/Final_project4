@@ -52,42 +52,6 @@
             justify-content: space-between;
         }
 
-        #boardList {
-            overflow: hidden;
-        }
-
-        #boardList .page > ul {
-            margin: 30px 0;
-            overflow: auto;
-        }
-
-        #boardList > li {
-            float: left;
-            height: 40px;
-            line-height: 40px;
-            border-bottom: 1px solid #ddd;
-            width: 10%;
-        }
-
-        #boardList > li:nth-child(5n+2) {
-            width: 60%;
-            /* 내용이 길면 ...으로 제목 겹침 방 */
-            white-space: nowrap;
-
-            /* 줄바꾸지 않음 */
-            overflow: hidden;
-
-            /* 넘친 데이터 숨기기*/
-            text-overflow: ellipsis;
-
-            /* 넘친 데이터 ...표  */
-        }
-
-        .page {
-            text-align: center;
-            margin: 5px auto;
-        }
-
         .page > ul {
             padding-top: 5px;
             display: table;
@@ -132,7 +96,7 @@
         }
 
         .sidebar-menu li a:hover {
-            background-color: #ddd;
+            background-color: rgba(255, 227, 160, 0.3);
         }
 
         .active {
@@ -140,38 +104,6 @@
             color: white;
         }
 
-        #boardList li:nth-child(-n+5) {
-            font-weight: bold;
-        }
-
-        #boardList li:nth-child(2), #boardList li:nth-child(n+4):nth-child(-n+5) {
-            text-align: center;
-        }
-
-        #boardList > li:nth-child(5n+4), #boardList > li:nth-child(5n+5) {
-            text-align: center;
-        }
-
-        #writeBtn {
-            margin: 10px 0;
-        }
-
-        #search-select {
-            width: auto;
-            height: 38px;
-            margin-right: 20px;
-        }
-
-        #searchForm {
-            height: 50px;
-            text-align: center;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        #search-div {
-            width: 400px;
-        }
         select::-ms-expand{
             display: none;
         }
@@ -201,6 +133,30 @@
             justify-content: center;
             margin-top: 10px;
         }
+
+        #boardList {
+            width: 900px;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        #boardList th, #boardList td {
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #boardList td.title {
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #boardList tbody tr:hover {
+            background-color: rgba(255, 227, 160, 0.3); /* 마우스 오버 시 행 배경색 변경 */
+        }
+
     </style>
 </head>
 
@@ -232,26 +188,36 @@
                     </c:if>
                 </div>
             </div>
-            <ul id="boardList">
-                <li>글번호</li>
-                <li>제목</li>
-                <li>작성자</li>
-                <li>조회수</li>
-                <li>작성일</li>
-                <!-- 데이터 표시 -->
+            <table id="boardList" style="text-align: center">
+                <thead>
+                <tr>
+                    <th>글번호</th>
+                    <th>글제목</th>
+                    <th>🖋️</th>
+                    <th>👁️</th>
+                    <th>💛</th>
+                    <th>🗓️</th>
+                </tr>
+                </thead>
+                <tbody>
                 <c:forEach var="bVO" items="${list}">
-                    <li>${bVO.post_id}</li>
-                    <c:url var="viewUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/view">
-                        <c:param name="no" value="${bVO.post_id}"/>
-                        <c:param name="searchKey" value="${pVO.searchKey}"/>
-                        <c:param name="searchWord" value="${pVO.searchWord}"/>
-                    </c:url>
-                    <li><a href="${viewUrl}">${bVO.title}</a></li>
-                    <li>${bVO.user_id}</li>
-                    <li>${bVO.views}</li>
-                    <li>${bVO.write_date}</li>
+                    <tr>
+                        <td>${bVO.post_id}</td>
+                        <c:url var="viewUrl" value="${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/view">
+                            <c:param name="no" value="${bVO.post_id}"/>
+                            <c:param name="searchKey" value="${pVO.searchKey}"/>
+                            <c:param name="searchWord" value="${pVO.searchWord}"/>
+                        </c:url>
+                        <td class="title"><a href="${viewUrl}">${bVO.title}</a></td>
+                        <td>${bVO.user_id}</td>
+                        <td>${bVO.views}</td>
+                        <td>${bVO.likes}</td>
+                        <td>${bVO.write_date}</td>
+                    </tr>
                 </c:forEach>
-            </ul>
+                </tbody>
+            </table>
+
 
             <!-- 페이지 박스-->
             <!-- todo: 페이지 인식해서 보이게 -->
