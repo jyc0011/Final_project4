@@ -28,7 +28,6 @@ public class ServletInitializer extends SpringBootServletInitializer {
             @Override
             protected void postProcessContext(Context context) {
                 super.postProcessContext(context);
-
                 JspPropertyGroup jspPropertyGroup = new JspPropertyGroup();
                 jspPropertyGroup.addUrlPattern("*.jsp");
                 jspPropertyGroup.addUrlPattern("*.jspf");
@@ -47,9 +46,9 @@ public class ServletInitializer extends SpringBootServletInitializer {
             }
         };
     }
-
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(ShouldbeApplication.class); // Replace ShouldbeApplication.class with your main application class
+        return application.sources(ShouldbeApplication.class);
+
     }
 }

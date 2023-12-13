@@ -53,7 +53,7 @@
         }
 
         .sidebar-menu li a:hover {
-            background-color: #ddd;
+            background-color: rgba(255, 227, 160, 0.3);
         }
 
         .active {
@@ -76,7 +76,7 @@
     </style>
     <script>
         function change_image(){
-            window.open("${pageContext.request.contextPath}/mypage/proflieimgChange", "w", "left= -1100px, top=390px,width=400px, height=300px");
+            window.open("${pageContext.request.contextPath}/mypage/proflieimgChange", "w", "left= 700px, top=390px,width=400px, height=300px");
         }
         $(function () {
             $("#userEditForm").submit(function(){
@@ -130,6 +130,7 @@
     <div id="sidebar">
         <br/>
         <ul class="sidebar-menu">
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/">회원정보</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user" class="active">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
@@ -158,13 +159,19 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="pwd" class="col-sm-2 col-form-label">비밀번호</label>
+                <label for="pwd" class="col-sm-2 col-form-label">기존 비밀번호</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" placeholder="Enter password" name="now_password">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="pwd" class="col-sm-2 col-form-label">새 비밀번호</label>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="pwd-confirm" class="col-sm-2 col-form-label">비밀번호확인</label>
+                <label for="pwd-confirm" class="col-sm-2 col-form-label">새 비밀번호 확인</label>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" id="pwd-confirm" placeholder="Confirm password"
                            name="pwd-confirm">

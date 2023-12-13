@@ -8,13 +8,19 @@
         </if>
     </select>
     <select id="boardPageList" resultType="BoardVO">
-        select post_id, user_id, title, content, views, board_cat, date_format(write_date, '%m-%d %H:%i') as write_date
-        from posts where board_cat=#{board_cat}
+        SELECT p.post_id, p.user_id, p.title, p.content, p.views, p.board_cat,
+        DATE_FORMAT(p.write_date, '%m-%d %H:%i') AS write_date,
+        COUNT(l.user_id) AS likes
+        FROM posts p
+        LEFT JOIN post_like l ON p.post_id = l.post_id
+        WHERE p.board_cat=#{board_cat}
         <if test="searchWord!=null">
-            and ${searchKey} like '%${searchWord}%'
+            AND ${searchKey} LIKE '%${searchWord}%'
         </if>
+        GROUP BY p.post_id
         order by post_id desc limit ${onePageRecord} offset ${offsetPoint}
     </select>
+
     <insert id="boardInsert">
         insert into posts(user_id, title, content, board_cat)
         values (#{user_id}, #{title}, #{content}, #{board_cat})

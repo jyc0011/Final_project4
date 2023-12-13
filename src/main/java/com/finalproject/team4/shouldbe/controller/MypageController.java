@@ -1,5 +1,6 @@
 package com.finalproject.team4.shouldbe.controller;
 
+import com.finalproject.team4.shouldbe.service.ChatService;
 import com.finalproject.team4.shouldbe.service.MypageService;
 import com.finalproject.team4.shouldbe.util.EncryptUtil;
 import com.finalproject.team4.shouldbe.vo.*;
@@ -21,7 +22,8 @@ import java.util.List;
 public class MypageController {
     @Autowired
     MypageService service;
-
+    @Autowired
+    ChatService chatservice;
     EncryptUtil encrypt = new EncryptUtil();
 
     @GetMapping("/mypage")
@@ -60,25 +62,35 @@ public class MypageController {
 
     // 프로필 수정
     @PostMapping("/mypage/editProfileOk")
-    public String mypageEidt(MypageVO vo, @RequestParam("user_id") String user_id, @RequestParam("password") String password, RedirectAttributes redirect) {
+    public String mypageEdit(MypageVO vo, @RequestParam("user_id") String user_id, @RequestParam("password") String password, @RequestParam("now_password") String now_password, RedirectAttributes redirect) {
         MypageVO mVo = service.mypage_info(user_id);
-        System.out.println("password"+password);
-        System.out.println("mvo" + mVo.toString());
-        System.out.println(vo.toString());
         if (mVo == null) {
             return "redirect:/mypage/change_user";
-        } else if (encrypt.encrypt(password, mVo.getSalt()).equals(mVo.getPassword())) {
-            int result = service.mypage_edit(vo);
-            return "redirect:/mypage/change_user";
         }
-        redirect.addFlashAttribute("result", "회원수정 실패, 비밀번호를 확인해주세요!");
-        return "mypage/mypage_editResult";
+        if (! encrypt.encrypt(now_password, mVo.getSalt()).equals(mVo.getPassword())) {
+            System.out.println("1");
+            redirect.addFlashAttribute("result", "회원수정 실패, 비밀번호를 확인해주세요!");
+            return "mypage/mypage_editResult";
+        } else if (encrypt.encrypt(password, mVo.getSalt()).equals(mVo.getPassword())) {
+            System.out.println("2");
+            redirect.addFlashAttribute("result", "회원수정 실패, 기존 비밀번호와 동일합니다!");
+            return "mypage/mypage_editResult";
+        }
+        System.out.println("3");
+        vo.setPassword(encrypt.encrypt(password,mVo.getSalt()));
+        service.mypage_edit(vo);
+        redirect.addFlashAttribute("result", "회원수정가 수정되었습니다!");
+        return "redirect:/mypage/change_user";
     }
 
     // 친구목록
     @GetMapping("/mypage/friend_user")
     public ModelAndView mypage_friend_user(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String followed_user_id = (String) session.getAttribute("logId");
 
         PagingVO pvo = new PagingVO();
@@ -88,6 +100,20 @@ public class MypageController {
 
         List<FriendVO> flist = service.friendList(pvo, followed_user_id);
         System.out.println(flist);
+        for(int i=0;i< flist.size();i++) {
+            FriendVO fvo = service.selectChatId(followed_user_id, flist.get(i).getFollowing_user_id());
+            if (fvo != null) {
+                flist.get(i).setChat_id(fvo.getChat_id());
+                flist.get(i).setFrom_id(fvo.getFrom_id());
+                flist.get(i).setTo_id(fvo.getTo_id());
+            } else {
+                flist.get(i).setChat_id(0);
+                flist.get(i).setFrom_id("null");
+                flist.get(i).setTo_id("null");
+            }
+        }
+        System.out.println(flist);
+        mav.addObject("myId", followed_user_id);
         mav.addObject("pVO", pvo);
         mav.addObject("flist", flist);
         mav.setViewName("mypage/friend_user");
@@ -105,6 +131,10 @@ public class MypageController {
     @GetMapping("/mypage/blockList")
     public ModelAndView mypage_blocklist(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String user_id = (String) session.getAttribute("logId");
 
         PagingVO pvo = new PagingVO();
@@ -132,7 +162,10 @@ public class MypageController {
     @GetMapping("/mypage/post_user")
     public ModelAndView mypage_post_user(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
-
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String user_id = (String) session.getAttribute("logId");
 
         PagingVO pvo = new PagingVO();
@@ -152,6 +185,10 @@ public class MypageController {
     @GetMapping("/mypage/post_user/reply")
     public ModelAndView mypage_post_user_reply(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String user_id = (String) session.getAttribute("logId");
         
         PagingVO pvo = new PagingVO();
@@ -169,7 +206,10 @@ public class MypageController {
 
     // 회원탈퇴
     @GetMapping("/mypage/withdraw_user")
-    public String mypage_withdraw_user() {
+    public String mypage_withdraw_user(HttpSession session) {
+        if(session.getAttribute("logStatus") != "Y"){
+            return "redirect:/login";
+        }
         return "mypage/withdraw_user";
     }
 
@@ -196,7 +236,10 @@ public class MypageController {
     @GetMapping("/mypage/save_chat")
     public ModelAndView saveChat(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView("mypage/save_user");
-
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String userId = (String) session.getAttribute("logId");
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);
@@ -221,6 +264,10 @@ public class MypageController {
     @GetMapping("/mypage/save_quiz")
     public ModelAndView saveQuiz(HttpSession session, @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView("mypage/save_quiz");
+        if(session.getAttribute("logStatus") != "Y"){
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
         String userId = (String) session.getAttribute("logId");
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(10);

@@ -75,42 +75,6 @@
         }
     </style>
     <script>
-        function change_image(){
-            window.open("${pageContext.request.contextPath}/mypage/proflieimgChange", "w", "left= -1100px, top=390px,width=400px, height=300px");
-        }
-        $(function () {
-            $("#userEditForm").submit(function(){
-                if($("#pwd").val() == ""){
-                    alert("비밀번호를 입력해주세요.");
-                    return false;
-                }
-                if($("#pwd").val() != $("#pwd-confirm").val()){
-                    alert("비밀번호가 일치하지 않습니다.");
-                    return false;
-                }
-            });
-            var user_id = $("#userid").val();
-            $(document).on('click', '#basicimg',function () {
-                event.preventDefault();
-                $.ajax({
-                    url: "${pageContext.servletContext.contextPath}/mypage/basicimg",
-                    type: "post",
-                    data: {
-                        user_id: user_id
-                    },
-                    async: false,
-                    processData: false,
-                    contentType: false,
-                    success: function(result){
-                        document.location.reload();
-                    },
-                    error : function(error){
-                        console.log(error.responseText);
-                    }
-                });
-            });
-        });
-
         document.addEventListener('DOMContentLoaded', function() {
             var selectedLanguages = '${myvo.lang}'.split('/');
             selectedLanguages.forEach(function(lang) {
@@ -128,6 +92,7 @@
     <div id="sidebar">
         <br/>
         <ul class="sidebar-menu">
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/" class="active">회원정보</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user">친구관리</a></li>
@@ -170,43 +135,43 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">사용가능언어</label>
                 <div class="col-sm-10">
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-ko" value="ko" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-ko" value="ko" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-ko">한국어</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-en" value="en" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-en" value="en" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-en">English</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-ja" value="ja" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-ja" value="ja" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-ja">日本語</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-zn-CN" value="zn-CN" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-zn-CN" value="zn-CN" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-zn-CN">中國語-简体</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-zn-TW" value="zn-TW" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-zn-TW" value="zn-TW" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-zn-TW">中國語-繁体</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-vi" value="vi" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-vi" value="vi" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-vi">Tiếng Việt</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-th" value="th" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-th" value="th" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-th">แบบไทย</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-id" value="id" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-id" value="id" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-id">Indonésia</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-fr" value="fr" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-fr" value="fr" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-fr">Français</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-es" value="es" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-es" value="es" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-es">Español</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-ru" value="ru" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-ru" value="ru" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-ru">Русский</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-de" value="de" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-de" value="de" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-de">Deutsch</label>
 
-                    <input type="checkbox" class="btn-check" name="lang" id="lang-it" value="it" autocomplete="off">
+                    <input type="checkbox" class="btn-check" name="lang" id="lang-it" value="it" autocomplete="off" disabled>
                     <label class="btn btn-outline-secondary" for="lang-it">Italiano</label>
                 </div>
 

@@ -43,7 +43,7 @@
         }
 
         .sidebar-menu li a:hover {
-            background-color: #ddd;
+            background-color: rgba(255, 227, 160, 0.3);
         }
 
         .active {
@@ -100,6 +100,10 @@
             background-color: #ffe3a0;
             color: black;
         }
+
+        #gochat_btn{
+            text-decoration: none;
+        }
     </style>
     <script>
         $(function () {
@@ -131,6 +135,7 @@
     <div id="sidebar">
         <br/>
         <ul class="sidebar-menu">
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/">회원정보</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user" class="active">친구관리</a></li>
@@ -155,11 +160,14 @@
                 <div class="friend-info">
                     <input type="hidden" id="following_user_id" name="following_user_id"
                            value="${flist.following_user_id}"/>
-                    <strong>${flist.user_name}</strong>
+                    <strong>${flist.following_user_id}</strong>
                     <p>${flist.profile_content}</p>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-warning btn-action">채팅하기</button>
+                    <a href="${pageContext.request.contextPath}/chat?chat_id=${flist.chat_id}&other_user_id=${
+                    flist.following_user_id}&from_id=${flist.from_id}" id="gochat_btn">
+                        <button type="button" class="btn btn-warning btn-action">채팅하기</button>
+                    </a>
                     <button type="button" class="btn btn-outline-secondary btn-action" id="deletefriend"
                             title="${flist.followed_user_id}">친구삭제
                     </button>

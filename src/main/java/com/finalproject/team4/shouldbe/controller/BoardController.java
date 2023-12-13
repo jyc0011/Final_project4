@@ -84,18 +84,24 @@ public class BoardController {
             listUrl = "/board/" + cat;
         }
         ModelAndView mav = new ModelAndView();
-        //조회수 증가
-        boardService.viewCount(no);
+        try {
+            //조회수 증가
+            boardService.viewCount(no);
 
-        //게시글 데이터
-        var bVO = boardService.boardSelect(no);
-        bVO.setTitle(HtmlUtils.htmlUnescape(bVO.getTitle()));
-        bVO.setContent(HtmlUtils.htmlUnescape(bVO.getContent()));
-        mav.setViewName("/board/board_view");
-        mav.addObject("bVO", bVO);
-        mav.addObject("listUrl", listUrl);
+            //게시글 데이터
+            var bVO = boardService.boardSelect(no);
+            bVO.setTitle(HtmlUtils.htmlUnescape(bVO.getTitle()));
+            bVO.setContent(HtmlUtils.htmlUnescape(bVO.getContent()));
+            mav.setViewName("/board/board_view");
+            mav.addObject("bVO", bVO);
+            mav.addObject("listUrl", listUrl);
 
-        return mav;
+            return mav;
+        }
+        catch (NullPointerException ex) {
+            mav.setViewName("redirect:/board/notice");
+            return mav;
+        }
     }
 
 
@@ -189,7 +195,7 @@ public class BoardController {
         try {
             if (boardService.getReport(no, user_id) != 0) {
                 map.put("result", false);
-                map.put("msg", "이미 추천한 글입니다.");
+                map.put("msg", "이미 신고되었습니다!");
                 return map;
             }
             int result = boardService.report(no, user_id);
