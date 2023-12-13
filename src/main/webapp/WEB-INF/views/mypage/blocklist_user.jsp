@@ -131,6 +131,7 @@
     <div id="sidebar">
         <br/>
         <ul class="sidebar-menu">
+            <li><a href="${pageContext.servletContext.contextPath}/mypage/">회원정보</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/change_user">회원정보 수정</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/post_user">작성한글</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/mypage/friend_user" class="active">친구관리</a></li>
