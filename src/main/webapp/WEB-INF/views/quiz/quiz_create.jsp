@@ -102,9 +102,54 @@
             $('#quiz_lang').change(function () {
                 var selectedLanguage = $(this).val();
                 $('#quiz_content').val(''); // 언어가 변경될 때마다 내용 초기화
+                $('#answer').val('');
                 $('#warning-message').hide(); // 메시지 숨기기
 
                 $('#quiz_content').on('input', function () {
+                    var value = $(this).val();
+                    var isValid = true;
+
+                    if (selectedLanguage === 'ko' && /[^ㄱ-ㅎㅏ-ㅣ가-힣\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'en' && /[^a-zA-Z\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'jp' && /[^ぁ-ゔゞァ-ヺー龰\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'zh-CN' && /[^一-龥\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'zh-TW' && /[^一-龥\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'vi' && /[^a-zA-Zàảãáạăằẳẵắặâầẩẫấậđèẻẽéẹêềểễếệìỉĩíịòỏõóọôồổỗốộơờởỡớợùủũúụưừửữứựỳỷỹýỵ\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'th' && /[^ก-๙\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'id' && /[^a-zA-Z\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'fr' && /[^a-zA-Zàâçéèêëîïôûùüÿœ\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'es' && /[^a-zA-ZáéíñóúüÁÉÍÑÓÚÜ\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'ru' && /[^а-яА-ЯёЁ\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'de' && /[^a-zA-ZäöüßÄÖÜ\s]/.test(value)) {
+                        isValid = false;
+                    } else if (selectedLanguage === 'it' && /[^a-zA-Zàèéìîòóù\s]/.test(value)) {
+                        isValid = false;
+                    }
+                    if (!isValid) {
+                        $('#warning-message').show();
+                    } else {
+                        $('#warning-message').hide();
+                    }
+                });
+            });
+            $('#answer').change(function () {
+                var selectedLanguage = $(this).val();
+                $('#quiz_content').val(''); // 언어가 변경될 때마다 내용 초기화
+                $('#answer').val('');
+                $('#warning-message').hide(); // 메시지 숨기기
+
+                $('#answer').on('input', function () {
                     var value = $(this).val();
                     var isValid = true;
 
@@ -224,6 +269,21 @@
                 });
             });
         });
+
+        function toggleSubmitButton() {
+            var content = document.getElementById('quiz_content').value;
+            var answer = document.getElementById('answer').value;
+            var submitButton = document.getElementById('quiz_submit');
+
+            // Check if both inputs have values
+            if (content && answer) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+        document.getElementById('quiz_content').addEventListener('input', toggleSubmitButton);
+        document.getElementById('answer').addEventListener('input', toggleSubmitButton);
     </script>
 
 

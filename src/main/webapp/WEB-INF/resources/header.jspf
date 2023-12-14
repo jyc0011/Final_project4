@@ -12,10 +12,10 @@
     <script src="${pageContext.servletContext.contextPath}/js/no-cache.js"></script>
     <link rel="shortcut icon" href="https://ibsintelligence.com/wp-content/uploads/2023/05/Smoothpay.jpg">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Titillium+Web&family=ZCOOL+XiaoWei&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Kanit&family=M+PLUS+1&family=Nanum+Gothic&family=Noto+Sans+HK&family=Noto+Sans+SC&family=Noto+Sans+TC&family=Titillium+Web&display=swap');
 
         body {
-            font-family: 'Titillium Web', 'ZCOOL XiaoWei', 'Nanum Gothic', serif !important;
+            font-family: 'Titillium Web', 'M PLUS 1','Noto Sans HK','Noto Sans SC','Noto Sans TY','Nanum Gothic', serif !important;
         }
 
         .banner {

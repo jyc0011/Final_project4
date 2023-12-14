@@ -34,6 +34,16 @@
                 window.history.back();
             }
         }
+        document.addEventListener('DOMContentLoaded', function () {
+            var manager = ${manager}
+            var submitBtn = document.getElementById('submitBtn');
+            if (manager !== 'Y') {
+                submitBtn.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    alert('관리자가 아니라서 작성할 수 없습니다.');
+                });
+            }
+        });
     </script>
 </head>
 

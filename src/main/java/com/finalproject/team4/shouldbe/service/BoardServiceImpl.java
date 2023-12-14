@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -29,7 +30,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int totalRecord(PagingVO pVO) {
+    public Map<String, Object> totalRecord(PagingVO pVO) {
         return Mapper.totalRecord(pVO);
     }
 

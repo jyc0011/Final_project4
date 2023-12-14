@@ -145,7 +145,7 @@ public class UserController {
             System.out.println(1);
             redirect.addFlashAttribute("result", "로그인 실패, 아이디를 확인해주세요!");
             return "redirect:/login";
-        } else if (vo.getWithdraw()!= null) {
+        } else if (vo.getWithdraw()!= 0) {
             System.out.println(2);
             redirect.addFlashAttribute("result", "탈퇴 예정 회원입니다. 탈퇴를 취소하고 싶다면 문의해주세요.");
             return "redirect:/login";

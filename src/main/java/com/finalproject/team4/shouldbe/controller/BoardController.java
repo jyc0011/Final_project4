@@ -38,8 +38,15 @@ public class BoardController {
         var boardCat = parseCategory(request.getRequestURI());
         //board category setting
         pVO.setBoard_cat(boardCat);
+        Map<String, Object> recordResult = boardService.totalRecord(pVO);
+        Long totalRecordLong = (Long) recordResult.get("totalRecord");
+        Long todayRecordLong = (Long) recordResult.get("todayRecord");
+        int totalRecord = totalRecordLong.intValue();
+        int todayRecord = todayRecordLong.intValue();
+        System.out.println(todayRecord+" "+totalRecord);
         //총레코드 수
-        pVO.setTotalRecord(boardService.totalRecord(pVO));
+        pVO.setTodayRecord(todayRecord);
+        pVO.setTotalRecord(totalRecord);
         //DB선택(page, 검색)
         List<BoardVO> list = boardService.boardPageList(pVO);
         mav.addObject("list", list);
@@ -72,7 +79,6 @@ public class BoardController {
         return "redirect:/board/" + boardCat;
 
     }
-
 
     @GetMapping({"/board/free/view", "board/notice/view", "board/inquiries/view"})
     public ModelAndView view(int no, String searchKey, String searchWord, HttpServletRequest request) {

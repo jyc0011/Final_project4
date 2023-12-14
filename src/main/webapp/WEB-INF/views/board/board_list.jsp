@@ -47,9 +47,8 @@
         }
 
         #boardTop {
-            height: 50px;
-            display: flex;
-            justify-content: space-between;
+            height: 20px;
+            text-align: right;
         }
 
         .page > ul {
@@ -166,26 +165,22 @@
             <br/>
             <ul class="sidebar-menu">
                 <li><a href="${pageContext.servletContext.contextPath}/board/notice"
-                       <c:if test="${pVO.board_cat=='notice'}">class="current active"</c:if>>공지사항</a></li>
+                       <c:if test="${pVO.board_cat=='notice'}">class="current active"</c:if>>NOTICE</a></li>
                 <li><a href="${pageContext.servletContext.contextPath}/board/free"
-                       <c:if test="${pVO.board_cat=='free'}">class="current active"</c:if>>자유게시판</a></li>
+                       <c:if test="${pVO.board_cat=='free'}">class="current active"</c:if>>FREE</a></li>
                 <li><a href="${pageContext.servletContext.contextPath}/board/inquiries"
-                       <c:if test="${pVO.board_cat=='inquiries'}">class="current active"</c:if>>문의게시판</a></li>
+                       <c:if test="${pVO.board_cat=='inquiries'}">class="current active"</c:if>>INQUIRE</a></li>
             </ul>
         </nav>
         <main>
-            <h1>
-                <c:if test="${pVO.board_cat=='notice'}">공지사항</c:if>
-                <c:if test="${pVO.board_cat=='free'}">자유게시판</c:if>
-                <c:if test="${pVO.board_cat=='inquiries'}">문의게시판</c:if>
-            </h1>
-            <div id="boardTop">
-                <div>총 ${pVO.totalRecord}건 - 현재 ${pVO.nowPage}페이지</div>
-                <div style="float:right">
-                    <c:if test="${'Y'.equals(logStatus)}">
-                        <input type="button" value="글 작성" class="post-button btn btn-warning" id="write-button"
-                               onclick="location.href='${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/write'">
-                    </c:if>
+            <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
+                <h1>
+                    <c:if test="${pVO.board_cat=='notice'}">NOTICE</c:if>
+                    <c:if test="${pVO.board_cat=='free'}">FREE</c:if>
+                    <c:if test="${pVO.board_cat=='inquiries'}">INQUIRE</c:if>
+                </h1>
+                <div id="boardTop">
+                    <div>Total Record : ${pVO.totalRecord} / Today Record : ${pVO.todayRecord}</div>
                 </div>
             </div>
             <table id="boardList" style="text-align: center">
@@ -218,11 +213,10 @@
                 </tbody>
             </table>
 
-
             <!-- 페이지 박스-->
             <!-- todo: 페이지 인식해서 보이게 -->
-            <div>
-                <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+            <div style="display: flex; flex-direction: row; justify-content: space-evenly; align-items: center">
+                <div class="pagination-container" style="margin: 0 auto; width: fit-content">
                     <div class="pagination" style="display: flex">
                         <div class="paging">
                             <ul class="pagination justify-content-center d-flex">
@@ -287,6 +281,22 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+                <div>
+                    <c:if test="${pVO.board_cat=='notice'}">
+                        <c:if test="${'Y'.equals(manager)}">
+                            <input type="button" value="글 작성" class="post-button btn btn-warning" id="write-button"
+                                   onclick="location.href='${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/write'">
+                        </c:if>
+                    </c:if>
+
+                    <c:if test="${pVO.board_cat=='free' || pVO.board_cat=='inquiries'}">
+                        <c:if test="${'Y'.equals(logStatus)}">
+                            <input type="button" value="글 작성" class="post-button btn btn-warning" id="write-button"
+                                   onclick="location.href='${pageContext.servletContext.contextPath}/board/${pVO.board_cat}/write'">
+                        </c:if>
+                    </c:if>
+
                 </div>
             </div>
             <br>
