@@ -17,11 +17,20 @@
         FROM posts p
         LEFT JOIN post_like l ON p.post_id = l.post_id
         WHERE p.board_cat=#{board_cat}
-        <if test="searchWord!=null">
-            AND ${searchKey} LIKE '%${searchWord}%'
-        </if>
+        <choose>
+            <when test="searchWord!=null and searchKey=='user_id'">
+                AND p.user_id LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <when test="searchWord!=null and searchKey=='title'">
+                AND p.title LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <when test="searchWord!=null and searchKey=='content'">
+                AND p.content LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+        </choose>
         GROUP BY p.post_id
-        order by post_id desc limit ${onePageRecord} offset ${offsetPoint}
+        ORDER BY post_id DESC
+        LIMIT #{onePageRecord} OFFSET #{offsetPoint}
     </select>
 
     <insert id="boardInsert">
