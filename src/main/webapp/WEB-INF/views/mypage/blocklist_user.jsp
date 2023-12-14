@@ -26,7 +26,7 @@
 
         #content {
             padding: 20px;
-            width: 80%;
+            width: 70%;
         }
 
         .sidebar-menu {

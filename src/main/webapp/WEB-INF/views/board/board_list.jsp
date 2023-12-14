@@ -304,18 +304,64 @@
             <div class="post-end-line">
                 <div class="inboard-search-area">
                     <div class="search flex-container"> <!-- Add a class to make this a flex container -->
-                        <form method="get" action="${pageContext.servletContext.contextPath}/board/list"
-                              onsubmit="return searchCheck()" class="searchForm">
-                            <select name="searchKey" class="select">
-                                <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>TITLE</option>
-                                <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>CONTENT</option>
-                                <option value="user_id" ${pVO.searchKey=='user_id' ? 'selected' : '' }>WRITER</option>
-                            </select>
-                            <div class="input-group mb-3" style="width: 300px;">
-                                <input type="search" class="form-control" placeholder="SEARCH WORD" name="searchWord" id="inboard-search" value="${pVO.searchWord}">
-                                <button class="btn btn-warning" type="submit" class="post-button" id="search-button">SEATCH</button>
-                            </div>
-                        </form>
+                        <c:choose>
+                            <c:when test="${pVO.board_cat == 'notice'}">
+                                <form method="get" action="${pageContext.servletContext.contextPath}/board/notice"
+                                      onsubmit="return searchCheck()" class="searchForm">
+                                    <select name="searchKey" class="select">
+                                        <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>TITLE</option>
+                                        <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>CONTENT</option>
+                                        <option value="user_id" ${pVO.searchKey=='user_id' ? 'selected' : '' }>WRITER</option>
+                                    </select>
+                                    <div class="input-group mb-3" style="width: 300px;">
+                                        <input type="search" class="form-control" placeholder="SEARCH WORD" name="searchWord" id="inboard-search" value="${pVO.searchWord}">
+                                        <button class="btn btn-warning" type="submit" class="post-button" id="search-button">SEATCH</button>
+                                    </div>
+                                </form>
+                            </c:when>
+                            <c:when test="${pVO.board_cat == 'free'}">
+                                <form method="get" action="${pageContext.servletContext.contextPath}/board/free"
+                                      onsubmit="return searchCheck()" class="searchForm">
+                                    <select name="searchKey" class="select">
+                                        <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>TITLE</option>
+                                        <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>CONTENT</option>
+                                        <option value="user_id" ${pVO.searchKey=='user_id' ? 'selected' : '' }>WRITER</option>
+                                    </select>
+                                    <div class="input-group mb-3" style="width: 300px;">
+                                        <input type="search" class="form-control" placeholder="SEARCH WORD" name="searchWord" id="inboard-search" value="${pVO.searchWord}">
+                                        <button class="btn btn-warning" type="submit" class="post-button" id="search-button">SEATCH</button>
+                                    </div>
+                                </form>
+                            </c:when>
+                            <c:when test="${pVO.board_cat == 'inquiries'}">
+                                <form method="get" action="${pageContext.servletContext.contextPath}/board/inquiries"
+                                      onsubmit="return searchCheck()" class="searchForm">
+                                    <select name="searchKey" class="select">
+                                        <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>TITLE</option>
+                                        <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>CONTENT</option>
+                                        <option value="user_id" ${pVO.searchKey=='user_id' ? 'selected' : '' }>WRITER</option>
+                                    </select>
+                                    <div class="input-group mb-3" style="width: 300px;">
+                                        <input type="search" class="form-control" placeholder="SEARCH WORD" name="searchWord" id="inboard-search" value="${pVO.searchWord}">
+                                        <button class="btn btn-warning" type="submit" class="post-button" id="search-button">SEATCH</button>
+                                    </div>
+                                </form>
+                            </c:when>
+                            <c:otherwise>
+                                <form method="get" action="${pageContext.servletContext.contextPath}/board/notice"
+                                      onsubmit="return searchCheck()" class="searchForm">
+                                    <select name="searchKey" class="select">
+                                        <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>TITLE</option>
+                                        <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>CONTENT</option>
+                                        <option value="user_id" ${pVO.searchKey=='user_id' ? 'selected' : '' }>WRITER</option>
+                                    </select>
+                                    <div class="input-group mb-3" style="width: 300px;">
+                                        <input type="search" class="form-control" placeholder="SEARCH WORD" name="searchWord" id="inboard-search" value="${pVO.searchWord}">
+                                        <button class="btn btn-warning" type="submit" class="post-button" id="search-button">SEATCH</button>
+                                    </div>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>

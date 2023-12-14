@@ -175,12 +175,6 @@
             background-color: #c8c8c8;
         }
 
-        #liked {
-            margin-top: 10px;
-            text-align: center;
-            font-size: 16px;
-        }
-
         #replyReport:hover, #replyLike:hover, #replyEdit:hover, #replyDelete:hover {
             color: #555555;
         }
@@ -264,7 +258,7 @@
                     data: {no: ${bVO.post_id}},
                     type: 'GET',
                     success: function (result) {
-                        $("#liked").html(result);
+                        $("#liked").html("LIKE "+result);
                     },
                     error: function (e) {
                         console.log(e.responseText);
@@ -457,18 +451,22 @@
 <main>
     <div id="viewArea">
         <ul>
-            <li>POST ID : ${bVO.post_id} &nbsp; 🖋️ : ${bVO.user_id} &nbsp; 👁️ : ${bVO.views} &nbsp; 🗓️
-                : ${bVO.write_date}</li>
+            <li>POST ID : ${bVO.post_id} &nbsp; 🖋️${bVO.user_id} &nbsp; 👁️${bVO.views} &nbsp; 🗓️${bVO.write_date}</li>
             <hr>
-            <li><h4><b>TITLE : ${bVO.title}</b></h4></li>
+            <li><h4><b>${bVO.title}</b></h4></li>
             <hr>
             <li>${bVO.content}</li>
         </ul>
     </div>
-    <div>
-        <button id="likeButton">💛</button>
-        <div id="liked"></div>
-        <button id="report">⚠️</button>
+    <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 40px; background-color: rgba(255, 227, 160, 0.2); padding: 0 20px; border-radius: 10px;">
+        <div style="display: flex; flex-direction: column; align-items: center; padding: 10px;">
+            <div id="liked" style="margin-bottom: 10px; font-size: 16px;">0 likes</div>
+            <button id="likeButton" style="font-size: 24px; padding: 5px 10px; border: none; background-color: transparent; cursor: pointer;  border-radius: 10px; background-color: rgba(255, 227, 160, 0.4);">💛</button>
+        </div>
+        <div style="padding: 10px;">
+            <div style="margin-bottom: 10px; font-size: 16px; text-align: center">REPORT IT</div>
+            <button id="report" style="font-size: 24px; padding: 5px 10px; border: none; background-color: transparent; cursor: pointer; border-radius: 10px; background-color: rgba(255, 227, 160, 0.4);">🔔</button>
+        </div>
     </div>
     <br>
     <hr style="width: 1000px;">
@@ -499,7 +497,7 @@
                 <textarea name="content" id="content"></textarea>
                 <!-- button은 form안에있을경우 input type submit과 동일 -->
                 <div>
-                    <button class="btn btn-warning" id="addReply">POST COMMENT</button>
+                    <button class="btn btn-warning" id="addReply">POST</button>
                 </div>
             </form>
         </c:if>
@@ -508,7 +506,7 @@
             <input type="hidden" name="post_id_Edit" value="${bVO.post_id}"/>
             <textarea name="content" id="content_Edit"></textarea>
             <div>
-                <button class="btn btn-warning" id="EditReply">POST COMMENT</button>
+                <button class="btn btn-warning" id="EditReply">EDIT</button>
             </div>
         </form>
     </div>

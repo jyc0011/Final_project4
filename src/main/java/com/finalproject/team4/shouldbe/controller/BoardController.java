@@ -182,6 +182,7 @@ public class BoardController {
             result = boardService.increaseLike(no, user_id);
             if (result > 0) {
                 map.put("result", true);
+                map.put("msg", "게시글을 추천합니다!");
                 return map;
             }
             map.put("result", false);

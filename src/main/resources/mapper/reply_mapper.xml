@@ -39,10 +39,10 @@
         WHERE comment_id = #{param1} AND user_id = #{param2}
                 );
     </insert>
-    <select id="like" parameterType="map" resultType="int">
+    <select id="like" resultType="int">
         SELECT COUNT(*)
         FROM comment_like
-        WHERE comment_id = #{commentId} AND user_id = #{userId}
+        WHERE comment_id = #{param1} AND user_id = #{param2}
     </select>
 
     <delete id="decreaseLike">

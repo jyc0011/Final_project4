@@ -56,7 +56,7 @@ public class BoardReplyController {
 
         var map = new HashMap<String, Object>();
         var reply = replyService.selectReply(postNo, replyNo);
-        if(reply.getWriter().equals((String)session.getAttribute("logId"))){
+        if(reply.getWriter().equals(session.getAttribute("logId"))){
             int result = replyService.deleteReply(postNo, replyNo);
             if(result>0) {
                 map.put("result", true);
@@ -93,7 +93,7 @@ public class BoardReplyController {
         if("Y".equals(session.getAttribute("logStatus"))){
             var id = (String)session.getAttribute("logId");
             int result = replyService.like(no, id);
-            if(result>0){
+            if(result==0){
                 replyService.increaseLike(no,id);
                 map.put("result", true);
                 map.put("msg","좋아요를 눌렀습니다!");
