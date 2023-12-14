@@ -29,7 +29,7 @@
 
         #quiz_reg_content{
             width: 1000px;
-            height: 600px;
+            height: auto;
             padding: 40px;
             margin: 20px auto;
             border: 5px solid #69491a;
@@ -298,7 +298,7 @@
             <div id="select_box">
                 <div class="form-group-box">
                     <div class="form-group">
-                        <label for="quiz_lang">QUIZ LANGUAGE:</label>
+                        <label for="quiz_lang">QUIZ LANG</label>
                         <select id="quiz_lang">
                             <option value="ko">한국어</option>
                             <option value="en">English</option>
@@ -316,7 +316,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="answer_lang">ANSWER LANGUAGE:</label>
+                        <label for="answer_lang">ANSWER LANG</label>
                         <select id="answer_lang">
                             <option value="ko">한국어</option>
                             <option value="en">English</option>
@@ -334,7 +334,7 @@
                         </select>
                     </div>       
                     <div class="form-group">
-                        <label for="level">LEVEL:</label>
+                        <label for="level">LEVEL</label>
                         <select id="level">
                             <option value="1">EASY</option>
                             <option value="2">MEDIUM</option>

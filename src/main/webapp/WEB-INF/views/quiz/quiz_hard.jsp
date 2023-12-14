@@ -51,11 +51,11 @@
         }
         .form-control{
             width: 700px;
-            font-size: 60px;
+            font-size: 40px;
         }
         .input-group-text{
             width: 200px;
-            font-size: 60px;
+            font-size: 40px;
             margin: 0 auto;
             background-color: #FFD954;
         }

@@ -158,6 +158,7 @@
             color: black;
         }
         .tr_list>td{
+            height: 75px;
             border-bottom: 1px solid #000000;
         }
 

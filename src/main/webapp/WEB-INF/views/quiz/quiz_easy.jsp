@@ -46,14 +46,13 @@
         }
         .form-control{
             width: 700px;
-            font-size: 60px;
+            font-size: 40px;
         }
         .input-group-text{
             width: 200px;
-            font-size: 60px;
+            font-size: 40px;
             margin: 0 auto;
             background-color: #FFD954;
-            text-align: center;
         }
 
     </style>
@@ -166,7 +165,7 @@
         <input type="hidden" name="quiz_content" value="${quiz.quiz_content}"/>
         <input type="hidden" name="level" value="${quiz.level}"/>
         <input type="hidden" name="quiz_lang" value="${quiz.quiz_lang}"/>
-        <input type="submit"  class="input-group-text" value="SUBMIT"/>
+        <input type="submit" style="text-align:center" class="input-group-text" value="SUBMIT"/>
     </form>
 </main>
 </body>
