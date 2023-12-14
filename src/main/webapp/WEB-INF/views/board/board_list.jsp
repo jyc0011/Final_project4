@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>게시판 글 목록</title>
+    <title>BOARD : LIST</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -186,8 +186,8 @@
             <table id="boardList" style="text-align: center">
                 <thead>
                 <tr>
-                    <th>글번호</th>
-                    <th>글제목</th>
+                    <th>NO</th>
+                    <th>POST TITLE</th>
                     <th>🖋️</th>
                     <th>👁️</th>
                     <th>💛</th>
@@ -307,13 +307,13 @@
                         <form method="get" action="${pageContext.servletContext.contextPath}/board/list"
                               onsubmit="return searchCheck()" class="searchForm">
                             <select name="searchKey" class="select">
-                                <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>제목</option>
-                                <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>글내용</option>
-                                <option value="user_id" ${pVO.searchKey=='user_id' ? 'selected' : '' }>글쓴이</option>
+                                <option value="title" ${pVO.searchKey=='title' ? 'selected' : '' }>TITLE</option>
+                                <option value="content" ${pVO.searchKey=='content' ? 'selected' : '' }>CONTENT</option>
+                                <option value="user_id" ${pVO.searchKey=='user_id' ? 'selected' : '' }>WRITER</option>
                             </select>
                             <div class="input-group mb-3" style="width: 300px;">
-                                <input type="search" class="form-control" placeholder="게시판 내 검색" name="searchWord" id="inboard-search" value="${pVO.searchWord}">
-                                <button class="btn btn-warning" type="submit" class="post-button" id="search-button">search</button>
+                                <input type="search" class="form-control" placeholder="SEARCH WORD" name="searchWord" id="inboard-search" value="${pVO.searchWord}">
+                                <button class="btn btn-warning" type="submit" class="post-button" id="search-button">SEATCH</button>
                             </div>
                         </form>
                     </div>
@@ -329,7 +329,7 @@
     function searchCheck() {
         let searchWord = $("#inboard-search").val();
         if (searchWord === "") {
-            alert("검색어를 입력해주세요");
+            alert("Please enter your search word!");
             return false;
         }
         return true;

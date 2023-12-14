@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>글 내용보기</title>
+    <title>BOARD : VIEW</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -207,8 +207,8 @@
                 location.href = "${pageContext.servletContext.contextPath}/board/${bVO.board_cat}/edit?no=${bVO.post_id}"
             })
             $("#deletePost").on('click', function () {
-                if (!confirm("정말 삭제하시겠습니까?")) {
-                    alert("취소 되었습니다.");
+                if (!confirm("Are you sure you want to delete?")) {
+                    alert("It has been cancelled.");
                 } else {
                     location.href = "/board/${bVO.board_cat}/delete?no=${bVO.post_id}";
 
@@ -242,7 +242,7 @@
                                 tag += "<input type='button' class='reply-button' id='replyReport' value='Report'/>";
                                 tag += "<input type='button' class='reply-button' id='replyLike' value='Like'/>";
                             }
-                            tag += "<div>&nbsp추천수: " + rVO.like + "</div>"
+                            tag += "<div>&nbsp LIKE: " + rVO.like + "</div>"
                             tag += "</div>";
                             tag += "</div>";
                             tag += "</li>";
@@ -330,7 +330,7 @@
                 })
             })
             $(document).on('click', '#replyList input[value=Del]', function () {
-                if (!confirm("정말 삭제하시겠습니까?")) {
+                if (!confirm("Are you sure you want to delete?")) {
                     return;
                 }
                 var replyNo = $(this).siblings('input[type="hidden"]').val();
@@ -351,7 +351,7 @@
 
             });
             $(document).on('click', '#replyList input[value=Report]', function () {
-                if (!confirm("정말 신고하시겠습니까?")) {
+                if (!confirm("Are you sure you want to report this?")) {
                     return;
                 }
                 var replyNo = $(this).siblings('.reply-comment-id').val();
@@ -431,7 +431,7 @@
                 })
             });
             $("#report").click(function () {
-                if (!confirm("신고하시겠습니까?")) {
+                if (!confirm("Are you sure you want to report this?")) {
                     return;
                 }
                 $.ajax({
@@ -440,7 +440,7 @@
                     data: {no: ${bVO.post_id}, user_id: '${bVO.user_id}'},
                     success: function (r) {
                         if (r.result == true) {
-                            alert("신고했습니다.")
+                            alert("Reported.")
                         } else {
                             alert(r.msg);
                         }
@@ -457,41 +457,41 @@
 <main>
     <div id="viewArea">
         <ul>
-            <li>글번호 : ${bVO.post_id} &nbsp; 작성자 : ${bVO.user_id} &nbsp; 조회수 : ${bVO.views} &nbsp; 작성일
+            <li>POST ID : ${bVO.post_id} &nbsp; 🖋️ : ${bVO.user_id} &nbsp; 👁️ : ${bVO.views} &nbsp; 🗓️
                 : ${bVO.write_date}</li>
             <hr>
-            <li><h4><b>제목 : ${bVO.title}</b></h4></li>
+            <li><h4><b>TITLE : ${bVO.title}</b></h4></li>
             <hr>
             <li>${bVO.content}</li>
         </ul>
     </div>
     <div>
-        <button id="likeButton">추천</button>
+        <button id="likeButton">💛</button>
         <div id="liked"></div>
-        <button id="report">신고하기</button>
+        <button id="report">⚠️</button>
     </div>
     <br>
     <hr style="width: 1000px;">
     <div class="util">
-        <button id="toList" class="btn btn-secondary">목록</button>
+        <button id="toList" class="btn btn-secondary">LIST</button>
         <c:if test="${logId==bVO.user_id}">
-            <button id="editPost" class="btn btn-warning">수정</button>
+            <button id="editPost" class="btn btn-warning">EDIT</button>
         </c:if>
 
         <c:if test="${logId==bVO.user_id}">
-            <button id="deletePost" class="btn btn-warning">삭제</button>
+            <button id="deletePost" class="btn btn-warning">DELETE</button>
         </c:if>
     </div>
     <hr style="width: 1000px;">
     <!-- 댓글 -->
     <div class="replyArea">
-        <h5>댓글 목록</h5>
+        <h5>COMMENT LIST</h5>
         <br>
         <ul id="replyList">
         </ul>
         <br>
         <c:if test="${'Y'.equals(logStatus)}">
-            <h5>댓글 작성</h5>
+            <h5>COMMENT</h5>
             <br>
             <form method="post" id="replyForm">
                 <!--  원글 글번호 -->
@@ -499,7 +499,7 @@
                 <textarea name="content" id="content"></textarea>
                 <!-- button은 form안에있을경우 input type submit과 동일 -->
                 <div>
-                    <button class="btn btn-warning" id="addReply">댓글등록</button>
+                    <button class="btn btn-warning" id="addReply">POST COMMENT</button>
                 </div>
             </form>
         </c:if>
@@ -508,7 +508,7 @@
             <input type="hidden" name="post_id_Edit" value="${bVO.post_id}"/>
             <textarea name="content" id="content_Edit"></textarea>
             <div>
-                <button class="btn btn-warning" id="EditReply">댓글등록</button>
+                <button class="btn btn-warning" id="EditReply">POST COMMENT</button>
             </div>
         </form>
     </div>

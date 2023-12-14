@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Insert title here</title>
+    <title>QUIZ : CREATE</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -261,10 +261,10 @@
                         $('#quiz_content').val('');
                         $('#quiz_lang').val('ko');
                         $('#level').val('1');
-                        alert("성공");
+                        alert("SUCCESS");
                     },
                     error: function () {
-                        alert("실패");
+                        alert("FAIL");
                     }
                 });
             });
@@ -291,63 +291,63 @@
 
 <body>
 <main>
-    <h1>퀴즈 등록하기</h1>
+    <h1>CREATE QUIZ</h1>
 
     <div id="quiz_reg_content">
         <form method="post" action="/quiz_createOk" id="quiz_createForm">
             <div id="select_box">
                 <div class="form-group-box">
                     <div class="form-group">
-                        <label for="quiz_lang">문제의 언어:</label>
+                        <label for="quiz_lang">QUIZ LANGUAGE:</label>
                         <select id="quiz_lang">
                             <option value="ko">한국어</option>
-                            <option value="en">영어</option>
-                            <option value="jp">일본어</option>
-                            <option value="zh-CN">중국어 간체</option>
-                            <option value="zh-TW">중국어 번체</option>
-                            <option value="vi">베트남어</option>
-                            <option value="th">태국어</option>
-                            <option value="id">인도네시아어</option>
-                            <option value="fr">프랑스어</option>
-                            <option value="es">스페인어</option>
-                            <option value="ru">러시아어</option>
-                            <option value="de">독일어</option>
-                            <option value="it">이탈리아어</option>
+                            <option value="en">English</option>
+                            <option value="jp">日本語</option>
+                            <option value="zh-CN">中國語-简体</option>
+                            <option value="zh-TW">中國語-繁体</option>
+                            <option value="vi">Tiếng Việt</option>
+                            <option value="th">แบบไทย</option>
+                            <option value="id">Indonésia</option>
+                            <option value="fr">Français</option>
+                            <option value="es">Español</option>
+                            <option value="ru">Русский</option>
+                            <option value="de">Deutsch</option>
+                            <option value="it">Italiano</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="answer_lang">정답의 언어:</label>
+                        <label for="answer_lang">ANSWER LANGUAGE:</label>
                         <select id="answer_lang">
                             <option value="ko">한국어</option>
-                            <option value="en">영어</option>
-                            <option value="ja">일본어</option>
-                            <option value="zh-CN">중국어 간체</option>
-                            <option value="zh-TW">중국어 번체</option>
-                            <option value="vi">베트남어</option>
-                            <option value="th">태국어</option>
-                            <option value="id">인도네시아어</option>
-                            <option value="fr">프랑스어</option>
-                            <option value="es">스페인어</option>
-                            <option value="ru">러시아어</option>
-                            <option value="de">독일어</option>
-                            <option value="it">이탈리아어</option>
+                            <option value="en">English</option>
+                            <option value="jp">日本語</option>
+                            <option value="zh-CN">中國語-简体</option>
+                            <option value="zh-TW">中國語-繁体</option>
+                            <option value="vi">Tiếng Việt</option>
+                            <option value="th">แบบไทย</option>
+                            <option value="id">Indonésia</option>
+                            <option value="fr">Français</option>
+                            <option value="es">Español</option>
+                            <option value="ru">Русский</option>
+                            <option value="de">Deutsch</option>
+                            <option value="it">Italiano</option>
                         </select>
                     </div>       
                     <div class="form-group">
-                        <label for="level">퀴즈 난이도:</label>
+                        <label for="level">LEVEL:</label>
                         <select id="level">
-                            <option value="1">쉬움</option>
-                            <option value="2">중간</option>
-                            <option value="3">어려움</option>
+                            <option value="1">EASY</option>
+                            <option value="2">MEDIUM</option>
+                            <option value="3">HARD</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div id="warning-message" style="display: none; color: red;">잘못된 입력입니다. 언어에 맞는 문자를 입력해주세요.</div>
+            <div id="warning-message" style="display: none; color: red;">Invalid input. Please enter the characters appropriate for your language.</div>
             <div class="submit-group">
-                <input type="text" id="quiz_content" placeholder="문제"/>
-                <input type="text" id="answer" placeholder="정답"/>
-                <div id="quiz_submit_box"><input id="quiz_submit" type="submit" value="제출"/></div>
+                <input type="text" id="quiz_content" placeholder="QUIZ CONTENT"/>
+                <input type="text" id="answer" placeholder="ANSWER"/>
+                <div id="quiz_submit_box"><input id="quiz_submit" type="submit" value="SUBMIT"/></div>
             </div>
         </form>
     </div>

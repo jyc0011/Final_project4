@@ -154,6 +154,7 @@
             <a href="${pageContext.servletContext.contextPath}/mypage/" class="dropbtn">MY PAGE</a>
             <c:if test="${logStatus=='Y'}">
                 <div class="dropdown-content">
+                    <a href="${pageContext.servletContext.contextPath}/mypage/">USER INFO</a>
                     <a href="${pageContext.servletContext.contextPath}/mypage/change_user">INFO EDIT</a>
                     <a href="${pageContext.servletContext.contextPath}/mypage/post_user">POST LIST</a>
                     <a href="${pageContext.servletContext.contextPath}/mypage/friend_user">FRIENDS</a>

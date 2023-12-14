@@ -3,10 +3,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
     .footer-section {
+        margin-top: 30px;
         width: 100%;
         background-color: #332913;
         height: 350px;
-        margin: 0;
     }
 
     .footer-first-area,

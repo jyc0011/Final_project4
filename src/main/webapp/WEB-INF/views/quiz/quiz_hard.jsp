@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Insert title here</title>
+    <title>QUIZ : HARD</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -161,16 +161,16 @@
 
 <body>
 <main>
-    <div class="language_box">어려움 : <span id="language"></span></div>
-    <div class="language_box">정답 언어 : <span id="answer_lang"></span></div>
+    <div class="language_box">HARD : <span id="language"></span></div>
+    <div class="language_box">ANSWER LANGUAGE : <span id="answer_lang"></span></div>
     <div id="quiz_content">${quiz.quiz_content}</div>
     <form method="post" id="input_form" class="input-group mb-3" action="/quiz/checkAnswer">
-        <input type="text" name="user_answer" class="form-control" placeholder="정답 입력"/>
+        <input type="text" name="user_answer" class="form-control" placeholder="ENTER ANSWER"/>
         <input type="hidden" name="quiz_id" value="${quiz.quiz_id}"/>
         <input type="hidden" name="quiz_content" value="${quiz.quiz_content}"/>
         <input type="hidden" name="level" value="${quiz.level}"/>
         <input type="hidden" name="quiz_lang" value="${quiz.quiz_lang}"/>
-        <input type="submit" class="input-group-text" value="제출"/>
+        <input type="submit" class="input-group-text" value="SUBMIT"/>
     </form>
 </main>
 </body>
