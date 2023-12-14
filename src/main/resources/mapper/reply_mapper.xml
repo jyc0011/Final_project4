@@ -39,7 +39,17 @@
         WHERE comment_id = #{param1} AND user_id = #{param2}
                 );
     </insert>
-    <insert id="like">
+    <select id="like" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM comment_like
+        WHERE comment_id = #{commentId} AND user_id = #{userId}
+    </select>
+
+    <delete id="decreaseLike">
+        delete from comment_like where comment_id=#{param1} and user_id=#{param2}
+    </delete>
+
+    <insert id="increaseLike">
         insert into comment_like(comment_id, user_id)
         SELECT #{param1}, #{param2}
             WHERE NOT EXISTS (

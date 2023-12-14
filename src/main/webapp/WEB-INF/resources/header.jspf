@@ -129,7 +129,7 @@
 <div class="banner">
     <div class="logo-area">
         <a href="${pageContext.servletContext.contextPath}/"><img
-                src="${pageContext.servletContext.contextPath}/image/logo.png" class="logo" height="110px"></a>
+                src="${pageContext.servletContext.contextPath}/image/logo.png" class="logo" height="150px"></a>
         <!-- 로고 이미지 -->
     </div>
     <div class="login">
@@ -142,7 +142,7 @@
         </c:if>
         <c:if test="${logStatus!='Y'}">
             <a href="${pageContext.servletContext.contextPath}/login" class="login-button">LOGIN&nbsp</a> | <a
-                href="${pageContext.servletContext.contextPath}/create" class="login-button">&nbspREGISTER</a>
+                href="${pageContext.servletContext.contextPath}/captcha" class="login-button">&nbspREGISTER</a>
         </c:if>
     </div>
 </div>

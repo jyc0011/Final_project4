@@ -13,10 +13,11 @@ public class CaptchaUtil {
     private static final String CAPTCHA_DIR = "/../captcha/";
     public static String[] APICaptchaCombined() {
         try {
-            String key = APICaptchakey(); // 키 발급
-            String imagePath = APICaptchaImage(key); // 이미지 캡차 생성
-            String audioPath = APICaptchaAudio(key); // 음성 캡차 생성
-            return new String[]{imagePath, audioPath,key};
+            String IKey = APICaptchakey(); // 키 발급
+            String SKey=APICaptchakeySound();
+            String imagePath = APICaptchaImage(IKey); // 이미지 캡차 생성
+            String audioPath = APICaptchaAudio(SKey); // 음성 캡차 생성
+            return new String[]{imagePath, audioPath, IKey, SKey};
         } catch (Exception e) {
             System.out.println(e);
             return null;
@@ -26,6 +27,33 @@ public class CaptchaUtil {
         try {
             String code = "0"; // 키 발급시 0, 캡차 이미지 비교시 1로 세팅
             String apiURL = "https://naveropenapi.apigw.ntruss.com/captcha/v1/nkey?code=" + code;
+            HttpURLConnection con = setupConnection(apiURL, "GET");
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if (responseCode == 200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 오류 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            System.out.println(response);
+            JSONObject jsonResponse = new JSONObject(response.toString());
+            return jsonResponse.getString("key"); // JSON 응답에서 "key" 값을 추출
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    public static String APICaptchakeySound() {
+        try {
+            String code = "0"; // 키 발급시 0, 캡차 이미지 비교시 1로 세팅
+            String apiURL = "https://naveropenapi.apigw.ntruss.com/scaptcha/v1/skey?code=" + code;
             HttpURLConnection con = setupConnection(apiURL, "GET");
             int responseCode = con.getResponseCode();
             BufferedReader br;
@@ -103,6 +131,7 @@ public class CaptchaUtil {
                 JSONObject jsonResponse = new JSONObject(response.toString());
                 return jsonResponse.getBoolean("result"); // 캡차 검증 결과 반환
             } else { // 오류 발생
+                System.out.println("imeagecaptchaerror");
                 handleErrorResponse(con);
                 return false;
             }
@@ -130,6 +159,7 @@ public class CaptchaUtil {
                 JSONObject jsonResponse = new JSONObject(response.toString());
                 return jsonResponse.getBoolean("result"); // 캡차 검증 결과 반환
             } else { // 오류 발생
+                System.out.println("soundcaptchaterror");
                 handleErrorResponse(con);
                 return false;
             }

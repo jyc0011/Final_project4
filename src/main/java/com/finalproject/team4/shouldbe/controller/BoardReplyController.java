@@ -92,15 +92,18 @@ public class BoardReplyController {
         var map = new HashMap<String, Object>();
         if("Y".equals(session.getAttribute("logStatus"))){
             var id = (String)session.getAttribute("logId");
-
             int result = replyService.like(no, id);
             if(result>0){
+                replyService.increaseLike(no,id);
                 map.put("result", true);
+                map.put("msg","좋아요를 눌렀습니다!");
+                return map;
+            } else {
+                replyService.decreaseLike(no, id);
+                map.put("result", false);
+                map.put("msg", "좋아요를 취소했습니다!");
                 return map;
             }
-            map.put("result", false);
-            map.put("msg", "이미 좋아요를 눌렀습니다!");
-
         }
         map.put("result", false);
         map.put("message", "로그인해주세요.");

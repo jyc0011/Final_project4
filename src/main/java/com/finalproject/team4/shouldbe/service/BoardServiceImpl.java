@@ -58,7 +58,10 @@ public class BoardServiceImpl implements BoardService {
     public int increaseLike(int post_id, String user_id) {
        return Mapper.increaseLike(post_id, user_id);
     }
-
+    @Override
+    public void decreaseLike(int post_id, String user_id) {
+        Mapper.decreaseLike(post_id, user_id);
+    }
     @Override
     public int getLikeStatus(int post_id, String user_id) {
         return Mapper.getLikeStatus(post_id, user_id);

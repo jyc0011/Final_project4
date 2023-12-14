@@ -15,4 +15,8 @@ public interface ReplyMapper {
     public int report(int comment_id, String user_id);
     public int like(int comment_id, String user_id);
     void updateComment(int postId, int commentId, String userId, String content);
+
+    void decreaseLike(int commentId, String userId);
+
+    void increaseLike(int commentId, String userId);
 }

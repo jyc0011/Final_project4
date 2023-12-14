@@ -390,10 +390,12 @@
                     success: function (r) {
                         console.log(r);
                         if (r.result == true) {
-                            console.log("success")
+                            console.log("success");
+                            alert(r.msg);
                             getReply();
                         } else {
                             alert(r.msg);
+                            getReply();
                         }
                         getLike();
 
@@ -414,6 +416,7 @@
                     success: function (r) {
                         console.log(r);
                         if (r.result == true) {
+                            alert(r.msg);
                             console.log("success")
                         } else {
                             alert(r.msg);

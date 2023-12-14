@@ -173,8 +173,9 @@ public class BoardController {
         var map = new HashMap<String, Object>();
         int result = boardService.getLikeStatus(no, user_id);
         if (result > 0) {
+            boardService.decreaseLike(no,user_id);
             map.put("result", false);
-            map.put("msg", "이미 추천한 글입니다.");
+            map.put("msg", "추천을 취소합니다!");
             return map;
         }
         try {

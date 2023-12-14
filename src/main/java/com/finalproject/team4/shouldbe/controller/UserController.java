@@ -6,7 +6,6 @@ import com.finalproject.team4.shouldbe.util.EncryptUtil;
 import com.finalproject.team4.shouldbe.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -41,18 +40,23 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("/captcha")
+    public String captcha(HttpSession session){
+        String[] captchaPaths = CaptchaUtil.APICaptchaCombined();
+        session.setAttribute("captchaImagePath", captchaPaths[0]);
+        session.setAttribute("captchaAudioPath", captchaPaths[1]);
+        session.setAttribute("captchaKey",captchaPaths[2]);
+        session.setAttribute("captchaKeyS",captchaPaths[3]);
+        return "create_membership/captcha";
+    }
+
     @GetMapping("/create")
     public String createMembership(HttpSession session, HttpServletRequest request) {
         if ("Y".equals(session.getAttribute("logStatus"))) {
             return "redirect:/";
         }
         session.invalidate(); // 회원가입중 새로고침시 인증정보 날리기
-        HttpSession newSession = request.getSession(true);
         // 캡차 이미지와 음성 생성
-        String[] captchaPaths = CaptchaUtil.APICaptchaCombined();
-        newSession.setAttribute("captchaImagePath", captchaPaths[0]);
-        newSession.setAttribute("captchaAudioPath", captchaPaths[1]);
-        newSession.setAttribute("captchaKey",captchaPaths[2]);
         return "create_membership/create_membership";
     }
 
@@ -107,13 +111,15 @@ public class UserController {
     }
 
     @PostMapping("/verifyCaptcha")
-    @ResponseBody
-    public boolean verifyCaptcha(@RequestBody Map<String, String> data) {
-        String captchaKey = data.get("key");
-        String captchaValue = data.get("captcha");
-        boolean a=CaptchaUtil.APICaptchakeyResult(captchaKey, captchaValue);
-        boolean b=CaptchaUtil.APICaptchakeyResultSound(captchaKey, captchaValue);
-        return a||b;
+    public String verifyCaptcha(String captchaInput, HttpSession session) {
+        String IKey = (String) session.getAttribute("captchaKey");
+        String Skey= (String) session.getAttribute("captchaKeyS");
+        boolean a=CaptchaUtil.APICaptchakeyResult(IKey, captchaInput);
+        boolean b=CaptchaUtil.APICaptchakeyResultSound(Skey, captchaInput);
+        if(a||b){
+            return "redirect:/create";
+        }
+        return "redirect:/captcha";
     }
 
     @PostMapping("/createOk")

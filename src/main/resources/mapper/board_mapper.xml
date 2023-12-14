@@ -51,6 +51,9 @@
     <update id="boardUpdate">
         update posts set title=#{title}, content=#{content} where post_id = ${post_id};
     </update>
+    <delete id="decreaseLike">
+        delete from post_like where post_id=#{param1} and user_id=#{param2}
+    </delete>
     <insert id="increaseLike">
         insert into post_like(post_id, user_id) values(#{param1}, #{param2})
     </insert>

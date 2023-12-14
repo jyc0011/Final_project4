@@ -12,5 +12,7 @@ public interface ReplyService {
     public int deleteReply(int post_id, int comment_id);
     public int report(int comment_id, String user_id);
     public int like(int comment_id, String user_id);
+    public void decreaseLike(int comment_id, String user_id);
+    public void increaseLike(int comment_id, String user_id);
     public boolean updateComment(int postId, int commentId, String userId, String content);
 }

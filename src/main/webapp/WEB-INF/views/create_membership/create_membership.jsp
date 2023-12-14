@@ -226,6 +226,7 @@
             $("#userid").keyup(function () {
                 $("#isIdChecked").val("N");
             });
+
             $("#sendcode").on('click', function () {
 
                 var email = $("#email").val();
@@ -249,6 +250,7 @@
 
                 });
             });
+
             $("#checkcode").click(function () {
                 var code = $("#authenticate").val();
                 $.ajax({
@@ -301,24 +303,24 @@
 
             $("#create_Form").submit(function () {
                 if (!isCheckedId()) {
+                    event.preventDefault();
                     alert("Please run ID duplication check!");
                     return false;
                 }
                 if (!checkpwd()) {//여러가지 체크들
+                    event.preventDefault();
                     alert("Passwords do not match!");
                     return false;
                 }
                 if (!isCheckedEmail()) {
+                    event.preventDefault();
                     alert("Please proceed with email verification!");
                     return false;
                 }
-                if(!isCheckedCaptcha()){
-                    alert("Please verify captcha!")
-                }
-
                 var terms1Checked = document.getElementById('terms1').checked;
                 var terms2Checked = document.getElementById('terms2').checked;
                 if (!terms1Checked || !terms2Checked) {
+                    event.preventDefault();
                     alert("Agree to the Terms of Use!");
                     return false;
                 }
@@ -326,32 +328,7 @@
 
             })
 
-            $("#checkCaptcha").click(function () {
-                var captchaValue =$("#captchaInput").val();
-                var captchaKey = $("#captchaKey").val();
-                $.ajax({
-                    type: "POST",
-                    url: "/verifyCaptcha",
-                    contentType: "application/json",
-                    data:JSON.stringify({
-                        key: captchaKey,
-                        captcha: captchaValue
-                    }),
-                    success: function (r) {
-                        if (r) {
-                            alert("Captcha verification successful.");
-                            $("#isCaptChaChecked").val("Y");
-                        } else {
-                            alert("Captcha verification failed. Please try again!");
-                            $("#isCaptchaChecked").val("N");
-                        }
-                    },
-                    error: function (e) {
-                        console.log(e.responseText);
-                    }
 
-                });
-            });
         });
     </script>
 </head>
@@ -500,21 +477,6 @@
                 <div>
                     <label style="cursor: pointer"><input type="checkbox" id="terms2"
                                                           style="margin-right: 5px; cursor: pointer"/>개인정보 수집 동의<strong>(필수)</strong></label>
-                </div>
-            </div>
-            <div style="width: 600px; padding: 10px; display: flex; flex-direction: column; justify-content: center">
-                <label style="margin-bottom: 3px">CAPTCHA:</label>
-                <img src="${pageContext.servletContext.contextPath}${captchaImagePath}" alt="Captcha Image" style="width:590px; margin-bottom: 10px;">
-                <audio controls style="width: 590px">
-                    <source src="${pageContext.servletContext.contextPath}${captchaAudioPath}" type="audio/wav">
-                    Your browser does not support the audio element.
-                </audio>
-                <br>
-                <div style="display: flex; flex-direction: row; align-items: center;">
-                    <input type="hidden" name="captchaKey" id="captchaKey" value="${captchaKey}" />
-                    <input type="hidden" name="isCaptchaChecked" id="isCaptchaChecked" value="N">
-                    <input type="text" name="captchaInput" id="captchaInput" placeholder="Enter Captcha" style="width: 470px; height: 40px;">
-                    <input type="button" value="CHECK" id="checkCaptcha" class="btn btn-warning submitBtn" style="margin-top:0; margin-left:20px; border: none" />
                 </div>
             </div>
             <div style="display: flex; align-items: center;">

@@ -45,7 +45,14 @@ public class ReplyServiceImpl implements ReplyService {
     public int like(int comment_id, String user_id) {
         return mapper.like(comment_id, user_id);
     }
-
+    @Override
+    public void decreaseLike(int comment_id, String user_id) {
+        mapper.decreaseLike(comment_id, user_id);
+    }
+    @Override
+    public void increaseLike(int comment_id, String user_id) {
+        mapper.increaseLike(comment_id, user_id);
+    }
     @Override
     public boolean updateComment(int postId, int commentId, String userId, String content) {
         try {

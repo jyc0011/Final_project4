@@ -26,4 +26,6 @@ public interface BoardService {
 
     public int report(int no, String userId);
     public int getReport(int no, String userId);
+
+    void decreaseLike(int no, String userId);
 }
