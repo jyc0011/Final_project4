@@ -27,10 +27,10 @@
             margin: 5px auto;
             font-size: 1.5em;
         }
+
         #quiz_content{
             width: 900px;
             height: 400px;
-            line-height: 400px;
             font-size: 7em;
             border:5px solid #000000;
             margin: 0 auto;
@@ -67,6 +67,16 @@
                     $('#submitButton').prop('disabled', false);
                 } else {
                     $('#submitButton').prop('disabled', true);
+                }
+            });
+
+            document.getElementById('sound_button').addEventListener('click', function() {
+                var audioPath = '${quiz.quiz_sound}';
+                if (audioPath === 'error') {
+                    alert('Sound cannot be played.');
+                } else {
+                    var audio = new Audio(audioPath);
+                    audio.play();
                 }
             });
 
@@ -158,7 +168,16 @@
 <main>
     <div class="language_box">EASY : <span id="language"></span></div>
     <div class="language_box">ANSWER LANGUAGE : <span id="answer_lang"></span></div>
-    <div id="quiz_content">${quiz.quiz_content}</div>
+    <div id="quiz_content" style="display: flex; flex-direction: column">
+        <div>
+            <button id="sound_button" style="background-color: transparent; border: none; font-size: 0.5em; cursor: pointer; float: left">
+                🔊
+            </button>
+        </div>
+        <div style="margin-top: 20px;">
+            ${quiz.quiz_content}
+        </div>
+    </div>
     <form method="post" id="input_form" class="input-group mb-3" action="/quiz/checkAnswer">
         <input type="text" name="user_answer" class="form-control" placeholder="INPUT ANSWER"/>
         <input type="hidden" name="quiz_id" value="${quiz.quiz_id}"/>
