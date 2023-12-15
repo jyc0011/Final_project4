@@ -8,6 +8,8 @@
                content,
                date_format(write_date, '%m-%d %H:%i') as write_date,
                is_deleted,
+               depth,
+               target_parent,
                count(l.user_id)                       as 'like',
                CASE WHEN EXISTS (
                 SELECT 1
@@ -19,10 +21,18 @@
     LEFT JOIN comment_like l ON c.comment_id = l.comment_id
     WHERE post_id = #{param1}
         GROUP BY c.comment_id
-        ORDER BY write_date;
+        ORDER BY target_parent asc, write_date asc;
     </select>
-    <insert id="addReply">
-        insert into comments(user_id, post_id, content) values(#{writer}, #{post_id}, #{content})
+    <insert id="addReply" useGeneratedKeys="true" keyProperty="comment_id">
+        insert into comments(user_id, post_id, content, target_parent) values(#{writer}, #{post_id}, #{content},0)
+    </insert>
+    <update id="updateTargetParent">
+        UPDATE comments
+        SET target_parent = #{comment_id}
+        WHERE comment_id = #{comment_id}
+    </update>
+    <insert id="addReplyReply">
+        insert into comments(user_id, post_id, content,target_parent,depth) values(#{userId}, #{postId}, #{content},#{commentId},1)
     </insert>
     <select id="selectReply" resultType="BoardReplyVO">
         select comment_id,

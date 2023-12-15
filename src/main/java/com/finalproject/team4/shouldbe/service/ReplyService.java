@@ -15,4 +15,5 @@ public interface ReplyService {
     public void decreaseLike(int comment_id, String user_id);
     public void increaseLike(int comment_id, String user_id);
     public boolean updateComment(int postId, int commentId, String userId, String content);
+    public boolean addReplyReply(int postId, int commentId, String userId, String content);
 }

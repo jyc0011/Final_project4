@@ -54,6 +54,19 @@ public class BoardReplyController {
         map.put("result", false);
         return map;
     }
+
+    @PostMapping("/boardReply/reply")
+    @ResponseBody
+    public int replyReply(@RequestParam("post_id") int post_id,
+                                        @RequestParam("comment_id") int comment_id,
+                                        @RequestParam("content") String content,
+                                        HttpSession session){
+        String userId = (String)session.getAttribute("logId");
+        System.out.println(post_id+" "+comment_id+" "+content);
+        boolean updateStatus = replyService.addReplyReply(post_id, comment_id, userId, content);
+        return 1;
+    }
+
     @PostMapping("/boardReply/delete")
     @ResponseBody
     public Map<String, Object> deleteReply(HttpSession session, int replyNo, int postNo){

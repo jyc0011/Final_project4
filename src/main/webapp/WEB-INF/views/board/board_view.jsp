@@ -85,14 +85,14 @@
             margin-bottom: 0;
         }
 
-        #replyForm, #replyFormEdit {
+        #replyForm, #replyFormEdit, #replyFormReply {
             width: 970px;
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        #replyForm > div, #replyFormEdit>div {
+        #replyForm > div, #replyFormEdit > div, #replyFormReply > div {
             display: flex;
             justify-content: flex-end;
         }
@@ -150,6 +150,12 @@
             flex-direction: column;
         }
 
+        .comment-section-re {
+            display: flex;
+            flex-direction: column;
+            margin-left: 50px;
+        }
+
         .content-and-buttons {
             display: flex;
             align-items: center;
@@ -199,7 +205,7 @@
             background-color: rgba(255, 227, 160);
         }
 
-        .reply-button{
+        .reply-button {
             padding-left: 5px;
             padding-right: 5px;
             background-color: white;
@@ -208,13 +214,18 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         .reply-button.active {
             background-color: rgba(255, 227, 160);
         }
 
+        .reply-comment-id{
+            padding-right: 5px;
+        }
+
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             try {
                 var myLike = '${bVO.myLike}';
                 if (myLike === '1') {
@@ -252,24 +263,34 @@
                     type: 'GET',
                     success: function (result) {
                         //console.log(result);
-                        var tag = ""; //댓글목록 태그(수정, 삭제);
+                        var tag = ''; //댓글목록 태그(수정, 삭제);
                         $(result).each(function (i, rVO) {
-                            tag += "<li><div class='comment-section'>";
+                            if (rVO.depth == 0) {
+                                tag += "<li><div class='comment-section'>";
+                            } else {
+                                tag += "<li><div class='comment-section-re'>";
+                            }
                             tag += "<div><b>" + rVO.writer + "</b>(" + rVO.write_date + ")</div>";
                             tag += "<div class='content-and-buttons'>";
                             tag += "<p class='comment-content'>" + rVO.content + "</p>";
 
                             if ('${logId}' == rVO.writer) {
                                 tag += "<div class='button-container'>";
-                                tag += "<input type='hidden' class='comment-id' value='" + rVO.comment_id + "'/>";
+                                tag += "<input type='hidden' class='reply-button comment-id reply-comment-id' value='" + rVO.comment_id + "'/>";
+                                if (rVO.depth == 0) {
+                                    tag += "<input type='button' class='reply-button reply' id='reply' value='Reply'/>";
+                                }
                                 tag += "<input type='button' class='reply-button replyEdit' id='replyEdit' value='Edit'/>";
                                 tag += "<input type='button' class='reply-button' id='replyDelete' value='Del'/>";
-                            }else{
+                            } else {
                                 tag += "<div class='button-container'>";
-                                tag += "<input type='hidden' class='reply-button reply-comment-id' value='" + rVO.comment_id + "'/>";
+                                tag += "<input type='hidden' class='reply-button comment-id reply-comment-id' value='" + rVO.comment_id + "'/>";
+                                if (rVO.depth == 0) {
+                                    tag += "<input type='button' class='reply-button reply' id='reply' value='Reply'/>";
+                                }
                                 tag += "<input type='hidden' class='reply-button reply-writer' value='" + rVO.writer + "'/>";
                                 tag += "<input type='button' class='reply-button' id='replyReport' value='Report'/>";
-                                if (rVO.myLike==1) {
+                                if (rVO.myLike == 1) {
                                     tag += "<input type='button' class='reply-button active' id='replyLike' value='Like'/>";
                                 } else {
                                     tag += "<input type='button' class='reply-button' id='replyLike' value='Like'/>";
@@ -296,7 +317,7 @@
                     data: {no: ${bVO.post_id}},
                     type: 'GET',
                     success: function (result) {
-                        $("#liked").html("LIKE "+result);
+                        $("#liked").html("LIKE " + result);
                     },
                     error: function (e) {
                         console.log(e.responseText);
@@ -305,39 +326,77 @@
                 })
             }
 
-            $(document).on('click', '.replyEdit', function() {
+            $(document).on('click', '.reply', function () {
+                var commentId = $(this).siblings('.comment-id').val();
+                console.log("Comment ID:", commentId);
+                currentCommentId = commentId;
+                $('#replyFormReply').show();
+                $('#replyForm').hide();
+            });
+
+            $(document).on('click', '.replyEdit', function () {
                 var currentContent = $(this).closest('.comment-section').find('.comment-content').text();
                 var commentId = $(this).siblings('.comment-id').val();
                 console.log("Comment ID:", commentId);
-                currentCommentId=commentId;
+                currentCommentId = commentId;
                 $('#content_Edit').val(currentContent);
                 $('#replyFormEdit').show();
                 $('#replyForm').hide();
             });
 
-            $('#EditReply').click(function(e) {
+            $('#EditReply').click(function (e) {
                 e.preventDefault();
                 var postId = $('input[name="post_id_Edit"]').val();
                 var updatedContent = $('#content_Edit').val();
-                var commentId=currentCommentId;
+                var commentId = currentCommentId;
                 console.log(postId, updatedContent, commentId);
                 $.ajax({
                     url: '/boardReply/edit',
                     type: 'POST',
                     data: {
                         post_id: postId,
-                        comment_id:commentId,
+                        comment_id: commentId,
                         content: updatedContent
                     },
-                    success: function(response) {
+                    success: function (response) {
                         alert('Comment updated successfully.');
                         getReply();
                         $('#replyFormEdit').hide();
                         $('#replyForm').show();
                     },
-                    error: function(err) {
+                    error: function (err) {
                         alert('Error updating comment.');
                         console.log(err);
+                    }
+                });
+            });
+
+            $(document).on('click', '#ReplyReply', function (e) {
+                alert('test');
+                console.log(currentCommentId);
+                e.preventDefault();
+                var postId = $('input[name="post_id_Reply"]').val();
+                var updatedContent = $('#content_Reply').val();
+                var commentId = currentCommentId;
+                console.log(postId, updatedContent, commentId);
+                $.ajax({
+                    url: '/boardReply/reply',
+                    type: 'POST',
+                    data: {
+                        post_id: postId,
+                        comment_id: commentId,
+                        content: updatedContent
+                    },
+                    success: function (response) {
+                        e.preventDefault();
+                        alert('Comment updated successfully.');
+                        getReply();
+                        $('#replyFormReply').hide();
+                        $('#replyForm').show();
+                    },
+                    error: function (err) {
+                        alert('Error updating comment.');
+                        console.log(err.responseText);
                     }
                 });
             });
@@ -360,7 +419,7 @@
                     }
 
                 })
-            })
+            });
             $(document).on('click', '#replyList input[value=Del]', function () {
                 if (!confirm("Are you sure you want to delete?")) {
                     return;
@@ -393,7 +452,8 @@
                     url: "${pageContext.servletContext.contextPath}/boardReply/report",
                     data: {
                         id: commentUserId,
-                        no: replyNo},
+                        no: replyNo
+                    },
                     success: function (r) {
                         console.log(r);
                         if (r.result == true) {
@@ -410,7 +470,7 @@
 
                 })
 
-            })
+            });
             $(document).on('click', '#replyList input[value=Like]', function () {
                 var replyNo = $(this).siblings('.reply-comment-id').val();
                 console.log(replyNo);
@@ -418,7 +478,8 @@
                     type: "POST",
                     url: "${pageContext.servletContext.contextPath}/boardReply/like",
                     data: {
-                        no: replyNo},
+                        no: replyNo
+                    },
                     success: function (r) {
                         console.log(r);
                         if (r.result == true) {
@@ -438,7 +499,7 @@
 
                 })
 
-            })
+            });
 
             $("#likeButton").click(function () {
                 $.ajax({
@@ -483,7 +544,6 @@
             getReply();
             getLike();
         })
-
     </script>
 <body>
 <main>
@@ -499,11 +559,14 @@
     <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 40px; background-color: rgba(255, 227, 160, 0.2); padding: 0 20px; border-radius: 10px;">
         <div style="display: flex; flex-direction: column; align-items: center; padding: 10px;">
             <div id="liked" style="margin-bottom: 10px; font-size: 16px;">0 likes</div>
-            <button id="likeButton" class="likeButton" >💛</button>
+            <button id="likeButton" class="likeButton">💛</button>
         </div>
         <div style="padding: 10px;">
             <div style="margin-bottom: 10px; font-size: 16px; text-align: center">REPORT IT</div>
-            <button id="report" style="font-size: 24px; padding: 5px 10px; border: none; background-color: transparent; cursor: pointer; border-radius: 10px; background-color: rgba(255, 227, 160, 0.4);">🔔</button>
+            <button id="report"
+                    style="font-size: 24px; padding: 5px 10px; border: none; background-color: transparent; cursor: pointer; border-radius: 10px; background-color: rgba(255, 227, 160, 0.4);">
+                🔔
+            </button>
         </div>
     </div>
     <br>
@@ -538,6 +601,14 @@
                 </div>
             </form>
         </c:if>
+
+        <form method="post" id="replyFormReply" style="display: none">
+            <input type="hidden" name="post_id_Reply" value="${bVO.post_id}"/>
+            <textarea name="content" id="content_Reply"></textarea>
+            <div>
+                <button class="btn btn-warning" id="ReplyReply">REPLY</button>
+            </div>
+        </form>
 
         <form method="post" id="replyFormEdit" style="display: none">
             <input type="hidden" name="post_id_Edit" value="${bVO.post_id}"/>

@@ -17,6 +17,8 @@ public interface ReplyMapper {
     void updateComment(int postId, int commentId, String userId, String content);
 
     void decreaseLike(int commentId, String userId);
-
     void increaseLike(int commentId, String userId);
+    boolean addReplyReply(int postId, int commentId, String userId, String content);
+
+    int updateTargetParent(BoardReplyVO rVO);
 }

@@ -22,7 +22,8 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public int addReply(BoardReplyVO rVO) {
-        return mapper.addReply(rVO);
+        mapper.addReply(rVO);
+        return mapper.updateTargetParent(rVO);
     }
 
     @Override
@@ -61,5 +62,9 @@ public class ReplyServiceImpl implements ReplyService {
         } catch (Exception e) {
             return false;
         }
+    }
+    @Override
+    public boolean addReplyReply(int postId, int commentId, String userId, String content){
+        return mapper.addReplyReply(postId,commentId,userId,content);
     }
 }
