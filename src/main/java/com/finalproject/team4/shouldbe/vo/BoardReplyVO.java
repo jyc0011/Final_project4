@@ -19,6 +19,8 @@ public class BoardReplyVO {
     private String board_cat;
     private String title;
     private int depth;
+    private int target_parent;
+    private int myLike;
 
     /*
     private int comment_report_id;

@@ -24,11 +24,15 @@ public class BoardReplyController {
 
     @GetMapping("/boardReply/list")
     @ResponseBody
-    public List<BoardReplyVO> replyList(int no){
+    public List<BoardReplyVO> replyList(int no,HttpSession session){
         //댓글 데이터
-        var rVOList = replyService.replyList(no);
+        String userId = (String) session.getAttribute("logId");
+        if (userId == null || userId.isEmpty()) {
+            userId = "not_login";
+        }
+        var rVOList = replyService.replyList(no,userId);
 
-        //System.out.println(rVOList);
+        System.out.println(rVOList);
         return rVOList;
     }
     @PostMapping("/boardReply/add")

@@ -35,8 +35,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardVO boardSelect(int post_id) {
-        return Mapper.boardSelect(post_id);
+    public BoardVO boardSelect(int post_id, String userId) {
+        return Mapper.boardSelect(post_id,userId);
     }
 
     @Override

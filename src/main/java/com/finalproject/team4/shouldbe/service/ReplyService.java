@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ReplyService {
 
-    public List<BoardReplyVO> replyList(int post_id);
+    public List<BoardReplyVO> replyList(int post_id, String logId);
     public int addReply(BoardReplyVO rVO);
     public BoardReplyVO selectReply(int post_id, int comment_id);
     public int deleteReply(int post_id, int comment_id);

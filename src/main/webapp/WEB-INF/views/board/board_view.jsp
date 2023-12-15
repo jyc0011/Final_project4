@@ -171,15 +171,21 @@
             cursor: pointer;
         }
 
-        #likeButton:hover {
-            background-color: #c8c8c8;
+        .likeButton {
+            font-size: 24px;
+            padding: 5px 10px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            border-radius: 10px;
+            background-color: rgba(255, 227, 160, 0.4);
         }
 
-        #replyReport:hover, #replyLike:hover, #replyEdit:hover, #replyDelete:hover {
+        #replyReport:hover, #replyEdit:hover, #replyDelete:hover {
             color: #555555;
         }
 
-        #replyLike, #replyDelete {
+        #replyDelete {
             padding-left: 5px;
             padding-right: 5px;
             background-color: white;
@@ -189,9 +195,38 @@
             cursor: pointer;
         }
 
-        #reply
+        .active {
+            background-color: rgba(255, 227, 160);
+        }
+
+        .reply-button{
+            padding-left: 5px;
+            padding-right: 5px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .reply-button.active {
+            background-color: rgba(255, 227, 160);
+        }
+
     </style>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                var myLike = '${bVO.myLike}';
+                if (myLike === '1') {
+                    var likeButton = document.getElementById('likeButton');
+                    if (likeButton) {
+                        likeButton.classList.add('active');
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
         var currentCommentId = null;
         $(function () {
             $("#toList").click(function () {
@@ -234,14 +269,17 @@
                                 tag += "<input type='hidden' class='reply-button reply-comment-id' value='" + rVO.comment_id + "'/>";
                                 tag += "<input type='hidden' class='reply-button reply-writer' value='" + rVO.writer + "'/>";
                                 tag += "<input type='button' class='reply-button' id='replyReport' value='Report'/>";
-                                tag += "<input type='button' class='reply-button' id='replyLike' value='Like'/>";
+                                if (rVO.myLike==1) {
+                                    tag += "<input type='button' class='reply-button active' id='replyLike' value='Like'/>";
+                                } else {
+                                    tag += "<input type='button' class='reply-button' id='replyLike' value='Like'/>";
+                                }
                             }
                             tag += "<div>&nbsp LIKE: " + rVO.like + "</div>"
                             tag += "</div>";
                             tag += "</div>";
                             tag += "</li>";
                         });
-
                         $("#replyList").html(tag);
 
                     },
@@ -461,7 +499,7 @@
     <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 40px; background-color: rgba(255, 227, 160, 0.2); padding: 0 20px; border-radius: 10px;">
         <div style="display: flex; flex-direction: column; align-items: center; padding: 10px;">
             <div id="liked" style="margin-bottom: 10px; font-size: 16px;">0 likes</div>
-            <button id="likeButton" style="font-size: 24px; padding: 5px 10px; border: none; background-color: transparent; cursor: pointer;  border-radius: 10px; background-color: rgba(255, 227, 160, 0.4);">💛</button>
+            <button id="likeButton" class="likeButton" >💛</button>
         </div>
         <div style="padding: 10px;">
             <div style="margin-bottom: 10px; font-size: 16px; text-align: center">REPORT IT</div>
@@ -495,7 +533,6 @@
                 <!--  원글 글번호 -->
                 <input type="hidden" name="post_id" value="${bVO.post_id}"/>
                 <textarea name="content" id="content"></textarea>
-                <!-- button은 form안에있을경우 input type submit과 동일 -->
                 <div>
                     <button class="btn btn-warning" id="addReply">POST</button>
                 </div>

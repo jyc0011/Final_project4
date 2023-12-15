@@ -16,5 +16,6 @@ public class BoardVO {
     private String board_cat;//posts
     private String write_date;//posts
     private int likes;
+    private int myLike;
 }
 

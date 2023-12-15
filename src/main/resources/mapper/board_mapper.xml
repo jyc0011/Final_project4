@@ -43,16 +43,21 @@
         where post_id = ${param1};
     </update>
     <select id="boardSelect" resultType="BoardVO">
-        select post_id,
+        SELECT post_id,
                user_id,
                title,
                content,
                views,
                board_cat,
-               date_format(write_date, '%m-%d %H:%i')
-                   as write_date
-        from posts
-        where post_id = #{param1};
+               DATE_FORMAT(write_date, '%m-%d %H:%i') AS write_date,
+               CASE WHEN EXISTS (
+                   SELECT 1
+                   FROM post_like pl
+                   WHERE pl.post_id = posts.post_id
+                     AND pl.user_id = #{param2}
+               ) THEN 1 ELSE 0 END AS myLike
+        FROM posts
+        WHERE post_id = #{param1};
     </select>
     <delete id="boardDelete">
         delete from posts where post_id=#{param1}

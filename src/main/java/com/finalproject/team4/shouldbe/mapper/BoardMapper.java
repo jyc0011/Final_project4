@@ -15,7 +15,7 @@ public interface BoardMapper {
 
     public Map<String, Object> totalRecord(PagingVO pVO);
 
-    public BoardVO boardSelect(int post_id);
+    public BoardVO boardSelect(int post_id, String userId);
 
     public void viewCount(int post_id);
 

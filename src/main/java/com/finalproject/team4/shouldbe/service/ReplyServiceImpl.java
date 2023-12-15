@@ -16,8 +16,8 @@ public class ReplyServiceImpl implements ReplyService {
     ChatMapper chatMapper;
 
     @Override
-    public List<BoardReplyVO> replyList(int post_id) {
-        return mapper.replyList(post_id);
+    public List<BoardReplyVO> replyList(int post_id, String logId) {
+        return mapper.replyList(post_id, logId);
     }
 
     @Override
