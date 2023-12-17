@@ -239,7 +239,7 @@
             <table id="example" class="display" style="width:100%">
                 <thead id="list_head">
                 <tr class="management_list">
-                    <th class="user_name">닉네임</th>
+                    <th class="user_name">이름</th>
                     <th class="user_id">아이디</th>
                     <th class="time">정지일</th>
                     <th> 정지기간</th>

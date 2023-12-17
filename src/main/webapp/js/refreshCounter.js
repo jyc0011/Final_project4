@@ -11,7 +11,7 @@ function trackRefresh() {
         refreshData.lastRefreshTime = currentTime;
     }
 
-    if (refreshData.count >= 4) {
+    if (refreshData.count >= 3) {
         window.location.href = '/refresh/captcha';
     }
 
@@ -24,6 +24,5 @@ function detectUserInteraction() {
 }
 
 document.addEventListener('click', detectUserInteraction);
-document.addEventListener('scroll', detectUserInteraction, true);
 
 window.onload = trackRefresh;

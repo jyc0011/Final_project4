@@ -249,6 +249,7 @@
         <div class="quiz_list">
             <!-- 쉬움 -->
             <div class="qqlist" id="quiz_easy">
+                <h4 style="text-align: center">쉬움</h4>
                 <table class="display" style="width:100%">
                     <thead class="list_head">
                     <tr class="management_list">
@@ -275,6 +276,7 @@
 
             <!-- 중간 -->
             <div class="qqlist" id="quiz_medium">
+                <h4 style="text-align: center">중간</h4>
                 <table class="display" style="width:100%">
                     <thead class="list_head">
                     <tr class="management_list">
@@ -301,6 +303,7 @@
 
             <!-- 어려움 -->
             <div class="qqlist" id="quiz_hard">
+                <h4 style="text-align: center">어려움</h4>
                 <table class="display" style="width:100%">
                     <thead class="list_head">
                     <tr class="management_list">
