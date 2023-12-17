@@ -44,9 +44,11 @@
         from comments
         where post_id = #{param1} and comment_id = #{param2}
     </select>
-    <delete id="deleteReply">
-        delete from comments where post_id=#{param1} and comment_id = #{param2}
-    </delete>
+    <update id="deleteReply">
+        update comments
+        set is_deleted=1
+        where post_id=#{param1} and comment_id = #{param2}
+    </update>
     <insert id="report">
         INSERT INTO comment_report(comment_id, user_id)
         SELECT #{param1}, #{param2}

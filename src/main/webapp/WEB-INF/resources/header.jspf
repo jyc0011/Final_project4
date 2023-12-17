@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="${pageContext.servletContext.contextPath}/js/no-cache.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/js/refreshCounter.js"></script>
     <link rel="shortcut icon" href="https://ibsintelligence.com/wp-content/uploads/2023/05/Smoothpay.jpg">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit&family=M+PLUS+1&family=Nanum+Gothic&family=Noto+Sans+HK&family=Noto+Sans+SC&family=Noto+Sans+TC&family=Titillium+Web&display=swap');

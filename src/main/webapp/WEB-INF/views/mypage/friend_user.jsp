@@ -145,9 +145,8 @@
     </div>
     <div id="content" class="col-10">
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/friend_user" id="now">친구
-                목록</a></li>
-            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/blockList">차단 목록</a>
+            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/friend_user" id="now">FRIENDS</a></li>
+            <li class="list-inline-item"><a href="${pageContext.servletContext.contextPath}/mypage/blockList">BLOCK LIST</a>
             </li>
         </ul>
         <c:forEach var="flist" items="${flist}">

@@ -270,33 +270,40 @@
                             } else {
                                 tag += "<li><div class='comment-section-re'>";
                             }
-                            tag += "<div><b>" + rVO.writer + "</b>(" + rVO.write_date + ")</div>";
-                            tag += "<div class='content-and-buttons'>";
-                            tag += "<p class='comment-content'>" + rVO.content + "</p>";
+                            if(rVO.is_deleted==1){
+                                tag += "<div><b>삭제된 메세지</b></div>";
+                                tag += "<div class='content-and-buttons'>";
+                                tag += "<p class='comment-content'>삭제된 메세지 내용입니다.</p>";
+                            }else{
+                                tag += "<div><b>" + rVO.writer + "</b>(" + rVO.write_date + ")</div>";
+                                tag += "<div class='content-and-buttons'>";
+                                tag += "<p class='comment-content'>" + rVO.content + "</p>";
 
-                            if ('${logId}' == rVO.writer) {
-                                tag += "<div class='button-container'>";
-                                tag += "<input type='hidden' class='reply-button comment-id reply-comment-id' value='" + rVO.comment_id + "'/>";
-                                if (rVO.depth == 0) {
-                                    tag += "<input type='button' class='reply-button reply' id='reply' value='Reply'/>";
-                                }
-                                tag += "<input type='button' class='reply-button replyEdit' id='replyEdit' value='Edit'/>";
-                                tag += "<input type='button' class='reply-button' id='replyDelete' value='Del'/>";
-                            } else {
-                                tag += "<div class='button-container'>";
-                                tag += "<input type='hidden' class='reply-button comment-id reply-comment-id' value='" + rVO.comment_id + "'/>";
-                                if (rVO.depth == 0) {
-                                    tag += "<input type='button' class='reply-button reply' id='reply' value='Reply'/>";
-                                }
-                                tag += "<input type='hidden' class='reply-button reply-writer' value='" + rVO.writer + "'/>";
-                                tag += "<input type='button' class='reply-button' id='replyReport' value='Report'/>";
-                                if (rVO.myLike == 1) {
-                                    tag += "<input type='button' class='reply-button active' id='replyLike' value='Like'/>";
+                                if ('${logId}' == rVO.writer) {
+                                    tag += "<div class='button-container'>";
+                                    tag += "<input type='hidden' class='reply-button comment-id reply-comment-id' value='" + rVO.comment_id + "'/>";
+                                    if (rVO.depth == 0) {
+                                        tag += "<input type='button' class='reply-button reply' id='reply' value='Reply'/>";
+                                    }
+                                    tag += "<input type='button' class='reply-button replyEdit' id='replyEdit' value='Edit'/>";
+                                    tag += "<input type='button' class='reply-button' id='replyDelete' value='Del'/>";
                                 } else {
-                                    tag += "<input type='button' class='reply-button' id='replyLike' value='Like'/>";
+                                    tag += "<div class='button-container'>";
+                                    tag += "<input type='hidden' class='reply-button comment-id reply-comment-id' value='" + rVO.comment_id + "'/>";
+                                    if (rVO.depth == 0) {
+                                        tag += "<input type='button' class='reply-button reply' id='reply' value='Reply'/>";
+                                    }
+                                    tag += "<input type='hidden' class='reply-button reply-writer' value='" + rVO.writer + "'/>";
+                                    tag += "<input type='button' class='reply-button' id='replyReport' value='Report'/>";
+                                    if (rVO.myLike == 1) {
+                                        tag += "<input type='button' class='reply-button active' id='replyLike' value='Like'/>";
+                                    } else {
+                                        tag += "<input type='button' class='reply-button' id='replyLike' value='Like'/>";
+                                    }
                                 }
+                                tag += "<div>&nbsp LIKE: " + rVO.like + "</div>"
                             }
-                            tag += "<div>&nbsp LIKE: " + rVO.like + "</div>"
+
                             tag += "</div>";
                             tag += "</div>";
                             tag += "</li>";
@@ -330,8 +337,9 @@
                 var commentId = $(this).siblings('.comment-id').val();
                 console.log("Comment ID:", commentId);
                 currentCommentId = commentId;
-                $('#replyFormReply').show();
-                $('#replyForm').hide();
+                var parentLi = $(this).closest('li');
+                $('#replyFormReply').insertAfter(parentLi).show();
+                $('#replyFormEdit').hide();
             });
 
             $(document).on('click', '.replyEdit', function () {
@@ -339,9 +347,10 @@
                 var commentId = $(this).siblings('.comment-id').val();
                 console.log("Comment ID:", commentId);
                 currentCommentId = commentId;
+                var parentLi = $(this).closest('li');
                 $('#content_Edit').val(currentContent);
-                $('#replyFormEdit').show();
-                $('#replyForm').hide();
+                $('#replyFormEdit').insertAfter(parentLi).show();
+                $('#replyFormReply').hide();
             });
 
             $('#EditReply').click(function (e) {
@@ -372,7 +381,6 @@
             });
 
             $(document).on('click', '#ReplyReply', function (e) {
-                alert('test');
                 console.log(currentCommentId);
                 e.preventDefault();
                 var postId = $('input[name="post_id_Reply"]').val();

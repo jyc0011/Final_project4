@@ -50,13 +50,48 @@ public class UserController {
         return "create_membership/captcha";
     }
 
+    // /refresh/captcha 핸들러
+    @GetMapping("/refresh/captcha")
+    public String re_captcha(HttpServletRequest request, HttpSession session) {
+        // 현재 URL을 세션에 저장
+        String refererUrl = request.getHeader("Referer");
+        session.setAttribute("previousUrl", refererUrl);
+        System.out.println(refererUrl);
+
+        // 기존의 캡챠 관련 로직
+        String[] captchaPaths = CaptchaUtil.APICaptchaCombined();
+        session.setAttribute("captchaImagePath", captchaPaths[0]);
+        session.setAttribute("captchaAudioPath", captchaPaths[1]);
+        session.setAttribute("captchaKey",captchaPaths[2]);
+        session.setAttribute("captchaKeyS",captchaPaths[3]);
+
+        return "captcha";
+    }
+
+    // /refresh/verifyCaptcha 핸들러
+    @PostMapping("/refresh/verifyCaptcha")
+    public String verifyCaptchaRefresh(String captchaInput, HttpSession session) {
+        String IKey = (String) session.getAttribute("captchaKey");
+        String Skey = (String) session.getAttribute("captchaKeyS");
+        boolean a = CaptchaUtil.APICaptchakeyResult(IKey, captchaInput);
+        boolean b = CaptchaUtil.APICaptchakeyResultSound(Skey, captchaInput);
+
+        if (a || b) {
+            // 세션에서 이전 URL 가져오기
+            String previousUrl = (String) session.getAttribute("previousUrl");
+            return "redirect:" + (previousUrl != null ? previousUrl : "/");
+        }
+
+        return "redirect:/captcha";
+    }
+
+
     @GetMapping("/create")
     public String createMembership(HttpSession session, HttpServletRequest request) {
         if ("Y".equals(session.getAttribute("logStatus"))) {
             return "redirect:/";
         }
         session.invalidate(); // 회원가입중 새로고침시 인증정보 날리기
-        // 캡차 이미지와 음성 생성
         return "create_membership/create_membership";
     }
 
