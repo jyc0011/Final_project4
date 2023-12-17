@@ -54,8 +54,11 @@ public class UserController {
     @GetMapping("/refresh/captcha")
     public String re_captcha(HttpServletRequest request, HttpSession session) {
         // 현재 URL을 세션에 저장
-        String refererUrl = request.getHeader("Referer");
-        session.setAttribute("previousUrl", refererUrl);
+        if(! request.getHeader("Referer").equals("http://localhost:9988/refresh/captcha")){
+            String refererUrl = request.getHeader("Referer");
+            session.setAttribute("previousUrl", refererUrl);
+        }
+        String refererUrl= (String) session.getAttribute("previousUrl");
         System.out.println(refererUrl);
 
         // 기존의 캡챠 관련 로직
@@ -199,10 +202,20 @@ public class UserController {
                           @RequestParam("userid") String userid,
                           @RequestParam("userpwd") String userpwd,
                           RedirectAttributes redirect) {
+        Integer loginFailCount = (Integer) session.getAttribute("loginFailCount");
+        if (loginFailCount == null) {
+            loginFailCount = 0;
+        }
         LoginVO vo = userService.userLoginCheck(userid);
         System.out.println(vo);
         if (vo == null) {//로그인 실패
             System.out.println(1);
+            loginFailCount++;
+            if (loginFailCount >= 3) {
+                session.setAttribute("loginFailCount", 0);
+                return "redirect:/refresh/captcha";
+            }
+            session.setAttribute("loginFailCount", loginFailCount);
             redirect.addFlashAttribute("result", "로그인 실패, 아이디를 확인해주세요!");
             return "redirect:/login";
         } else if (vo.getWithdraw()!= 0) {
@@ -253,6 +266,12 @@ public class UserController {
         }
         System.out.println(encrypt.encrypt(userpwd, vo.getSalt()));
         System.out.println(vo.getPassword());
+        loginFailCount++;
+        if (loginFailCount >= 3) {
+            session.setAttribute("loginFailCount", 0);
+            return "redirect:/refresh/captcha";
+        }
+        session.setAttribute("loginFailCount", loginFailCount);
         redirect.addFlashAttribute("result", "로그인 실패, 비밀번호를 확인해주세요!");
         return "redirect:/login";
 
