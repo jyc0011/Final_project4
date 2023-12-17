@@ -269,9 +269,6 @@
     </div>
     <div id="member_management">
         <h1 id="quiz_list_title">탈퇴 회원 관리</h1>
-        <form class="withdrawn" action="/admin/withdrawn/all" method="get">
-            <button type="submit" class="withdraw_button">유예 기한 만료 회원 전부 탈퇴</button>
-        </form>
 
         <div class="col-sm-12">
             <table id="example" class="display" style="width:100%">

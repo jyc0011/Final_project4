@@ -121,12 +121,14 @@
         where user_id=#{user_id}
     </select>
 
-    <update id="withdrawExpiredUsers">
+    <delete id="withdrawExpiredUsers">
     <![CDATA[
-        DELETE FROM users
-        WHERE withdraw < NOW() - INTERVAL 30 DAY
+        DELETE users
+        FROM users
+        INNER JOIN withdrawn_users ON users.user_id = withdrawn_users.user_id
+        WHERE withdrawn_users.withdrawn_time < NOW() - INTERVAL 30 DAY
         ]]>
-    </update>
+    </delete>
 
     <delete id="deleteUserById" parameterType="String">
         DELETE FROM users WHERE user_id = #{userId}

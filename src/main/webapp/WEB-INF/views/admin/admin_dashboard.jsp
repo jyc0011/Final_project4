@@ -252,7 +252,8 @@
         <h1 id="dashboardTitle">대시보드</h1>
         <div id="dashboard">
             <section id="preferred">
-                <h2>선호언어</h2>
+                <h2>가입자 국적 통계
+                </h2>
                 <div id="">
                     <canvas id="bar-chart-horizontal" width="900" height="400"></canvas>
                 </div>
