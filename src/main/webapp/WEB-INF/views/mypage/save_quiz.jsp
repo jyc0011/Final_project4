@@ -147,7 +147,7 @@
             <div id="postsContainer">
                     <c:forEach var="saveQuiz" items="${saveQuiz}">
                         <div class="post-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="trdisplay: flex; justify-content: space-between; align-items: center;">
                                 <strong>${saveQuiz.quiz_content}</strong>
                                 <form action="/mypage/save_quiz/delete" method="post" style="display: inline;">
                                     <input type="hidden" name="quiz_id" value="${saveQuiz.quiz_id}" />

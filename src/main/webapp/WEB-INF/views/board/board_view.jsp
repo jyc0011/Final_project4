@@ -519,11 +519,16 @@
                         if (r.result == true) {
                             alert(r.msg);
                             console.log("success")
+                            var likeButton = document.getElementById('likeButton');
+                            if (likeButton) {
+                                likeButton.classList.toggle('active');
+                            }
                         } else {
                             alert(r.msg);
+                            var likeButton = document.getElementById('likeButton');
+                            likeButton.classList.toggle('active');
                         }
                         getLike();
-
                     },
                     error: function (e) {
                         console.log(e.responseText);

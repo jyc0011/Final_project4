@@ -176,6 +176,9 @@
             <button id="sound_button" style="background-color: transparent; border: none; font-size: 0.5em; cursor: pointer; float: left; display: ${quiz.quiz_sound == 'error' ? 'none' : 'inline-block'};">
                 🔊
             </button>
+            <button style="background-color: transparent; border: none; font-size: 0.5em; cursor: pointer; float: left; display: ${quiz.quiz_sound == 'error' ? '' : 'inline-block'};">
+                &nbsp;
+            </button>
         </div>
         <div style="margin-top: 20px;">
             ${quiz.quiz_content}

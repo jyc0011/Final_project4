@@ -62,7 +62,7 @@
             width: 150px;
             height: 1000px;
             list-style-type: none;
-            border-right: 1px solid #ddd;
+            border-right: 1px solid #000000;
         }
 
         #side_menu > li > a {
@@ -73,7 +73,7 @@
         }
 
         #side_menu li a:hover {
-            background-color: #ddd;
+            background-color: #000000;
         }
 
         main {
@@ -140,7 +140,7 @@
         }
 
         #list_content {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #000000;
         }
 
         .pagination {
@@ -165,7 +165,7 @@
         }
 
         .reply_list>td{
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #000000;
         }
     </style>
 </head>
